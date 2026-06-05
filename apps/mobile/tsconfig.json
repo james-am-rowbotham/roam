@@ -3,15 +3,8 @@
   "compilerOptions": {
     "jsx": "react-native",
     "paths": {
-      "@roam/core": [
-        "../../packages/core/src/index.ts"
-      ]
+      "@roam/core": ["../../packages/core/src/index.ts"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
