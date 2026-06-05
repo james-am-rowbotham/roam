@@ -41,7 +41,7 @@ export const colors = {
     info: { bg: '#e6f1fb', text: '#185fa5' },
     success: { bg: '#e3efd9', text: '#4a7a33' },
   },
-} as const
+} as const;
 
 export const radius = {
   sm: 6,
@@ -49,7 +49,7 @@ export const radius = {
   lg: 8,
   xl: 12,
   full: 360,
-} as const
+} as const;
 
 export const spacing = {
   1: 2,
@@ -60,14 +60,14 @@ export const spacing = {
   6: 12,
   8: 16,
   12: 24,
-} as const
+} as const;
 
 // Typography — Inter font family.
 // Register fonts in apps/mobile/app/_layout.tsx via expo-font.
 const font = {
   regular: 'Inter_400Regular',
   semiBold: 'Inter_600SemiBold',
-} as const
+} as const;
 
 export const type = {
   title: { fontFamily: font.semiBold, fontSize: 17, lineHeight: 24 },
@@ -84,4 +84,4 @@ export const type = {
   meta: { fontFamily: font.regular, fontSize: 13, lineHeight: 18 },
   label: { fontFamily: font.semiBold, fontSize: 11, lineHeight: 16, letterSpacing: 0.6 },
   tab: { fontFamily: font.semiBold, fontSize: 11, lineHeight: 16 },
-} as const
+} as const;
