@@ -1,0 +1,10 @@
+{
+  "extends": "@roam/config/tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-native",
+    "paths": {
+      "@roam/core": ["../../packages/core/src/index.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

@@ -1,0 +1,21 @@
+node_modules
+**/node_modules
+
+# Expo
+**/ios
+**/android
+**/.expo
+**/dist
+
+# Env
+.env
+.env.local
+**/.env
+**/.env.local
+
+# Bun
+bun.lockb
+
+# Build
+**/build
+**/dist

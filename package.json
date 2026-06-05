@@ -1,0 +1,21 @@
+{
+  "name": "roam",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:api": "bun run --filter @roam/api dev",
+    "dev:mobile": "bun run --filter @roam/mobile dev",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun test",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "simple-git-hooks": "^2.11.0",
+    "typescript": "~6.0.3"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "bunx biome check --write . && bun run lint"
+  }
+}

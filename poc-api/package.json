@@ -1,0 +1,20 @@
+{
+  "name": "roam-poc-api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "db:setup": "bun src/db/setup.ts",
+    "db:seed": "bun src/db/seed.ts",
+    "db:fetch-gr11": "bun src/db/fetch-gr11.ts"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "drizzle-orm": "^0.40.0",
+    "postgres": "^3.4.0"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
+}

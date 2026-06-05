@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Roam",
+    "slug": "roam",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "roam",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.roam.app"
+    },
+    "android": {
+      "package": "com.roam.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#f7f5f4"
+      }
+    },
+    "plugins": ["expo-router", "expo-dev-client", ["@maplibre/maplibre-react-native", {}]],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Roam POC",
+    "slug": "roam-poc",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "roam-poc",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.roam.poc"
+    },
+    "android": {
+      "package": "com.roam.poc",
+      "adaptiveIcon": {
+        "backgroundColor": "#f7f5f4"
+      }
+    },
+    "plugins": [
+      "expo-dev-client",
+      ["@maplibre/maplibre-react-native", {}]
+    ]
+  }
+}

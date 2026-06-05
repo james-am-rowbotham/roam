@@ -1,0 +1,21 @@
+{
+  "name": "@roam/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "bun src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@roam/core": "workspace:*",
+    "@roam/db": "workspace:*",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@roam/config": "workspace:*",
+    "bun-types": "latest",
+    "typescript": "~6.0.3"
+  }
+}
