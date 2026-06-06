@@ -8,8 +8,9 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "bun src/migrate.ts",
+    "db:baseline": "bun src/baseline.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
