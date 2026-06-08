@@ -10,9 +10,11 @@
     "test": "bun test --env-file .env"
   },
   "dependencies": {
+    "@hono/zod-openapi": "^1.4.0",
     "@roam/core": "workspace:*",
     "@roam/db": "workspace:*",
-    "hono": "^4.6.0"
+    "hono": "^4.6.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@roam/config": "workspace:*",

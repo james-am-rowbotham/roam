@@ -22,3 +22,6 @@ packages/db/data/
 # Build
 **/build
 **/dist
+
+# Generated code — run npm run codegen to regenerate
+apps/mobile/lib/generated

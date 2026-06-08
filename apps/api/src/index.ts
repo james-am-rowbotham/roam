@@ -1,12 +1,18 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import { cors } from 'hono/cors';
-import { trails } from './routes/trails';
+import { trailsRouter } from './routes/trails';
 
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.use('*', cors());
 app.get('/health', (c) => c.json({ status: 'ok' }));
-app.route('/trails', trails);
+app.route('/trails', trailsRouter);
+
+// OpenAPI spec — Orval reads this to generate the typed client
+app.doc('/openapi.json', {
+  openapi: '3.0.0',
+  info: { title: 'Roam API', version: '1.0.0' },
+});
 
 const port = Number.parseInt(process.env.PORT ?? '3000');
 console.log(`API listening on http://localhost:${port}`);

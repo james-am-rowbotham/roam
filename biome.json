@@ -31,7 +31,8 @@
       "**/build",
       "poc-api",
       "poc-mobile",
-      "**/data"
+      "**/data",
+      "**/generated"
     ]
   }
 }

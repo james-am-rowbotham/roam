@@ -36,6 +36,7 @@ describe('GET /trails/:id', () => {
   it('returns a GeoJSON Feature for a valid trail', async () => {
     const list = await app.fetch(new Request('http://localhost/trails'));
     const [first] = (await list.json()) as Array<{ id: number }>;
+    if (!first) throw new Error('No trails in seed');
 
     const res = await app.fetch(new Request(`http://localhost/trails/${first.id}`));
     expect(res.status).toBe(200);
@@ -55,6 +56,7 @@ describe('GET /trails/:id/sections', () => {
   it('returns ordered sections', async () => {
     const list = await app.fetch(new Request('http://localhost/trails'));
     const [first] = (await list.json()) as Array<{ id: number }>;
+    if (!first) throw new Error('No trails in seed');
 
     const res = await app.fetch(new Request(`http://localhost/trails/${first.id}/sections`));
     expect(res.status).toBe(200);
@@ -70,6 +72,7 @@ describe('GET /trails/:id/water', () => {
   it('returns water sources ordered by chainage', async () => {
     const list = await app.fetch(new Request('http://localhost/trails'));
     const [first] = (await list.json()) as Array<{ id: number }>;
+    if (!first) throw new Error('No trails in seed');
 
     const res = await app.fetch(new Request(`http://localhost/trails/${first.id}/water`));
     expect(res.status).toBe(200);
@@ -85,6 +88,7 @@ describe('GET /trails/:id/accommodations', () => {
   it('returns accommodations ordered by chainage', async () => {
     const list = await app.fetch(new Request('http://localhost/trails'));
     const [first] = (await list.json()) as Array<{ id: number }>;
+    if (!first) throw new Error('No trails in seed');
 
     const res = await app.fetch(new Request(`http://localhost/trails/${first.id}/accommodations`));
     expect(res.status).toBe(200);
