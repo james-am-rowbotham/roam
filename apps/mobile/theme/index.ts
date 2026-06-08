@@ -71,6 +71,16 @@ export const spacing = {
   12: 24,
 } as const;
 
+// Semantic spacing — use these for layout decisions, not raw spacing values.
+// screenPadding: horizontal padding for screen content
+// sectionGap: vertical gap between major sections on a screen
+// contentPaddingBottom: bottom padding on ScrollViews to clear the tab bar + safe area
+export const layout = {
+  screenPadding: spacing[8], // 16
+  sectionGap: 28, // breathing room between content sections
+  contentPaddingBottom: 32, // base bottom padding (add insets.bottom on top)
+} as const;
+
 // Typography — Inter font family.
 // Register fonts in apps/mobile/app/_layout.tsx via expo-font.
 // All font family references must go through this object — never hardcode strings.

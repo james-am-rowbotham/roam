@@ -1,0 +1,1 @@
+ALTER TABLE "water_sources" ADD COLUMN "image_url" text;

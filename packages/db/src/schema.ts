@@ -111,6 +111,7 @@ export const waterSources = pgTable('water_sources', {
     .references(() => routes.id),
   name: text('name'),
   chainageM: doublePrecision('chainage_m').notNull(),
+  imageUrl: text('image_url'),
   geom: geometry('geom', { type: 'point', srid: 4326 }),
   seasonal: boolean('seasonal').notNull().default(false),
   ...trustFields,

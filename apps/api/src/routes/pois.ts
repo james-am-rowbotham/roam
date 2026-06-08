@@ -22,11 +22,27 @@ poisRouter.openapi(
   }),
   async (c) => {
     const { id } = c.req.valid('param');
-    const rows = await db.execute(sql`
-      SELECT *, ST_Y(geom) AS lat, ST_X(geom) AS lng
-      FROM water_sources WHERE id = ${id}
-    `);
-    const row = (rows as unknown[])[0];
+    const [row] = await db
+      .select({
+        id: waterSources.id,
+        routeId: waterSources.routeId,
+        name: waterSources.name,
+        chainageM: waterSources.chainageM,
+        imageUrl: waterSources.imageUrl,
+        seasonal: waterSources.seasonal,
+        source: waterSources.source,
+        confidence: waterSources.confidence,
+        lastConfirmedAt: waterSources.lastConfirmedAt,
+        reportCount: waterSources.reportCount,
+        manualOverride: waterSources.manualOverride,
+        createdAt: waterSources.createdAt,
+        updatedAt: waterSources.updatedAt,
+        lat: sql<number | null>`ST_Y(geom)`,
+        lng: sql<number | null>`ST_X(geom)`,
+      })
+      .from(waterSources)
+      .where(eq(waterSources.id, id));
+
     if (!row) return c.json({ error: 'not found' }, 404);
     return c.json(row as z.infer<typeof WaterSourceSchema>, 200);
   },
@@ -50,11 +66,30 @@ poisRouter.openapi(
   }),
   async (c) => {
     const { id } = c.req.valid('param');
-    const rows = await db.execute(sql`
-      SELECT *, ST_Y(geom) AS lat, ST_X(geom) AS lng
-      FROM accommodations WHERE id = ${id}
-    `);
-    const row = (rows as unknown[])[0];
+    const [row] = await db
+      .select({
+        id: accommodations.id,
+        routeId: accommodations.routeId,
+        name: accommodations.name,
+        chainageM: accommodations.chainageM,
+        imageUrl: accommodations.imageUrl,
+        type: accommodations.type,
+        capacity: accommodations.capacity,
+        seasonal: accommodations.seasonal,
+        bookingUrl: accommodations.bookingUrl,
+        source: accommodations.source,
+        confidence: accommodations.confidence,
+        lastConfirmedAt: accommodations.lastConfirmedAt,
+        reportCount: accommodations.reportCount,
+        manualOverride: accommodations.manualOverride,
+        createdAt: accommodations.createdAt,
+        updatedAt: accommodations.updatedAt,
+        lat: sql<number | null>`ST_Y(geom)`,
+        lng: sql<number | null>`ST_X(geom)`,
+      })
+      .from(accommodations)
+      .where(eq(accommodations.id, id));
+
     if (!row) return c.json({ error: 'not found' }, 404);
     return c.json(row as z.infer<typeof AccommodationSchema>, 200);
   },

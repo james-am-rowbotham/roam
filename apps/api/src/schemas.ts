@@ -50,6 +50,7 @@ export const WaterSourceSchema = z.object({
   chainageM: z.number(),
   lat: z.number().nullable(),
   lng: z.number().nullable(),
+  imageUrl: z.string().nullable(),
   seasonal: z.boolean(),
   ...TrustSchema.shape,
   createdAt: z.string(),
