@@ -9,9 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { MapView, TrailLayer } from '../../components/map';
 import { Button, Icon, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
+import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailSections } from '../../lib/hooks';
+import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, radius, spacing, type } from '../../theme';
 
 type Tab = 'overview' | 'sections';
@@ -51,6 +54,8 @@ export default function TrailDetailScreen() {
 
   const { data: trailResponse, isLoading } = useTrail(id);
   const trail = trailResponse?.data?.properties;
+  const geojson = trailResponse?.data ?? null;
+  const setViewport = useMapStore((s) => s.setViewport);
 
   const { data: sectionsResponse } = useTrailSections(id);
   const sections = sectionsResponse?.data ?? [];
@@ -116,8 +121,26 @@ export default function TrailDetailScreen() {
           <View style={styles.tabContent}>
             <Text style={styles.description}>{trail.description}</Text>
 
-            {/* Map thumbnail placeholder */}
-            <View style={styles.mapThumb} />
+            {/* Map preview — tap to open full map */}
+            <TouchableOpacity
+              style={styles.mapThumb}
+              activeOpacity={0.9}
+              onPress={() => {
+                setViewport({ center: MAP_DEFAULT_CENTER, zoom: MAP_DEFAULT_ZOOM });
+                router.push('/(tabs)/map');
+              }}
+            >
+              <MapView zoom={6} interactive={false}>
+                {geojson && (
+                  <TrailLayer
+                    id="trail-preview"
+                    geojson={geojson}
+                    color={colors.trail.gr}
+                    width={2}
+                  />
+                )}
+              </MapView>
+            </TouchableOpacity>
 
             {/* ON THIS TRAIL */}
             <Text style={styles.onTrailLabel}>ON THIS TRAIL</Text>
@@ -232,9 +255,9 @@ const styles = StyleSheet.create({
   tabContent: { padding: spacing[8], gap: spacing[6] },
   description: { ...type.body, color: colors.text.secondary, lineHeight: 22 },
   mapThumb: {
-    height: 80,
+    height: 140,
     borderRadius: radius.lg,
-    backgroundColor: colors.bg.subtle,
+    overflow: 'hidden',
     borderWidth: 0.5,
     borderColor: colors.border.default,
   },

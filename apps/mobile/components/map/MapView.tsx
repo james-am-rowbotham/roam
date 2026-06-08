@@ -9,11 +9,26 @@ interface Props {
   center?: [number, number];
   zoom?: number;
   children?: ReactNode;
+  /** When false, disables all pan/zoom/rotate — use for thumbnail preview maps */
+  interactive?: boolean;
 }
 
-export function MapView({ center = MAP_DEFAULT_CENTER, zoom = MAP_DEFAULT_ZOOM, children }: Props) {
+export function MapView({
+  center = MAP_DEFAULT_CENTER,
+  zoom = MAP_DEFAULT_ZOOM,
+  children,
+  interactive = true,
+}: Props) {
   return (
-    <MapComponent mapStyle={MAP_STYLE_URL} style={styles.map} logo={false}>
+    <MapComponent
+      mapStyle={MAP_STYLE_URL}
+      style={styles.map}
+      logo={false}
+      dragPan={interactive}
+      touchZoom={interactive}
+      touchRotate={interactive}
+      doubleTapZoom={interactive}
+    >
       <Camera center={center} zoom={zoom} />
       {children}
     </MapComponent>

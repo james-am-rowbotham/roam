@@ -9,10 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { MapView, TrailLayer } from '../../components/map';
+import { ElevationChart } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
+import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { geometryViewport } from '../../lib/geo';
 import { useSection } from '../../lib/hooks';
-import { colors, fonts, radius, spacing, type } from '../../theme';
+import { useMapStore } from '../../store/mapStore';
+import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 type Tab = 'overview' | 'guide';
 
@@ -56,6 +61,7 @@ export default function SectionDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
+  const setHighlight = useMapStore((s) => s.setHighlight);
 
   const { data: response, isLoading } = useSection(id);
   const section = response?.data;
@@ -68,6 +74,8 @@ export default function SectionDetailScreen() {
     );
   }
 
+  const sectionGeom = 'geometry' in section ? (section.geometry as Record<string, unknown>) : null;
+  const sectionViewport = geometryViewport(sectionGeom);
   const distanceKm = section.distanceM ? (section.distanceM / 1000).toFixed(1) : '—';
   const ascentM = section.ascentM ? `+${Math.round(section.ascentM)} m` : '—';
   const descentM = section.descentM ? `−${Math.round(section.descentM)} m` : '—';
@@ -125,10 +133,56 @@ export default function SectionDetailScreen() {
           <View style={styles.content}>
             {section.description && <Text style={styles.description}>{section.description}</Text>}
 
-            {/* Elevation profile placeholder */}
-            <View style={styles.elevationCard}>
-              <Text style={styles.elevationLabel}>Elevation profile</Text>
-            </View>
+            {/* Section map — tap to open full map centred on this section */}
+            <TouchableOpacity
+              style={styles.mapCard}
+              activeOpacity={0.9}
+              onPress={() => {
+                const label = 'name' in section ? section.name : null;
+                const chainageRange =
+                  'startChainageM' in section &&
+                  section.startChainageM != null &&
+                  section.endChainageM != null
+                    ? ([
+                        Math.min(section.startChainageM, section.endChainageM),
+                        Math.max(section.startChainageM, section.endChainageM),
+                      ] as [number, number])
+                    : null;
+                // Always call setHighlight so isHighlightActive=true and back button shows
+                const viewport = sectionViewport ?? {
+                  center: MAP_DEFAULT_CENTER,
+                  zoom: MAP_DEFAULT_ZOOM,
+                };
+                setHighlight(viewport, sectionGeom ?? {}, label, chainageRange);
+                router.push('/(tabs)/map');
+              }}
+            >
+              <MapView
+                center={sectionViewport?.center}
+                zoom={sectionViewport?.zoom ?? 8}
+                interactive={false}
+              >
+                {'geometry' in section && section.geometry && (
+                  <TrailLayer
+                    id="section-preview"
+                    geojson={{
+                      type: 'Feature',
+                      geometry: section.geometry as never,
+                      properties: {},
+                    }}
+                    color={colors.trail.gr}
+                    width={3}
+                  />
+                )}
+              </MapView>
+            </TouchableOpacity>
+
+            {/* Elevation chart */}
+            <ElevationChart
+              ascentM={section.ascentM}
+              descentM={section.descentM}
+              distanceM={section.distanceM}
+            />
 
             {/* Full stats */}
             <Text style={styles.fullStatsTitle}>Full stats</Text>
@@ -246,14 +300,13 @@ const styles = StyleSheet.create({
   content: { padding: spacing[8], gap: spacing[6] },
   description: { ...type.body, color: colors.text.primary, lineHeight: 22 },
 
-  elevationCard: {
-    height: 116,
+  mapCard: {
+    height: 160,
     borderRadius: radius.lg,
-    backgroundColor: colors.bg.subtle,
-    alignItems: 'center',
-    justifyContent: 'center',
+    overflow: 'hidden',
+    borderWidth: 0.5,
+    borderColor: colors.border.default,
   },
-  elevationLabel: { ...type.meta, color: colors.text.secondary },
 
   fullStatsTitle: { ...type.sectionHeader, color: colors.text.primary },
   statRow: {
