@@ -1,7 +1,8 @@
+import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { MapView, TrailLayer } from '../../components/map';
+import { MapView, POILayer, TrailLayer } from '../../components/map';
 import { Icon } from '../../components/ui';
-import { useTrail, useTrails } from '../../lib/hooks';
+import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { colors, fonts, radius, spacing, type } from '../../theme';
 
 // ---------------------------------------------------------------------------
@@ -42,19 +43,38 @@ function FilterBar() {
 // ---------------------------------------------------------------------------
 
 export default function MapScreen() {
-  // Fetch the first trail to render on the map
+  const router = useRouter();
   const { data: trailsResponse } = useTrails();
   const firstTrailId = trailsResponse?.data?.[0]?.id;
-  const { data: trailResponse } = useTrail(firstTrailId ?? 0, {
-    query: { enabled: !!firstTrailId },
-  });
+  const enabled = { query: { enabled: !!firstTrailId } };
+
+  const { data: trailResponse } = useTrail(firstTrailId ?? 0, enabled);
+  const { data: waterResponse } = useTrailWater(firstTrailId ?? 0, enabled);
+  const { data: accommResponse } = useTrailAccommodations(firstTrailId ?? 0, enabled);
+
   const geojson = trailResponse?.data ?? null;
+  const water = waterResponse?.data ?? [];
+  const accommodations = accommResponse?.data ?? [];
 
   return (
     <View style={styles.screen}>
       {/* Full-screen map */}
       <MapView>
         {geojson && <TrailLayer id="gr11" geojson={geojson} color={colors.trail.gr} width={3} />}
+        <POILayer
+          id="water"
+          pois={water}
+          color={colors.marker.water}
+          radius={5}
+          onPress={(id) => router.push(`/poi/water/${id}`)}
+        />
+        <POILayer
+          id="accommodations"
+          pois={accommodations}
+          color={colors.marker.refuge}
+          radius={6}
+          onPress={(id) => router.push(`/poi/accommodation/${id}`)}
+        />
       </MapView>
 
       {/* Floating UI overlaid on the map */}

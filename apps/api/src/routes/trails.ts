@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { accommodations, asc, db, eq, routes, sections, sql, trails, waterSources } from '@roam/db';
+import { asc, db, eq, routes, sections, sql, trails } from '@roam/db';
 import {
   AccommodationSchema,
   ErrorSchema,
@@ -153,12 +153,13 @@ trailsRouter.openapi(
       .from(trails)
       .where(eq(trails.id, id));
     if (!trail) return c.json({ error: 'not found' }, 404);
-    const rows = await db
-      .select()
-      .from(waterSources)
-      .where(eq(waterSources.routeId, trail.routeId))
-      .orderBy(asc(waterSources.chainageM));
-    return c.json(rows, 200);
+    const rows = await db.execute(sql`
+      SELECT *, ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM water_sources
+      WHERE route_id = ${trail.routeId}
+      ORDER BY chainage_m ASC
+    `);
+    return c.json(rows as unknown as z.infer<typeof WaterSourceSchema>[], 200);
   },
 );
 
@@ -185,11 +186,12 @@ trailsRouter.openapi(
       .from(trails)
       .where(eq(trails.id, id));
     if (!trail) return c.json({ error: 'not found' }, 404);
-    const rows = await db
-      .select()
-      .from(accommodations)
-      .where(eq(accommodations.routeId, trail.routeId))
-      .orderBy(asc(accommodations.chainageM));
-    return c.json(rows, 200);
+    const rows = await db.execute(sql`
+      SELECT *, ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM accommodations
+      WHERE route_id = ${trail.routeId}
+      ORDER BY chainage_m ASC
+    `);
+    return c.json(rows as unknown as z.infer<typeof AccommodationSchema>[], 200);
   },
 );
