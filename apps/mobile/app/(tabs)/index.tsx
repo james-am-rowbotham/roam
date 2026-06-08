@@ -26,9 +26,7 @@ export default function HomeScreen() {
         contentContainerStyle={styles.carousel}
       >
         {isLoading
-          ? (['a', 'b', 'c'] as const).map((k) => (
-              <View key={k} style={styles.skeleton} />
-            ))
+          ? (['a', 'b', 'c'] as const).map((k) => <View key={k} style={styles.skeleton} />)
           : trails.map((trail) => (
               <TrailCard
                 key={trail.id}
