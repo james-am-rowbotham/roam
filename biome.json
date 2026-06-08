@@ -30,7 +30,8 @@
       "**/dist",
       "**/build",
       "poc-api",
-      "poc-mobile"
+      "poc-mobile",
+      "**/data"
     ]
   }
 }

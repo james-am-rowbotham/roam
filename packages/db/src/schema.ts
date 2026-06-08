@@ -22,8 +22,9 @@ export const routes = pgTable('routes', {
   distanceM: doublePrecision('distance_m'),
   ascentM: doublePrecision('ascent_m'),
   descentM: doublePrecision('descent_m'),
+  // MultiLineString when ways don't fully connect; LineString when they do.
   // Full-resolution geometry for the offline package; API serves simplified versions.
-  geom: geometry('geom', { type: 'linestring', srid: 4326 }),
+  geom: geometry('geom', { srid: 4326 }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

@@ -5,12 +5,11 @@ import postgres from 'postgres';
 const url = process.env.DATABASE_URL;
 if (!url) throw new Error('DATABASE_URL is not set');
 
-// migrationsFolder is relative to this file at runtime
-const sql = postgres(url, { max: 1 });
-const db = drizzle(sql);
+const client = postgres(url, { max: 1 });
+const db = drizzle(client);
 
 await migrate(db, { migrationsFolder: './drizzle' });
 
 console.log('Migrations complete');
-await sql.end();
+await client.end();
 process.exit(0);

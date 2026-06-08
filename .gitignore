@@ -16,6 +16,9 @@ node_modules
 # Bun
 bun.lockb
 
+# Downloaded OSM data — re-fetch with packages/db/scripts/fetch-osm-data.sh
+packages/db/data/
+
 # Build
 **/build
 **/dist
