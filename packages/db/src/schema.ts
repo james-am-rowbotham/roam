@@ -38,6 +38,7 @@ export const trails = pgTable('trails', {
   ref: text('ref'), // official ref e.g. "GR11", "PCT"
   country: text('country'),
   region: text('region'),
+  imageUrl: text('image_url'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
@@ -47,6 +48,7 @@ export const peaks = pgTable('peaks', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
   elevationM: doublePrecision('elevation_m'),
+  imageUrl: text('image_url'),
   geom: geometry('geom', { type: 'point', srid: 4326 }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -72,6 +74,7 @@ export const sections = pgTable('sections', {
     .references(() => routes.id),
   name: text('name').notNull(),
   description: text('description'),
+  imageUrl: text('image_url'),
   orderIndex: integer('order_index').notNull(),
   startChainageM: doublePrecision('start_chainage_m').notNull(),
   endChainageM: doublePrecision('end_chainage_m').notNull(),
@@ -126,6 +129,7 @@ export const accommodations = pgTable('accommodations', {
   type: text('type', {
     enum: ['refuge', 'hut', 'campsite', 'hotel', 'hostel'],
   }).notNull(),
+  imageUrl: text('image_url'),
   capacity: integer('capacity'),
   seasonal: boolean('seasonal').notNull().default(false),
   bookingUrl: text('booking_url'),

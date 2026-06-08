@@ -485,6 +485,23 @@ native + offline parts of the stack before committing to structure.
 - Commands (fill in once scaffolded): `bun install`, `bun run dev`,
   `bun run db:migrate`, `bun run db:seed`, `bun run typecheck`, `bun test`.
 
+### Mobile styling rules (`apps/mobile`)
+- **No hardcoded colours.** Every colour must come from `colors` or `colors.overlay` in
+  `apps/mobile/theme/index.ts`. Never write `'#fff'`, `'rgba(...)'`, or any hex string
+  directly in a component or screen file.
+- **No hardcoded font strings.** Every `fontFamily` must reference `fonts.regular`,
+  `fonts.semiBold`, or `fonts.bold` from the theme — never write `'Inter_600SemiBold'`
+  or any font name directly. Use `type.*` tokens wherever they exist; add a new token
+  to the theme when a combination is needed more than once.
+- **No `fontWeight` overrides.** React Native custom fonts do not respond to `fontWeight`
+  the same way as the web. Use the correct font face (`fonts.semiBold` / `fonts.bold`)
+  instead of overriding weight on top of a different face.
+- **Screens are thin.** Screens fetch data and compose components. Rendering logic lives
+  in `components/ui/` (generic) or `components/trail/` (trail-specific). Extract any
+  sub-component used more than once.
+- **API shapes come from Orval.** Never hand-write API response types in the mobile app.
+  Run `npm run codegen` after any API schema change; import types from `lib/hooks.ts`.
+
 ---
 
 ## 19. Roadmap (post-V1)

@@ -41,6 +41,15 @@ export const colors = {
     info: { bg: '#e6f1fb', text: '#185fa5' },
     success: { bg: '#e3efd9', text: '#4a7a33' },
   },
+
+  // Overlay tokens — used on hero images and frosted-glass elements
+  overlay: {
+    dark: 'rgba(0,0,0,0.35)', // hero image scrim
+    darkStrong: 'rgba(0,0,0,0.4)', // section hero (shorter image, needs more contrast)
+    frosted: 'rgba(255,255,255,0.92)', // back button on hero
+    onImage: '#ffffff', // primary text on dark hero
+    onImageMuted: 'rgba(255,255,255,0.85)', // secondary text on hero
+  },
 } as const;
 
 export const radius = {
@@ -64,24 +73,24 @@ export const spacing = {
 
 // Typography — Inter font family.
 // Register fonts in apps/mobile/app/_layout.tsx via expo-font.
-const font = {
+// All font family references must go through this object — never hardcode strings.
+export const fonts = {
   regular: 'Inter_400Regular',
   semiBold: 'Inter_600SemiBold',
+  bold: 'Inter_700Bold',
 } as const;
 
 export const type = {
-  title: { fontFamily: font.semiBold, fontSize: 17, lineHeight: 24 },
-  sectionHeader: {
-    fontFamily: font.semiBold,
-    fontSize: 18,
-    lineHeight: 24,
-    letterSpacing: -0.36,
-  },
-  cardTitle: { fontFamily: font.semiBold, fontSize: 15, lineHeight: 20 },
-  statValue: { fontFamily: font.semiBold, fontSize: 17, lineHeight: 24 },
-  bodyLarge: { fontFamily: font.regular, fontSize: 17, lineHeight: 24 },
-  body: { fontFamily: font.regular, fontSize: 15, lineHeight: 20 },
-  meta: { fontFamily: font.regular, fontSize: 13, lineHeight: 18 },
-  label: { fontFamily: font.semiBold, fontSize: 11, lineHeight: 16, letterSpacing: 0.6 },
-  tab: { fontFamily: font.semiBold, fontSize: 11, lineHeight: 16 },
+  // §16 CLAUDE.md tokens
+  title: { fontFamily: fonts.semiBold, fontSize: 17, lineHeight: 24 },
+  sectionHeader: { fontFamily: fonts.semiBold, fontSize: 18, lineHeight: 24, letterSpacing: -0.36 },
+  cardTitle: { fontFamily: fonts.semiBold, fontSize: 15, lineHeight: 20 },
+  statValue: { fontFamily: fonts.semiBold, fontSize: 17, lineHeight: 24 },
+  bodyLarge: { fontFamily: fonts.regular, fontSize: 17, lineHeight: 24 },
+  body: { fontFamily: fonts.regular, fontSize: 15, lineHeight: 20 },
+  meta: { fontFamily: fonts.regular, fontSize: 13, lineHeight: 18 },
+  label: { fontFamily: fonts.semiBold, fontSize: 11, lineHeight: 16, letterSpacing: 0.6 },
+  tab: { fontFamily: fonts.semiBold, fontSize: 11, lineHeight: 16 },
+  // Detail-screen tabs (Overview/Sections/Guide) — SemiBold 13px, present in Figma but not in §16
+  detailTab: { fontFamily: fonts.semiBold, fontSize: 13, lineHeight: 18 },
 } as const;

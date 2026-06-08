@@ -15,6 +15,20 @@
       "when": 1780931039745,
       "tag": "0001_routes_geom_generic",
       "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780943906945,
+      "tag": "0002_last_blue_blade",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780944037490,
+      "tag": "0003_misty_payback",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ export {
   useGetTrailsIdSections as useTrailSections,
   useGetTrailsIdWater as useTrailWater,
   useGetTrailsIdAccommodations as useTrailAccommodations,
+  useGetSectionsId as useSection,
 } from './generated/api';
 
 // Re-export types screens need
