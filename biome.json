@@ -29,6 +29,7 @@
       "**/android",
       "**/dist",
       "**/build",
+      "**/.expo",
       "poc-api",
       "poc-mobile",
       "**/data",

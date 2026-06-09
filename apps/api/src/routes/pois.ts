@@ -44,7 +44,7 @@ poisRouter.openapi(
       .where(eq(waterSources.id, id));
 
     if (!row) return c.json({ error: 'not found' }, 404);
-    return c.json(row as z.infer<typeof WaterSourceSchema>, 200);
+    return c.json(row as unknown as z.infer<typeof WaterSourceSchema>, 200);
   },
 );
 
@@ -91,6 +91,6 @@ poisRouter.openapi(
       .where(eq(accommodations.id, id));
 
     if (!row) return c.json({ error: 'not found' }, 404);
-    return c.json(row as z.infer<typeof AccommodationSchema>, 200);
+    return c.json(row as unknown as z.infer<typeof AccommodationSchema>, 200);
   },
 );

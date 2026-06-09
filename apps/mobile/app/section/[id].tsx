@@ -61,12 +61,12 @@ export default function SectionDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
-  const setHighlight = useMapStore((s) => s.setHighlight);
+  const setSectionFilter = useMapStore((s) => s.setSectionFilter);
 
   const { data: response, isLoading } = useSection(id);
   const section = response?.data;
 
-  if (isLoading || !section) {
+  if (isLoading || !section || 'error' in section) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator color={colors.accent} />
@@ -148,12 +148,22 @@ export default function SectionDetailScreen() {
                         Math.max(section.startChainageM, section.endChainageM),
                       ] as [number, number])
                     : null;
-                // Always call setHighlight so isHighlightActive=true and back button shows
                 const viewport = sectionViewport ?? {
                   center: MAP_DEFAULT_CENTER,
                   zoom: MAP_DEFAULT_ZOOM,
                 };
-                setHighlight(viewport, sectionGeom ?? {}, label, chainageRange);
+                const geomCenter = sectionViewport?.center ?? null;
+                const sectionId = 'id' in section ? section.id : 0;
+                if (label && geomCenter && sectionGeom) {
+                  setSectionFilter(
+                    sectionId,
+                    label,
+                    geomCenter,
+                    sectionGeom,
+                    chainageRange,
+                    viewport,
+                  );
+                }
                 router.push('/(tabs)/map');
               }}
             >
@@ -252,7 +262,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing[8],
     paddingBottom: spacing[8],
   },
-  heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.overlay.darkStrong },
+  heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: colors.overlay.darkStrong },
   backBtn: {
     position: 'absolute',
     top: 52,

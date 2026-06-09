@@ -49,10 +49,11 @@ export function ElevationChart({ ascentM, descentM, distanceM }: Props) {
     [toX(1), toY(eEnd)],
   ];
 
-  let d = `M ${pts[0][0]} ${pts[0][1]}`;
+  const first = pts[0] ?? [toX(0), toY(e0)];
+  let d = `M ${first[0]} ${first[1]}`;
   for (let i = 1; i < pts.length; i++) {
-    const prev = pts[i - 1] ?? pts[0];
-    const curr = pts[i] ?? pts[pts.length - 1];
+    const prev = pts[i - 1] ?? first;
+    const curr = pts[i] ?? first;
     const cpX = (prev[0] + curr[0]) / 2;
     d += ` C ${cpX} ${prev[1]}, ${cpX} ${curr[1]}, ${curr[0]} ${curr[1]}`;
   }

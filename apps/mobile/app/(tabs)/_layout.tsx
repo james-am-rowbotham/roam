@@ -17,28 +17,30 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color, size }) => <Icon name="home" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => <Icon name="home" color={color as string} size={size} />,
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
           title: 'Map',
-          tabBarIcon: ({ color, size }) => <Icon name="map" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => <Icon name="map" color={color as string} size={size} />,
         }}
       />
       <Tabs.Screen
         name="journeys"
         options={{
           title: 'Journeys',
-          tabBarIcon: ({ color, size }) => <Icon name="backpack" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="backpack" color={color as string} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color, size }) => <Icon name="user" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => <Icon name="user" color={color as string} size={size} />,
         }}
       />
     </Tabs>

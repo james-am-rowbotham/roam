@@ -62,7 +62,7 @@ export default function WaterSourceScreen() {
   const { data: response, isLoading } = useWaterSource(id);
   const poi = response?.data;
 
-  if (isLoading || !poi) {
+  if (isLoading || !poi || 'error' in poi) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator color={colors.accent} />

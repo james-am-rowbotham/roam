@@ -53,12 +53,15 @@ export default function TrailDetailScreen() {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
 
   const { data: trailResponse, isLoading } = useTrail(id);
-  const trail = trailResponse?.data?.properties;
-  const geojson = trailResponse?.data ?? null;
+  const rawTrailData = trailResponse?.data;
+  const trail = rawTrailData && 'properties' in rawTrailData ? rawTrailData.properties : null;
+  const geojson = rawTrailData && 'type' in rawTrailData ? rawTrailData : null;
+  const setTrailFilter = useMapStore((s) => s.setTrailFilter);
   const setViewport = useMapStore((s) => s.setViewport);
 
   const { data: sectionsResponse } = useTrailSections(id);
-  const sections = sectionsResponse?.data ?? [];
+  const rawSections = sectionsResponse?.data;
+  const sections = Array.isArray(rawSections) ? rawSections : [];
 
   if (isLoading || !trail) {
     return (
@@ -126,6 +129,24 @@ export default function TrailDetailScreen() {
               style={styles.mapThumb}
               activeOpacity={0.9}
               onPress={() => {
+                const trailIdNum = Number(id);
+                const trailLabel = trail.ref ?? trail.name ?? 'Trail';
+                // Center label on the midpoint of the trail geometry
+                const trailGeomCenter =
+                  geojson && 'geometry' in geojson && geojson.geometry
+                    ? (() => {
+                        const g = geojson.geometry as Record<string, unknown>;
+                        const coords = g.coordinates as unknown[][];
+                        if (g.type === 'LineString' && Array.isArray(coords) && coords.length > 0) {
+                          const mid = coords[Math.floor(coords.length / 2)] as [number, number];
+                          return mid;
+                        }
+                        return null;
+                      })()
+                    : null;
+                if (trailGeomCenter) {
+                  setTrailFilter(trailIdNum, trailLabel, trailGeomCenter);
+                }
                 setViewport({ center: MAP_DEFAULT_CENTER, zoom: MAP_DEFAULT_ZOOM });
                 router.push('/(tabs)/map');
               }}
@@ -134,7 +155,7 @@ export default function TrailDetailScreen() {
                 {geojson && (
                   <TrailLayer
                     id="trail-preview"
-                    geojson={geojson}
+                    geojson={geojson as never}
                     color={colors.trail.gr}
                     width={2}
                   />
@@ -211,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     padding: spacing[8],
   },
-  heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.overlay.dark },
+  heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: colors.overlay.dark },
   backBtn: {
     position: 'absolute',
     top: 51,

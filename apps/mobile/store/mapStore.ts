@@ -6,52 +6,94 @@ interface MapViewport {
 }
 
 interface MapState {
-  // Viewport the map should fly to on next render
+  // Viewport to fly to on next render
   pendingViewport: MapViewport | null;
-  // Active section highlight — persists until explicitly cleared
-  highlightGeojson: Record<string, unknown> | null;
-  highlightLabel: string | null;
-  highlightChainageRange: [number, number] | null;
-  // Separate flag so the back panel shows even if geojson is temporarily null
-  isHighlightActive: boolean;
 
-  setViewport: (v: MapViewport) => void; // navigate to map without highlight
-  setHighlight: (
-    viewport: MapViewport,
-    geojson: Record<string, unknown>,
-    label: string | null,
+  // Whether the trail (GR11) is shown on the map. It's a removable filter:
+  // default on, hidden when the trail chip is removed, restored when re-added.
+  trailVisible: boolean;
+
+  // Active filter state
+  activeTrailId: number | null;
+  activeTrailLabel: string | null; // e.g. "GR11"
+  activeTrailGeomCenter: [number, number] | null; // midpoint of trail for label
+
+  activeSectionId: number | null;
+  activeSectionLabel: string | null; // e.g. "Western Pyrenees"
+  activeSectionGeomCenter: [number, number] | null; // midpoint of section for label
+  activeSectionGeom: Record<string, unknown> | null; // for rendering section line
+  activeSectionChainageRange: [number, number] | null; // for filtering POIs
+
+  // Actions
+  setViewport: (v: MapViewport) => void;
+  setTrailFilter: (trailId: number, label: string, geomCenter: [number, number]) => void;
+  setSectionFilter: (
+    sectionId: number,
+    label: string,
+    geomCenter: [number, number],
+    geom: Record<string, unknown>,
     chainageRange: [number, number] | null,
+    viewport: MapViewport,
   ) => void;
-  applyPendingViewport: (center: [number, number], zoom: number) => void;
-  clearHighlight: () => void;
+  showTrail: () => void; // re-add GR11 after it was removed
+  removeTrailFilter: () => void; // hides GR11 and clears trail AND section
+  removeSectionFilter: () => void; // clears section only
 }
 
 export const useMapStore = create<MapState>((set) => ({
   pendingViewport: null,
-  highlightGeojson: null,
-  highlightLabel: null,
-  highlightChainageRange: null,
-  isHighlightActive: false,
+  trailVisible: true,
+  activeTrailId: null,
+  activeTrailLabel: null,
+  activeTrailGeomCenter: null,
+  activeSectionId: null,
+  activeSectionLabel: null,
+  activeSectionGeomCenter: null,
+  activeSectionGeom: null,
+  activeSectionChainageRange: null,
 
   setViewport: (v) => set({ pendingViewport: v }),
 
-  setHighlight: (viewport, geojson, label, chainageRange) =>
+  setTrailFilter: (trailId, label, geomCenter) =>
     set({
-      pendingViewport: viewport,
-      highlightGeojson: geojson,
-      highlightLabel: label,
-      highlightChainageRange: chainageRange,
-      isHighlightActive: true,
+      trailVisible: true,
+      activeTrailId: trailId,
+      activeTrailLabel: label,
+      activeTrailGeomCenter: geomCenter,
     }),
 
-  applyPendingViewport: (center, zoom) => set({ pendingViewport: null }),
-
-  clearHighlight: () =>
+  setSectionFilter: (sectionId, label, geomCenter, geom, chainageRange, viewport) =>
     set({
-      highlightGeojson: null,
-      highlightLabel: null,
-      highlightChainageRange: null,
-      isHighlightActive: false,
-      pendingViewport: null,
+      trailVisible: true,
+      activeSectionId: sectionId,
+      activeSectionLabel: label,
+      activeSectionGeomCenter: geomCenter,
+      activeSectionGeom: geom,
+      activeSectionChainageRange: chainageRange,
+      pendingViewport: viewport,
+    }),
+
+  showTrail: () => set({ trailVisible: true }),
+
+  removeTrailFilter: () =>
+    set({
+      trailVisible: false,
+      activeTrailId: null,
+      activeTrailLabel: null,
+      activeTrailGeomCenter: null,
+      activeSectionId: null,
+      activeSectionLabel: null,
+      activeSectionGeomCenter: null,
+      activeSectionGeom: null,
+      activeSectionChainageRange: null,
+    }),
+
+  removeSectionFilter: () =>
+    set({
+      activeSectionId: null,
+      activeSectionLabel: null,
+      activeSectionGeomCenter: null,
+      activeSectionGeom: null,
+      activeSectionChainageRange: null,
     }),
 }));

@@ -3,21 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@roam/core": "workspace:*",
-    "@roam/db": "workspace:*",
-    "next": "^15.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "typecheck": "echo 'no admin sources yet (Phase 7)'"
   },
   "devDependencies": {
     "@roam/config": "workspace:*",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "typescript": "~6.0.3"
   }
 }

@@ -1,5 +1,5 @@
 import { GeoJSONSource, Layer, Marker } from '@maplibre/maplibre-react-native';
-import type { FeatureCollection, Point } from 'geojson';
+// GeoJSON types are available via @maplibre/maplibre-react-native's ambient declarations
 import { TouchableOpacity, View } from 'react-native';
 
 export interface POI {
@@ -19,7 +19,7 @@ interface Props {
   annotationMode?: boolean;
 }
 
-function toFeatureCollection(pois: POI[]): FeatureCollection<Point> {
+function toFeatureCollection(pois: POI[]): GeoJSON.FeatureCollection<GeoJSON.Point> {
   return {
     type: 'FeatureCollection',
     features: pois

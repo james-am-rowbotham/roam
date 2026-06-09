@@ -3,9 +3,11 @@ import {
   Backpack,
   Calendar,
   ChevronRight,
+  X as Close,
   Home,
   Map as MapIcon,
   Mic,
+  Plus,
   Search,
   User,
   UtensilsCrossed,
@@ -22,9 +24,11 @@ export type IconName =
   | 'chevron-right'
   | 'search'
   | 'microphone'
+  | 'plus'
   | 'calendar'
   | 'water'
-  | 'food';
+  | 'food'
+  | 'close';
 
 interface Props {
   name: IconName;
@@ -41,9 +45,11 @@ const icons: Record<IconName, React.ElementType> = {
   'chevron-right': ChevronRight,
   search: Search,
   microphone: Mic,
+  plus: Plus,
   calendar: Calendar,
   water: Waves,
   food: UtensilsCrossed,
+  close: Close,
 };
 
 export function Icon({ name, size = 24, color = colors.text.primary }: Props) {

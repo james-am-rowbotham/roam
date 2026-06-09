@@ -33,7 +33,7 @@ export default function AccommodationScreen() {
   const { data: response, isLoading } = useAccommodation(id);
   const poi = response?.data;
 
-  if (isLoading || !poi) {
+  if (isLoading || !poi || 'error' in poi) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator color={colors.accent} />
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   loading: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 
   hero: { height: 200, backgroundColor: colors.bg.subtle, overflow: 'hidden' },
-  heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: colors.overlay.dark },
+  heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: colors.overlay.dark },
   backBtn: {
     position: 'absolute',
     top: 14,
