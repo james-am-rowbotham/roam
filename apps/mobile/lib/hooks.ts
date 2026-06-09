@@ -9,6 +9,16 @@ export {
   useGetSectionsId as useSection,
   useGetPoisWaterId as useWaterSource,
   useGetPoisAccommodationsId as useAccommodation,
+  useGetJourneys as useJourneys,
+  useGetJourneysId as useJourney,
+} from './generated/api';
+
+// Orval generated the POST as a query hook (it would fire on mount), so for the
+// create action we expose the imperative call and wrap it in useMutation at the
+// call site. TODO: configure Orval to emit a mutation hook for POST.
+export {
+  postJourneys as createJourney,
+  getGetJourneysQueryKey as journeysQueryKey,
 } from './generated/api';
 
 // Re-export types screens need
@@ -18,4 +28,8 @@ export type {
   GetTrailsIdSections200Item as Section,
   GetTrailsIdWater200Item as WaterSource,
   GetTrailsIdAccommodations200Item as Accommodation,
+  GetJourneys200Item as JourneyListItem,
+  GetJourneysId200 as JourneyWithStages,
+  GetJourneysId200StagesItem as Stage,
+  PostJourneysBody as CreateJourneyBody,
 } from './generated/api';

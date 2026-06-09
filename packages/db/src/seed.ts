@@ -1,7 +1,9 @@
-import { sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
 import { accommodations, routes, sections, trails, waterSources } from './schema';
+
+type LonLat = [number, number];
 
 // ---------------------------------------------------------------------------
 // Config
@@ -16,6 +18,50 @@ const HEADERS = { 'User-Agent': 'roam-app/0.1 (trail data seed, contact: dev@roa
 
 // Pyrenees bounding box for POI queries
 const BBOX = { south: 42.2, west: -1.9, north: 43.6, east: 3.5 };
+
+// ---------------------------------------------------------------------------
+// Imagery — curated, theme-appropriate Unsplash photos assigned deterministically
+// (by index) so re-seeds are stable. Placeholder dev imagery until real curated
+// photos arrive via the ingestion pipeline (§8). All URLs verified to resolve.
+// ---------------------------------------------------------------------------
+
+const img = (id: string) => `https://images.unsplash.com/photo-${id}?w=800&q=80`;
+
+const TRAIL_IMAGE = img('1506905925346-21bda4d32df4');
+
+const MOUNTAIN_IMAGES = [
+  '1506905925346-21bda4d32df4',
+  '1464822759023-fed622ff2c3b',
+  '1454496522488-7a8e488e8606',
+  '1519681393784-d120267933ba',
+  '1486870591958-9b9d0d1dda99',
+  '1551632811-561732d1e306',
+  '1470071459604-3b5ec3a7fe05',
+  '1483728642387-6c3bdd6c93e5',
+  '1464278533981-50106e6176b1',
+  '1426604966848-d7adac402bff',
+  '1551524559-8af4e6624178',
+  '1518609878373-06d740f60d8b',
+].map(img);
+
+const REFUGE_IMAGES = [
+  '1520250497591-112f2f40a3f4',
+  '1571896349842-33c89424de2d',
+  '1518733057094-95b53143d2a7',
+  '1605540436563-5bca919ae766',
+  '1531366936337-7c912a4589a7',
+].map(img);
+
+const WATER_IMAGES = [
+  '1432405972618-c60b0225b8f9',
+  '1437482078695-73f5ca6c96e2',
+  '1505672678657-cc7037095e60',
+  '1444930694458-01babf71870c',
+  '1502082553048-f009c37129b9',
+].map(img);
+
+// Cycle through a pool by index — stable across re-seeds, no randomness.
+const pick = (pool: string[], i: number): string => pool[i % pool.length] ?? pool[0] ?? TRAIL_IMAGE;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -58,10 +104,82 @@ async function overpass(query: string): Promise<{ elements: Array<OverpassWay | 
 }
 
 // ---------------------------------------------------------------------------
+// Geometry ordering — OSM ways merge into several disconnected pieces (small
+// gaps), and their ST_Dump order is NOT walking order, which corrupts chainage.
+// Stitch them into one west→east ordered line so chainage is monotonic.
+// ---------------------------------------------------------------------------
+
+interface Piece {
+  coords: LonLat[];
+  start: LonLat;
+  end: LonLat;
+}
+
+function toPieces(raw: LonLat[][]): Piece[] {
+  const out: Piece[] = [];
+  for (const coords of raw) {
+    const start = coords[0];
+    const end = coords[coords.length - 1];
+    if (start && end && coords.length >= 2) out.push({ coords, start, end });
+  }
+  return out;
+}
+
+// Greedy nearest-neighbour chain. GR11 runs Atlantic→Mediterranean, so start at
+// the westernmost endpoint and repeatedly append the nearest remaining piece,
+// flipping it when its far end is the closer join.
+function orderIntoLine(pieces: Piece[]): LonLat[] {
+  const d2 = (a: LonLat, b: LonLat) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2;
+
+  let seed: { piece: Piece; coords: LonLat[] } | null = null;
+  let minLon = Number.POSITIVE_INFINITY;
+  for (const p of pieces) {
+    if (p.start[0] < minLon) {
+      minLon = p.start[0];
+      seed = { piece: p, coords: p.coords };
+    }
+    if (p.end[0] < minLon) {
+      minLon = p.end[0];
+      seed = { piece: p, coords: [...p.coords].reverse() };
+    }
+  }
+  if (!seed) return [];
+
+  const used = new Set<Piece>([seed.piece]);
+  const chain: LonLat[] = [...seed.coords];
+  let tail = chain[chain.length - 1] ?? null;
+
+  while (used.size < pieces.length && tail) {
+    let best: { piece: Piece; coords: LonLat[] } | null = null;
+    let bestD = Number.POSITIVE_INFINITY;
+    for (const p of pieces) {
+      if (used.has(p)) continue;
+      const ds = d2(tail, p.start);
+      const de = d2(tail, p.end);
+      if (ds < bestD) {
+        bestD = ds;
+        best = { piece: p, coords: p.coords };
+      }
+      if (de < bestD) {
+        bestD = de;
+        best = { piece: p, coords: [...p.coords].reverse() };
+      }
+    }
+    if (!best) break;
+    used.add(best.piece);
+    chain.push(...best.coords.slice(1));
+    tail = chain[chain.length - 1] ?? tail;
+  }
+  return chain;
+}
+
+// ---------------------------------------------------------------------------
 // Step 1: Route geometry
-// Reads from the pre-downloaded cache file. Re-fetch with:
+// Reads from the pre-downloaded cache file. The current cache was fetched by ref
+// and includes the unrelated Île-de-France "GR 11" (filtered out below). Prefer
+// re-fetching by the canonical relation id (GR11 = 68861, see CLAUDE.md §8):
 //   curl -X POST https://overpass.openstreetmap.fr/api/interpreter \
-//     --data-urlencode 'data=[out:json][timeout:300];relation["ref"="GR 11"]["route"="hiking"];way(r);out geom;' \
+//     --data-urlencode 'data=[out:json][timeout:300];relation(68861);way(r);out geom;' \
 //     -o packages/db/data/gr11-ways.json
 // ---------------------------------------------------------------------------
 
@@ -71,14 +189,22 @@ async function seedRoute(): Promise<number> {
   const cacheFile = Bun.file(`${import.meta.dir}/../data/gr11-ways.json`);
   const data = (await cacheFile.json()) as { elements: Array<OverpassWay | OverpassNode> };
 
-  const ways = data.elements.filter(
-    (e): e is OverpassWay => e.type === 'way' && Array.isArray(e.geometry) && e.geometry.length > 1,
-  );
-  console.log(`  Got ${ways.length} ways`);
+  // The cache was fetched by ref ("GR 11"), which also matches the Île-de-France
+  // GR 11 near Paris. Keep only ways inside the Pyrenees corridor so the trail
+  // doesn't jump 700 km north. (Better: re-fetch by relation id — see header.)
+  const inBbox = (p: { lat: number; lon: number }) =>
+    p.lat >= BBOX.south && p.lat <= BBOX.north && p.lon >= BBOX.west && p.lon <= BBOX.east;
+  const ways = data.elements
+    .filter(
+      (e): e is OverpassWay =>
+        e.type === 'way' && Array.isArray(e.geometry) && e.geometry.length > 1,
+    )
+    .filter((w) => w.geometry.some(inBbox));
+  console.log(`  Got ${ways.length} ways in the Pyrenees corridor`);
   if (ways.length === 0) throw new Error('Cache file is empty or missing — re-fetch it');
 
   // max:1 = single connection so TEMP TABLE is visible across all queries in this session
-  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1 });
+  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
 
   await client`DROP TABLE IF EXISTS _seed_gr11_ways`;
   await client`CREATE TEMP TABLE _seed_gr11_ways (geom geometry(LineString, 4326))`;
@@ -88,28 +214,37 @@ async function seedRoute(): Promise<number> {
     await client`INSERT INTO _seed_gr11_ways VALUES (ST_GeomFromText(${`LINESTRING(${coords})`}, 4326))`;
   }
 
-  const rows = await client<Array<{ wkt: string; length_m: string }>>`
-    SELECT
-      ST_AsText(ST_LineMerge(ST_Collect(geom))) AS wkt,
-      ST_Length(ST_LineMerge(ST_Collect(geom))::geography) AS length_m
+  // Merge touching ways, then order the resulting pieces into one walking line.
+  const pieceRows = await client<Array<{ gj: string }>>`
+    SELECT ST_AsGeoJSON((ST_Dump(ST_LineMerge(ST_Collect(geom)))).geom) AS gj
     FROM _seed_gr11_ways
   `;
+  const rawPieces = pieceRows.map(
+    (r) => (JSON.parse(r.gj) as { coordinates: LonLat[] }).coordinates,
+  );
+  const ordered = orderIntoLine(toPieces(rawPieces));
+  if (ordered.length < 2) throw new Error('Failed to order route pieces into a line');
 
-  const row = rows[0];
-  if (!row) throw new Error('Failed to merge ways');
-  console.log(`  Merged → ${Math.round(Number(row.length_m) / 1000)} km`);
+  const wkt = `LINESTRING(${ordered.map(([lon, lat]) => `${lon} ${lat}`).join(', ')})`;
+  const [lenRow] = await client<Array<{ len: number }>>`
+    SELECT ST_Length(ST_GeomFromText(${wkt}, 4326)::geography) AS len
+  `;
+  const lengthM = Number(lenRow?.len ?? 0);
+  console.log(
+    `  Ordered ${rawPieces.length} pieces → ${Math.round(lengthM / 1000)} km single line`,
+  );
 
   const inserted = await db
     .insert(routes)
     .values({
       name: 'GR11',
       description: 'Sendero de los Pirineos — Hendaye to Cap de Creus',
-      distanceM: Number(row.length_m),
+      distanceM: lengthM,
       ascentM: 47_000,
       descentM: 47_000,
-      geom: sql`ST_GeomFromText(${row.wkt}, 4326)`,
+      geom: sql`ST_GeomFromText(${wkt}, 4326)`,
     })
-    .returning({ id: routes.id }); // exclude geom — Drizzle can't parse MultiLineString EWKB
+    .returning({ id: routes.id }); // exclude geom — Drizzle can't parse the EWKB back
 
   const route = inserted[0];
   if (!route) throw new Error('Failed to insert route');
@@ -119,6 +254,7 @@ async function seedRoute(): Promise<number> {
     ref: 'GR11',
     country: 'Spain',
     region: 'Pyrenees',
+    imageUrl: TRAIL_IMAGE,
   });
 
   await client.end();
@@ -167,47 +303,52 @@ async function computeChainage(routeId: number, lon: number, lat: number): Promi
 // Step 3: Sections
 // ---------------------------------------------------------------------------
 
+// The GR11 walks as ~40 day-stages between refuges and villages. We don't have
+// the official étape endpoints yet (that's the Phase 7 ingestion pipeline), so
+// approximate them as even ~22 km splits along the corrected line, grouped into
+// the three classic regions. Elevation is distributed evenly across stages.
+const SECTION_COUNT = 40;
+
+function regionFor(fraction: number): string {
+  if (fraction < 1 / 3) return 'Western Pyrenees';
+  if (fraction < 2 / 3) return 'Central Pyrenees';
+  return 'Eastern Pyrenees';
+}
+
 async function seedSections(routeId: number): Promise<void> {
-  console.log('Computing section chainage…');
+  console.log('Generating sections…');
 
-  const anchors = [
-    [
-      'Western Pyrenees',
-      'Basque Country & Navarre — Hendaye to Candanchú',
-      -1.7777,
-      43.371,
-      -0.5311,
-      42.7997,
-    ],
-    [
-      'Central Pyrenees',
-      'Aragón high mountains — Candanchú to Benasque',
-      -0.5311,
-      42.7997,
-      0.5217,
-      42.6036,
-    ],
-    ['Eastern Pyrenees', 'Catalonia — Benasque to Cap de Creus', 0.5217, 42.6036, 3.3196, 42.3194],
-  ] as const;
+  const [route] = await db
+    .select({ distanceM: routes.distanceM, ascentM: routes.ascentM, descentM: routes.descentM })
+    .from(routes)
+    .where(eq(routes.id, routeId));
+  if (!route?.distanceM) throw new Error('Route has no length — cannot generate sections');
 
-  for (const [
-    index,
-    [name, description, startLon, startLat, endLon, endLat],
-  ] of anchors.entries()) {
-    const startChainageM = await computeChainage(routeId, startLon, startLat);
-    const endChainageM = await computeChainage(routeId, endLon, endLat);
-    console.log(
-      `  ${name}: ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)} km`,
-    );
-    await db.insert(sections).values({
+  const total = route.distanceM;
+  const ascentPer = Math.round((route.ascentM ?? 0) / SECTION_COUNT);
+  const descentPer = Math.round((route.descentM ?? 0) / SECTION_COUNT);
+
+  const rows = Array.from({ length: SECTION_COUNT }, (_, i) => {
+    const startChainageM = (i * total) / SECTION_COUNT;
+    const endChainageM = ((i + 1) * total) / SECTION_COUNT;
+    const region = regionFor((i + 0.5) / SECTION_COUNT);
+    return {
       routeId,
-      name,
-      description,
-      orderIndex: index + 1,
+      name: `GR11 Stage ${i + 1}`,
+      description: `${region} · km ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)}`,
+      orderIndex: i + 1,
       startChainageM,
       endChainageM,
-    });
-  }
+      ascentM: ascentPer,
+      descentM: descentPer,
+      imageUrl: pick(MOUNTAIN_IMAGES, i),
+    };
+  });
+
+  await db.insert(sections).values(rows);
+  console.log(
+    `  Inserted ${SECTION_COUNT} sections (~${Math.round(total / SECTION_COUNT / 1000)} km each)`,
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -230,7 +371,7 @@ async function seedAccommodations(routeId: number): Promise<void> {
   const nodes = data.elements.filter((e): e is OverpassNode => e.type === 'node' && !!e.tags?.name);
   console.log(`  Got ${nodes.length} nodes, filtering to corridor…`);
 
-  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1 });
+  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
   let inserted = 0;
 
   for (const node of nodes) {
@@ -262,6 +403,7 @@ async function seedAccommodations(routeId: number): Promise<void> {
       capacity: tags.capacity ? Number.parseInt(tags.capacity) : null,
       seasonal: !!(tags.seasonal === 'yes' || tags.opening_hours?.includes('summer')),
       bookingUrl: tags.website ?? tags['contact:website'] ?? null,
+      imageUrl: pick(REFUGE_IMAGES, inserted),
       source: 'osm',
       confidence: 0.7,
     });
@@ -291,7 +433,7 @@ async function seedWaterSources(routeId: number): Promise<void> {
   const nodes = data.elements.filter((e): e is OverpassNode => e.type === 'node');
   console.log(`  Got ${nodes.length} nodes, filtering to corridor…`);
 
-  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1 });
+  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
   let inserted = 0;
 
   for (const node of nodes) {
@@ -314,6 +456,7 @@ async function seedWaterSources(routeId: number): Promise<void> {
       chainageM,
       geom: sql`ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)`,
       seasonal: tags.seasonal === 'yes' || tags.intermittent === 'yes',
+      imageUrl: pick(WATER_IMAGES, inserted),
       source: 'osm',
       confidence: 0.65,
     });

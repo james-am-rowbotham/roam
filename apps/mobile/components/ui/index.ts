@@ -5,3 +5,5 @@ export { NavBar } from './NavBar';
 export { SearchField } from './SearchField';
 export { SectionHeader } from './SectionHeader';
 export { StatPill } from './StatPill';
+export { StatusChip } from './StatusChip';
+export type { StatusVariant } from './StatusChip';

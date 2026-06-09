@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@roam/config": "workspace:*",
+    "bun-types": "latest",
     "typescript": "~6.0.3"
   }
 }

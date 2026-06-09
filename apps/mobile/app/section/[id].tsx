@@ -14,8 +14,10 @@ import { ElevationChart } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { CURRENT_USER_ID } from '../../config/user';
 import { geometryViewport } from '../../lib/geo';
 import { useSection } from '../../lib/hooks';
+import { useCreateJourney } from '../../lib/useCreateJourney';
 import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
@@ -62,6 +64,7 @@ export default function SectionDetailScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const setSectionFilter = useMapStore((s) => s.setSectionFilter);
+  const createMutation = useCreateJourney();
 
   const { data: response, isLoading } = useSection(id);
   const section = response?.data;
@@ -239,9 +242,20 @@ export default function SectionDetailScreen() {
         )}
       </ScrollView>
 
-      {/* CTA */}
+      {/* CTA — plan a journey starting from this section to the end of the route */}
       <View style={styles.ctaWrap}>
-        <Button label="Start from here" />
+        <Button
+          label={createMutation.isPending ? 'Planning…' : 'Start from here'}
+          onPress={() =>
+            createMutation.mutate({
+              routeId: section.routeId,
+              userId: CURRENT_USER_ID,
+              startSectionId: section.id,
+              accommodation: 'mixed',
+              targetDistancePerDayM: 20_000,
+            })
+          }
+        />
       </View>
     </View>
   );

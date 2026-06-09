@@ -13,7 +13,9 @@ import { MapView, TrailLayer } from '../../components/map';
 import { Button, Icon, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { CURRENT_USER_ID } from '../../config/user';
 import { useTrail, useTrailSections } from '../../lib/hooks';
+import { useCreateJourney } from '../../lib/useCreateJourney';
 import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, radius, spacing, type } from '../../theme';
 
@@ -62,6 +64,10 @@ export default function TrailDetailScreen() {
   const { data: sectionsResponse } = useTrailSections(id);
   const rawSections = sectionsResponse?.data;
   const sections = Array.isArray(rawSections) ? rawSections : [];
+
+  // Interim: "Start journey" creates a journey with default pace/accommodation
+  // and opens it. The full Setup flow (Figma 08–12) will replace this CTA.
+  const createMutation = useCreateJourney();
 
   if (isLoading || !trail) {
     return (
@@ -212,7 +218,17 @@ export default function TrailDetailScreen() {
 
       {/* CTA */}
       <View style={styles.ctaWrap}>
-        <Button label="Start journey" />
+        <Button
+          label={createMutation.isPending ? 'Planning…' : 'Start journey'}
+          onPress={() =>
+            createMutation.mutate({
+              routeId: trail.routeId,
+              userId: CURRENT_USER_ID,
+              accommodation: 'mixed',
+              targetDistancePerDayM: 20_000,
+            })
+          }
+        />
       </View>
     </View>
   );

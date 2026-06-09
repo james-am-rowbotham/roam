@@ -74,6 +74,61 @@ export const AccommodationSchema = z.object({
   updatedAt: z.string(),
 });
 
+// --- Journeys & stages -----------------------------------------------------
+
+export const StageSchema = z.object({
+  id: z.number(),
+  journeyId: z.number(),
+  orderIndex: z.number(),
+  startChainageM: z.number(),
+  endChainageM: z.number(),
+  distanceM: z.number().nullable(),
+  ascentM: z.number().nullable(),
+  descentM: z.number().nullable(),
+  overnightAccommodationId: z.number().nullable(),
+  status: z.enum(['planned', 'active', 'completed']),
+  completedAt: z.string().nullable(),
+  restDay: z.boolean(),
+  stoppedEarlyAtChainageM: z.number().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const JourneySchema = z.object({
+  id: z.number(),
+  userId: z.string(),
+  routeId: z.number(),
+  direction: z.enum(['forward', 'reverse']),
+  startDate: z.string().nullable(),
+  endDate: z.string().nullable(),
+  status: z.enum(['planned', 'active', 'completed', 'abandoned']),
+  accommodation: z.enum(['refuge', 'camping', 'mixed']).nullable(),
+  startChainageM: z.number().nullable(),
+  endChainageM: z.number().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const JourneyWithStagesSchema = JourneySchema.extend({
+  stages: z.array(StageSchema),
+});
+
+// Request body for creating a journey. The server runs the Journey Engine over
+// the route to generate stages. Pace is set by `targetDistancePerDayM` or, if
+// absent, by `startDate`+`endDate`; with neither, every section is its own day.
+export const CreateJourneySchema = z.object({
+  routeId: z.number(),
+  // Interim until Supabase Auth is wired — the owner is taken from the body.
+  userId: z.string(),
+  direction: z.enum(['forward', 'reverse']).optional(),
+  accommodation: z.enum(['refuge', 'camping', 'mixed']).optional(),
+  startSectionId: z.number().optional(),
+  endSectionId: z.number().optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  targetDistancePerDayM: z.number().positive().optional(),
+});
+
 export const ErrorSchema = z.object({
   error: z.string(),
 });
