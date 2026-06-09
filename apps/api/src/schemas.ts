@@ -97,6 +97,7 @@ export const StageSchema = z.object({
 export const JourneySchema = z.object({
   id: z.number(),
   userId: z.string(),
+  name: z.string().nullable(),
   routeId: z.number(),
   direction: z.enum(['forward', 'reverse']),
   startDate: z.string().nullable(),
@@ -120,6 +121,7 @@ export const CreateJourneySchema = z.object({
   routeId: z.number(),
   // Interim until Supabase Auth is wired — the owner is taken from the body.
   userId: z.string(),
+  name: z.string().optional(),
   direction: z.enum(['forward', 'reverse']).optional(),
   accommodation: z.enum(['refuge', 'camping', 'mixed']).optional(),
   startSectionId: z.number().optional(),

@@ -15,12 +15,18 @@ interface Props {
 export function JourneyCard({ journey, trailName, onPress }: Props) {
   const chip = journeyStatusChip(journey.status);
 
+  const title = journey.name?.trim() || trailName;
   const distance =
     journey.startChainageM != null && journey.endChainageM != null
       ? formatKm(journey.endChainageM - journey.startChainageM)
       : null;
   const dates = formatDateRange(journey.startDate, journey.endDate);
-  const meta = [distance, dates, journey.direction === 'reverse' ? 'Reversed' : null]
+  const meta = [
+    journey.name?.trim() ? trailName : null,
+    distance,
+    dates,
+    journey.direction === 'reverse' ? 'Reversed' : null,
+  ]
     .filter(Boolean)
     .join('  ·  ');
 
@@ -28,7 +34,7 @@ export function JourneyCard({ journey, trailName, onPress }: Props) {
     <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
       <View style={styles.left}>
         <Text style={styles.title} numberOfLines={1}>
-          {trailName}
+          {title}
         </Text>
         {meta.length > 0 && (
           <Text style={styles.meta} numberOfLines={1}>

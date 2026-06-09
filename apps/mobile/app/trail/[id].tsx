@@ -9,15 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapView, TrailLayer } from '../../components/map';
 import { Button, Icon, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
-import { CURRENT_USER_ID } from '../../config/user';
 import { useTrail, useTrailSections } from '../../lib/hooks';
-import { useCreateJourney } from '../../lib/useCreateJourney';
+import { useJourneySetupStore } from '../../store/journeySetupStore';
 import { useMapStore } from '../../store/mapStore';
-import { colors, fonts, radius, spacing, type } from '../../theme';
+import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 type Tab = 'overview' | 'sections';
 
@@ -52,6 +52,7 @@ function SummaryRow({
 export default function TrailDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
 
   const { data: trailResponse, isLoading } = useTrail(id);
@@ -65,9 +66,7 @@ export default function TrailDetailScreen() {
   const rawSections = sectionsResponse?.data;
   const sections = Array.isArray(rawSections) ? rawSections : [];
 
-  // Interim: "Start journey" creates a journey with default pace/accommodation
-  // and opens it. The full Setup flow (Figma 08–12) will replace this CTA.
-  const createMutation = useCreateJourney();
+  const initSetup = useJourneySetupStore((s) => s.init);
 
   if (isLoading || !trail) {
     return (
@@ -217,17 +216,17 @@ export default function TrailDetailScreen() {
       </ScrollView>
 
       {/* CTA */}
-      <View style={styles.ctaWrap}>
+      <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + layout.ctaBarPadding }]}>
         <Button
-          label={createMutation.isPending ? 'Planning…' : 'Start journey'}
-          onPress={() =>
-            createMutation.mutate({
+          label="Start journey"
+          onPress={() => {
+            initSetup({
               routeId: trail.routeId,
-              userId: CURRENT_USER_ID,
-              accommodation: 'mixed',
-              targetDistancePerDayM: 20_000,
-            })
-          }
+              trailId: Number(id),
+              trailRef: trail.ref ?? trail.name ?? 'Trail',
+            });
+            router.push('/journey/setup/scope');
+          }}
         />
       </View>
     </View>
@@ -329,5 +328,5 @@ const styles = StyleSheet.create({
   sectionMeta: { ...type.meta, color: colors.text.secondary },
   sectionDesc: { ...type.meta, color: colors.text.secondary, marginTop: 2 },
 
-  ctaWrap: { padding: spacing[8], paddingBottom: spacing[6] },
+  ctaWrap: { padding: layout.ctaBarPadding },
 });

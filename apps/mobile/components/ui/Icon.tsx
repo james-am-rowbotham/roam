@@ -1,7 +1,10 @@
 import {
   ArrowLeft,
+  ArrowLeftRight,
   Backpack,
   Calendar,
+  Check,
+  ChevronDown,
   ChevronRight,
   X as Close,
   Home,
@@ -22,6 +25,9 @@ export type IconName =
   | 'user'
   | 'arrow-left'
   | 'chevron-right'
+  | 'chevron-down'
+  | 'swap'
+  | 'check'
   | 'search'
   | 'microphone'
   | 'plus'
@@ -43,6 +49,9 @@ const icons: Record<IconName, React.ElementType> = {
   user: User,
   'arrow-left': ArrowLeft,
   'chevron-right': ChevronRight,
+  'chevron-down': ChevronDown,
+  swap: ArrowLeftRight,
+  check: Check,
   search: Search,
   microphone: Mic,
   plus: Plus,

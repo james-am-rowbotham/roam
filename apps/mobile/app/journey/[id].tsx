@@ -50,6 +50,14 @@ export default function JourneyDetailScreen() {
   const totalAscentM = stages.reduce((a, s) => a + (s.ascentM ?? 0), 0);
   const chip = journeyStatusChip(journey.status);
   const trailName = trail?.ref ?? trail?.name ?? 'Journey';
+  const title = journey.name?.trim() || trailName;
+  const subtitle = [
+    journey.name?.trim() ? trailName : null,
+    `${stages.length}-day journey`,
+    journey.direction === 'reverse' ? 'reversed' : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
   return (
     <View style={styles.screen}>
@@ -63,10 +71,10 @@ export default function JourneyDetailScreen() {
         </TouchableOpacity>
         <View style={styles.headerText}>
           <Text style={styles.title} numberOfLines={1}>
-            {trailName}
+            {title}
           </Text>
-          <Text style={styles.subtitle}>
-            {stages.length}-day journey{journey.direction === 'reverse' ? ' · reversed' : ''}
+          <Text style={styles.subtitle} numberOfLines={1}>
+            {subtitle}
           </Text>
         </View>
         <StatusChip label={chip.label} variant={chip.variant} />

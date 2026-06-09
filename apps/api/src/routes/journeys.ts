@@ -78,6 +78,7 @@ journeysRouter.openapi(
         .insert(journeys)
         .values({
           userId: body.userId,
+          name: body.name ?? null,
           routeId: body.routeId,
           direction: body.direction ?? 'forward',
           startDate: body.startDate ? new Date(body.startDate) : null,

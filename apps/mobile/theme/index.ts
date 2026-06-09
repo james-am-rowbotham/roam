@@ -79,6 +79,7 @@ export const layout = {
   screenPadding: spacing[8], // 16
   sectionGap: 28, // breathing room between content sections
   contentPaddingBottom: 32, // base bottom padding (add insets.bottom on top)
+  ctaBarPadding: spacing[8], // padding around a fixed bottom CTA bar; add insets.bottom on the bottom edge
 } as const;
 
 // Typography — Inter font family.

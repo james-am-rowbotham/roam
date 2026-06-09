@@ -201,6 +201,7 @@ export const photos = pgTable('photos', {
 export const journeys = pgTable('journeys', {
   id: serial('id').primaryKey(),
   userId: text('user_id').notNull(),
+  name: text('name'),
   routeId: integer('route_id')
     .notNull()
     .references(() => routes.id),

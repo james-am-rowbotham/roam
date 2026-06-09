@@ -5,7 +5,7 @@ import { JourneyCard } from '../../components/journey';
 import { Button, Icon, SectionHeader } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { useJourneys, useTrails } from '../../lib/hooks';
-import { useCreateJourney } from '../../lib/useCreateJourney';
+import { useJourneySetupStore } from '../../store/journeySetupStore';
 import { colors, layout, radius, spacing, type } from '../../theme';
 
 export default function JourneysScreen() {
@@ -19,17 +19,16 @@ export default function JourneysScreen() {
   const trails = trailsData?.data ?? [];
   const firstTrail = trails[0];
 
-  // Interim: + creates a journey for the first trail with default pace and opens
-  // it. The Setup flow (Figma 08–12) will let the user choose trail/range/pace.
-  const createMutation = useCreateJourney();
+  // + launches the Journey Setup flow for the first trail.
+  const initSetup = useJourneySetupStore((s) => s.init);
   const startNewJourney = () => {
     if (!firstTrail) return;
-    createMutation.mutate({
+    initSetup({
       routeId: firstTrail.routeId,
-      userId: CURRENT_USER_ID,
-      accommodation: 'mixed',
-      targetDistancePerDayM: 20_000,
+      trailId: firstTrail.id,
+      trailRef: firstTrail.ref ?? firstTrail.name,
     });
+    router.push('/journey/setup/scope');
   };
 
   const trailName = (routeId: number): string => {
@@ -56,7 +55,7 @@ export default function JourneysScreen() {
             style={styles.newBtn}
             onPress={startNewJourney}
             activeOpacity={0.85}
-            disabled={!firstTrail || createMutation.isPending}
+            disabled={!firstTrail}
           >
             <Icon name="plus" size={18} color={colors.text.onAccent} />
           </TouchableOpacity>

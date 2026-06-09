@@ -4,11 +4,11 @@
 // no I/O, no Date.now(), no randomness. Given the same input it always returns the
 // same plan. See PROJECT GUIDE §11.
 //
-// The model is intentionally simple (principle 4 — progressive complexity): a day
-// ("stage") is made of one or more *whole* sections. Sections are the curated
-// day-segmentation of a route, so we never split one across days in V1 — we only
-// *combine* short ones when the pace is fast. No routing graph, no chainage maths
-// beyond addition.
+// Model (principle 4 — progressive complexity): the route is linearly referenced
+// (§7), so a journey is just the selected chainage span cut into equal day-length
+// windows sized to the pace target. A long section therefore splits across several
+// days and short sections combine within a day — no routing graph, only 1-D maths.
+// Each day reports the sections it overlaps (for labels) and a pro-rated ascent.
 
 import type { Accommodation, Section } from './types';
 
@@ -86,24 +86,49 @@ const EMPTY_PLAN: JourneyPlan = {
 export function planJourney(input: PlanJourneyInput): JourneyPlan {
   const direction = input.direction ?? 'forward';
 
-  // Walking order, forward, along the route.
+  // Sections in ascending chainage, then the selected span and its 1-D bounds.
   const ordered = [...input.sections].sort((a, b) => a.orderIndex - b.orderIndex);
   const span = sliceSpan(ordered, input.startSectionId, input.endSectionId);
-  // Reverse journeys walk the same sections in the opposite order.
-  const walk = direction === 'reverse' ? [...span].reverse() : span;
+  if (span.length === 0) return EMPTY_PLAN;
 
-  if (walk.length === 0) return EMPTY_PLAN;
+  const lo = Math.min(...span.map((s) => Math.min(s.startChainageM, s.endChainageM)));
+  const hi = Math.max(...span.map((s) => Math.max(s.startChainageM, s.endChainageM)));
+  const spanLength = hi - lo;
+  if (spanLength <= 0) return EMPTY_PLAN;
 
-  const target = resolveTargetM(walk, input.pace, input.dates);
+  // Days are equal-length chainage chunks sized to the pace target. This both
+  // splits a long section across days and combines short ones within a day, so
+  // pace meaningfully changes the number of days at any section granularity.
+  const target = resolveTargetM(spanLength, span.length, input.pace, input.dates);
+  const numDays = target > 0 ? Math.max(1, Math.round(spanLength / target)) : span.length;
+  const dayLength = spanLength / numDays;
+
+  const reverse = direction === 'reverse';
   const accommodation = input.accommodation ?? 'mixed';
   const accommodations = input.accommodations ?? [];
 
-  const stages = packDays(walk, target).map((day, i) => {
-    const stage = buildStage(day, direction, i + 1);
+  // Ascending chainage windows; a reverse journey walks them high → low, so
+  // day 1 is the far (high-chainage) end of the span.
+  const windows = Array.from({ length: numDays }, (_, i) => ({
+    lo: lo + i * dayLength,
+    hi: i === numDays - 1 ? hi : lo + (i + 1) * dayLength,
+  }));
+  const walkOrder = reverse ? [...windows].reverse() : windows;
+
+  const stages: PlannedStage[] = walkOrder.map((w, i) => {
+    const { ascent, descent } = attributeElevation(span, w.lo, w.hi);
+    const endChainageM = reverse ? w.lo : w.hi;
     return {
-      ...stage,
+      orderIndex: i + 1,
+      startChainageM: reverse ? w.hi : w.lo,
+      endChainageM,
+      distanceM: w.hi - w.lo,
+      // Walking backwards turns climbs into descents and vice versa.
+      ascentM: reverse ? descent : ascent,
+      descentM: reverse ? ascent : descent,
+      sectionIds: sectionsInWindow(span, w.lo, w.hi, reverse),
       suggestedAccommodationId: suggestOvernight(
-        stage.endChainageM,
+        endChainageM,
         direction,
         accommodation,
         accommodations,
@@ -124,11 +149,6 @@ export function planJourney(input: PlanJourneyInput): JourneyPlan {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** A section's length along the route, always >= 0. */
-function sectionDistanceM(s: Section): number {
-  return Math.abs(s.endChainageM - s.startChainageM);
-}
-
 function sum(xs: number[]): number {
   return xs.reduce((a, b) => a + b, 0);
 }
@@ -148,18 +168,16 @@ function sliceSpan(
 }
 
 /** Daily distance target in metres. `pace` wins; else derive from `dates`
- *  (total distance / budgeted days); else 0, meaning one section per day. */
+ *  (span length / budgeted days); else split into one day per section. */
 function resolveTargetM(
-  walk: Section[],
+  spanLength: number,
+  sectionCount: number,
   pace: JourneyPace | undefined,
   dates: JourneyDates | undefined,
 ): number {
   if (pace) return Math.max(0, pace.targetDistancePerDayM);
-  if (dates) {
-    const total = sum(walk.map(sectionDistanceM));
-    return total / budgetedDays(dates);
-  }
-  return 0;
+  if (dates) return spanLength / budgetedDays(dates);
+  return sectionCount > 0 ? spanLength / sectionCount : spanLength;
 }
 
 /** Inclusive calendar-day span between two dates, at least 1. */
@@ -168,54 +186,43 @@ function budgetedDays(dates: JourneyDates): number {
   return Math.max(1, Math.round(diff / DAY_MS) + 1);
 }
 
-/** Pack whole sections into days: add sections to a day until the next one would
- *  push it past the target. A single section longer than the target stands alone. */
-function packDays(walk: Section[], target: number): Section[][] {
-  const days: Section[][] = [];
-  let current: Section[] = [];
-  let currentDistance = 0;
-
-  for (const s of walk) {
-    const d = sectionDistanceM(s);
-    if (current.length > 0 && currentDistance + d > target) {
-      days.push(current);
-      current = [];
-      currentDistance = 0;
-    }
-    current.push(s);
-    currentDistance += d;
-  }
-  if (current.length > 0) days.push(current);
-  return days;
+/** A section's chainage interval, ascending, with its length. */
+function sectionInterval(s: Section): { slo: number; shi: number; len: number } {
+  const slo = Math.min(s.startChainageM, s.endChainageM);
+  const shi = Math.max(s.startChainageM, s.endChainageM);
+  return { slo, shi, len: shi - slo };
 }
 
-/** Turn a group of walked sections into a stage. For a reverse journey the day is
- *  entered at each section's high-chainage end, and ascent/descent swap. */
-function buildStage(
-  day: Section[],
-  direction: Direction,
-  orderIndex: number,
-): Omit<PlannedStage, 'suggestedAccommodationId'> {
-  const first = day[0] as Section;
-  const last = day[day.length - 1] as Section;
-  const reverse = direction === 'reverse';
+/** Sum a window's ascent/descent from the sections it overlaps, pro-rated by the
+ *  fraction of each section inside the window. */
+function attributeElevation(
+  span: Section[],
+  lo: number,
+  hi: number,
+): { ascent: number; descent: number } {
+  let ascent = 0;
+  let descent = 0;
+  for (const s of span) {
+    const { slo, shi, len } = sectionInterval(s);
+    if (len <= 0) continue;
+    const overlap = Math.min(hi, shi) - Math.max(lo, slo);
+    if (overlap <= 0) continue;
+    const frac = overlap / len;
+    ascent += (s.ascentM ?? 0) * frac;
+    descent += (s.descentM ?? 0) * frac;
+  }
+  return { ascent, descent };
+}
 
-  const startChainageM = reverse ? first.endChainageM : first.startChainageM;
-  const endChainageM = reverse ? last.startChainageM : last.endChainageM;
-
-  const ascent = sum(day.map((s) => s.ascentM ?? 0));
-  const descent = sum(day.map((s) => s.descentM ?? 0));
-
-  return {
-    orderIndex,
-    startChainageM,
-    endChainageM,
-    distanceM: sum(day.map(sectionDistanceM)),
-    // Walking the route backwards turns its climbs into descents and vice versa.
-    ascentM: reverse ? descent : ascent,
-    descentM: reverse ? ascent : descent,
-    sectionIds: day.map((s) => s.id),
-  };
+/** Ids of sections meaningfully overlapping the window (> 1 m), in walking order. */
+function sectionsInWindow(span: Section[], lo: number, hi: number, reverse: boolean): number[] {
+  const ids = span
+    .filter((s) => {
+      const { slo, shi } = sectionInterval(s);
+      return Math.min(hi, shi) - Math.max(lo, slo) > 1;
+    })
+    .map((s) => s.id);
+  return reverse ? ids.reverse() : ids;
 }
 
 function matchesPreference(type: Accommodation['type'], pref: AccommodationPreference): boolean {

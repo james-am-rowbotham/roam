@@ -36,37 +36,43 @@ function accommodation(
 }
 
 describe('planJourney — pacing', () => {
-  it('makes one stage per section when no pace or dates are given', () => {
-    const plan = planJourney({ sections: makeSections() });
-    expect(plan.totalDays).toBe(4);
-    expect(plan.stages.map((s) => s.sectionIds)).toEqual([[1], [2], [3], [4]]);
+  it('splits the span into equal day-length windows at the target pace', () => {
+    // 8 km/day over 40 km → 5 days of 8 km (sections are split across days).
+    const plan = planJourney({
+      sections: makeSections(),
+      pace: { targetDistancePerDayM: 8_000 },
+    });
+    expect(plan.totalDays).toBe(5);
+    expect(plan.stages.every((s) => s.distanceM === 8_000)).toBe(true);
   });
 
-  it('combines short sections up to the daily target (fast pace)', () => {
-    // 20 km/day target over 4×10 km sections → two 20 km days.
+  it('combines sections into longer days at a fast pace', () => {
+    // 20 km/day over 4×10 km → two 20 km days, each spanning two sections.
     const plan = planJourney({
       sections: makeSections(),
       pace: { targetDistancePerDayM: 20_000 },
     });
     expect(plan.totalDays).toBe(2);
-    expect(plan.stages.map((s) => s.sectionIds)).toEqual([
-      [1, 2],
-      [3, 4],
-    ]);
     expect(plan.stages[0]?.distanceM).toBe(20_000);
+    expect(plan.stages[0]?.sectionIds).toEqual([1, 2]);
   });
 
-  it('never splits a section, even when it exceeds the target', () => {
-    const plan = planJourney({
-      sections: makeSections(),
-      pace: { targetDistancePerDayM: 1_000 }, // smaller than any section
-    });
+  it('changes the number of days as pace changes', () => {
+    const sections = makeSections();
+    const relaxed = planJourney({ sections, pace: { targetDistancePerDayM: 6_000 } });
+    const fast = planJourney({ sections, pace: { targetDistancePerDayM: 40_000 } });
+    expect(relaxed.totalDays).toBeGreaterThan(fast.totalDays);
+    expect(fast.totalDays).toBe(1);
+  });
+
+  it('makes one day per section when no pace or dates are given', () => {
+    const plan = planJourney({ sections: makeSections() });
     expect(plan.totalDays).toBe(4);
-    expect(plan.stages.every((s) => s.sectionIds.length === 1)).toBe(true);
+    expect(plan.stages.map((s) => s.distanceM)).toEqual([10_000, 10_000, 10_000, 10_000]);
   });
 
-  it('derives the target from start/finish dates', () => {
-    // 4 calendar days (Mon→Thu inclusive) over 40 km → ~10 km/day → 4 days.
+  it('derives the day count from start/finish dates', () => {
+    // Mon→Thu inclusive = 4 days.
     const plan = planJourney({
       sections: makeSections(),
       dates: { startDate: new Date('2026-06-01'), endDate: new Date('2026-06-04') },
@@ -76,24 +82,37 @@ describe('planJourney — pacing', () => {
 });
 
 describe('planJourney — totals', () => {
-  it('sums distance, ascent and descent across the whole route', () => {
-    const plan = planJourney({ sections: makeSections() });
-    expect(plan.totalDistanceM).toBe(40_000);
-    expect(plan.totalAscentM).toBe(2_000);
-    expect(plan.totalDescentM).toBe(800);
+  it('preserves total distance, ascent and descent across any pace', () => {
+    const sections = makeSections();
+    for (const target of [6_000, 13_000, 40_000]) {
+      const plan = planJourney({ sections, pace: { targetDistancePerDayM: target } });
+      expect(Math.round(plan.totalDistanceM)).toBe(40_000);
+      expect(Math.round(plan.totalAscentM)).toBe(2_000);
+      expect(Math.round(plan.totalDescentM)).toBe(800);
+    }
+  });
+
+  it('pro-rates ascent when a section is split across days', () => {
+    // 5 km/day splits each 10 km (+500 m) section into two 5 km (+250 m) days.
+    const plan = planJourney({ sections: makeSections(), pace: { targetDistancePerDayM: 5_000 } });
+    expect(plan.totalDays).toBe(8);
+    expect(plan.stages[0]?.ascentM).toBeCloseTo(250, 5);
   });
 });
 
 describe('planJourney — direction', () => {
   it('reverses walking order and swaps ascent/descent', () => {
-    const plan = planJourney({ sections: makeSections(), direction: 'reverse' });
+    const plan = planJourney({
+      sections: makeSections(),
+      pace: { targetDistancePerDayM: 10_000 },
+      direction: 'reverse',
+    });
     expect(plan.stages.map((s) => s.sectionIds)).toEqual([[4], [3], [2], [1]]);
-    // First reverse stage covers the last section, walked high→low chainage.
     const first = plan.stages[0];
+    // First reverse day covers the last section, walked high → low chainage.
     expect(first?.startChainageM).toBe(40_000);
     expect(first?.endChainageM).toBe(30_000);
     expect(first?.distanceM).toBe(10_000);
-    // Climbs become descents going the other way.
     expect(first?.ascentM).toBe(200);
     expect(first?.descentM).toBe(500);
   });
@@ -101,9 +120,14 @@ describe('planJourney — direction', () => {
 
 describe('planJourney — section span', () => {
   it('restricts the journey to an inclusive span of sections', () => {
-    const plan = planJourney({ sections: makeSections(), startSectionId: 2, endSectionId: 3 });
-    expect(plan.stages.map((s) => s.sectionIds)).toEqual([[2], [3]]);
+    const plan = planJourney({
+      sections: makeSections(),
+      startSectionId: 2,
+      endSectionId: 3,
+      pace: { targetDistancePerDayM: 10_000 },
+    });
     expect(plan.totalDistanceM).toBe(20_000);
+    expect(plan.stages.map((s) => s.sectionIds)).toEqual([[2], [3]]);
   });
 
   it('returns an empty plan for an unknown section bound', () => {
@@ -118,7 +142,7 @@ describe('planJourney — overnight suggestion', () => {
 
   it('suggests the nearest accommodation matching the preference, within the window', () => {
     const accs: Accommodation[] = [
-      accommodation({ id: 10, chainageM: 10_200, type: 'refuge' }), // 200 m past day-1 end
+      accommodation({ id: 10, chainageM: 10_200, type: 'refuge' }),
       accommodation({ id: 11, chainageM: 9_000, type: 'campsite' }),
     ];
     const plan = planJourney({

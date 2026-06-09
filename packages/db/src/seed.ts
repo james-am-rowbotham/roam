@@ -334,7 +334,7 @@ async function seedSections(routeId: number): Promise<void> {
     const region = regionFor((i + 0.5) / SECTION_COUNT);
     return {
       routeId,
-      name: `GR11 Stage ${i + 1}`,
+      name: `Stage ${i + 1}`,
       description: `${region} · km ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)}`,
       orderIndex: i + 1,
       startChainageM,
