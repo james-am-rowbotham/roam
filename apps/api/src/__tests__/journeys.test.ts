@@ -168,6 +168,43 @@ describe('Journeys', () => {
     expect(undone.stages[0]?.completedAt).toBeNull();
   });
 
+  it('pauses and resumes a journey', async () => {
+    // The previous test leaves this journey active.
+    const paused = await progress({ type: 'pause' });
+    expect(paused.status).toBe('paused');
+    const resumed = await progress({ type: 'resume' });
+    expect(resumed.status).toBe('active');
+  });
+
+  it('keeps only one active journey — resuming another pauses this one', async () => {
+    // This journey is active (left so by the previous test).
+    const other = (await (
+      await api('/journeys', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ routeId, userId: TEST_USER, targetDistancePerDayM: 25_000 }),
+      })
+    ).json()) as { id: number };
+
+    // Starting the other journey must auto-pause this one.
+    const res = await api(`/journeys/${other.id}/progress`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ type: 'start' }),
+    });
+    expect(res.status).toBe(200);
+    expect(((await res.json()) as { status: string }).status).toBe('active');
+
+    const thisJourney = (await (await api(`/journeys/${journeyId}`)).json()) as { status: string };
+    expect(thisJourney.status).toBe('paused');
+
+    // Resume this one again → it becomes active and the other is paused.
+    const resumed = await progress({ type: 'resume' });
+    expect(resumed.status).toBe('active');
+    const otherJourney = (await (await api(`/journeys/${other.id}`)).json()) as { status: string };
+    expect(otherJourney.status).toBe('paused');
+  });
+
   it('inserts a rest day after a stage and shifts the schedule', async () => {
     const before = (await (await api(`/journeys/${journeyId}`)).json()) as {
       stages: Array<{ id: number }>;
@@ -254,5 +291,35 @@ describe('Journeys', () => {
       target?.distanceM ?? 0,
       1,
     );
+  });
+
+  it('updates the journey name and guide preset', async () => {
+    const res = await api(`/journeys/${journeyId}`, {
+      method: 'PATCH',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: 'Renamed plan', guidePreset: 'full' }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { name: string; guidePreset: string };
+    expect(body.name).toBe('Renamed plan');
+    expect(body.guidePreset).toBe('full');
+  });
+
+  it('deletes a journey and its stages', async () => {
+    const created = (await (
+      await api('/journeys', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ routeId, userId: TEST_USER, targetDistancePerDayM: 25_000 }),
+      })
+    ).json()) as { id: number };
+
+    const res = await api(`/journeys/${created.id}`, { method: 'DELETE' });
+    expect(res.status).toBe(200);
+    expect(((await res.json()) as { id: number }).id).toBe(created.id);
+
+    // Gone afterwards.
+    expect((await api(`/journeys/${created.id}`)).status).toBe(404);
+    expect((await api(`/journeys/${created.id}`, { method: 'DELETE' })).status).toBe(404);
   });
 });

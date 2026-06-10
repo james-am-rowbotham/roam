@@ -4,6 +4,7 @@ export type { IconName } from './Icon';
 export { NavBar } from './NavBar';
 export { SearchField } from './SearchField';
 export { OptionCard } from './OptionCard';
+export { RoamLogo, RoamMark } from './RoamLogo';
 export { SectionHeader } from './SectionHeader';
 export { Segmented } from './Segmented';
 export { StatPill } from './StatPill';

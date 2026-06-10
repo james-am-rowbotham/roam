@@ -367,6 +367,13 @@ function sectionName(i: number): string {
   return `${from} → ${to}`;
 }
 
+// Deterministic per-section weight in ~[0.55, 1.45], averaging ~1, so seeded
+// elevation varies between sections instead of every day reading identically.
+function elevationWeight(i: number, salt: number): number {
+  const h = ((i * 2_654_435_761 + salt * 40_503) >>> 0) % 1000;
+  return 0.55 + (h / 1000) * 0.9;
+}
+
 async function seedSections(routeId: number): Promise<void> {
   console.log('Generating sections…');
 
@@ -377,8 +384,8 @@ async function seedSections(routeId: number): Promise<void> {
   if (!route?.distanceM) throw new Error('Route has no length — cannot generate sections');
 
   const total = route.distanceM;
-  const ascentPer = Math.round((route.ascentM ?? 0) / SECTION_COUNT);
-  const descentPer = Math.round((route.descentM ?? 0) / SECTION_COUNT);
+  const ascentMean = (route.ascentM ?? 0) / SECTION_COUNT;
+  const descentMean = (route.descentM ?? 0) / SECTION_COUNT;
 
   const rows = Array.from({ length: SECTION_COUNT }, (_, i) => {
     const startChainageM = (i * total) / SECTION_COUNT;
@@ -391,8 +398,10 @@ async function seedSections(routeId: number): Promise<void> {
       orderIndex: i + 1,
       startChainageM,
       endChainageM,
-      ascentM: ascentPer,
-      descentM: descentPer,
+      // Vary per section so days differ — deterministic placeholder until the
+      // ingestion pipeline (§8) computes real per-section elevation.
+      ascentM: Math.round(ascentMean * elevationWeight(i, 1)),
+      descentM: Math.round(descentMean * elevationWeight(i, 7)),
       imageUrl: pick(MOUNTAIN_IMAGES, i),
     };
   });

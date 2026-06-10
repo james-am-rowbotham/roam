@@ -1,19 +1,33 @@
 import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { JourneyCard } from '../../components/journey';
 import { TrailCard } from '../../components/trail';
 import { NavBar, SearchField, SectionHeader } from '../../components/ui';
-import { useTrails } from '../../lib/hooks';
+import { CURRENT_USER_ID } from '../../config/user';
+import { useJourneys, useTrails } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { data, isLoading } = useTrails();
   const trails = data?.data ?? [];
+
+  // In-progress journeys (the navigated one + any paused) surface on Home.
+  const { data: journeysData } = useJourneys({ userId: CURRENT_USER_ID });
+  const inProgress = (journeysData?.data ?? []).filter(
+    (j) => j.status === 'active' || j.status === 'paused',
+  );
+  const trailName = (routeId: number): string => {
+    const t = trails.find((x) => x.routeId === routeId);
+    return t?.ref ?? t?.name ?? 'Journey';
+  };
 
   return (
     <ScrollView
       style={styles.screen}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[styles.content, { paddingTop: insets.top + spacing[2] }]}
       showsVerticalScrollIndicator={false}
     >
       <NavBar />
@@ -37,9 +51,22 @@ export default function HomeScreen() {
       </ScrollView>
 
       <SectionHeader title="My journeys" />
-      <View style={styles.emptyJourneys}>
-        <Text style={styles.emptyText}>No active journeys</Text>
-      </View>
+      {inProgress.length > 0 ? (
+        inProgress.map((j) => (
+          <JourneyCard
+            key={j.id}
+            journey={j}
+            trailName={trailName(j.routeId)}
+            compact
+            onOpen={() => router.push(`/journey/${j.id}`)}
+            onMap={() => router.push(`/journey/active/${j.id}`)}
+          />
+        ))
+      ) : (
+        <View style={styles.emptyJourneys}>
+          <Text style={styles.emptyText}>No active journeys</Text>
+        </View>
+      )}
     </ScrollView>
   );
 }

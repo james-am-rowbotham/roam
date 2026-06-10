@@ -1,13 +1,28 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { type ProgressAction, applyProgress, planJourney } from '@roam/core';
-import { accommodations, asc, db, desc, eq, journeys, routes, sections, stages } from '@roam/db';
+import {
+  accommodations,
+  and,
+  asc,
+  db,
+  desc,
+  eq,
+  inArray,
+  journeys,
+  ne,
+  routes,
+  sections,
+  stages,
+} from '@roam/db';
 import {
   CreateJourneySchema,
   ErrorSchema,
   IdParamSchema,
   JourneySchema,
+  JourneySummarySchema,
   JourneyWithStagesSchema,
   ProgressActionSchema,
+  UpdateJourneySchema,
 } from '../schemas';
 
 export const journeysRouter = new OpenAPIHono();
@@ -113,6 +128,7 @@ journeysRouter.openapi(
           startDate: body.startDate ? new Date(body.startDate) : null,
           endDate: body.endDate ? new Date(body.endDate) : null,
           accommodation: body.accommodation ?? null,
+          guidePreset: body.guidePreset ?? 'guided',
           startChainageM: walk[0]?.startChainageM ?? null,
           endChainageM: walk.at(-1)?.endChainageM ?? null,
         })
@@ -141,7 +157,7 @@ journeysRouter.openapi(
     request: { query: z.object({ userId: z.string() }) },
     responses: {
       200: {
-        content: { 'application/json': { schema: z.array(JourneySchema) } },
+        content: { 'application/json': { schema: z.array(JourneySummarySchema) } },
         description: 'Journeys',
       },
     },
@@ -153,7 +169,55 @@ journeysRouter.openapi(
       .from(journeys)
       .where(eq(journeys.userId, userId))
       .orderBy(desc(journeys.createdAt));
-    return c.json(rows as unknown as z.infer<typeof JourneySchema>[], 200);
+
+    // Progress summary per journey, from its (non-rest) stages.
+    const ids = rows.map((r) => r.id);
+    const stageRows = ids.length
+      ? await db
+          .select({
+            journeyId: stages.journeyId,
+            distanceM: stages.distanceM,
+            restDay: stages.restDay,
+            status: stages.status,
+          })
+          .from(stages)
+          .where(inArray(stages.journeyId, ids))
+      : [];
+
+    type Sum = {
+      totalDays: number;
+      completedDays: number;
+      totalDistanceM: number;
+      doneDistanceM: number;
+    };
+    const byJourney = new Map<number, Sum>();
+    for (const s of stageRows) {
+      if (s.restDay) continue;
+      const agg = byJourney.get(s.journeyId) ?? {
+        totalDays: 0,
+        completedDays: 0,
+        totalDistanceM: 0,
+        doneDistanceM: 0,
+      };
+      agg.totalDays += 1;
+      agg.totalDistanceM += s.distanceM ?? 0;
+      if (s.status === 'completed') {
+        agg.completedDays += 1;
+        agg.doneDistanceM += s.distanceM ?? 0;
+      }
+      byJourney.set(s.journeyId, agg);
+    }
+
+    const summarised = rows.map((r) => ({
+      ...r,
+      ...(byJourney.get(r.id) ?? {
+        totalDays: 0,
+        completedDays: 0,
+        totalDistanceM: 0,
+        doneDistanceM: 0,
+      }),
+    }));
+    return c.json(summarised as unknown as z.infer<typeof JourneySummarySchema>[], 200);
   },
 );
 
@@ -188,6 +252,76 @@ journeysRouter.openapi(
       { ...journey, stages: stageRows } as unknown as z.infer<typeof JourneyWithStagesSchema>,
       200,
     );
+  },
+);
+
+// PATCH /journeys/:id — update editable journey settings (name).
+journeysRouter.openapi(
+  createRoute({
+    method: 'patch',
+    path: '/{id}',
+    tags: ['Journeys'],
+    summary: 'Update journey settings',
+    request: {
+      params: IdParamSchema,
+      body: { content: { 'application/json': { schema: UpdateJourneySchema } } },
+    },
+    responses: {
+      200: {
+        content: { 'application/json': { schema: JourneyWithStagesSchema } },
+        description: 'Updated journey with stages',
+      },
+      404: { content: { 'application/json': { schema: ErrorSchema } }, description: 'Not found' },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid('param');
+    const body = c.req.valid('json');
+    const [existing] = await db
+      .select({ id: journeys.id })
+      .from(journeys)
+      .where(eq(journeys.id, id));
+    if (!existing) return c.json({ error: 'not found' }, 404);
+
+    const patch: Partial<typeof journeys.$inferInsert> = { updatedAt: new Date() };
+    if (body.name !== undefined) patch.name = body.name.trim() || null;
+    if (body.guidePreset !== undefined) patch.guidePreset = body.guidePreset;
+    await db.update(journeys).set(patch).where(eq(journeys.id, id));
+
+    return c.json(await journeyWithStages(id), 200);
+  },
+);
+
+// DELETE /journeys/:id — remove a journey and its stages.
+journeysRouter.openapi(
+  createRoute({
+    method: 'delete',
+    path: '/{id}',
+    tags: ['Journeys'],
+    summary: 'Delete a journey',
+    request: { params: IdParamSchema },
+    responses: {
+      200: {
+        content: { 'application/json': { schema: z.object({ id: z.number() }) } },
+        description: 'Deleted',
+      },
+      404: { content: { 'application/json': { schema: ErrorSchema } }, description: 'Not found' },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid('param');
+    const [journey] = await db
+      .select({ id: journeys.id })
+      .from(journeys)
+      .where(eq(journeys.id, id));
+    if (!journey) return c.json({ error: 'not found' }, 404);
+
+    await db.transaction(async (tx) => {
+      await tx.delete(stages).where(eq(stages.journeyId, id));
+      await tx.delete(journeys).where(eq(journeys.id, id));
+    });
+
+    return c.json({ id }, 200);
   },
 );
 
@@ -253,12 +387,28 @@ journeysRouter.openapi(
       );
     });
 
+    // Only one journey may be navigated ('active') at a time: when this one
+    // becomes active, any other active journey for the same user is paused.
+    const becameActive = result.journey.status === 'active' && journey.status !== 'active';
+
     await db.transaction(async (tx) => {
       if (result.journey.status !== journey.status) {
         await tx
           .update(journeys)
           .set({ status: result.journey.status, updatedAt: new Date() })
           .where(eq(journeys.id, id));
+      }
+      if (becameActive) {
+        await tx
+          .update(journeys)
+          .set({ status: 'paused', updatedAt: new Date() })
+          .where(
+            and(
+              eq(journeys.userId, journey.userId),
+              eq(journeys.status, 'active'),
+              ne(journeys.id, id),
+            ),
+          );
       }
       for (const s of changed) {
         await tx

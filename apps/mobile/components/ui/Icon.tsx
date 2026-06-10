@@ -11,6 +11,8 @@ import {
   Home,
   Map as MapIcon,
   Mic,
+  Pause,
+  Play,
   Plus,
   Search,
   User,
@@ -32,6 +34,8 @@ export type IconName =
   | 'combine'
   | 'search'
   | 'microphone'
+  | 'play'
+  | 'pause'
   | 'plus'
   | 'calendar'
   | 'water'
@@ -57,6 +61,8 @@ const icons: Record<IconName, React.ElementType> = {
   combine: Combine,
   search: Search,
   microphone: Mic,
+  play: Play,
+  pause: Pause,
   plus: Plus,
   calendar: Calendar,
   water: Waves,

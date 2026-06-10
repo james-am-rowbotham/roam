@@ -23,6 +23,8 @@ export {
   postJourneysIdRemoveRestDay as journeyRemoveRestDay,
   postJourneysIdCombine as journeyCombine,
   postJourneysIdSplit as journeySplit,
+  deleteJourneysId as deleteJourney,
+  patchJourneysId as updateJourney,
   getGetJourneysQueryKey as journeysQueryKey,
   getGetJourneysIdQueryKey as journeyQueryKey,
 } from './generated/api';

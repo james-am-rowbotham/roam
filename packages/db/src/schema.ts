@@ -210,10 +210,14 @@ export const journeys = pgTable('journeys', {
     .default('forward'),
   startDate: timestamp('start_date'),
   endDate: timestamp('end_date'),
-  status: text('status', { enum: ['planned', 'active', 'completed', 'abandoned'] })
+  status: text('status', { enum: ['planned', 'active', 'paused', 'completed', 'abandoned'] })
     .notNull()
     .default('planned'),
   accommodation: text('accommodation', { enum: ['refuge', 'camping', 'mixed'] }),
+  // How proactive the Guide is — collected in setup, editable in journey Settings.
+  guidePreset: text('guide_preset', { enum: ['silent', 'guided', 'full'] })
+    .notNull()
+    .default('guided'),
   startChainageM: doublePrecision('start_chainage_m'),
   endChainageM: doublePrecision('end_chainage_m'),
   createdAt: timestamp('created_at').defaultNow().notNull(),

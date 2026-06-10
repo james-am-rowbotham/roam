@@ -30,6 +30,29 @@ describe('applyProgress — start', () => {
   });
 });
 
+describe('applyProgress — pause & resume', () => {
+  it('pauses an active journey and resumes it', () => {
+    const active = applyProgress(planned, makeStages(3), { type: 'start' });
+    const paused = applyProgress(active.journey, active.stages, { type: 'pause' });
+    expect(paused.journey.status).toBe('paused');
+    // Stages are untouched — pausing only changes which journey is navigated.
+    expect(paused.stages.every((s) => s.status === 'planned')).toBe(true);
+
+    const resumed = applyProgress(paused.journey, paused.stages, { type: 'resume' });
+    expect(resumed.journey.status).toBe('active');
+  });
+
+  it('resume also activates a never-started (planned) journey', () => {
+    const r = applyProgress(planned, makeStages(2), { type: 'resume' });
+    expect(r.journey.status).toBe('active');
+  });
+
+  it('pause is a no-op on a non-active journey', () => {
+    const r = applyProgress({ status: 'completed' }, makeStages(1), { type: 'pause' });
+    expect(r.journey.status).toBe('completed');
+  });
+});
+
 describe('applyProgress — completeStage', () => {
   it('records completion without advancing other stages', () => {
     const r = applyProgress({ status: 'active' }, makeStages(3), {

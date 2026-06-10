@@ -89,6 +89,7 @@ export default function ReviewStep() {
         name: name.trim() || undefined,
         direction,
         accommodation,
+        guidePreset: guide,
         startSectionId: scope === 'section' ? (setup.startSectionId ?? undefined) : undefined,
         endSectionId: scope === 'section' ? (setup.endSectionId ?? undefined) : undefined,
         stages: toCreateStages(itinerary),
@@ -143,7 +144,6 @@ export default function ReviewStep() {
       </View>
 
       {/* Itinerary — adjustable before confirming */}
-      <Text style={styles.listHeader}>ITINERARY</Text>
       <View style={styles.leadingLine} />
       {itinerary.map((s, i) => {
         const nextStage = itinerary[i + 1];

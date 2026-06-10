@@ -102,8 +102,9 @@ export const JourneySchema = z.object({
   direction: z.enum(['forward', 'reverse']),
   startDate: z.string().nullable(),
   endDate: z.string().nullable(),
-  status: z.enum(['planned', 'active', 'completed', 'abandoned']),
+  status: z.enum(['planned', 'active', 'paused', 'completed', 'abandoned']),
   accommodation: z.enum(['refuge', 'camping', 'mixed']).nullable(),
+  guidePreset: z.enum(['silent', 'guided', 'full']),
   startChainageM: z.number().nullable(),
   endChainageM: z.number().nullable(),
   createdAt: z.string(),
@@ -112,6 +113,15 @@ export const JourneySchema = z.object({
 
 export const JourneyWithStagesSchema = JourneySchema.extend({
   stages: z.array(StageSchema),
+});
+
+// Journey list rows carry a progress summary (computed from stages) so the My
+// Journeys cards can show day counts + distance without fetching every itinerary.
+export const JourneySummarySchema = JourneySchema.extend({
+  totalDays: z.number(),
+  completedDays: z.number(),
+  totalDistanceM: z.number(),
+  doneDistanceM: z.number(),
 });
 
 // Request body for creating a journey. The server runs the Journey Engine over
@@ -124,6 +134,7 @@ export const CreateJourneySchema = z.object({
   name: z.string().optional(),
   direction: z.enum(['forward', 'reverse']).optional(),
   accommodation: z.enum(['refuge', 'camping', 'mixed']).optional(),
+  guidePreset: z.enum(['silent', 'guided', 'full']).optional(),
   startSectionId: z.number().optional(),
   endSectionId: z.number().optional(),
   startDate: z.string().optional(),
@@ -146,10 +157,19 @@ export const CreateJourneySchema = z.object({
     .optional(),
 });
 
+// Editable journey settings (Settings tab). Re-planning fields (direction, range,
+// pace) are not updatable here — they'd regenerate the itinerary.
+export const UpdateJourneySchema = z.object({
+  name: z.string().optional(),
+  guidePreset: z.enum(['silent', 'guided', 'full']).optional(),
+});
+
 // Progress / override actions on an active journey. `at` timestamps are stamped
 // server-side, so the client only sends the action + target.
 export const ProgressActionSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('start') }),
+  z.object({ type: z.literal('pause') }),
+  z.object({ type: z.literal('resume') }),
   z.object({ type: z.literal('completeStage'), stageId: z.number() }),
   z.object({ type: z.literal('uncompleteStage'), stageId: z.number() }),
   z.object({ type: z.literal('stopEarly'), stageId: z.number(), chainageM: z.number() }),

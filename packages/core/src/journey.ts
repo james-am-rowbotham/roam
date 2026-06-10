@@ -214,14 +214,26 @@ function attributeElevation(
   return { ascent, descent };
 }
 
-/** Ids of sections meaningfully overlapping the window (> 1 m), in walking order. */
+/**
+ * Ids of the sections a day represents, in walking order. A section belongs to the
+ * one day its midpoint falls in (so boundaries aren't double-counted across days);
+ * a pure sub-section day falls back to the section it sits inside.
+ */
 function sectionsInWindow(span: Section[], lo: number, hi: number, reverse: boolean): number[] {
-  const ids = span
-    .filter((s) => {
+  let owned = span.filter((s) => {
+    const { slo, shi } = sectionInterval(s);
+    const mid = (slo + shi) / 2;
+    return mid >= lo && mid < hi;
+  });
+  if (owned.length === 0) {
+    const dayMid = (lo + hi) / 2;
+    const containing = span.find((s) => {
       const { slo, shi } = sectionInterval(s);
-      return Math.min(hi, shi) - Math.max(lo, slo) > 1;
-    })
-    .map((s) => s.id);
+      return dayMid >= slo && dayMid <= shi;
+    });
+    owned = containing ? [containing] : [];
+  }
+  const ids = owned.map((s) => s.id);
   return reverse ? ids.reverse() : ids;
 }
 

@@ -1,5 +1,6 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -10,13 +11,31 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ScheduleGap, journeyStatusChip } from '../../components/journey';
-import { Button, Icon, StatPill, StatusChip } from '../../components/ui';
+import { ScheduleGap } from '../../components/journey';
+import { Button, Icon, Segmented, StatPill } from '../../components/ui';
+import { CURRENT_USER_ID } from '../../config/user';
 import { formatElevationM, formatKm, orientRoute, routeEndpoints } from '../../lib/format';
-import { useJourney, useTrailAccommodations, useTrailSections, useTrails } from '../../lib/hooks';
+import {
+  deleteJourney,
+  journeyQueryKey,
+  journeysQueryKey,
+  updateJourney,
+  useJourney,
+  useTrailAccommodations,
+  useTrailSections,
+  useTrails,
+} from '../../lib/hooks';
 import { sectionCut } from '../../lib/itinerary';
+import { sectionsForDay as sectionsForDayOf } from '../../lib/sections';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
+import type { GuidePreset } from '../../store/journeySetupStore';
 import { colors, layout, radius, spacing, type } from '../../theme';
+
+const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
+  { value: 'silent', label: 'Silent' },
+  { value: 'guided', label: 'Guided' },
+  { value: 'full', label: 'Full' },
+];
 
 type StageItem = { id: number; status: 'planned' | 'active' | 'completed' };
 
@@ -27,11 +46,40 @@ function confirmRemoveRest(stageId: number, remove: (id: number) => void) {
   ]);
 }
 
+function confirmDelete(remove: () => void) {
+  Alert.alert('Delete journey?', 'This permanently removes the journey and its itinerary.', [
+    { text: 'Cancel', style: 'cancel' },
+    { text: 'Delete', style: 'destructive', onPress: remove },
+  ]);
+}
+
+function confirmEnd(end: () => void) {
+  Alert.alert('End journey?', 'Marks the journey finished — it stays in your journeys.', [
+    { text: 'Cancel', style: 'cancel' },
+    { text: 'End journey', style: 'destructive', onPress: end },
+  ]);
+}
+
 export default function JourneyDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { progress, restDay, removeRestDay, combine, split } = useJourneyProgress(id);
+  const queryClient = useQueryClient();
+  const [tab, setTab] = useState<'itinerary' | 'settings'>('itinerary');
+  const [guideDraft, setGuideDraft] = useState<GuidePreset | null>(null);
+
+  const remove = useMutation({
+    mutationFn: () => deleteJourney(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: journeysQueryKey({ userId: CURRENT_USER_ID }) });
+      router.replace('/(tabs)/journeys');
+    },
+  });
+  const update = useMutation({
+    mutationFn: (guidePreset: GuidePreset) => updateJourney(id, { guidePreset }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: journeyQueryKey(id) }),
+  });
 
   const { data: journeyResponse, isLoading } = useJourney(id);
   const rawJourney = journeyResponse?.data;
@@ -57,17 +105,9 @@ export default function JourneyDetailScreen() {
   });
   const sectionRanges = Array.isArray(sectionsData?.data) ? sectionsData.data : [];
 
-  // Sections a day covers, in walking order — shown as links into section detail.
-  const sectionsForDay = (start: number, end: number) => {
-    const lo = Math.min(start, end);
-    const hi = Math.max(start, end);
-    const out = sectionRanges.filter((sec) => {
-      const slo = Math.min(sec.startChainageM, sec.endChainageM);
-      const shi = Math.max(sec.startChainageM, sec.endChainageM);
-      return Math.min(hi, shi) - Math.max(lo, slo) > 1;
-    });
-    return start > end ? [...out].reverse() : out;
-  };
+  // Sections a day represents, in walking order — shown as links into section detail.
+  const sectionsForDay = (start: number, end: number) =>
+    sectionsForDayOf(sectionRanges, start, end);
 
   if (isLoading || !journey) {
     return (
@@ -80,11 +120,16 @@ export default function JourneyDetailScreen() {
   const stages = journey.stages;
   const totalDistanceM = stages.reduce((a, s) => a + (s.distanceM ?? 0), 0);
   const totalAscentM = stages.reduce((a, s) => a + (s.ascentM ?? 0), 0);
-  const chip = journeyStatusChip(journey.status);
   const isPlanned = journey.status === 'planned';
   const isActive = journey.status === 'active';
+  const isPaused = journey.status === 'paused';
+  // Active + paused are both "in progress" (started, not finished).
+  const inProgress = isActive || isPaused;
+  const reverse = journey.direction === 'reverse';
 
   const onStageTap = (stage: StageItem) => {
+    // Completing a stage only makes sense on the journey you're navigating; on a
+    // paused journey, resume first (tapping here would silently un-pause it).
     if (!isActive || progress.isPending) return;
     progress.mutate(
       stage.status === 'completed'
@@ -93,7 +138,7 @@ export default function JourneyDetailScreen() {
     );
   };
 
-  const editable = isPlanned || isActive;
+  const editable = isPlanned || inProgress;
   const walkStages = stages.filter((s) => !s.restDay);
   const completedCount = walkStages.filter((s) => s.status === 'completed').length;
   const doneDistanceM = walkStages
@@ -101,7 +146,7 @@ export default function JourneyDetailScreen() {
     .reduce((a, s) => a + (s.distanceM ?? 0), 0);
   // The "current" day is derived: the first walking day that isn't done. There is
   // therefore only ever one, and completing a day never auto-starts another.
-  const currentStage = isActive
+  const currentStage = inProgress
     ? (stages.find((s) => !s.restDay && s.status !== 'completed') ?? null)
     : null;
   const currentWalkIndex = currentStage
@@ -113,208 +158,317 @@ export default function JourneyDetailScreen() {
     : 0;
   const trailName = trail?.ref ?? trail?.name ?? 'Journey';
   const title = journey.name?.trim() || trailName;
-  const subtitle = [
-    journey.name?.trim() ? trailName : null,
-    `${stages.length}-day journey`,
-    journey.direction === 'reverse' ? 'reversed' : null,
-  ]
-    .filter(Boolean)
-    .join(' · ');
+
+  // "Section Y of M": the section the current day starts in, in walking order.
+  const totalSections = sectionRanges.length;
+  const currentSections = currentStage
+    ? sectionsForDay(currentStage.startChainageM, currentStage.endChainageM)
+    : [];
+  const currentSectionOrder = currentSections[0]?.orderIndex ?? 0;
+  const currentSectionNum = reverse ? totalSections - currentSectionOrder + 1 : currentSectionOrder;
+
+  const guideValue = guideDraft ?? journey.guidePreset;
 
   return (
     <View style={styles.screen}>
-      {/* Header */}
+      {/* Header — centered title, back + trail ref on the left */}
       <View style={[styles.header, { paddingTop: insets.top + spacing[2] }]}>
-        <TouchableOpacity
-          style={styles.backBtn}
-          onPress={() => (router.canGoBack() ? router.back() : router.replace('/(tabs)/journeys'))}
-        >
-          <Icon name="arrow-left" size={20} color={colors.accent} />
-        </TouchableOpacity>
-        <View style={styles.headerText}>
-          <Text style={styles.title} numberOfLines={1}>
-            {title}
-          </Text>
-          <Text style={styles.subtitle} numberOfLines={1}>
-            {subtitle}
-          </Text>
+        <View style={styles.headerSide}>
+          <TouchableOpacity
+            onPress={() =>
+              router.canGoBack() ? router.back() : router.replace('/(tabs)/journeys')
+            }
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Icon name="arrow-left" size={20} color={colors.accent} />
+          </TouchableOpacity>
         </View>
-        <StatusChip label={chip.label} variant={chip.variant} />
+        <Text style={styles.headerTitle} numberOfLines={1}>
+          {title}
+        </Text>
+        <View style={styles.headerSide} />
       </View>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: layout.contentPaddingBottom + insets.bottom }}
-      >
-        {/* Active progress, or planned/completed totals */}
-        {isActive ? (
-          <View style={styles.progressHeader}>
-            <View style={styles.progressTopRow}>
-              <Text style={styles.progressDay}>
-                Day {currentDay} of {walkStages.length}
-              </Text>
-              <Text style={styles.progressDone}>{completedCount} done</Text>
-            </View>
-            <View style={styles.progressTrack}>
-              <View style={[styles.progressFill, { width: `${progressPct}%` }]} />
-            </View>
-            <Text style={styles.progressMeta}>
-              {formatKm(doneDistanceM)} of {formatKm(totalDistanceM)}
+      {/* Tabs */}
+      <View style={styles.tabs}>
+        {(['itinerary', 'settings'] as const).map((t) => (
+          <TouchableOpacity
+            key={t}
+            style={styles.tab}
+            onPress={() => setTab(t)}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.tabLabel, tab === t && styles.tabLabelActive]}>
+              {t === 'itinerary' ? 'Itinerary' : 'Settings'}
             </Text>
-          </View>
-        ) : (
-          <View style={styles.stats}>
-            <StatPill value={formatKm(totalDistanceM)} label="distance" />
-            <View style={styles.divider} />
-            <StatPill value={formatElevationM(totalAscentM)} label="ascent" />
-            <View style={styles.divider} />
-            <StatPill value={String(walkStages.length)} label="days" />
-          </View>
-        )}
+            {tab === t && <View style={styles.tabUnderline} />}
+          </TouchableOpacity>
+        ))}
+      </View>
 
-        {/* Itinerary */}
-        <Text style={styles.listHeader}>ITINERARY</Text>
-        <View style={styles.leadingLine} />
-        {stages.map((s, i) => {
-          const nextStage = stages[i + 1];
-          const gap = nextStage ? (
-            <ScheduleGap
-              editable={editable}
-              canCombine={!s.restDay && !nextStage.restDay}
-              canSplit={
-                !s.restDay && sectionCut(s.startChainageM, s.endChainageM, sectionRanges) !== null
-              }
-              onAddRest={() => restDay.mutate(s.id)}
-              onCombine={() => combine.mutate(s.id)}
-              onSplit={() => split.mutate(s.id)}
-            />
-          ) : null;
+      {tab === 'itinerary' ? (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: layout.contentPaddingBottom + insets.bottom }}
+        >
+          {/* In-progress progress bar, or planned/completed totals */}
+          {inProgress ? (
+            <View style={styles.progressHeader}>
+              <View style={styles.progressTopRow}>
+                <Text style={styles.progressDay}>
+                  Day {currentDay} of {walkStages.length}
+                </Text>
+                {totalSections > 0 && currentSectionNum > 0 && (
+                  <Text style={styles.progressDone}>
+                    Section {currentSectionNum} of {totalSections}
+                  </Text>
+                )}
+              </View>
+              <View style={styles.progressTrack}>
+                <View style={[styles.progressFill, { width: `${progressPct}%` }]} />
+              </View>
+              <Text style={styles.progressMeta}>
+                {formatKm(doneDistanceM)} of {formatKm(totalDistanceM)} · {completedCount} days done
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.stats}>
+              <StatPill value={formatKm(totalDistanceM)} label="distance" />
+              <View style={styles.divider} />
+              <StatPill value={formatElevationM(totalAscentM)} label="ascent" />
+              <View style={styles.divider} />
+              <StatPill value={String(walkStages.length)} label="days" />
+            </View>
+          )}
 
-          if (s.restDay) {
+          {/* Itinerary */}
+          <View style={styles.leadingLine} />
+          {stages.map((s, i) => {
+            const nextStage = stages[i + 1];
+            const gap = nextStage ? (
+              <ScheduleGap
+                editable={editable}
+                canCombine={!s.restDay && !nextStage.restDay}
+                canSplit={
+                  !s.restDay && sectionCut(s.startChainageM, s.endChainageM, sectionRanges) !== null
+                }
+                onAddRest={() => restDay.mutate(s.id)}
+                onCombine={() => combine.mutate(s.id)}
+                onSplit={() => split.mutate(s.id)}
+              />
+            ) : null;
+
+            if (s.restDay) {
+              return (
+                <Fragment key={s.id}>
+                  <TouchableOpacity
+                    style={styles.restRow}
+                    onPress={() => confirmRemoveRest(s.id, removeRestDay.mutate)}
+                    disabled={!editable}
+                    activeOpacity={editable ? 0.6 : 1}
+                  >
+                    <View style={styles.restBadge}>
+                      <Icon name="calendar" size={14} color={colors.text.secondary} />
+                    </View>
+                    <Text style={styles.restLabel}>Rest day</Text>
+                    {editable && <Text style={styles.restRemove}>Remove</Text>}
+                  </TouchableOpacity>
+                  {gap}
+                </Fragment>
+              );
+            }
+
+            const overnight = accommodationName(s.overnightAccommodationId);
+            const done = s.status === 'completed';
+            const current = currentStage?.id === s.id;
+            const daySections = sectionsForDay(s.startChainageM, s.endChainageM);
+            // A connected waypoint chain for the day; each place links to its section.
+            const chain: { place: string; sectionId: number }[] = [];
+            daySections.forEach((sec, idx) => {
+              const [from, to] = routeEndpoints(orientRoute(sec.name, reverse));
+              if (idx === 0) chain.push({ place: from, sectionId: sec.id });
+              chain.push({ place: to, sectionId: sec.id });
+            });
             return (
               <Fragment key={s.id}>
-                <TouchableOpacity
-                  style={styles.restRow}
-                  onPress={() => confirmRemoveRest(s.id, removeRestDay.mutate)}
-                  disabled={!editable}
-                  activeOpacity={editable ? 0.6 : 1}
-                >
-                  <View style={styles.restBadge}>
-                    <Icon name="calendar" size={14} color={colors.text.secondary} />
+                <View style={[styles.stage, current && styles.stageCurrent]}>
+                  <View style={styles.stageMain}>
+                    <TouchableOpacity
+                      style={[
+                        styles.dayBadge,
+                        done && styles.dayBadgeDone,
+                        current && styles.dayBadgeActive,
+                      ]}
+                      onPress={() => onStageTap(s)}
+                      disabled={!isActive || (!done && !current)}
+                      activeOpacity={done || current ? 0.6 : 1}
+                    >
+                      {done ? (
+                        <Icon name="check" size={16} color={colors.status.success.text} />
+                      ) : (
+                        <Text style={[styles.dayNum, current && styles.dayNumActive]}>
+                          {s.orderIndex}
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                    <View style={styles.stageBody}>
+                      <View style={styles.sectionList}>
+                        {chain.length > 0 ? (
+                          chain.map((node, idx) => (
+                            <Fragment key={`${node.place}-${idx}`}>
+                              {idx > 0 && <Text style={styles.sectionSep}>→</Text>}
+                              <TouchableOpacity
+                                onPress={() => router.push(`/section/${node.sectionId}`)}
+                                hitSlop={{ top: 6, bottom: 6, left: 2, right: 2 }}
+                              >
+                                <Text style={[styles.sectionLink, done && styles.sectionLinkDone]}>
+                                  {node.place}
+                                </Text>
+                              </TouchableOpacity>
+                            </Fragment>
+                          ))
+                        ) : (
+                          <Text style={[styles.stageTitle, done && styles.sectionLinkDone]}>
+                            Day {s.orderIndex}
+                          </Text>
+                        )}
+                      </View>
+                      <Text style={styles.stageMeta}>
+                        {[
+                          formatKm(s.distanceM),
+                          `${formatElevationM(s.ascentM)} ↑`,
+                          `${formatElevationM(s.descentM)} ↓`,
+                        ].join('  ·  ')}
+                      </Text>
+                      {overnight && (
+                        <View style={styles.overnight}>
+                          <Icon name="home" size={13} color={colors.marker.refuge} />
+                          <Text style={styles.overnightText} numberOfLines={1}>
+                            {overnight}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
                   </View>
-                  <Text style={styles.restLabel}>Rest day</Text>
-                  {editable && <Text style={styles.restRemove}>Remove</Text>}
-                </TouchableOpacity>
+                  {current && isActive && (
+                    <View style={styles.stageActions}>
+                      <TouchableOpacity
+                        style={styles.ctaComplete}
+                        onPress={() => onStageTap(s)}
+                        disabled={progress.isPending}
+                        activeOpacity={0.85}
+                      >
+                        <Text style={styles.ctaCompleteLabel}>
+                          {progress.isPending ? '…' : 'Mark complete'}
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.ctaResume}
+                        onPress={() => router.push(`/journey/active/${id}`)}
+                        activeOpacity={0.85}
+                      >
+                        <Text style={styles.ctaResumeLabel}>Open map</Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
                 {gap}
               </Fragment>
             );
-          }
+          })}
+        </ScrollView>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingTop: spacing[8],
+            paddingBottom: layout.contentPaddingBottom + insets.bottom,
+          }}
+        >
+          {/* Guide level — mirrors the setup Guide preset */}
+          <Text style={styles.listHeader}>GUIDE LEVEL</Text>
+          <View style={styles.segWrap}>
+            <Segmented
+              value={guideValue}
+              onChange={(v) => {
+                setGuideDraft(v);
+                update.mutate(v);
+              }}
+              options={GUIDE_OPTIONS}
+            />
+          </View>
+          <Text style={styles.settingsBlurb}>
+            How much the trail companion chimes in unprompted — alerts, tips and nudges.
+          </Text>
 
-          const overnight = accommodationName(s.overnightAccommodationId);
-          const done = s.status === 'completed';
-          const current = currentStage?.id === s.id;
-          const daySections = sectionsForDay(s.startChainageM, s.endChainageM);
-          // A connected waypoint chain for the day; each place links to its section.
-          const reverse = journey.direction === 'reverse';
-          const chain: { place: string; sectionId: number }[] = [];
-          daySections.forEach((sec, idx) => {
-            const [from, to] = routeEndpoints(orientRoute(sec.name, reverse));
-            if (idx === 0) chain.push({ place: from, sectionId: sec.id });
-            chain.push({ place: to, sectionId: sec.id });
-          });
-          return (
-            <Fragment key={s.id}>
-              <View style={[styles.stage, current && styles.stageCurrent]}>
-                <View style={styles.stageMain}>
-                  <TouchableOpacity
-                    style={[
-                      styles.dayBadge,
-                      done && styles.dayBadgeDone,
-                      current && styles.dayBadgeActive,
-                    ]}
-                    onPress={() => onStageTap(s)}
-                    disabled={!isActive || (!done && !current)}
-                    activeOpacity={done || current ? 0.6 : 1}
-                  >
-                    {done ? (
-                      <Icon name="check" size={16} color={colors.status.success.text} />
-                    ) : (
-                      <Text style={[styles.dayNum, current && styles.dayNumActive]}>
-                        {s.orderIndex}
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                  <View style={styles.stageBody}>
-                    <View style={styles.sectionList}>
-                      {chain.length > 0 ? (
-                        chain.map((node, idx) => (
-                          <Fragment key={`${node.place}-${idx}`}>
-                            {idx > 0 && <Text style={styles.sectionSep}>→</Text>}
-                            <TouchableOpacity
-                              onPress={() => router.push(`/section/${node.sectionId}`)}
-                              hitSlop={{ top: 6, bottom: 6, left: 2, right: 2 }}
-                            >
-                              <Text style={styles.sectionLink}>{node.place}</Text>
-                            </TouchableOpacity>
-                          </Fragment>
-                        ))
-                      ) : (
-                        <Text style={styles.stageTitle}>Day {s.orderIndex}</Text>
-                      )}
-                    </View>
-                    <Text style={styles.stageMeta}>
-                      {[
-                        formatKm(s.distanceM),
-                        s.ascentM != null ? `↑${formatElevationM(s.ascentM)}` : null,
-                        s.descentM != null ? `↓${formatElevationM(s.descentM)}` : null,
-                      ]
-                        .filter(Boolean)
-                        .join('  ·  ')}
-                    </Text>
-                    {overnight && (
-                      <View style={styles.overnight}>
-                        <Icon name="home" size={13} color={colors.marker.refuge} />
-                        <Text style={styles.overnightText} numberOfLines={1}>
-                          {overnight}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </View>
-                {current && (
-                  <TouchableOpacity
-                    style={styles.markComplete}
-                    onPress={() => onStageTap(s)}
-                    disabled={progress.isPending}
-                    activeOpacity={0.85}
-                  >
-                    <Text style={styles.markCompleteLabel}>
-                      {progress.isPending ? '…' : 'Mark complete'}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              </View>
-              {gap}
-            </Fragment>
-          );
-        })}
-      </ScrollView>
+          {/* Journey — danger */}
+          <Text style={[styles.listHeader, styles.detailsHeader]}>JOURNEY</Text>
+          <View style={styles.dangerWrap}>
+            <Button
+              variant="danger"
+              label={remove.isPending ? 'Deleting…' : 'Delete journey'}
+              onPress={() => confirmDelete(() => remove.mutate())}
+              disabled={remove.isPending}
+            />
+          </View>
+          <Text style={styles.settingsBlurb}>
+            Removes the plan and offline data from this device.
+          </Text>
+        </ScrollView>
+      )}
 
-      {/* Progress CTA */}
-      {(isPlanned || isActive) && (
+      {/* Start CTA — never-started journeys. */}
+      {tab === 'itinerary' && isPlanned && (
         <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
-          {isPlanned ? (
-            <Button
-              label={progress.isPending ? 'Starting…' : 'Start journey'}
-              onPress={() => progress.mutate({ type: 'start' })}
-            />
-          ) : (
-            <Button
-              label="End journey"
-              variant="ghost"
-              onPress={() => progress.mutate({ type: 'end' })}
-            />
-          )}
+          <Button
+            label={progress.isPending ? 'Starting…' : 'Start journey'}
+            onPress={() =>
+              progress.mutate(
+                { type: 'start' },
+                { onSuccess: () => router.push(`/journey/active/${id}`) },
+              )
+            }
+          />
+        </View>
+      )}
+
+      {/* In-progress CTA (Figma 13e) — pause/resume navigation + end the journey. */}
+      {tab === 'itinerary' && inProgress && (
+        <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
+          <View style={styles.ctaRow}>
+            <TouchableOpacity
+              style={styles.ctaPrimary}
+              disabled={progress.isPending}
+              onPress={
+                isPaused
+                  ? () =>
+                      progress.mutate(
+                        { type: 'resume' },
+                        { onSuccess: () => router.push(`/journey/active/${id}`) },
+                      )
+                  : () => progress.mutate({ type: 'pause' })
+              }
+              activeOpacity={0.85}
+            >
+              <Icon name={isPaused ? 'play' : 'pause'} size={16} color={colors.text.onAccent} />
+              <Text style={styles.ctaPrimaryLabel}>{isPaused ? 'Resume' : 'Pause'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.ctaEnd}
+              disabled={progress.isPending}
+              onPress={() =>
+                confirmEnd(() =>
+                  progress.mutate(
+                    { type: 'end' },
+                    { onSuccess: () => router.replace('/(tabs)/journeys') },
+                  ),
+                )
+              }
+              activeOpacity={0.85}
+            >
+              <Text style={styles.ctaEndLabel}>End journey</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </View>
@@ -328,24 +482,35 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing[4],
     paddingHorizontal: layout.screenPadding,
     paddingBottom: spacing[4],
+    backgroundColor: colors.bg.surface,
+  },
+  headerSide: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
+  headerTitle: { ...type.title, color: colors.text.primary, textAlign: 'center' },
+
+  tabs: {
+    flexDirection: 'row',
+    paddingLeft: spacing[6],
     backgroundColor: colors.bg.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.border.default,
   },
-  backBtn: {
-    width: 38,
-    height: 38,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.subtle,
-    alignItems: 'center',
-    justifyContent: 'center',
+  // No bottom padding — the active underline sits flush on the bottom border.
+  tab: { paddingHorizontal: spacing[4], paddingTop: spacing[5], gap: 7, alignItems: 'center' },
+  tabLabel: { ...type.detailTab, color: colors.text.secondary },
+  tabLabelActive: { color: colors.text.primary },
+  tabUnderline: { height: 1.5, width: '100%', backgroundColor: colors.accent },
+
+  detailsHeader: { paddingTop: spacing[12] },
+  segWrap: { paddingHorizontal: layout.screenPadding, paddingBottom: spacing[4] },
+  settingsBlurb: {
+    ...type.meta,
+    color: colors.text.secondary,
+    paddingHorizontal: layout.screenPadding,
+    lineHeight: 18,
   },
-  headerText: { flex: 1 },
-  title: { ...type.title, color: colors.text.primary },
-  subtitle: { ...type.meta, color: colors.text.secondary },
+  dangerWrap: { paddingHorizontal: layout.screenPadding, paddingBottom: spacing[4] },
 
   stats: {
     flexDirection: 'row',
@@ -405,20 +570,11 @@ const styles = StyleSheet.create({
   sectionList: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing[2] },
   stageTitle: { ...type.cardTitle, color: colors.text.primary },
   sectionLink: { ...type.cardTitle, color: colors.text.primary, textDecorationLine: 'underline' },
+  sectionLinkDone: { color: colors.text.secondary, textDecorationLine: 'none' },
   sectionSep: { ...type.cardTitle, color: colors.text.secondary },
   stageMeta: { ...type.meta, color: colors.text.secondary },
   overnight: { flexDirection: 'row', alignItems: 'center', gap: spacing[2], marginTop: spacing[1] },
   overnightText: { ...type.meta, color: colors.text.primary, flex: 1 },
-  markComplete: {
-    marginTop: spacing[4],
-    height: 44,
-    borderRadius: radius.lg,
-    backgroundColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  markCompleteLabel: { ...type.cardTitle, color: colors.text.onAccent },
-
   restRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -444,4 +600,46 @@ const styles = StyleSheet.create({
     borderTopColor: colors.border.default,
     backgroundColor: colors.bg.surface,
   },
+  ctaRow: { flexDirection: 'row', gap: spacing[3] },
+  ctaPrimary: {
+    flex: 1,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.accent,
+    flexDirection: 'row',
+    gap: spacing[3],
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaPrimaryLabel: { ...type.cardTitle, color: colors.text.onAccent },
+  // Tonal danger (matches Button's `dangerSubtle`) — destructive but quiet.
+  ctaEnd: {
+    flex: 1,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.status.danger.bg,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaEndLabel: { ...type.cardTitle, color: colors.status.danger.text },
+
+  stageActions: { flexDirection: 'row', gap: spacing[3], marginTop: spacing[5] },
+  ctaComplete: {
+    flex: 1,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaCompleteLabel: { ...type.cardTitle, color: colors.text.onAccent },
+  ctaResume: {
+    flex: 1,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.bg.subtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ctaResumeLabel: { ...type.cardTitle, color: colors.text.primary },
 });

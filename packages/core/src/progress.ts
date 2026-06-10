@@ -2,7 +2,7 @@
 // passed in, never read from the clock), so the exact same transitions run on the
 // server and on device for offline overrides replayed through the outbox (§11).
 
-export type JourneyStatus = 'planned' | 'active' | 'completed' | 'abandoned';
+export type JourneyStatus = 'planned' | 'active' | 'paused' | 'completed' | 'abandoned';
 export type StageStatus = 'planned' | 'active' | 'completed';
 
 export interface JourneyProgress {
@@ -20,6 +20,8 @@ export interface StageProgress {
 
 export type ProgressAction =
   | { type: 'start' }
+  | { type: 'pause' }
+  | { type: 'resume' }
   | { type: 'completeStage'; stageId: number; at: string }
   | { type: 'uncompleteStage'; stageId: number }
   | { type: 'stopEarly'; stageId: number; chainageM: number }
@@ -49,6 +51,18 @@ export function applyProgress(
   switch (action.type) {
     case 'start': {
       status = 'active';
+      break;
+    }
+    // Pause/resume toggle whether this journey is the one being navigated. Only
+    // one journey may be 'active' at a time — that single-active invariant is
+    // enforced by the caller (the engine sees one journey), which pauses any
+    // other active journey when this one resumes.
+    case 'pause': {
+      if (status === 'active') status = 'paused';
+      break;
+    }
+    case 'resume': {
+      if (status === 'paused' || status === 'planned') status = 'active';
       break;
     }
     case 'completeStage': {

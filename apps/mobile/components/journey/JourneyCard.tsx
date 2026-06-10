@@ -1,70 +1,137 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { formatDateRange, formatKm } from '../../lib/format';
+import { formatKm } from '../../lib/format';
 import type { JourneyListItem } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
-import { Icon } from '../ui';
 import { StatusChip } from '../ui';
-import { journeyStatusChip } from './status';
 
 interface Props {
   journey: JourneyListItem;
   trailName: string;
-  onPress: () => void;
+  /** Open the journey (itinerary / settings). */
+  onOpen: () => void;
+  /** Open the full-screen active map (active/paused journeys only). */
+  onMap: () => void;
+  /** Resume a paused journey (sets it active, then opens the map). */
+  onResume?: () => void;
+  /** Button-less variant (e.g. the Home "My journeys" card) — tap opens it. */
+  compact?: boolean;
 }
 
-export function JourneyCard({ journey, trailName, onPress }: Props) {
-  const chip = journeyStatusChip(journey.status);
-
+export function JourneyCard({ journey, trailName, onOpen, onMap, onResume, compact }: Props) {
   const title = journey.name?.trim() || trailName;
-  const distance =
-    journey.startChainageM != null && journey.endChainageM != null
-      ? formatKm(journey.endChainageM - journey.startChainageM)
-      : null;
-  const dates = formatDateRange(journey.startDate, journey.endDate);
-  const meta = [
-    journey.name?.trim() ? trailName : null,
-    distance,
-    dates,
-    journey.direction === 'reverse' ? 'Reversed' : null,
-  ]
-    .filter(Boolean)
-    .join('  ·  ');
+  const isActive = journey.status === 'active';
+  const isPaused = journey.status === 'paused';
+  const isCompleted = journey.status === 'completed' || journey.status === 'abandoned';
+  // Active and paused journeys are both "in progress" — only the action differs.
+  const inProgress = isActive || isPaused;
+
+  const total = journey.totalDays || 0;
+  const done = journey.completedDays || 0;
+  const currentDay = Math.min(done + 1, total || 1);
+  const pct = isCompleted ? 100 : total > 0 ? Math.round((done / total) * 100) : 0;
+  const barColor = isCompleted ? colors.status.success.text : colors.status.info.text;
+
+  const chip = isCompleted
+    ? { label: '✓ Complete', variant: 'success' as const }
+    : isPaused
+      ? { label: `Paused · Day ${currentDay}`, variant: 'warn' as const }
+      : isActive
+        ? { label: `Day ${currentDay} of ${total}`, variant: 'info' as const }
+        : { label: 'Planned', variant: 'info' as const };
+
+  const meta = inProgress
+    ? `${formatKm(journey.doneDistanceM || 0)} of ${formatKm(journey.totalDistanceM || 0)}`
+    : isCompleted
+      ? `${total} days · ${formatKm(journey.totalDistanceM || 0)} · all sections complete`
+      : `${total} days · ${formatKm(journey.totalDistanceM || 0)}`;
 
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
-      <View style={styles.left}>
+    <TouchableOpacity style={styles.card} onPress={onOpen} activeOpacity={0.9}>
+      <View style={styles.topRow}>
         <Text style={styles.title} numberOfLines={1}>
           {title}
         </Text>
-        {meta.length > 0 && (
-          <Text style={styles.meta} numberOfLines={1}>
-            {meta}
-          </Text>
-        )}
-      </View>
-      <View style={styles.right}>
         <StatusChip label={chip.label} variant={chip.variant} />
-        <Icon name="chevron-right" size={18} color={colors.text.secondary} />
       </View>
+
+      <View style={styles.track}>
+        <View style={[styles.fill, { width: `${pct}%`, backgroundColor: barColor }]} />
+      </View>
+
+      <Text style={styles.meta} numberOfLines={1}>
+        {meta}
+      </Text>
+
+      {!compact &&
+        inProgress &&
+        (isPaused ? (
+          <View style={styles.actions}>
+            <TouchableOpacity style={styles.btnGhost} onPress={onMap} activeOpacity={0.85}>
+              <Text style={styles.btnGhostLabel}>View map</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btnPrimary} onPress={onResume} activeOpacity={0.85}>
+              <Text style={styles.btnPrimaryLabel}>Resume</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          // The actively-navigated journey: one CTA straight to the map.
+          <View style={styles.actions}>
+            <TouchableOpacity style={styles.btnPrimary} onPress={onMap} activeOpacity={0.85}>
+              <Text style={styles.btnPrimaryLabel}>Open in map</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing[4],
     backgroundColor: colors.bg.surface,
     borderRadius: radius.xl,
     borderWidth: 1,
     borderColor: colors.border.default,
     padding: spacing[6],
     marginHorizontal: spacing[8],
-    marginBottom: spacing[3],
+    marginBottom: spacing[4],
+    gap: spacing[3],
   },
-  left: { flex: 1, gap: spacing[1] },
-  title: { ...type.cardTitle, color: colors.text.primary },
+  topRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing[3],
+  },
+  title: { ...type.cardTitle, color: colors.text.primary, flex: 1 },
+
+  track: {
+    height: 4,
+    borderRadius: radius.full,
+    backgroundColor: colors.bg.subtle,
+    overflow: 'hidden',
+  },
+  fill: { height: 4, borderRadius: radius.full },
+
   meta: { ...type.meta, color: colors.text.secondary },
-  right: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
+
+  actions: { flexDirection: 'row', gap: spacing[3], marginTop: spacing[2] },
+  btnGhost: {
+    flex: 1,
+    height: 40,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border.default,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnGhostLabel: { ...type.cardTitle, color: colors.text.primary },
+  btnPrimary: {
+    flex: 1,
+    height: 40,
+    borderRadius: radius.lg,
+    backgroundColor: colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnPrimaryLabel: { ...type.cardTitle, color: colors.text.onAccent },
 });

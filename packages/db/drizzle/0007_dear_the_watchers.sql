@@ -1,0 +1,1 @@
+ALTER TABLE "journeys" ADD COLUMN "guide_preset" text DEFAULT 'guided' NOT NULL;

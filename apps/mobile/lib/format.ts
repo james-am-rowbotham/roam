@@ -14,6 +14,19 @@ export function formatElevationM(m: number | null | undefined): string {
   return `${Math.round(m)} m`;
 }
 
+/**
+ * A rough day grade from ascent per km — no curated grade data yet, so this is a
+ * heuristic (Easy < 40 m/km, Moderate < 70, else Hard).
+ */
+export function gradeFor(distanceM: number | null, ascentM: number | null): string {
+  const km = (distanceM ?? 0) / 1000;
+  if (km <= 0) return 'Easy';
+  const perKm = (ascentM ?? 0) / km;
+  if (perKm < 40) return 'Easy';
+  if (perKm < 70) return 'Moderate';
+  return 'Hard';
+}
+
 /** ISO date → "4 Jun". Null/invalid → null. */
 function formatDay(iso: string | null | undefined): string | null {
   if (!iso) return null;
