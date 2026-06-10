@@ -43,6 +43,13 @@
       "when": 1781037260123,
       "tag": "0005_sharp_spyke",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1781123660123,
+      "tag": "0006_enable_rls",
+      "breakpoints": true
     }
   ]
 }
