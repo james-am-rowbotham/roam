@@ -305,14 +305,66 @@ async function computeChainage(routeId: number, lon: number, lat: number): Promi
 
 // The GR11 walks as ~40 day-stages between refuges and villages. We don't have
 // the official étape endpoints yet (that's the Phase 7 ingestion pipeline), so
-// approximate them as even ~22 km splits along the corrected line, grouped into
-// the three classic regions. Elevation is distributed evenly across stages.
+// approximate them as even ~21 km splits and name each by its endpoints from a
+// curated west→east list of real GR11 waypoints. These place names are dev
+// placeholders (not chainage-accurate) until ingestion supplies real étapes.
 const SECTION_COUNT = 40;
+
+// 41 waypoints (Atlantic → Mediterranean) → 40 named sections.
+const WAYPOINTS = [
+  'Irun',
+  'Bera',
+  'Elizondo',
+  'Burguete',
+  'Roncesvalles',
+  'Ochagavía',
+  'Isaba',
+  'Zuriza',
+  'Candanchú',
+  'Canfranc',
+  'Sallent de Gállego',
+  'Panticosa',
+  'Bujaruelo',
+  'Refugio de Góriz',
+  'Pineta',
+  'Parzán',
+  'Refugio de Biadós',
+  'Refugio de Estós',
+  'Benasque',
+  'Refugio de Llauset',
+  'Refugio de Conangles',
+  'Refugi de la Restanca',
+  'Refugi de Colomèrs',
+  'Salardú',
+  "Alós d'Isil",
+  'Àreu',
+  'Tavascan',
+  'Estaon',
+  'Refugi de Vallferrera',
+  'El Serrat',
+  'Arinsal',
+  'Encamp',
+  "Refugi de l'Illa",
+  'Puigcerdà',
+  'Núria',
+  'Queralbs',
+  'Setcases',
+  'Beget',
+  'Albanyà',
+  'La Jonquera',
+  'Cadaqués',
+];
 
 function regionFor(fraction: number): string {
   if (fraction < 1 / 3) return 'Western Pyrenees';
   if (fraction < 2 / 3) return 'Central Pyrenees';
   return 'Eastern Pyrenees';
+}
+
+function sectionName(i: number): string {
+  const from = WAYPOINTS[i] ?? `km ${i}`;
+  const to = WAYPOINTS[i + 1] ?? 'end';
+  return `${from} → ${to}`;
 }
 
 async function seedSections(routeId: number): Promise<void> {
@@ -334,7 +386,7 @@ async function seedSections(routeId: number): Promise<void> {
     const region = regionFor((i + 0.5) / SECTION_COUNT);
     return {
       routeId,
-      name: `Stage ${i + 1}`,
+      name: sectionName(i),
       description: `${region} · km ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)}`,
       orderIndex: i + 1,
       startChainageM,

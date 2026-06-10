@@ -18,8 +18,15 @@ export {
 // call site. TODO: configure Orval to emit a mutation hook for POST.
 export {
   postJourneys as createJourney,
+  postJourneysIdProgress as journeyProgress,
+  postJourneysIdRestDay as journeyRestDay,
+  postJourneysIdRemoveRestDay as journeyRemoveRestDay,
+  postJourneysIdCombine as journeyCombine,
+  postJourneysIdSplit as journeySplit,
   getGetJourneysQueryKey as journeysQueryKey,
+  getGetJourneysIdQueryKey as journeyQueryKey,
 } from './generated/api';
+export type { PostJourneysIdProgressBody as ProgressAction } from './generated/api';
 
 // Re-export types screens need
 export type {

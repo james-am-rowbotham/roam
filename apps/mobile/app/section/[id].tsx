@@ -229,7 +229,7 @@ export default function SectionDetailScreen() {
                 color={colors.trail.local}
                 icon="food"
                 title="Food"
-                body="Carry food for the full stage unless refuges are confirmed open."
+                body="Carry food for the full section unless refuges are confirmed open."
               />
             </View>
           </View>

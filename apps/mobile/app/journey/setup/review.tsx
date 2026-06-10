@@ -5,18 +5,28 @@ import {
 } from '@roam/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SetupScaffold } from '../../../components/journey';
-import { StatusChip } from '../../../components/ui';
+import { ScheduleGap, SetupScaffold } from '../../../components/journey';
+import { Icon, StatusChip } from '../../../components/ui';
 import { CURRENT_USER_ID } from '../../../config/user';
-import { formatElevationM, formatKm } from '../../../lib/format';
+import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
 import {
   createJourney,
   journeysQueryKey,
   useTrailAccommodations,
   useTrailSections,
 } from '../../../lib/hooks';
+import {
+  type EditStage,
+  canSplitDay,
+  combineDays,
+  fromPlan,
+  insertRestDay,
+  removeStage,
+  splitDay,
+  toCreateStages,
+} from '../../../lib/itinerary';
 import { PACE_TARGET_M, useJourneySetupStore } from '../../../store/journeySetupStore';
 import { colors, radius, spacing, type } from '../../../theme';
 
@@ -61,6 +71,16 @@ export default function ReviewStep() {
     accommodations: accommodations as unknown as CoreAccommodation[],
   });
 
+  // Editable copy of the plan — reset whenever the planning inputs change.
+  const planKey = `${pace}|${scope}|${direction}|${setup.startSectionId}|${setup.endSectionId}|${sections.length}`;
+  const [edited, setEdited] = useState<EditStage[] | null>(null);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset only when the planning inputs (planKey) change, not on every recompute of plan.
+  useEffect(() => setEdited(null), [planKey]);
+  const itinerary = edited ?? fromPlan(plan.stages);
+
+  const totalDays = itinerary.length;
+  const totalDistanceM = itinerary.reduce((a, s) => a + s.distanceM, 0);
+
   const create = useMutation({
     mutationFn: () =>
       createJourney({
@@ -71,7 +91,7 @@ export default function ReviewStep() {
         accommodation,
         startSectionId: scope === 'section' ? (setup.startSectionId ?? undefined) : undefined,
         endSectionId: scope === 'section' ? (setup.endSectionId ?? undefined) : undefined,
-        targetDistancePerDayM: PACE_TARGET_M[pace],
+        stages: toCreateStages(itinerary),
       }),
     onSuccess: (res) => {
       if ('error' in res.data) return;
@@ -80,15 +100,15 @@ export default function ReviewStep() {
     },
   });
 
-  const [expanded, setExpanded] = useState(false);
-  const COLLAPSED = 5;
-  const visibleStages = expanded ? plan.stages : plan.stages.slice(0, COLLAPSED);
+  // Section names are "start → end" places, oriented for the direction. A combined
+  // day lists each on its own line.
+  const daySectionNames = (sectionIds: number[]): string[] =>
+    sectionIds
+      .map((id) => sectionById.get(id)?.name)
+      .filter((n): n is string => Boolean(n))
+      .map((n) => orientRoute(n, direction === 'reverse'));
 
-  const stageTitle = (sectionIds: number[]): string => {
-    const names = sectionIds.map((id) => sectionById.get(id)?.name).filter(Boolean) as string[];
-    if (names.length <= 1) return names[0] ?? 'Stage';
-    return `${names[0]} → ${names[names.length - 1]}`;
-  };
+  let walkNum = 0;
 
   return (
     <SetupScaffold
@@ -109,61 +129,88 @@ export default function ReviewStep() {
       <Text style={styles.eyebrow}>STEP 5 OF 5 · REVIEW</Text>
       <Text style={styles.name}>{name || `${trailRef} journey`}</Text>
       <Text style={styles.sub}>
-        {plan.totalDays} days · {formatKm(plan.totalDistanceM)}
+        {totalDays} days · {formatKm(totalDistanceM)}
       </Text>
 
       {/* Summary grid */}
       <View style={styles.grid}>
         <SummaryCell label="Trail" value={trailRef} />
-        <SummaryCell label="Duration" value={`${plan.totalDays} days`} />
+        <SummaryCell label="Duration" value={`${totalDays} days`} />
         <SummaryCell label="Pace" value={cap(pace)} />
         <SummaryCell label="Stay" value={STAY_LABEL[accommodation]} />
         <SummaryCell label="Guide" value={cap(guide)} />
-        <SummaryCell label="Distance" value={formatKm(plan.totalDistanceM)} />
+        <SummaryCell label="Distance" value={formatKm(totalDistanceM)} />
       </View>
 
-      {/* Itinerary */}
+      {/* Itinerary — adjustable before confirming */}
       <Text style={styles.listHeader}>ITINERARY</Text>
-      {visibleStages.map((s) => {
-        const combined = s.sectionIds.length > 1;
-        const overnight = accById.get(s.suggestedAccommodationId ?? -1)?.name;
-        return (
-          <View key={s.orderIndex} style={styles.stage}>
-            <View style={styles.dayBadge}>
-              <Text style={styles.dayNum}>{s.orderIndex}</Text>
-            </View>
-            <View style={styles.stageBody}>
-              <View style={styles.stageTitleRow}>
-                <Text style={styles.stageTitle} numberOfLines={1}>
-                  {stageTitle(s.sectionIds)}
-                </Text>
-                {combined && <StatusChip label="Combined" variant="info" />}
+      <View style={styles.leadingLine} />
+      {itinerary.map((s, i) => {
+        const nextStage = itinerary[i + 1];
+        const gap = nextStage ? (
+          <ScheduleGap
+            inset={false}
+            canCombine={!s.restDay && !nextStage.restDay}
+            canSplit={canSplitDay(s, sections)}
+            onAddRest={() => setEdited(insertRestDay(itinerary, i))}
+            onCombine={() => setEdited(combineDays(itinerary, i))}
+            onSplit={() => setEdited(splitDay(itinerary, i, sections))}
+          />
+        ) : null;
+        const key = `${i}-${s.startChainageM}-${s.restDay}`;
+
+        if (s.restDay) {
+          return (
+            <Fragment key={key}>
+              <View style={styles.restRow}>
+                <View style={styles.restBadge}>
+                  <Icon name="calendar" size={14} color={colors.text.secondary} />
+                </View>
+                <Text style={styles.restLabel}>Rest day</Text>
+                <TouchableOpacity onPress={() => setEdited(removeStage(itinerary, i))}>
+                  <Text style={styles.restRemove}>Remove</Text>
+                </TouchableOpacity>
               </View>
-              <Text style={styles.stageMeta}>
-                {[
-                  formatKm(s.distanceM),
-                  s.ascentM != null ? `+${formatElevationM(s.ascentM)}` : null,
-                  s.descentM != null ? `−${formatElevationM(s.descentM)}` : null,
-                ]
-                  .filter(Boolean)
-                  .join(' · ')}
-              </Text>
-              {overnight && (
-                <Text style={styles.stageOvernight} numberOfLines={1}>
-                  Stay · {overnight}
+              {gap}
+            </Fragment>
+          );
+        }
+
+        walkNum += 1;
+        const combined = s.sectionIds.length > 1;
+        const overnight = accById.get(s.overnightAccommodationId ?? -1)?.name;
+        const names = daySectionNames(s.sectionIds);
+        return (
+          <Fragment key={key}>
+            <View style={styles.stage}>
+              <View style={styles.dayBadge}>
+                <Text style={styles.dayNum}>{walkNum}</Text>
+              </View>
+              <View style={styles.stageBody}>
+                <View style={styles.sectionRow}>
+                  <Text style={styles.stageTitle} numberOfLines={2}>
+                    {names.length ? routeChainPlaces(names).join(' → ') : 'Section'}
+                  </Text>
+                  {combined && <StatusChip label="Combined" variant="info" />}
+                </View>
+                <Text style={styles.stageMeta}>
+                  {[
+                    formatKm(s.distanceM),
+                    `↑${formatElevationM(s.ascentM)}`,
+                    `↓${formatElevationM(s.descentM)}`,
+                  ].join(' · ')}
                 </Text>
-              )}
+                {overnight && (
+                  <Text style={styles.stageOvernight} numberOfLines={1}>
+                    Stay · {overnight}
+                  </Text>
+                )}
+              </View>
             </View>
-          </View>
+            {gap}
+          </Fragment>
         );
       })}
-      {plan.stages.length > COLLAPSED && (
-        <TouchableOpacity onPress={() => setExpanded((e) => !e)} activeOpacity={0.7}>
-          <Text style={styles.toggle}>
-            {expanded ? 'Show fewer days' : `Show all ${plan.stages.length} days`}
-          </Text>
-        </TouchableOpacity>
-      )}
     </SetupScaffold>
   );
 }
@@ -186,12 +233,11 @@ const styles = StyleSheet.create({
   cellValue: { ...type.cardTitle, color: colors.text.primary },
 
   listHeader: { ...type.label, color: colors.text.secondary, paddingBottom: spacing[3] },
+  leadingLine: { height: 1, backgroundColor: colors.border.default },
   stage: {
     flexDirection: 'row',
     gap: spacing[4],
-    paddingVertical: spacing[3],
-    borderTopWidth: 1,
-    borderTopColor: colors.border.default,
+    paddingVertical: spacing[6],
   },
   dayBadge: {
     width: 28,
@@ -203,16 +249,28 @@ const styles = StyleSheet.create({
   },
   dayNum: { ...type.cardTitle, color: colors.text.primary },
   stageBody: { flex: 1, gap: spacing[1] },
-  stageTitleRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
+  sectionList: { gap: spacing[1] },
+  sectionRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
   stageTitle: { ...type.cardTitle, color: colors.text.primary, flexShrink: 1 },
   stageMeta: { ...type.meta, color: colors.text.secondary },
   stageOvernight: { ...type.meta, color: colors.marker.refuge },
-  toggle: {
-    ...type.meta,
-    fontFamily: type.cardTitle.fontFamily,
-    color: colors.text.primary,
-    paddingTop: spacing[4],
+
+  restRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[4],
+    paddingVertical: spacing[6],
   },
+  restBadge: {
+    width: 28,
+    height: 28,
+    borderRadius: radius.full,
+    backgroundColor: colors.bg.subtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  restLabel: { ...type.cardTitle, color: colors.text.secondary, flex: 1 },
+  restRemove: { ...type.meta, color: colors.text.secondary },
 
   cta: {
     flex: 1,

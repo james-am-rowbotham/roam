@@ -32,3 +32,34 @@ export function formatDateRange(
   if (s && e) return `${s} – ${e}`;
   return s ?? e ?? null;
 }
+
+// Sections are named "<from> → <to>" along the trail (forward). These split and
+// re-orient that label so lists read correctly when walking in reverse.
+
+/** The two endpoint places of a "<from> → <to>" section name. */
+export function routeEndpoints(name: string): [string, string] {
+  const i = name.indexOf(' → ');
+  if (i === -1) return [name, name];
+  return [name.slice(0, i), name.slice(i + 3)];
+}
+
+/** A section name oriented for the walking direction (flips it when reversed). */
+export function orientRoute(name: string, reverse: boolean): string {
+  if (!reverse) return name;
+  const [from, to] = routeEndpoints(name);
+  return `${to} → ${from}`;
+}
+
+/**
+ * Collapse a day's ordered "A → B" section names into one connected waypoint
+ * chain, dropping the shared endpoints: ["A → B", "B → C"] → ["A", "B", "C"].
+ */
+export function routeChainPlaces(orientedNames: string[]): string[] {
+  const places: string[] = [];
+  orientedNames.forEach((name, i) => {
+    const [from, to] = routeEndpoints(name);
+    if (i === 0) places.push(from);
+    places.push(to);
+  });
+  return places;
+}

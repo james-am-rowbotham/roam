@@ -25,3 +25,6 @@ packages/db/data/
 
 # Generated code — run npm run codegen to regenerate
 apps/mobile/lib/generated
+
+# VS Code   
+.vscode

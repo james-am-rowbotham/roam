@@ -129,7 +129,32 @@ export const CreateJourneySchema = z.object({
   startDate: z.string().optional(),
   endDate: z.string().optional(),
   targetDistancePerDayM: z.number().positive().optional(),
+  // Optional client-adjusted itinerary (rest days inserted, days combined). When
+  // present it is persisted as-is instead of generating stages from pace.
+  stages: z
+    .array(
+      z.object({
+        startChainageM: z.number(),
+        endChainageM: z.number(),
+        distanceM: z.number(),
+        ascentM: z.number(),
+        descentM: z.number(),
+        overnightAccommodationId: z.number().nullable(),
+        restDay: z.boolean(),
+      }),
+    )
+    .optional(),
 });
+
+// Progress / override actions on an active journey. `at` timestamps are stamped
+// server-side, so the client only sends the action + target.
+export const ProgressActionSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('start') }),
+  z.object({ type: z.literal('completeStage'), stageId: z.number() }),
+  z.object({ type: z.literal('uncompleteStage'), stageId: z.number() }),
+  z.object({ type: z.literal('stopEarly'), stageId: z.number(), chainageM: z.number() }),
+  z.object({ type: z.literal('end') }),
+]);
 
 export const ErrorSchema = z.object({
   error: z.string(),

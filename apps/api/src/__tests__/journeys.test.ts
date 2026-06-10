@@ -57,6 +57,56 @@ describe('Journeys', () => {
     expect(body.stages.every((s) => (s.distanceM ?? 0) > 0)).toBe(true);
   });
 
+  it('persists an explicitly provided (adjusted) itinerary as-is', async () => {
+    const res = await api('/journeys', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        routeId,
+        userId: TEST_USER,
+        name: 'Custom plan',
+        stages: [
+          {
+            startChainageM: 0,
+            endChainageM: 10000,
+            distanceM: 10000,
+            ascentM: 100,
+            descentM: 50,
+            overnightAccommodationId: null,
+            restDay: false,
+          },
+          {
+            startChainageM: 10000,
+            endChainageM: 10000,
+            distanceM: 0,
+            ascentM: 0,
+            descentM: 0,
+            overnightAccommodationId: null,
+            restDay: true,
+          },
+          {
+            startChainageM: 10000,
+            endChainageM: 20000,
+            distanceM: 10000,
+            ascentM: 100,
+            descentM: 50,
+            overnightAccommodationId: null,
+            restDay: false,
+          },
+        ],
+      }),
+    });
+    expect(res.status).toBe(201);
+    const body = (await res.json()) as {
+      name: string;
+      stages: Array<{ orderIndex: number; restDay: boolean }>;
+    };
+    expect(body.name).toBe('Custom plan');
+    expect(body.stages.length).toBe(3);
+    expect(body.stages[1]?.restDay).toBe(true);
+    body.stages.forEach((s, i) => expect(s.orderIndex).toBe(i + 1));
+  });
+
   it('returns the journey with its stages by id', async () => {
     const res = await api(`/journeys/${journeyId}`);
     expect(res.status).toBe(200);
@@ -85,5 +135,124 @@ describe('Journeys', () => {
       body: JSON.stringify({ routeId: 999999999, userId: TEST_USER }),
     });
     expect(res.status).toBe(404);
+  });
+
+  async function progress(action: object) {
+    const res = await api(`/journeys/${journeyId}/progress`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(action),
+    });
+    expect(res.status).toBe(200);
+    return (await res.json()) as {
+      status: string;
+      stages: Array<{ id: number; status: string; completedAt: string | null }>;
+    };
+  }
+
+  it('starts a journey, completes a stage, and undoes it', async () => {
+    const started = await progress({ type: 'start' });
+    expect(started.status).toBe('active');
+    // Starting activates the journey but does not auto-start a stage (current is derived).
+    expect(started.stages[0]?.status).toBe('planned');
+
+    const firstId = started.stages[0]?.id ?? 0;
+    const completed = await progress({ type: 'completeStage', stageId: firstId });
+    expect(completed.stages[0]?.status).toBe('completed');
+    expect(completed.stages[0]?.completedAt).not.toBeNull();
+    // Completing a day must NOT auto-start the next.
+    expect(completed.stages[1]?.status).toBe('planned');
+
+    const undone = await progress({ type: 'uncompleteStage', stageId: firstId });
+    expect(undone.stages[0]?.status).toBe('planned');
+    expect(undone.stages[0]?.completedAt).toBeNull();
+  });
+
+  it('inserts a rest day after a stage and shifts the schedule', async () => {
+    const before = (await (await api(`/journeys/${journeyId}`)).json()) as {
+      stages: Array<{ id: number }>;
+    };
+    const count = before.stages.length;
+    const firstId = before.stages[0]?.id ?? 0;
+
+    const res = await api(`/journeys/${journeyId}/rest-day`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ afterStageId: firstId }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      stages: Array<{ id: number; orderIndex: number; restDay: boolean }>;
+    };
+    expect(body.stages.length).toBe(count + 1);
+    // The inserted rest day sits right after the first stage.
+    expect(body.stages[1]?.restDay).toBe(true);
+    body.stages.forEach((s, i) => expect(s.orderIndex).toBe(i + 1));
+  });
+
+  it('combines two adjacent walking days into one', async () => {
+    const before = (await (await api(`/journeys/${journeyId}`)).json()) as {
+      stages: Array<{ id: number; restDay: boolean; distanceM: number | null }>;
+    };
+    const count = before.stages.length;
+    const idx = before.stages.findIndex(
+      (s, i) => !s.restDay && before.stages[i + 1] && !before.stages[i + 1]?.restDay,
+    );
+    const target = before.stages[idx];
+    const next = before.stages[idx + 1];
+    const res = await api(`/journeys/${journeyId}/combine`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ stageId: target?.id }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { stages: Array<{ id: number; distanceM: number | null }> };
+    expect(body.stages.length).toBe(count - 1);
+    const merged = body.stages.find((s) => s.id === target?.id);
+    expect(merged?.distanceM).toBeCloseTo((target?.distanceM ?? 0) + (next?.distanceM ?? 0), 3);
+  });
+
+  it('removes a rest day', async () => {
+    const before = (await (await api(`/journeys/${journeyId}`)).json()) as {
+      stages: Array<{ id: number; restDay: boolean }>;
+    };
+    const rest = before.stages.find((s) => s.restDay);
+    expect(rest).toBeDefined();
+    const res = await api(`/journeys/${journeyId}/remove-rest-day`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ stageId: rest?.id }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as { stages: Array<{ id: number }> };
+    expect(body.stages.some((s) => s.id === rest?.id)).toBe(false);
+  });
+
+  it('splits a day at a section boundary into two', async () => {
+    const before = (await (await api(`/journeys/${journeyId}`)).json()) as {
+      stages: Array<{ id: number; orderIndex: number; restDay: boolean; distanceM: number | null }>;
+    };
+    const count = before.stages.length;
+    // A long day (spans a section boundary) is splittable.
+    const target = [...before.stages]
+      .filter((s) => !s.restDay)
+      .sort((a, b) => (b.distanceM ?? 0) - (a.distanceM ?? 0))[0];
+    const res = await api(`/journeys/${journeyId}/split`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ stageId: target?.id }),
+    });
+    expect(res.status).toBe(200);
+    const body = (await res.json()) as {
+      stages: Array<{ id: number; orderIndex: number; distanceM: number | null }>;
+    };
+    expect(body.stages.length).toBe(count + 1);
+    // The two halves sum to the original distance.
+    const first = body.stages.find((s) => s.id === target?.id);
+    const second = body.stages.find((s) => s.orderIndex === (first?.orderIndex ?? 0) + 1);
+    expect((first?.distanceM ?? 0) + (second?.distanceM ?? 0)).toBeCloseTo(
+      target?.distanceM ?? 0,
+      1,
+    );
   });
 });

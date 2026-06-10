@@ -7,6 +7,7 @@ import {
   ChevronDown,
   ChevronRight,
   X as Close,
+  Combine,
   Home,
   Map as MapIcon,
   Mic,
@@ -28,6 +29,7 @@ export type IconName =
   | 'chevron-down'
   | 'swap'
   | 'check'
+  | 'combine'
   | 'search'
   | 'microphone'
   | 'plus'
@@ -52,6 +54,7 @@ const icons: Record<IconName, React.ElementType> = {
   'chevron-down': ChevronDown,
   swap: ArrowLeftRight,
   check: Check,
+  combine: Combine,
   search: Search,
   microphone: Mic,
   plus: Plus,

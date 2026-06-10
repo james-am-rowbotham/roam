@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SetupFooter, SetupScaffold, StagePicker } from '../../../components/journey';
 import { Icon, Segmented } from '../../../components/ui';
-import { formatKm } from '../../../lib/format';
+import { formatKm, orientRoute, routeEndpoints } from '../../../lib/format';
 import { useTrail, useTrailSections } from '../../../lib/hooks';
 import { useJourneySetupStore } from '../../../store/journeySetupStore';
 import { colors, radius, spacing, type } from '../../../theme';
@@ -34,6 +34,7 @@ export default function ScopeStep() {
   const walking = direction === 'reverse' ? [...orderedAsc].reverse() : orderedAsc;
   const walkPos = new Map(walking.map((s, i) => [s.id, i]));
 
+  const reverse = direction === 'reverse';
   const startSection = sections.find((s) => s.id === startSectionId) ?? walking[0];
   const endSection = sections.find((s) => s.id === endSectionId) ?? walking[walking.length - 1];
   const startPos = startSection ? (walkPos.get(startSection.id) ?? 0) : 0;
@@ -41,8 +42,13 @@ export default function ScopeStep() {
     ? (walkPos.get(endSection.id) ?? walking.length - 1)
     : walking.length - 1;
 
-  const fromLabel = startSection?.name ?? '—';
-  const toLabel = endSection?.name ?? '—';
+  // The journey's two endpoints — the place you set off from and the place you
+  // finish at — oriented for the direction (not the section names themselves).
+  const journeyFrom = startSection ? routeEndpoints(startSection.name)[reverse ? 1 : 0] : '—';
+  const journeyTo = endSection ? routeEndpoints(endSection.name)[reverse ? 0 : 1] : '—';
+
+  // Sections shown in walking order with names oriented for the direction.
+  const walkingDisplay = walking.map((s) => ({ ...s, name: orientRoute(s.name, reverse) }));
 
   // A finish can't come before the start in walking order, and vice versa.
   const startDisabled = walking.filter((s) => (walkPos.get(s.id) ?? 0) > endPos).map((s) => s.id);
@@ -92,7 +98,7 @@ export default function ScopeStep() {
         <Text style={styles.meta}>
           {[
             trail?.distanceM ? formatKm(trail.distanceM) : null,
-            `${sections.length} stages`,
+            `${sections.length} sections`,
             trail?.country,
           ]
             .filter(Boolean)
@@ -105,7 +111,7 @@ export default function ScopeStep() {
         <Text style={styles.label}>Direction</Text>
         <View style={styles.directionRow}>
           <Text style={styles.value}>
-            {fromLabel} → {toLabel}
+            {journeyFrom} → {journeyTo}
           </Text>
           <TouchableOpacity style={styles.flipBtn} onPress={flipDirection} activeOpacity={0.8}>
             <Icon name="swap" size={18} color={colors.text.primary} />
@@ -114,7 +120,7 @@ export default function ScopeStep() {
         <Text style={styles.hint}>Tap to reverse the direction.</Text>
       </View>
 
-      {/* Stage range — only when planning a specific section */}
+      {/* Section range — only when planning a specific part of the trail */}
       {isSection && (
         <>
           <TouchableOpacity
@@ -122,9 +128,11 @@ export default function ScopeStep() {
             onPress={() => setPicking('start')}
             activeOpacity={0.7}
           >
-            <Text style={styles.label}>Start from stage</Text>
+            <Text style={styles.label}>Start from section</Text>
             <View style={styles.directionRow}>
-              <Text style={styles.value}>{startSection?.name ?? '—'}</Text>
+              <Text style={styles.value}>
+                {startSection ? orientRoute(startSection.name, reverse) : '—'}
+              </Text>
               <Icon name="chevron-down" size={18} color={colors.text.secondary} />
             </View>
           </TouchableOpacity>
@@ -133,9 +141,11 @@ export default function ScopeStep() {
             onPress={() => setPicking('finish')}
             activeOpacity={0.7}
           >
-            <Text style={styles.label}>Finish at stage</Text>
+            <Text style={styles.label}>Finish at section</Text>
             <View style={styles.directionRow}>
-              <Text style={styles.value}>{endSection?.name ?? '—'}</Text>
+              <Text style={styles.value}>
+                {endSection ? orientRoute(endSection.name, reverse) : '—'}
+              </Text>
               <Icon name="chevron-down" size={18} color={colors.text.secondary} />
             </View>
           </TouchableOpacity>
@@ -156,8 +166,8 @@ export default function ScopeStep() {
 
       <StagePicker
         visible={picking !== null}
-        title={picking === 'start' ? 'Start from stage' : 'Finish at stage'}
-        sections={walking}
+        title={picking === 'start' ? 'Start from section' : 'Finish at section'}
+        sections={walkingDisplay}
         selectedId={picking === 'start' ? (startSection?.id ?? null) : (endSection?.id ?? null)}
         disabledIds={picking === 'start' ? startDisabled : finishDisabled}
         onSelect={(id) =>
