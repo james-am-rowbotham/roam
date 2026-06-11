@@ -14,11 +14,9 @@ export default function HomeScreen() {
   const { data, isLoading } = useTrails();
   const trails = data?.data ?? [];
 
-  // In-progress journeys (the navigated one + any paused) surface on Home.
+  // Active journey (the navigated one) surface on Home.
   const { data: journeysData } = useJourneys({ userId: CURRENT_USER_ID });
-  const inProgress = (journeysData?.data ?? []).filter(
-    (j) => j.status === 'active' || j.status === 'paused',
-  );
+  const isActiveJourney = (journeysData?.data ?? []).find((j) => j.status === 'active');
   const trailName = (routeId: number): string => {
     const t = trails.find((x) => x.routeId === routeId);
     return t?.ref ?? t?.name ?? 'Journey';
@@ -50,18 +48,16 @@ export default function HomeScreen() {
             ))}
       </ScrollView>
 
-      <SectionHeader title="My journeys" />
-      {inProgress.length > 0 ? (
-        inProgress.map((j) => (
-          <JourneyCard
-            key={j.id}
-            journey={j}
-            trailName={trailName(j.routeId)}
-            compact
-            onOpen={() => router.push(`/journey/${j.id}`)}
-            onMap={() => router.push(`/journey/active/${j.id}`)}
-          />
-        ))
+      <SectionHeader title="Active journey" />
+      {isActiveJourney ? (
+        <JourneyCard
+          key={isActiveJourney.id}
+          journey={isActiveJourney}
+          trailName={trailName(isActiveJourney.routeId)}
+          compact
+          onOpen={() => router.push(`/journey/${isActiveJourney.id}`)}
+          onMap={() => router.push(`/journey/active/${isActiveJourney.id}`)}
+        />
       ) : (
         <View style={styles.emptyJourneys}>
           <Text style={styles.emptyText}>No active journeys</Text>

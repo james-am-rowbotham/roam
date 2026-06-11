@@ -1,5 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { colors, radius, type } from '../../theme';
+import { Button } from '../ui';
 
 interface Props {
   onBack?: () => void;
@@ -18,34 +17,8 @@ export function SetupFooter({
 }: Props) {
   return (
     <>
-      {onBack && (
-        <TouchableOpacity style={[styles.btn, styles.back]} onPress={onBack} activeOpacity={0.85}>
-          <Text style={styles.backLabel}>Back</Text>
-        </TouchableOpacity>
-      )}
-      <TouchableOpacity
-        style={[styles.btn, styles.continue, continueDisabled && styles.disabled]}
-        onPress={onContinue}
-        activeOpacity={0.85}
-        disabled={continueDisabled}
-      >
-        <Text style={styles.continueLabel}>{continueLabel}</Text>
-      </TouchableOpacity>
+      {onBack && <Button label="Back" variant="outline" grow onPress={onBack} />}
+      <Button label={continueLabel} grow disabled={continueDisabled} onPress={onContinue} />
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  btn: {
-    flex: 1,
-    height: 52,
-    borderRadius: radius.lg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  back: { backgroundColor: colors.bg.surface, borderWidth: 1, borderColor: colors.border.default },
-  backLabel: { ...type.cardTitle, color: colors.text.primary },
-  continue: { backgroundColor: colors.accent },
-  continueLabel: { ...type.cardTitle, color: colors.text.onAccent },
-  disabled: { opacity: 0.5 },
-});

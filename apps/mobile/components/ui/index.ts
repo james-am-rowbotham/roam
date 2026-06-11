@@ -1,6 +1,9 @@
 export { Button } from './Button';
+export type { ButtonTone, ButtonVariant, ButtonSize } from './Button';
 export { Icon } from './Icon';
 export type { IconName } from './Icon';
+export { IconButton } from './IconButton';
+export type { IconButtonStyle, IconButtonSize } from './IconButton';
 export { NavBar } from './NavBar';
 export { SearchField } from './SearchField';
 export { OptionCard } from './OptionCard';

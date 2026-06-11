@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 import { Fragment, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScheduleGap, SetupScaffold } from '../../../components/journey';
-import { Icon, StatusChip } from '../../../components/ui';
+import { Button, Icon, StatusChip } from '../../../components/ui';
 import { CURRENT_USER_ID } from '../../../config/user';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
 import {
@@ -117,14 +117,12 @@ export default function ReviewStep() {
       onClose={() => router.back()}
       onBack={() => router.back()}
       footer={
-        <TouchableOpacity
-          style={[styles.cta, create.isPending && styles.ctaDisabled]}
-          onPress={() => create.mutate()}
-          activeOpacity={0.85}
+        <Button
+          label={create.isPending ? 'Creating…' : 'Start journey'}
+          grow
           disabled={create.isPending}
-        >
-          <Text style={styles.ctaLabel}>{create.isPending ? 'Creating…' : 'Start journey'}</Text>
-        </TouchableOpacity>
+          onPress={() => create.mutate()}
+        />
       }
     >
       <Text style={styles.eyebrow}>STEP 5 OF 5 · REVIEW</Text>
@@ -271,15 +269,4 @@ const styles = StyleSheet.create({
   },
   restLabel: { ...type.cardTitle, color: colors.text.secondary, flex: 1 },
   restRemove: { ...type.meta, color: colors.text.secondary },
-
-  cta: {
-    flex: 1,
-    height: 52,
-    borderRadius: radius.lg,
-    backgroundColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaDisabled: { opacity: 0.6 },
-  ctaLabel: { ...type.cardTitle, color: colors.text.onAccent },
 });

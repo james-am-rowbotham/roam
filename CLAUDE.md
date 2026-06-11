@@ -400,21 +400,32 @@ Mirror these Figma variables exactly:
 | 07 Peak route detail — Aneto (Vía Normal) | `173:720` |
 | 07b Peak — Aneto · Overview / Routes | `307:1031` · `310:1038` |
 | 08–12 Journey Setup (Step 1 → Review) | `63:295` · `65:330` · `67:375` · `68:390` · `81:411` |
-| 13b Active Journey (full-screen map) · 13c Paused sheet | `83:430` · `224:1001` |
-| 13b Active Journey — Itinerary (overrides) | `216:972` |
+| 13a Active Journey (full-screen map) · stats collapsed | `83:430` · `373:1112` |
+| 13b Active Journey — Paused · Options (•••) sheet | `224:1001` · `511:1344` |
+| 13c Active Journey — Itinerary / Settings tabs | `410:1201` · `407:1186` |
+| 13d Active Journey — Finish (•••) sheet | `481:1257` |
 | 14 Stage Complete | `76:419` |
 | 15/16 My Journeys (Active/Completed) | `77:425` · `85:439` |
 | 17 Profile | `87:479` |
 | 18 POI Detail | `164:651` |
 | 19 Landing (web) · 19b Filters popover | `126:628` · `212:879` |
 
-**Shared components (this iteration).** `IconButton` — a circular icon button with Style variants Subtle / Surface / Ghost and a swappable icon (the route **flip / switch** control; reusable for map and toolbar buttons). `Add Photo` — the photo-**evidence** tile (beside each Help-other-hikers confirmation, and on POI Detail’s *Latest photos*). A **peak reuses the trail-detail components verbatim** — hero, Stat Pills, scroll-tabs, Hazard Tag, list items, `section-row`, CTA Button — with the middle tab **Sections → Routes**; that tab swap is the only structural difference between a trail and a peak.
+**Shared components (this iteration).** `Button` — the text-button system: **Tone** (Default / Danger) × **Variant** (Solid / Outline / Ghost / Text) × **Size** (Small 36 / Medium 44 / Large 52), with an optional **leading icon** slot. `IconButton` — a circular icon button with Style variants Subtle / Surface / Ghost × Size (Small 32 / Medium 40 / Large 48) and a swappable icon (the route **flip / switch** control; reusable for map and toolbar buttons; also the active-journey **•••**). `Add Photo` — the photo-**evidence** tile (beside each Help-other-hikers confirmation, and on POI Detail’s *Latest photos*). A **peak reuses the trail-detail components verbatim** — hero, Stat Pills, scroll-tabs, Hazard Tag, list items, `section-row`, CTA Button — with the middle tab **Sections → Routes**; that tab swap is the only structural difference between a trail and a peak.
 
 Step 1 shows the route as start → finish locations (**Irun → Cadaqués**) with a **flip** control to reverse it, plus **Start from / Finish at stage** pickers so a journey can cover any stage range; the pace step adds **Start / Finish dates** that imply daily distance (budgeted days → km/day). The Review step
 shows the generated itinerary with **combined days** (fast pace) and a
-**stay-options** chooser. Active-journey overrides live on `216:972` (mark complete
-/ add rest day / tap-to-complete) and the **Pause** sheet `224:1001` (Resume / Stop
-here for today / Finish stage / **End journey**).
+**stay-options** chooser. The active journey shares one **control bar** across the map
+(`83:430`) and the itinerary (`410:1201`): **Pause** (outline) ⇄ **Resume** (solid) — an
+**immediate, reversible toggle** (no menu, no confirm; this absorbs the old "stop here
+for today") — beside a **••• (More)** button (`IconButton` Surface, Large on the map /
+Medium on the itinerary). The paused state has **no status chip**; the Resume button alone
+signals it. Everything secondary lives in one **••• options sheet** (`511:1344` on the map,
+`481:1257` on the itinerary) — identical except its top navigation row (**Itinerary** on
+the map, **Map** on the itinerary): **Itinerary/Map · Ask guide · Finish stage · Finish
+journey**. **Finish stage** marks the current stage complete and advances (→ Stage Complete
+`76:419`); **Finish journey** is **danger** and gated behind a confirm. The itinerary itself
+(`410:1201`) still carries schedule overrides (add rest day / combine / split /
+tap-to-complete).
 
 **Trust UI (the curation model, §6, made visible).** POI Detail (`164:651`) is the
 home of it: a **reliability card** (state + freshness + confidence, in status
@@ -460,8 +471,9 @@ native + offline parts of the stack before committing to structure.
 5. **Offline package** — bundle GR11 to R2; download into SQLite + register the
    offline map region; app works in airplane mode. Build the terrain + base-style
    workstream (§3) and the mutation outbox here.
-6. **Active journey + overrides** — full-screen map (`83:430`), itinerary overrides
-   (`216:972`), Pause sheet (`224:1001`), Stage Complete.
+6. **Active journey + overrides** — full-screen map (`83:430`), itinerary tabs
+   (`410:1201`), the shared Pause/Resume · ••• control bar, the ••• options sheet
+   (`511:1344` / `481:1257`), Stage Complete.
 7. **Content ingestion + admin — the distinct content workstream (§8).** This is its
    own phase because content acquisition, not engineering, is the real bottleneck.
    Build the **config-driven pipeline** (`packages/pipeline`) and the **curation tool**

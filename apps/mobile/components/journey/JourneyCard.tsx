@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { formatKm } from '../../lib/format';
 import type { JourneyListItem } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
-import { StatusChip } from '../ui';
+import { Button, StatusChip } from '../ui';
 
 interface Props {
   journey: JourneyListItem;
@@ -11,13 +11,11 @@ interface Props {
   onOpen: () => void;
   /** Open the full-screen active map (active/paused journeys only). */
   onMap: () => void;
-  /** Resume a paused journey (sets it active, then opens the map). */
-  onResume?: () => void;
   /** Button-less variant (e.g. the Home "My journeys" card) — tap opens it. */
   compact?: boolean;
 }
 
-export function JourneyCard({ journey, trailName, onOpen, onMap, onResume, compact }: Props) {
+export function JourneyCard({ journey, trailName, onOpen, onMap, compact }: Props) {
   const title = journey.name?.trim() || trailName;
   const isActive = journey.status === 'active';
   const isPaused = journey.status === 'paused';
@@ -62,25 +60,11 @@ export function JourneyCard({ journey, trailName, onOpen, onMap, onResume, compa
         {meta}
       </Text>
 
-      {!compact &&
-        inProgress &&
-        (isPaused ? (
-          <View style={styles.actions}>
-            <TouchableOpacity style={styles.btnGhost} onPress={onMap} activeOpacity={0.85}>
-              <Text style={styles.btnGhostLabel}>View map</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnPrimary} onPress={onResume} activeOpacity={0.85}>
-              <Text style={styles.btnPrimaryLabel}>Resume</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          // The actively-navigated journey: one CTA straight to the map.
-          <View style={styles.actions}>
-            <TouchableOpacity style={styles.btnPrimary} onPress={onMap} activeOpacity={0.85}>
-              <Text style={styles.btnPrimaryLabel}>Open in map</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+      {isActive && !compact && (
+        <View style={styles.actions}>
+          <Button label="Open in map" size="sm" grow onPress={onMap} />
+        </View>
+      )}
     </TouchableOpacity>
   );
 }
@@ -115,23 +99,4 @@ const styles = StyleSheet.create({
   meta: { ...type.meta, color: colors.text.secondary },
 
   actions: { flexDirection: 'row', gap: spacing[3], marginTop: spacing[2] },
-  btnGhost: {
-    flex: 1,
-    height: 40,
-    borderRadius: radius.lg,
-    borderWidth: 1,
-    borderColor: colors.border.default,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnGhostLabel: { ...type.cardTitle, color: colors.text.primary },
-  btnPrimary: {
-    flex: 1,
-    height: 40,
-    borderRadius: radius.lg,
-    backgroundColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  btnPrimaryLabel: { ...type.cardTitle, color: colors.text.onAccent },
 });

@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ScheduleGap } from '../../components/journey';
+import { ActiveControlBar, OptionsSheet, ScheduleGap } from '../../components/journey';
 import { Button, Icon, Segmented, StatPill } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { formatElevationM, formatKm, orientRoute, routeEndpoints } from '../../lib/format';
@@ -53,11 +53,20 @@ function confirmDelete(remove: () => void) {
   ]);
 }
 
-function confirmEnd(end: () => void) {
-  Alert.alert('End journey?', 'Marks the journey finished — it stays in your journeys.', [
-    { text: 'Cancel', style: 'cancel' },
-    { text: 'End journey', style: 'destructive', onPress: end },
-  ]);
+function confirmFinishJourney(end: () => void) {
+  Alert.alert(
+    'Finish journey?',
+    'Ends the journey and logs it as complete — it stays in your journeys.',
+    [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Finish journey', style: 'destructive', onPress: end },
+    ],
+  );
+}
+
+// The on-trail Guide chat is not built yet (Guide Core, §12 / phase 8).
+function askGuide() {
+  Alert.alert('Guide', 'The on-trail Guide is coming soon.');
 }
 
 export default function JourneyDetailScreen() {
@@ -68,6 +77,7 @@ export default function JourneyDetailScreen() {
   const queryClient = useQueryClient();
   const [tab, setTab] = useState<'itinerary' | 'settings'>('itinerary');
   const [guideDraft, setGuideDraft] = useState<GuidePreset | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const remove = useMutation({
     mutationFn: () => deleteJourney(id),
@@ -168,6 +178,46 @@ export default function JourneyDetailScreen() {
   const currentSectionNum = reverse ? totalSections - currentSectionOrder + 1 : currentSectionOrder;
 
   const guideValue = guideDraft ?? journey.guidePreset;
+
+  // Active-journey controls (shared model with the map): Pause is an immediate
+  // toggle; the ••• sheet holds navigation, guide, finish stage and finish journey.
+  const progressLabel = `Day ${currentDay} of ${walkStages.length} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
+  // Resuming from the itinerary drops you onto the live map; pausing stays put.
+  const toggleNavigation = () => {
+    if (isPaused) {
+      progress.mutate(
+        { type: 'resume' },
+        { onSuccess: () => router.push(`/journey/active/${id}`) },
+      );
+    } else {
+      progress.mutate({ type: 'pause' });
+    }
+  };
+  const finishStage = () => {
+    if (!currentStage) return;
+    progress.mutate(
+      { type: 'completeStage', stageId: currentStage.id },
+      {
+        onSuccess: () => {
+          setSheetOpen(false);
+          router.push(`/journey/complete/${id}`);
+        },
+      },
+    );
+  };
+  const finishJourney = () => {
+    confirmFinishJourney(() =>
+      progress.mutate(
+        { type: 'end' },
+        {
+          onSuccess: () => {
+            setSheetOpen(false);
+            router.replace('/(tabs)/journeys');
+          },
+        },
+      ),
+    );
+  };
 
   return (
     <View style={styles.screen}>
@@ -350,7 +400,7 @@ export default function JourneyDetailScreen() {
                       )}
                     </View>
                   </View>
-                  {current && isActive && (
+                  {/* {current && isActive && (
                     <View style={styles.stageActions}>
                       <TouchableOpacity
                         style={styles.ctaComplete}
@@ -370,7 +420,7 @@ export default function JourneyDetailScreen() {
                         <Text style={styles.ctaResumeLabel}>Open map</Text>
                       </TouchableOpacity>
                     </View>
-                  )}
+                  )} */}
                 </View>
                 {gap}
               </Fragment>
@@ -405,10 +455,11 @@ export default function JourneyDetailScreen() {
           <Text style={[styles.listHeader, styles.detailsHeader]}>JOURNEY</Text>
           <View style={styles.dangerWrap}>
             <Button
-              variant="danger"
+              tone="danger"
               label={remove.isPending ? 'Deleting…' : 'Delete journey'}
               onPress={() => confirmDelete(() => remove.mutate())}
               disabled={remove.isPending}
+              fullWidth
             />
           </View>
           <Text style={styles.settingsBlurb}>
@@ -432,45 +483,35 @@ export default function JourneyDetailScreen() {
         </View>
       )}
 
-      {/* In-progress CTA (Figma 13e) — pause/resume navigation + end the journey. */}
+      {/* In-progress control bar — Pause/Resume toggle + ••• options (Figma 13c). */}
       {tab === 'itinerary' && inProgress && (
         <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
-          <View style={styles.ctaRow}>
-            <TouchableOpacity
-              style={styles.ctaPrimary}
-              disabled={progress.isPending}
-              onPress={
-                isPaused
-                  ? () =>
-                      progress.mutate(
-                        { type: 'resume' },
-                        { onSuccess: () => router.push(`/journey/active/${id}`) },
-                      )
-                  : () => progress.mutate({ type: 'pause' })
-              }
-              activeOpacity={0.85}
-            >
-              <Icon name={isPaused ? 'play' : 'pause'} size={16} color={colors.text.onAccent} />
-              <Text style={styles.ctaPrimaryLabel}>{isPaused ? 'Resume' : 'Pause'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.ctaEnd}
-              disabled={progress.isPending}
-              onPress={() =>
-                confirmEnd(() =>
-                  progress.mutate(
-                    { type: 'end' },
-                    { onSuccess: () => router.replace('/(tabs)/journeys') },
-                  ),
-                )
-              }
-              activeOpacity={0.85}
-            >
-              <Text style={styles.ctaEndLabel}>End journey</Text>
-            </TouchableOpacity>
-          </View>
+          <ActiveControlBar
+            paused={isPaused}
+            pending={progress.isPending}
+            moreSize="md"
+            onToggle={toggleNavigation}
+            onMore={() => setSheetOpen(true)}
+          />
         </View>
       )}
+
+      <OptionsSheet
+        visible={sheetOpen}
+        context="itinerary"
+        journeyName={title}
+        progressLabel={progressLabel}
+        finishStageSubtitle={`Mark Day ${currentDay} complete and unlock Day ${currentDay + 1}.`}
+        pending={progress.isPending}
+        onNavigate={() => {
+          setSheetOpen(false);
+          router.push(`/journey/active/${id}`);
+        }}
+        onAskGuide={askGuide}
+        onFinishStage={finishStage}
+        onFinishJourney={finishJourney}
+        onClose={() => setSheetOpen(false)}
+      />
     </View>
   );
 }
@@ -600,29 +641,6 @@ const styles = StyleSheet.create({
     borderTopColor: colors.border.default,
     backgroundColor: colors.bg.surface,
   },
-  ctaRow: { flexDirection: 'row', gap: spacing[3] },
-  ctaPrimary: {
-    flex: 1,
-    height: 48,
-    borderRadius: radius.lg,
-    backgroundColor: colors.accent,
-    flexDirection: 'row',
-    gap: spacing[3],
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaPrimaryLabel: { ...type.cardTitle, color: colors.text.onAccent },
-  // Tonal danger (matches Button's `dangerSubtle`) — destructive but quiet.
-  ctaEnd: {
-    flex: 1,
-    height: 48,
-    borderRadius: radius.lg,
-    backgroundColor: colors.status.danger.bg,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ctaEndLabel: { ...type.cardTitle, color: colors.status.danger.text },
-
   stageActions: { flexDirection: 'row', gap: spacing[3], marginTop: spacing[5] },
   ctaComplete: {
     flex: 1,

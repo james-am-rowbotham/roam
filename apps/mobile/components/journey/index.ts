@@ -1,5 +1,6 @@
+export { ActiveControlBar } from './ActiveControlBar';
 export { JourneyCard } from './JourneyCard';
-export { PauseSheet } from './PauseSheet';
+export { OptionsSheet } from './OptionsSheet';
 export { ScheduleGap } from './ScheduleGap';
 export { SetupFooter } from './SetupFooter';
 export { SetupScaffold } from './SetupScaffold';

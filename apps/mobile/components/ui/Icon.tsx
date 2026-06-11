@@ -2,18 +2,24 @@ import {
   ArrowLeft,
   ArrowLeftRight,
   Backpack,
+  Bot,
   Calendar,
   Check,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
   X as Close,
+  Cloud,
   Combine,
+  Flag,
   Home,
   Map as MapIcon,
   Mic,
+  MoreHorizontal,
   Pause,
   Play,
   Plus,
+  Route,
   Search,
   User,
   UtensilsCrossed,
@@ -29,6 +35,8 @@ export type IconName =
   | 'arrow-left'
   | 'chevron-right'
   | 'chevron-down'
+  | 'chevron-up'
+  | 'cloud'
   | 'swap'
   | 'check'
   | 'combine'
@@ -40,7 +48,11 @@ export type IconName =
   | 'calendar'
   | 'water'
   | 'food'
-  | 'close';
+  | 'close'
+  | 'more'
+  | 'flag'
+  | 'robot'
+  | 'route';
 
 interface Props {
   name: IconName;
@@ -56,6 +68,8 @@ const icons: Record<IconName, React.ElementType> = {
   'arrow-left': ArrowLeft,
   'chevron-right': ChevronRight,
   'chevron-down': ChevronDown,
+  'chevron-up': ChevronUp,
+  cloud: Cloud,
   swap: ArrowLeftRight,
   check: Check,
   combine: Combine,
@@ -68,6 +82,10 @@ const icons: Record<IconName, React.ElementType> = {
   water: Waves,
   food: UtensilsCrossed,
   close: Close,
+  more: MoreHorizontal,
+  flag: Flag,
+  robot: Bot,
+  route: Route,
 };
 
 export function Icon({ name, size = 24, color = colors.text.primary }: Props) {

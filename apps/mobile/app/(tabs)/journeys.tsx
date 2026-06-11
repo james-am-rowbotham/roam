@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -6,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { JourneyCard } from '../../components/journey';
 import { Button, Icon } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
-import { journeyProgress, journeysQueryKey, useJourneys, useTrails } from '../../lib/hooks';
+import { useJourneys, useTrails } from '../../lib/hooks';
 import { useJourneySetupStore } from '../../store/journeySetupStore';
 import { colors, layout, radius, spacing, type } from '../../theme';
 
@@ -20,21 +19,10 @@ const TABS: { value: JourneyTab; label: string }[] = [
 export default function JourneysScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const queryClient = useQueryClient();
   const [tab, setTab] = useState<JourneyTab>('active');
 
   const { data: journeysData, isLoading } = useJourneys({ userId: CURRENT_USER_ID });
   const { data: trailsData } = useTrails();
-
-  // Resume a paused journey from its card, then drop into the map. Resuming
-  // auto-pauses any other active journey server-side (single-active invariant).
-  const resume = useMutation({
-    mutationFn: (journeyId: number) => journeyProgress(String(journeyId), { type: 'resume' }),
-    onSuccess: (_data, journeyId) => {
-      queryClient.invalidateQueries({ queryKey: journeysQueryKey({ userId: CURRENT_USER_ID }) });
-      router.push(`/journey/active/${journeyId}`);
-    },
-  });
 
   const journeys = journeysData?.data ?? [];
   const trails = trailsData?.data ?? [];
@@ -64,6 +52,14 @@ export default function JourneysScreen() {
     completed: journeys.filter((j) => j.status === 'completed' || j.status === 'abandoned'),
   };
   const list = byTab[tab];
+  const sortedList = list.sort((a, b) => {
+    // active to the top, then by most recently updated.
+    const aActive = a.status === 'active' ? 1 : 0;
+    const bActive = b.status === 'active' ? 1 : 0;
+    if (aActive !== bActive) return bActive - aActive;
+    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+  });
+
   const isEmpty = !isLoading && list.length === 0;
 
   const emptyText: Record<JourneyTab, string> = {
@@ -119,14 +115,13 @@ export default function JourneysScreen() {
           </View>
         )}
 
-        {list.map((j) => (
+        {sortedList.map((j) => (
           <JourneyCard
             key={j.id}
             journey={j}
             trailName={trailName(j.routeId)}
             onOpen={() => router.push(`/journey/${j.id}`)}
             onMap={() => router.push(`/journey/active/${j.id}`)}
-            onResume={() => resume.mutate(j.id)}
           />
         ))}
       </ScrollView>

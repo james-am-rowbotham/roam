@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapView, POILayer, TrailLayer } from '../../components/map';
-import { Icon } from '../../components/ui';
+import { Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useMapStore } from '../../store/mapStore';
@@ -228,9 +228,7 @@ export default function MapScreen() {
             {trailVisible && isSectionActive && activeSectionLabel && (
               <FilterChip label={activeSectionLabel} onRemove={removeSectionFilter} />
             )}
-            <TouchableOpacity style={styles.filterIcon} activeOpacity={0.8}>
-              <Icon name="search" size={18} color={colors.text.primary} />
-            </TouchableOpacity>
+            <IconButton icon="search" style="surface" size="md" />
             <TouchableOpacity style={styles.filterChipInactive} activeOpacity={0.8}>
               <Text style={styles.filterChipInactiveText}>Moderate</Text>
             </TouchableOpacity>
@@ -322,16 +320,6 @@ const styles = StyleSheet.create({
   filterContainer: { position: 'absolute', left: 0, right: 0 },
   filterWrap: { paddingHorizontal: spacing[8] },
   filterRow: { gap: spacing[4], flexDirection: 'row', alignItems: 'center' },
-  filterIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.surface,
-    borderWidth: 1,
-    borderColor: colors.border.default,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   filterChipInactive: {
     height: 36,
     paddingHorizontal: 14,
