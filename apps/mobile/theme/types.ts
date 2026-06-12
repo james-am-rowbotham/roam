@@ -17,10 +17,8 @@ export interface ThemeColors {
     warn: StatusPair;
     danger: StatusPair;
     success: StatusPair;
-    /** Progress/active state (was the blue "info" pair; resolves to green). */
+    /** Progress/active state (replaced the blue "info" pair; resolves to green). */
     progress: StatusPair;
-    /** @deprecated alias of `progress` — kept for one release, then removed. */
-    info: StatusPair;
   };
   brand: { blazeRed: string; blazeCream: string; blazeHairline: string };
   map: { base: string; road: string; green: string; route: string; water: string; contour: string };
@@ -34,7 +32,7 @@ export interface ThemeColors {
 }
 
 export interface ThemeFonts {
-  /** Display face for headings (Bricolage; Inter SB in legacy). Never below 15px. */
+  /** Display face for headings (Bricolage). Never below 15px. */
   display: string;
   displayBold: string;
   regular: string;

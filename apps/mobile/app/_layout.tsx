@@ -9,12 +9,7 @@ import {
   HankenGrotesk_600SemiBold,
   HankenGrotesk_700Bold,
 } from '@expo-google-fonts/hanken-grotesk';
-import {
-  Inter_400Regular,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  useFonts,
-} from '@expo-google-fonts/inter';
+import { useFonts } from 'expo-font';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
@@ -27,12 +22,7 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  // Both stacks load while the designRefresh flag exists; drop Inter with the
-  // legacy theme after one stable release.
   const [loaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_600SemiBold,
-    Inter_700Bold,
     BricolageGrotesque_600SemiBold,
     BricolageGrotesque_700Bold,
     HankenGrotesk_400Regular,

@@ -257,8 +257,8 @@ export default function StageCompleteScreen() {
                 </View>
               ) : (
                 <Text style={styles.consequence}>
-                  Plan reflows automatically · finish {finishPhrase(forecast.finishDate)} ·
-                  bookings unaffected
+                  Plan reflows automatically · finish {finishPhrase(forecast.finishDate)} · bookings
+                  unaffected
                 </Text>
               )}
             </View>
@@ -350,7 +350,12 @@ const styles = StyleSheet.create({
   tomorrowTitle: { ...type.cardTitle, color: colors.text.primary },
   tomorrowMeta: { ...type.meta, color: colors.text.secondary },
   leadIn: { ...type.meta, color: colors.text.secondary, paddingTop: spacing[2] },
-  decisionRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[3], paddingVertical: spacing[2] },
+  decisionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[3],
+    paddingVertical: spacing[2],
+  },
   consequence: { ...type.meta, fontSize: 11, lineHeight: 15, color: colors.text.secondary },
   bookingWarn: {
     flexDirection: 'row',
@@ -360,7 +365,13 @@ const styles = StyleSheet.create({
     padding: spacing[4],
     alignItems: 'flex-start',
   },
-  bookingWarnText: { ...type.meta, fontSize: 12, lineHeight: 17, color: colors.status.warn.text, flex: 1 },
+  bookingWarnText: {
+    ...type.meta,
+    fontSize: 12,
+    lineHeight: 17,
+    color: colors.status.warn.text,
+    flex: 1,
+  },
   bookingWarnLink: { fontFamily: fonts.semiBold, color: colors.status.warn.text },
 
   doneCard: {

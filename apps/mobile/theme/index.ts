@@ -86,8 +86,6 @@ export const colors: Theme['colors'] = {
     danger: { bg: palette.red100, text: palette.red700 },
     success: { bg: palette.green100, text: palette.green700 },
     progress,
-    // Deprecated alias of `progress` — delete in the final migration commit.
-    info: progress,
   },
 
   brand: {

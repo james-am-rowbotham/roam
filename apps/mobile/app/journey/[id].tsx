@@ -297,63 +297,63 @@ export default function JourneyDetailScreen() {
               chain.push({ place: to, sectionId: sec.id });
             });
             return (
-                <View key={s.id} style={[styles.stage, current && styles.stageCurrent]}>
-                  <View style={styles.stageMain}>
-                    <View
-                      style={[
-                        styles.dayBadge,
-                        done && styles.dayBadgeDone,
-                        current && styles.dayBadgeActive,
-                      ]}
-                    >
-                      {done ? (
-                        <Icon name="check" size={16} color={colors.status.success.text} />
+              <View key={s.id} style={[styles.stage, current && styles.stageCurrent]}>
+                <View style={styles.stageMain}>
+                  <View
+                    style={[
+                      styles.dayBadge,
+                      done && styles.dayBadgeDone,
+                      current && styles.dayBadgeActive,
+                    ]}
+                  >
+                    {done ? (
+                      <Icon name="check" size={16} color={colors.status.success.text} />
+                    ) : (
+                      <Text style={[styles.dayNum, current && styles.dayNumActive]}>
+                        {s.orderIndex}
+                      </Text>
+                    )}
+                  </View>
+                  <View style={styles.stageBody}>
+                    <View style={styles.sectionList}>
+                      {chain.length > 0 ? (
+                        chain.map((node, idx) => (
+                          <Fragment key={`${node.place}-${idx}`}>
+                            {idx > 0 && <Text style={styles.sectionSep}>→</Text>}
+                            <TouchableOpacity
+                              onPress={() => router.push(`/section/${node.sectionId}`)}
+                              hitSlop={{ top: 6, bottom: 6, left: 2, right: 2 }}
+                            >
+                              <Text style={[styles.sectionLink, done && styles.sectionLinkDone]}>
+                                {node.place}
+                              </Text>
+                            </TouchableOpacity>
+                          </Fragment>
+                        ))
                       ) : (
-                        <Text style={[styles.dayNum, current && styles.dayNumActive]}>
-                          {s.orderIndex}
+                        <Text style={[styles.stageTitle, done && styles.sectionLinkDone]}>
+                          Day {s.orderIndex}
                         </Text>
                       )}
                     </View>
-                    <View style={styles.stageBody}>
-                      <View style={styles.sectionList}>
-                        {chain.length > 0 ? (
-                          chain.map((node, idx) => (
-                            <Fragment key={`${node.place}-${idx}`}>
-                              {idx > 0 && <Text style={styles.sectionSep}>→</Text>}
-                              <TouchableOpacity
-                                onPress={() => router.push(`/section/${node.sectionId}`)}
-                                hitSlop={{ top: 6, bottom: 6, left: 2, right: 2 }}
-                              >
-                                <Text style={[styles.sectionLink, done && styles.sectionLinkDone]}>
-                                  {node.place}
-                                </Text>
-                              </TouchableOpacity>
-                            </Fragment>
-                          ))
-                        ) : (
-                          <Text style={[styles.stageTitle, done && styles.sectionLinkDone]}>
-                            Day {s.orderIndex}
-                          </Text>
-                        )}
+                    <Text style={styles.stageMeta}>
+                      {[
+                        formatKm(s.distanceM),
+                        `${formatElevationM(s.ascentM)} ↑`,
+                        `${formatElevationM(s.descentM)} ↓`,
+                      ].join('  ·  ')}
+                    </Text>
+                    {overnight && (
+                      <View style={styles.overnight}>
+                        <Icon name="stay" size={13} color={colors.marker.refuge} />
+                        <Text style={styles.overnightText} numberOfLines={1}>
+                          {overnight}
+                        </Text>
                       </View>
-                      <Text style={styles.stageMeta}>
-                        {[
-                          formatKm(s.distanceM),
-                          `${formatElevationM(s.ascentM)} ↑`,
-                          `${formatElevationM(s.descentM)} ↓`,
-                        ].join('  ·  ')}
-                      </Text>
-                      {overnight && (
-                        <View style={styles.overnight}>
-                          <Icon name="stay" size={13} color={colors.marker.refuge} />
-                          <Text style={styles.overnightText} numberOfLines={1}>
-                            {overnight}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
+                    )}
                   </View>
                 </View>
+              </View>
             );
           })}
         </ScrollView>

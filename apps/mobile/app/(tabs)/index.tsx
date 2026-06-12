@@ -55,8 +55,8 @@ export default function HomeScreen() {
         <View style={styles.welcomeCard}>
           <Text style={styles.welcomeTitle}>Welcome to Roam</Text>
           <Text style={styles.welcomeBody}>
-            Pick a trail, set your pace, and Roam plans the days — then walks them with you,
-            fully offline.
+            Pick a trail, set your pace, and Roam plans the days — then walks them with you, fully
+            offline.
           </Text>
           <Button label="Browse trails" size="sm" onPress={() => router.push('/(tabs)/map')} />
         </View>
