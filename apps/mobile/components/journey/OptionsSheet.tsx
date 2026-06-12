@@ -96,7 +96,7 @@ export function OptionsSheet({
             onPress={onNavigate}
           />
           <Row
-            icon="robot"
+            icon="guide"
             iconColor={colors.status.progress.text}
             iconBg={colors.status.progress.bg}
             title="Ask guide"

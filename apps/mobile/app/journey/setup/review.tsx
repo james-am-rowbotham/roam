@@ -251,7 +251,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  dayNum: { ...type.cardTitle, fontFamily: fonts.monoMedium, fontSize: 14, color: colors.text.primary },
+  dayNum: {
+    ...type.cardTitle,
+    fontFamily: fonts.monoMedium,
+    fontSize: 14,
+    color: colors.text.primary,
+  },
   stageBody: { flex: 1, gap: spacing[1] },
   sectionList: { gap: spacing[1] },
   sectionRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },

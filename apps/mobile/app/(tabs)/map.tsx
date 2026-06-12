@@ -10,7 +10,7 @@ import {
   TrailLayer,
   UserMarker,
 } from '../../components/map';
-import { Icon, IconButton } from '../../components/ui';
+import { Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
@@ -21,29 +21,14 @@ import { colors, fonts, radius, spacing, type } from '../../theme';
 // Filter chips — pure filters, × to remove
 // ---------------------------------------------------------------------------
 
+// Active filter — a selected Chip with a dismiss suffix ("GR11 ✕").
 function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }) {
-  return (
-    <View style={styles.chip}>
-      <Text style={styles.chipLabel}>{label}</Text>
-      <TouchableOpacity
-        style={styles.chipX}
-        onPress={onRemove}
-        hitSlop={{ top: 8, bottom: 8, left: 4, right: 8 }}
-      >
-        <Icon name="close" size={18} color={colors.text.onAccent} />
-      </TouchableOpacity>
-    </View>
-  );
+  return <Chip label={label} selected suffix="✕" onPress={onRemove} />;
 }
 
-// A removed filter, shown muted with a + to re-add it.
+// A removed filter, shown as a default chip with a + to re-add it.
 function ReAddChip({ label, onAdd }: { label: string; onAdd: () => void }) {
-  return (
-    <TouchableOpacity style={styles.reAddChip} onPress={onAdd} activeOpacity={0.8}>
-      <Icon name="plus" size={16} color={colors.text.secondary} />
-      <Text style={styles.reAddChipText}>{label}</Text>
-    </TouchableOpacity>
-  );
+  return <Chip label={`+ ${label}`} onPress={onAdd} />;
 }
 
 // ---------------------------------------------------------------------------
@@ -240,12 +225,8 @@ export default function MapScreen() {
               <FilterChip label={activeSectionLabel} onRemove={removeSectionFilter} />
             )}
             <IconButton icon="search" style="surface" size="md" />
-            <TouchableOpacity style={styles.filterChipInactive} activeOpacity={0.8}>
-              <Text style={styles.filterChipInactiveText}>Moderate</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.filterChipInactive} activeOpacity={0.8}>
-              <Text style={styles.filterChipInactiveText}>2–3 days</Text>
-            </TouchableOpacity>
+            <Chip label="Moderate" />
+            <Chip label="2–3 days" />
           </ScrollView>
         </View>
       </View>
@@ -300,35 +281,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.accent,
-    borderRadius: radius.full,
-    paddingLeft: 12,
-    paddingRight: 6,
-    paddingVertical: 7,
-    gap: 6,
-    shadowColor: colors.accent,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  chipLabel: { fontFamily: fonts.semiBold, fontSize: 13, color: colors.text.onAccent },
-  chipX: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  chipXText: {
-    fontFamily: fonts.semiBold,
-    fontSize: 13,
-    color: colors.text.onAccent,
-    lineHeight: 18,
-  },
 
   geoLabel: {
     flexDirection: 'row',
@@ -362,30 +314,6 @@ const styles = StyleSheet.create({
   filterContainer: { position: 'absolute', left: 0, right: 0 },
   filterWrap: { paddingHorizontal: spacing[8] },
   filterRow: { gap: spacing[4], flexDirection: 'row', alignItems: 'center' },
-  filterChipInactive: {
-    height: 36,
-    paddingHorizontal: 14,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.surface,
-    borderWidth: 1,
-    borderColor: colors.border.default,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  filterChipInactiveText: { fontFamily: fonts.semiBold, fontSize: 13, color: colors.text.primary },
-  reAddChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing[2],
-    height: 36,
-    paddingHorizontal: 12,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.surface,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: colors.border.default,
-  },
-  reAddChipText: { fontFamily: fonts.semiBold, fontSize: 13, color: colors.text.secondary },
 
   backBtn: {
     position: 'absolute',

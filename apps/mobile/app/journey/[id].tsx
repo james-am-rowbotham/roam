@@ -609,7 +609,12 @@ const styles = StyleSheet.create({
   },
   dayBadgeDone: { backgroundColor: colors.status.success.bg },
   dayBadgeActive: { backgroundColor: colors.status.progress.text },
-  dayNum: { ...type.cardTitle, fontFamily: fonts.monoMedium, fontSize: 14, color: colors.text.primary },
+  dayNum: {
+    ...type.cardTitle,
+    fontFamily: fonts.monoMedium,
+    fontSize: 14,
+    color: colors.text.primary,
+  },
   dayNumActive: { color: colors.text.onAccent },
   stageBody: { flex: 1, gap: spacing[2] },
   sectionList: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing[2] },

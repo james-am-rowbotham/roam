@@ -134,6 +134,18 @@ export const theme: Theme = { colors, fonts, type };
 
 export type { Theme, ThemeColors, ThemeFonts, ThemeType, TypeStyle } from './types';
 
+// Shadows — RN shadow props for elements floating over maps/photos.
+// Figma: 0 2 6 rgba(38,33,26,0.07).
+export const shadows = {
+  surface: {
+    shadowColor: '#26211A',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+} as const;
+
 export const radius = {
   sm: 6,
   md: 7,
