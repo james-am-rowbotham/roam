@@ -18,7 +18,7 @@ import {
   TrailLayer,
   UserMarker,
 } from '../../../components/map';
-import { Icon, IconButton } from '../../../components/ui';
+import { Icon, IconButton, RoamMark } from '../../../components/ui';
 import { stageSubGeometry, stageViewport } from '../../../lib/activeJourney';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
 import { locateOnLine } from '../../../lib/geo';
@@ -262,9 +262,13 @@ export default function ActiveJourneyScreen() {
             <>
               <View style={styles.grabber} />
               <View style={styles.stageSummary}>
-                <Text style={styles.summaryDay}>
-                  DAY {dayNum} OF {walkStages.length}
-                </Text>
+                {/* Blaze placement (3): the chip beside "DAY n OF m". */}
+                <View style={styles.summaryDayRow}>
+                  <RoamMark width={14} />
+                  <Text style={styles.summaryDay}>
+                    DAY {dayNum} OF {walkStages.length}
+                  </Text>
+                </View>
                 <Text style={styles.summaryTitle} numberOfLines={1}>
                   {routeLabel}
                 </Text>
@@ -393,6 +397,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.border.default,
   },
   stageSummary: { gap: spacing[1] },
+  summaryDayRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
   summaryDay: { ...type.label, color: colors.text.secondary },
   summaryTitle: { ...type.sectionHeader, color: colors.text.primary },
   summaryMeta: { ...type.meta, color: colors.text.secondary },

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapView, TrailLayer } from '../../components/map';
-import { Button, Icon, StatPill } from '../../components/ui';
+import { Button, Icon, RoamMark, StatPill } from '../../components/ui';
 import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailSections } from '../../lib/hooks';
@@ -97,6 +97,10 @@ export default function TrailDetailScreen() {
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Icon name="arrow-left" size={20} color={colors.accent} />
           </TouchableOpacity>
+          {/* Blaze placement (2): top-right of the trail hero photo. */}
+          <View style={styles.heroBlaze}>
+            <RoamMark width={22} />
+          </View>
           <Text style={styles.heroName}>{trail.ref ?? trail.name}</Text>
           {subtitle ? <Text style={styles.heroSub}>{subtitle}</Text> : null}
         </View>
@@ -172,7 +176,7 @@ export default function TrailDetailScreen() {
             <Text style={styles.onTrailLabel}>ON THIS TRAIL</Text>
             <SummaryRow
               color={colors.marker.refuge}
-              icon="home"
+              icon="stay"
               title="Stay"
               body={`${sections.length > 0 ? sections.length : '—'} sections · refuges and camping along the route`}
             />
@@ -248,6 +252,7 @@ const styles = StyleSheet.create({
     padding: spacing[8],
   },
   heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: colors.overlay.dark },
+  heroBlaze: { position: 'absolute', top: 57, right: 24 },
   backBtn: {
     position: 'absolute',
     top: 51,

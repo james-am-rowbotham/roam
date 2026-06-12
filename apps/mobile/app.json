@@ -16,17 +16,29 @@
       "package": "com.roam.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#494949"
+        "backgroundColor": "#26231E"
       }
     },
     "plugins": [
       "expo-router",
       "expo-dev-client",
-      ["@maplibre/maplibre-react-native", {}],
+      [
+        "@maplibre/maplibre-react-native",
+        {}
+      ],
       [
         "expo-location",
         {
           "locationWhenInUsePermission": "Roam uses your location to show where you are on the trail and your progress."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/brand/splash-lockup.png",
+          "imageWidth": 166,
+          "resizeMode": "contain",
+          "backgroundColor": "#FAF7F1"
         }
       ]
     ],

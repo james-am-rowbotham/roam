@@ -215,7 +215,7 @@ export default function SectionDetailScreen() {
             <View style={styles.summaryRows}>
               <SummaryRow
                 color={colors.marker.refuge}
-                icon="home"
+                icon="stay"
                 title="Stay"
                 body="Check refuges along this section — book ahead in season."
               />

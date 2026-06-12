@@ -22,7 +22,9 @@ export function Chip({ label, selected, onPress, suffix, disabled }: Props) {
       disabled={disabled}
       activeOpacity={0.8}
     >
-      <Text style={[styles.label, { color: selected ? colors.text.onAccent : colors.text.primary }]}>
+      <Text
+        style={[styles.label, { color: selected ? colors.text.onAccent : colors.text.primary }]}
+      >
         {label}
       </Text>
       {suffix && (

@@ -58,9 +58,7 @@ function makeGlyph(paths: string[]) {
 }
 
 // Hut with door.
-const Stay = makeGlyph([
-  'M4.4 10.6L12 4.6L19.6 10.6M6.4 9.2V19H17.6V9.2M10.4 19V14.4H13.6V19',
-]);
+const Stay = makeGlyph(['M4.4 10.6L12 4.6L19.6 10.6M6.4 9.2V19H17.6V9.2M10.4 19V14.4H13.6V19']);
 
 // Droplet with interior ripple arc.
 const WaterBottle = makeGlyph([

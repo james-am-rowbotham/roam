@@ -90,7 +90,12 @@ export const colors: Theme['colors'] = {
     info: progress,
   },
 
-  brand: { blazeRed: palette.blazeRed, blazeCream: palette.blazeCream },
+  brand: {
+    blazeRed: palette.blazeRed,
+    blazeCream: palette.blazeCream,
+    // Hairline on the cream bar so it reads on light surfaces.
+    blazeHairline: 'rgba(0,0,0,0.08)',
+  },
 
   map: {
     base: palette.sand200,

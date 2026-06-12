@@ -22,7 +22,7 @@ export interface ThemeColors {
     /** @deprecated alias of `progress` — kept for one release, then removed. */
     info: StatusPair;
   };
-  brand: { blazeRed: string; blazeCream: string };
+  brand: { blazeRed: string; blazeCream: string; blazeHairline: string };
   map: { base: string; road: string; green: string; route: string; water: string; contour: string };
   overlay: {
     dark: string;

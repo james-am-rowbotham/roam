@@ -281,7 +281,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
 
-
   geoLabel: {
     flexDirection: 'row',
     alignItems: 'center',

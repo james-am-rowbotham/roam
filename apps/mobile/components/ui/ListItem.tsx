@@ -40,12 +40,7 @@ export function ListItem(props: Props) {
   const isToggle = props.trailing === 'toggle';
 
   return (
-    <TouchableOpacity
-      style={styles.row}
-      onPress={onPress}
-      disabled={!onPress}
-      activeOpacity={0.7}
-    >
+    <TouchableOpacity style={styles.row} onPress={onPress} disabled={!onPress} activeOpacity={0.7}>
       {showIcon && icon && <Icon name={icon} size={20} color={colors.text.primary} />}
       <Text style={styles.title}>{title}</Text>
       {isToggle ? (
