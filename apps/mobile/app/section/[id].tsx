@@ -226,7 +226,7 @@ export default function SectionDetailScreen() {
                 body="Check water sources along this section before setting off."
               />
               <SummaryRow
-                color={colors.trail.local}
+                color={colors.marker.food}
                 icon="food"
                 title="Food"
                 body="Carry food for the full section unless refuges are confirmed open."

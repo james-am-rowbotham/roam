@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, radius, type } from '../../theme';
 
-// Status pill in the §16 status colours. Convention: green = done,
-// blue/info = active/current, neutral = upcoming, amber = caution.
-export type StatusVariant = 'neutral' | 'info' | 'success' | 'warn' | 'danger';
+// Status pill in the status colours. Convention: green = done,
+// progress = active/current, neutral = upcoming, amber = caution.
+// 'info' is a deprecated alias of 'progress' — remove after one release.
+export type StatusVariant = 'neutral' | 'progress' | 'info' | 'success' | 'warn' | 'danger';
 
 const VARIANTS: Record<StatusVariant, { bg: string; text: string }> = {
   neutral: { bg: colors.bg.subtle, text: colors.text.secondary },
-  info: colors.status.info,
+  progress: colors.status.progress,
+  info: colors.status.progress,
   success: colors.status.success,
   warn: colors.status.warn,
   danger: colors.status.danger,

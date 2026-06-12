@@ -1,4 +1,18 @@
 import {
+  BricolageGrotesque_600SemiBold,
+  BricolageGrotesque_700Bold,
+} from '@expo-google-fonts/bricolage-grotesque';
+import {
+  GeistMono_400Regular,
+  GeistMono_500Medium,
+} from '@expo-google-fonts/geist-mono';
+import {
+  HankenGrotesk_400Regular,
+  HankenGrotesk_500Medium,
+  HankenGrotesk_600SemiBold,
+  HankenGrotesk_700Bold,
+} from '@expo-google-fonts/hanken-grotesk';
+import {
   Inter_400Regular,
   Inter_600SemiBold,
   Inter_700Bold,
@@ -16,7 +30,21 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({ Inter_400Regular, Inter_600SemiBold, Inter_700Bold });
+  // Both stacks load while the designRefresh flag exists; drop Inter with the
+  // legacy theme after one stable release.
+  const [loaded, error] = useFonts({
+    Inter_400Regular,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    BricolageGrotesque_600SemiBold,
+    BricolageGrotesque_700Bold,
+    HankenGrotesk_400Regular,
+    HankenGrotesk_500Medium,
+    HankenGrotesk_600SemiBold,
+    HankenGrotesk_700Bold,
+    GeistMono_400Regular,
+    GeistMono_500Medium,
+  });
 
   useEffect(() => {
     if (loaded || error) SplashScreen.hideAsync();

@@ -183,7 +183,7 @@ export default function TrailDetailScreen() {
               body="Rivers, springs and refuge taps — rarely more than 2–3 hours apart."
             />
             <SummaryRow
-              color={colors.trail.local}
+              color={colors.marker.food}
               icon="food"
               title="Food"
               body="Resupply in valley towns every 3–5 days; most refuges serve dinner."

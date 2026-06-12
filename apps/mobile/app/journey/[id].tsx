@@ -575,7 +575,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg.subtle,
     overflow: 'hidden',
   },
-  progressFill: { height: 6, borderRadius: radius.full, backgroundColor: colors.status.info.text },
+  progressFill: { height: 6, borderRadius: radius.full, backgroundColor: colors.status.progress.text },
   progressMeta: { ...type.meta, color: colors.text.secondary },
 
   listHeader: {
@@ -593,7 +593,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing[8],
     paddingHorizontal: layout.screenPadding,
   },
-  stageCurrent: { backgroundColor: colors.status.info.bg },
+  stageCurrent: { backgroundColor: colors.status.progress.bg },
   stageMain: { flexDirection: 'row', gap: spacing[4], alignItems: 'flex-start' },
   dayBadge: {
     width: 30,
@@ -604,7 +604,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dayBadgeDone: { backgroundColor: colors.status.success.bg },
-  dayBadgeActive: { backgroundColor: colors.status.info.text },
+  dayBadgeActive: { backgroundColor: colors.status.progress.text },
   dayNum: { ...type.cardTitle, color: colors.text.primary },
   dayNumActive: { color: colors.text.onAccent },
   stageBody: { flex: 1, gap: spacing[2] },

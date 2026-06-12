@@ -27,15 +27,15 @@ export function JourneyCard({ journey, trailName, onOpen, onMap, compact }: Prop
   const done = journey.completedDays || 0;
   const currentDay = Math.min(done + 1, total || 1);
   const pct = isCompleted ? 100 : total > 0 ? Math.round((done / total) * 100) : 0;
-  const barColor = isCompleted ? colors.status.success.text : colors.status.info.text;
+  const barColor = isCompleted ? colors.status.success.text : colors.status.progress.text;
 
   const chip = isCompleted
     ? { label: '✓ Complete', variant: 'success' as const }
     : isPaused
       ? { label: `Paused · Day ${currentDay}`, variant: 'warn' as const }
       : isActive
-        ? { label: `Day ${currentDay} of ${total}`, variant: 'info' as const }
-        : { label: 'Planned', variant: 'info' as const };
+        ? { label: `Day ${currentDay} of ${total}`, variant: 'progress' as const }
+        : { label: 'Planned', variant: 'progress' as const };
 
   const meta = inProgress
     ? `${formatKm(journey.doneDistanceM || 0)} of ${formatKm(journey.totalDistanceM || 0)}`

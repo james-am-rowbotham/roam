@@ -97,8 +97,8 @@ export function OptionsSheet({
           />
           <Row
             icon="robot"
-            iconColor={colors.status.info.text}
-            iconBg={colors.status.info.bg}
+            iconColor={colors.status.progress.text}
+            iconBg={colors.status.progress.bg}
             title="Ask guide"
             subtitle="Ask the trail guide a question."
             onPress={onAskGuide}
