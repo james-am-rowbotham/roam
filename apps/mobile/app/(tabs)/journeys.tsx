@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { JourneyCard } from '../../components/journey';
-import { Button, Icon } from '../../components/ui';
+import { Button, Icon, RoamMark } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { useJourneys, useTrails } from '../../lib/hooks';
 import { useJourneySetupStore } from '../../store/journeySetupStore';
@@ -110,8 +110,12 @@ export default function JourneysScreen() {
       >
         {isEmpty && (
           <View style={styles.empty}>
+            <RoamMark width={34} />
+            <Text style={styles.emptyTitle}>No journeys yet</Text>
             <Text style={styles.emptyText}>{emptyText[tab]}</Text>
-            {tab !== 'completed' && <Button label="Plan a journey" onPress={startNewJourney} />}
+            {tab !== 'completed' && (
+              <Button label="Find a trail" onPress={() => router.push('/(tabs)')} />
+            )}
           </View>
         )}
 
@@ -168,5 +172,6 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     alignItems: 'center',
   },
+  emptyTitle: { ...type.cardTitle, color: colors.text.primary },
   emptyText: { ...type.body, color: colors.text.secondary, textAlign: 'center' },
 });

@@ -22,6 +22,7 @@ import {
   Plus,
   Route,
   Search,
+  TriangleAlert,
   User,
   WifiOff,
 } from 'lucide-react-native';
@@ -99,6 +100,7 @@ export type IconName =
   | 'flag'
   | 'guide'
   | 'route'
+  | 'alert'
   | 'wifi-off';
 
 interface Props {
@@ -135,6 +137,7 @@ const icons: Record<IconName, React.ElementType> = {
   flag: Flag,
   guide: Compass,
   route: Route,
+  alert: TriangleAlert,
   'wifi-off': WifiOff,
 };
 

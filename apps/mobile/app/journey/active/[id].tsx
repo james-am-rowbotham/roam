@@ -33,7 +33,7 @@ import {
 import { sectionsForDay } from '../../../lib/sections';
 import { useJourneyProgress } from '../../../lib/useJourneyProgress';
 import { useUserLocation } from '../../../lib/useUserLocation';
-import { colors, layout, radius, spacing, type } from '../../../theme';
+import { colors, fonts, layout, radius, spacing, type } from '../../../theme';
 
 // Finish journey is destructive — gate it behind a confirm.
 function confirmFinishJourney(end: () => void) {
@@ -233,6 +233,16 @@ export default function ActiveJourneyScreen() {
         {coords && <UserMarker coord={[coords.lng, coords.lat]} />}
       </MapView>
 
+      {/* Paused context chip — the Resume button is the state signal; this
+          pins where you are while paused. */}
+      {isPaused && (
+        <View style={[styles.pausedChip, { top: insets.top + spacing[4] }]} pointerEvents="none">
+          <Text style={styles.pausedChipText}>
+            {`PAUSED · DAY ${dayNum} · ${routeLabel.toUpperCase()}`}
+          </Text>
+        </View>
+      )}
+
       {/* Back */}
       <TouchableOpacity
         style={[styles.backBtn, { top: insets.top + 8 }]}
@@ -395,6 +405,20 @@ const styles = StyleSheet.create({
     height: 4,
     borderRadius: radius.full,
     backgroundColor: colors.border.default,
+  },
+  pausedChip: {
+    position: 'absolute',
+    alignSelf: 'center',
+    backgroundColor: colors.text.primary,
+    paddingHorizontal: spacing[6],
+    paddingVertical: spacing[3],
+    borderRadius: radius.full,
+  },
+  pausedChipText: {
+    fontFamily: fonts.monoMedium,
+    fontSize: 10,
+    letterSpacing: 0.2,
+    color: colors.text.onAccent,
   },
   stageSummary: { gap: spacing[1] },
   summaryDayRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },

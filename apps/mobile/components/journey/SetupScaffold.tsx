@@ -22,6 +22,8 @@ interface Props {
   step: number;
   onClose: () => void;
   onBack?: () => void;
+  /** Full-width strip rendered above the footer (the estimate ribbon). */
+  ribbon?: ReactNode;
   footer: ReactNode;
   children: ReactNode;
 }
@@ -29,7 +31,7 @@ interface Props {
 // Shared chrome for the Journey Setup steps: a top bar (close on step 1, back
 // thereafter) with the "New journey" title and progress dots, a scrolling body,
 // and a fixed footer supplied by each step.
-export function SetupScaffold({ step, onClose, onBack, footer, children }: Props) {
+export function SetupScaffold({ step, onClose, onBack, ribbon, footer, children }: Props) {
   const insets = useSafeAreaInsets();
   return (
     <View style={styles.screen}>
@@ -54,6 +56,7 @@ export function SetupScaffold({ step, onClose, onBack, footer, children }: Props
         {children}
       </ScrollView>
 
+      {ribbon}
       <View style={[styles.footer, { paddingBottom: insets.bottom + spacing[4] }]}>{footer}</View>
     </View>
   );

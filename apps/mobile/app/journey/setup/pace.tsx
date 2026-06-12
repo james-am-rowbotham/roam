@@ -72,6 +72,10 @@ export default function PaceStep() {
           );
         })}
       </View>
+
+      <Text style={styles.reflowNote}>
+        You can adjust any single day on the trail — Roam reflows the plan as you walk.
+      </Text>
     </SetupScaffold>
   );
 }
@@ -81,4 +85,5 @@ const styles = StyleSheet.create({
   heading: { ...type.sectionHeader, color: colors.text.primary, paddingBottom: spacing[4] },
   segWrap: { paddingBottom: spacing[6] },
   cards: { gap: spacing[3] },
+  reflowNote: { ...type.meta, color: colors.text.secondary, paddingTop: spacing[6] },
 });

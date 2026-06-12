@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ActiveControlBar, OptionsSheet, ScheduleGap } from '../../components/journey';
+import { ActiveControlBar, OptionsSheet } from '../../components/journey';
 import { Button, Icon, Segmented, StatPill } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { formatElevationM, formatKm, orientRoute, routeEndpoints } from '../../lib/format';
@@ -25,7 +25,6 @@ import {
   useTrailSections,
   useTrails,
 } from '../../lib/hooks';
-import { sectionCut } from '../../lib/itinerary';
 import { sectionsForDay as sectionsForDayOf } from '../../lib/sections';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
 import type { GuidePreset } from '../../store/journeySetupStore';
@@ -36,15 +35,6 @@ const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
   { value: 'guided', label: 'Guided' },
   { value: 'full', label: 'Full' },
 ];
-
-type StageItem = { id: number; status: 'planned' | 'active' | 'completed' };
-
-function confirmRemoveRest(stageId: number, remove: (id: number) => void) {
-  Alert.alert('Remove rest day?', undefined, [
-    { text: 'Cancel', style: 'cancel' },
-    { text: 'Remove', style: 'destructive', onPress: () => remove(stageId) },
-  ]);
-}
 
 function confirmDelete(remove: () => void) {
   Alert.alert('Delete journey?', 'This permanently removes the journey and its itinerary.', [
@@ -73,7 +63,7 @@ export default function JourneyDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { progress, restDay, removeRestDay, combine, split } = useJourneyProgress(id);
+  const { progress } = useJourneyProgress(id);
   const queryClient = useQueryClient();
   const [tab, setTab] = useState<'itinerary' | 'settings'>('itinerary');
   const [guideDraft, setGuideDraft] = useState<GuidePreset | null>(null);
@@ -137,18 +127,6 @@ export default function JourneyDetailScreen() {
   const inProgress = isActive || isPaused;
   const reverse = journey.direction === 'reverse';
 
-  const onStageTap = (stage: StageItem) => {
-    // Completing a stage only makes sense on the journey you're navigating; on a
-    // paused journey, resume first (tapping here would silently un-pause it).
-    if (!isActive || progress.isPending) return;
-    progress.mutate(
-      stage.status === 'completed'
-        ? { type: 'uncompleteStage', stageId: stage.id }
-        : { type: 'completeStage', stageId: stage.id },
-    );
-  };
-
-  const editable = isPlanned || inProgress;
   const walkStages = stages.filter((s) => !s.restDay);
   const completedCount = walkStages.filter((s) => s.status === 'completed').length;
   const doneDistanceM = walkStages
@@ -293,38 +271,17 @@ export default function JourneyDetailScreen() {
 
           {/* Itinerary */}
           <View style={styles.leadingLine} />
-          {stages.map((s, i) => {
-            const nextStage = stages[i + 1];
-            const gap = nextStage ? (
-              <ScheduleGap
-                editable={editable}
-                canCombine={!s.restDay && !nextStage.restDay}
-                canSplit={
-                  !s.restDay && sectionCut(s.startChainageM, s.endChainageM, sectionRanges) !== null
-                }
-                onAddRest={() => restDay.mutate(s.id)}
-                onCombine={() => combine.mutate(s.id)}
-                onSplit={() => split.mutate(s.id)}
-              />
-            ) : null;
-
+          {/* Read-only progress view: done / current / upcoming. Per-day decisions
+              happen at Stage Complete; legacy rest days still render. */}
+          {stages.map((s) => {
             if (s.restDay) {
               return (
-                <Fragment key={s.id}>
-                  <TouchableOpacity
-                    style={styles.restRow}
-                    onPress={() => confirmRemoveRest(s.id, removeRestDay.mutate)}
-                    disabled={!editable}
-                    activeOpacity={editable ? 0.6 : 1}
-                  >
-                    <View style={styles.restBadge}>
-                      <Icon name="calendar" size={14} color={colors.text.secondary} />
-                    </View>
-                    <Text style={styles.restLabel}>Rest day</Text>
-                    {editable && <Text style={styles.restRemove}>Remove</Text>}
-                  </TouchableOpacity>
-                  {gap}
-                </Fragment>
+                <View key={s.id} style={styles.restRow}>
+                  <View style={styles.restBadge}>
+                    <Icon name="calendar" size={14} color={colors.text.secondary} />
+                  </View>
+                  <Text style={styles.restLabel}>Rest day</Text>
+                </View>
               );
             }
 
@@ -340,18 +297,14 @@ export default function JourneyDetailScreen() {
               chain.push({ place: to, sectionId: sec.id });
             });
             return (
-              <Fragment key={s.id}>
-                <View style={[styles.stage, current && styles.stageCurrent]}>
+                <View key={s.id} style={[styles.stage, current && styles.stageCurrent]}>
                   <View style={styles.stageMain}>
-                    <TouchableOpacity
+                    <View
                       style={[
                         styles.dayBadge,
                         done && styles.dayBadgeDone,
                         current && styles.dayBadgeActive,
                       ]}
-                      onPress={() => onStageTap(s)}
-                      disabled={!isActive || (!done && !current)}
-                      activeOpacity={done || current ? 0.6 : 1}
                     >
                       {done ? (
                         <Icon name="check" size={16} color={colors.status.success.text} />
@@ -360,7 +313,7 @@ export default function JourneyDetailScreen() {
                           {s.orderIndex}
                         </Text>
                       )}
-                    </TouchableOpacity>
+                    </View>
                     <View style={styles.stageBody}>
                       <View style={styles.sectionList}>
                         {chain.length > 0 ? (
@@ -392,7 +345,7 @@ export default function JourneyDetailScreen() {
                       </Text>
                       {overnight && (
                         <View style={styles.overnight}>
-                          <Icon name="home" size={13} color={colors.marker.refuge} />
+                          <Icon name="stay" size={13} color={colors.marker.refuge} />
                           <Text style={styles.overnightText} numberOfLines={1}>
                             {overnight}
                           </Text>
@@ -400,30 +353,7 @@ export default function JourneyDetailScreen() {
                       )}
                     </View>
                   </View>
-                  {/* {current && isActive && (
-                    <View style={styles.stageActions}>
-                      <TouchableOpacity
-                        style={styles.ctaComplete}
-                        onPress={() => onStageTap(s)}
-                        disabled={progress.isPending}
-                        activeOpacity={0.85}
-                      >
-                        <Text style={styles.ctaCompleteLabel}>
-                          {progress.isPending ? '…' : 'Mark complete'}
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.ctaResume}
-                        onPress={() => router.push(`/journey/active/${id}`)}
-                        activeOpacity={0.85}
-                      >
-                        <Text style={styles.ctaResumeLabel}>Open map</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )} */}
                 </View>
-                {gap}
-              </Fragment>
             );
           })}
         </ScrollView>

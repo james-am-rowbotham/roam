@@ -22,10 +22,7 @@
     "plugins": [
       "expo-router",
       "expo-dev-client",
-      [
-        "@maplibre/maplibre-react-native",
-        {}
-      ],
+      ["@maplibre/maplibre-react-native", {}],
       [
         "expo-location",
         {
