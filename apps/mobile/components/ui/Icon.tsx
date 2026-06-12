@@ -13,6 +13,7 @@ import {
   Combine,
   Flag,
   Home,
+  LocateFixed,
   Map as MapIcon,
   Mic,
   MoreHorizontal,
@@ -37,6 +38,7 @@ export type IconName =
   | 'chevron-down'
   | 'chevron-up'
   | 'cloud'
+  | 'locate'
   | 'swap'
   | 'check'
   | 'combine'
@@ -70,6 +72,7 @@ const icons: Record<IconName, React.ElementType> = {
   'chevron-down': ChevronDown,
   'chevron-up': ChevronUp,
   cloud: Cloud,
+  locate: LocateFixed,
   swap: ArrowLeftRight,
   check: Check,
   combine: Combine,

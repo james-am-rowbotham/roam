@@ -7,6 +7,7 @@
     "scheme": "roam",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.roam.app"
@@ -14,10 +15,21 @@
     "android": {
       "package": "com.roam.app",
       "adaptiveIcon": {
-        "backgroundColor": "#f7f5f4"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#494949"
       }
     },
-    "plugins": ["expo-router", "expo-dev-client", ["@maplibre/maplibre-react-native", {}]],
+    "plugins": [
+      "expo-router",
+      "expo-dev-client",
+      ["@maplibre/maplibre-react-native", {}],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Roam uses your location to show where you are on the trail and your progress."
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
     }

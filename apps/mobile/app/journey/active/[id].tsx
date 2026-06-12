@@ -11,10 +11,17 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveControlBar, OptionsSheet } from '../../../components/journey';
-import { MapView, POILayer, TrailLayer } from '../../../components/map';
-import { Icon } from '../../../components/ui';
+import {
+  MapView,
+  type MapViewHandle,
+  POILayer,
+  TrailLayer,
+  UserMarker,
+} from '../../../components/map';
+import { Icon, IconButton } from '../../../components/ui';
 import { stageSubGeometry, stageViewport } from '../../../lib/activeJourney';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
+import { locateOnLine } from '../../../lib/geo';
 import {
   useJourney,
   useTrail,
@@ -25,6 +32,7 @@ import {
 } from '../../../lib/hooks';
 import { sectionsForDay } from '../../../lib/sections';
 import { useJourneyProgress } from '../../../lib/useJourneyProgress';
+import { useUserLocation } from '../../../lib/useUserLocation';
 import { colors, layout, radius, spacing, type } from '../../../theme';
 
 // Finish journey is destructive — gate it behind a confirm.
@@ -59,7 +67,9 @@ export default function ActiveJourneyScreen() {
   const insets = useSafeAreaInsets();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [statsExpanded, setStatsExpanded] = useState(true);
+  const mapRef = useRef<MapViewHandle>(null);
   const { progress } = useJourneyProgress(id);
+  const { coords } = useUserLocation();
 
   // The stats sheet folds by dragging its handle — down to collapse, up to expand.
   const statsPan = useRef(
@@ -139,6 +149,21 @@ export default function ActiveJourneyScreen() {
     .reduce((a, s) => a + (s.distanceM ?? 0), 0);
   const progressLabel = `Day ${dayNum} of ${walkStages.length} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
 
+  // Live position: project GPS onto the route → chainage (§7), then derive the
+  // current-stage distances by 1-D subtraction. Ignored when off-route or no fix.
+  const OFF_ROUTE_M = 150;
+  const located = coords ? locateOnLine(geojson, [coords.lng, coords.lat]) : null;
+  const userChainageM =
+    located && located.offRouteM <= OFF_ROUTE_M && totalM ? located.fraction * totalM : null;
+  const stageLen = hi - lo;
+  const clamp = (v: number) => Math.max(0, Math.min(stageLen, v));
+  const walkedM =
+    userChainageM != null ? clamp(Math.abs(userChainageM - currentStage.startChainageM)) : null;
+  const toGoM =
+    userChainageM != null ? clamp(Math.abs(currentStage.endChainageM - userChainageM)) : null;
+  const speedKmh = coords?.speedMps != null && coords.speedMps >= 0 ? coords.speedMps * 3.6 : null;
+  const altitudeM = coords?.altitudeM ?? null;
+
   // Pause is an immediate, reversible toggle — no menu, no confirm.
   const toggleNavigation = () => {
     progress.mutate({ type: isPaused ? 'resume' : 'pause' });
@@ -170,7 +195,7 @@ export default function ActiveJourneyScreen() {
 
   return (
     <View style={styles.screen}>
-      <MapView center={viewport?.center} zoom={viewport?.zoom}>
+      <MapView ref={mapRef} center={viewport?.center} zoom={viewport?.zoom}>
         {geojson && (
           <TrailLayer
             id="trail-full"
@@ -205,6 +230,7 @@ export default function ActiveJourneyScreen() {
           annotationMode
           onPress={(aid) => router.push(`/poi/accommodation/${aid}`)}
         />
+        {coords && <UserMarker coord={[coords.lng, coords.lat]} />}
       </MapView>
 
       {/* Back */}
@@ -214,6 +240,17 @@ export default function ActiveJourneyScreen() {
       >
         <Icon name="arrow-left" size={20} color={colors.accent} />
       </TouchableOpacity>
+
+      {/* Center-on-me — always visible; disabled until we have a fix. */}
+      <View style={[styles.recenter, { top: insets.top + 8 }]}>
+        <IconButton
+          icon="locate"
+          style="surface"
+          size="lg"
+          disabled={!coords}
+          onPress={() => coords && mapRef.current?.centerOn([coords.lng, coords.lat], 13)}
+        />
+      </View>
 
       {/* Floating dock — controls sit over the map; stats fold away. */}
       <View
@@ -235,16 +272,23 @@ export default function ActiveJourneyScreen() {
                   {formatKm(currentStage.distanceM)} · ↑ {formatElevationM(currentStage.ascentM)}
                 </Text>
               </View>
-              {/* Live metrics — wired up with on-trail tracking + weather (later phase). */}
+              {/* Distance/altitude/speed/to-go are live; avg speed, moving and
+                  ascent-climbed need a tracking session (later phase) → "—". */}
               <View style={styles.statsRow}>
-                <Stat value="—" label="distance" />
+                <Stat value={walkedM != null ? formatKm(walkedM) : '—'} label="distance" />
                 <Stat value="—" label="ascent" />
-                <Stat value="—" label="altitude" />
+                <Stat
+                  value={altitudeM != null ? formatElevationM(altitudeM) : '—'}
+                  label="altitude"
+                />
               </View>
               <View style={styles.statsRow}>
-                <Stat value="—" label="avg speed" />
+                <Stat
+                  value={speedKmh != null ? `${speedKmh.toFixed(1)} km/h` : '—'}
+                  label="speed"
+                />
                 <Stat value="—" label="moving" />
-                <Stat value="—" label="to go" />
+                <Stat value={toGoM != null ? formatKm(toGoM) : '—'} label="to go" />
               </View>
               <View style={styles.statsDivider} />
               <Text style={styles.statsEta}>ETA — · Sunset —</Text>
@@ -321,6 +365,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     ...SHADOW,
   },
+  recenter: { position: 'absolute', right: spacing[8], ...SHADOW },
 
   // Floating dock over the map — no full-width backdrop, so the map shows through.
   dock: {

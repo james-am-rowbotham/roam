@@ -1,12 +1,19 @@
 import { Marker } from '@maplibre/maplibre-react-native';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapView, POILayer, TrailLayer } from '../../components/map';
+import {
+  MapView,
+  type MapViewHandle,
+  POILayer,
+  TrailLayer,
+  UserMarker,
+} from '../../components/map';
 import { Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
+import { useUserLocation } from '../../lib/useUserLocation';
 import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, radius, spacing, type } from '../../theme';
 
@@ -91,6 +98,9 @@ export default function MapScreen() {
     zoom: MAP_DEFAULT_ZOOM,
   });
 
+  const { coords } = useUserLocation();
+  const mapRef = useRef<MapViewHandle>(null);
+
   // Depend on the serialized viewport so the map re-flies only when the pushed
   // value changes, not on every identity change.
   // biome-ignore lint/correctness/useExhaustiveDependencies: value-based dep on pendingViewport is intentional
@@ -143,7 +153,7 @@ export default function MapScreen() {
   return (
     <View style={styles.screen}>
       {/* Full-screen map */}
-      <MapView center={viewport.center} zoom={viewport.zoom}>
+      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
         {/* Trail (GR11) and everything attached to it — hidden when the trail
             filter is removed. Section highlight is dimmed against the full line. */}
         {trailVisible && (
@@ -201,6 +211,7 @@ export default function MapScreen() {
             )}
           </>
         )}
+        {coords && <UserMarker coord={[coords.lng, coords.lat]} />}
       </MapView>
 
       {/* Search bar */}
@@ -238,6 +249,17 @@ export default function MapScreen() {
           </ScrollView>
         </View>
       </View>
+
+      {/* Center-on-me — always visible; disabled until we have a fix. */}
+      <View style={[styles.locate, { bottom: insets.bottom + spacing[12] }]}>
+        <IconButton
+          icon="locate"
+          style="surface"
+          size="lg"
+          disabled={!coords}
+          onPress={() => coords && mapRef.current?.centerOn([coords.lng, coords.lat], 13)}
+        />
+      </View>
     </View>
   );
 }
@@ -267,6 +289,16 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   searchPlaceholder: { ...type.body, color: colors.text.secondary, flex: 1 },
+
+  locate: {
+    position: 'absolute',
+    right: spacing[8],
+    shadowColor: colors.accent,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 4,
+  },
 
   chip: {
     flexDirection: 'row',
