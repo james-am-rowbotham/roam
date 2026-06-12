@@ -29,7 +29,7 @@ import { sectionCut } from '../../lib/itinerary';
 import { sectionsForDay as sectionsForDayOf } from '../../lib/sections';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
 import type { GuidePreset } from '../../store/journeySetupStore';
-import { colors, layout, radius, spacing, type } from '../../theme';
+import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
   { value: 'silent', label: 'Silent' },
@@ -575,7 +575,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bg.subtle,
     overflow: 'hidden',
   },
-  progressFill: { height: 6, borderRadius: radius.full, backgroundColor: colors.status.progress.text },
+  progressFill: {
+    height: 6,
+    borderRadius: radius.full,
+    backgroundColor: colors.status.progress.text,
+  },
   progressMeta: { ...type.meta, color: colors.text.secondary },
 
   listHeader: {
@@ -605,7 +609,7 @@ const styles = StyleSheet.create({
   },
   dayBadgeDone: { backgroundColor: colors.status.success.bg },
   dayBadgeActive: { backgroundColor: colors.status.progress.text },
-  dayNum: { ...type.cardTitle, color: colors.text.primary },
+  dayNum: { ...type.cardTitle, fontFamily: fonts.monoMedium, fontSize: 14, color: colors.text.primary },
   dayNumActive: { color: colors.text.onAccent },
   stageBody: { flex: 1, gap: spacing[2] },
   sectionList: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing[2] },
@@ -650,7 +654,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ctaCompleteLabel: { ...type.cardTitle, color: colors.text.onAccent },
+  ctaCompleteLabel: { ...type.cardTitle, fontFamily: fonts.semiBold, color: colors.text.onAccent },
   ctaResume: {
     flex: 1,
     height: 48,
@@ -659,5 +663,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ctaResumeLabel: { ...type.cardTitle, color: colors.text.primary },
+  ctaResumeLabel: { ...type.cardTitle, fontFamily: fonts.semiBold, color: colors.text.primary },
 });

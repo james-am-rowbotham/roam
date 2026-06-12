@@ -346,8 +346,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
   },
-  geoLabelText: { fontFamily: fonts.semiBold, fontSize: 12, color: colors.trail.gr },
-  geoLabelArrow: { fontFamily: fonts.semiBold, fontSize: 12, color: colors.trail.gr, opacity: 0.5 },
+  geoLabelText: {
+    fontFamily: fonts.monoMedium,
+    fontSize: 11,
+    letterSpacing: 0.22,
+    color: colors.trail.gr,
+  },
+  geoLabelArrow: {
+    fontFamily: fonts.monoMedium,
+    fontSize: 11,
+    color: colors.trail.gr,
+    opacity: 0.5,
+  },
 
   filterContainer: { position: 'absolute', left: 0, right: 0 },
   filterWrap: { paddingHorizontal: spacing[8] },

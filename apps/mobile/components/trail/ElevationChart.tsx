@@ -1,6 +1,6 @@
 import { useWindowDimensions } from 'react-native';
 import { Path, Svg, Text as SvgText } from 'react-native-svg';
-import { colors, layout } from '../../theme';
+import { colors, fonts, layout } from '../../theme';
 
 interface Props {
   ascentM: number | null | undefined;
@@ -78,7 +78,8 @@ export function ElevationChart({ ascentM, descentM, distanceM }: Props) {
       <SvgText
         x={padLeft - 6}
         y={padTop + 4}
-        fontSize={10}
+        fontSize={9}
+        fontFamily={fonts.mono}
         fill={colors.text.secondary}
         textAnchor="end"
       >
@@ -87,7 +88,8 @@ export function ElevationChart({ ascentM, descentM, distanceM }: Props) {
       <SvgText
         x={padLeft - 6}
         y={padTop + innerH}
-        fontSize={10}
+        fontSize={9}
+        fontFamily={fonts.mono}
         fill={colors.text.secondary}
         textAnchor="end"
       >
@@ -98,7 +100,8 @@ export function ElevationChart({ ascentM, descentM, distanceM }: Props) {
       <SvgText
         x={padLeft + innerW}
         y={chartH - 4}
-        fontSize={10}
+        fontSize={9}
+        fontFamily={fonts.mono}
         fill={colors.text.secondary}
         textAnchor="end"
       >

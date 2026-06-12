@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors, radius, spacing, type } from '../../theme';
+import { colors, fonts, radius, spacing, type } from '../../theme';
 
 interface Option<T extends string> {
   value: T;
@@ -45,10 +45,10 @@ const styles = StyleSheet.create({
   },
   segActive: { backgroundColor: colors.accent },
   segInactive: { backgroundColor: colors.bg.subtle },
-  labelActive: { ...type.body, fontFamily: type.cardTitle.fontFamily, color: colors.text.onAccent },
+  labelActive: { ...type.body, fontFamily: fonts.semiBold, color: colors.text.onAccent },
   labelInactive: {
     ...type.body,
-    fontFamily: type.cardTitle.fontFamily,
+    fontFamily: fonts.semiBold,
     color: colors.text.secondary,
   },
 });

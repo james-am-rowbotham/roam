@@ -28,7 +28,7 @@ import {
   toCreateStages,
 } from '../../../lib/itinerary';
 import { PACE_TARGET_M, useJourneySetupStore } from '../../../store/journeySetupStore';
-import { colors, radius, spacing, type } from '../../../theme';
+import { colors, fonts, radius, spacing, type } from '../../../theme';
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const STAY_LABEL = { camping: 'Camping', refuge: 'Refuges', mixed: 'Mixed' } as const;
@@ -228,7 +228,13 @@ const styles = StyleSheet.create({
     gap: spacing[1],
   },
   cellLabel: { ...type.meta, color: colors.text.secondary },
-  cellValue: { ...type.cardTitle, color: colors.text.primary },
+  cellValue: {
+    ...type.cardTitle,
+    fontFamily: fonts.monoMedium,
+    fontSize: 14,
+    letterSpacing: -0.07,
+    color: colors.text.primary,
+  },
 
   listHeader: { ...type.label, color: colors.text.secondary, paddingBottom: spacing[3] },
   leadingLine: { height: 1, backgroundColor: colors.border.default },
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  dayNum: { ...type.cardTitle, color: colors.text.primary },
+  dayNum: { ...type.cardTitle, fontFamily: fonts.monoMedium, fontSize: 14, color: colors.text.primary },
   stageBody: { flex: 1, gap: spacing[1] },
   sectionList: { gap: spacing[1] },
   sectionRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },

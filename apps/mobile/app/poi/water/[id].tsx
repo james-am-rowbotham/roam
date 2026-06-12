@@ -246,8 +246,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  badgeLabel: { fontFamily: fonts.semiBold, fontSize: 11, letterSpacing: 0.8 },
-  name: { fontFamily: fonts.semiBold, fontSize: 23, color: colors.text.primary, lineHeight: 28 },
+  badgeLabel: { fontFamily: fonts.monoMedium, fontSize: 10, letterSpacing: 0.2 },
+  name: {
+    fontFamily: fonts.display,
+    fontSize: 23,
+    color: colors.text.primary,
+    lineHeight: 28,
+    letterSpacing: -0.23,
+  },
   subtitle: { ...type.meta, color: colors.text.secondary },
 
   reliabilityCard: { borderRadius: radius.lg, padding: spacing[6], gap: 4 },

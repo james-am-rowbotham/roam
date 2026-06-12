@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors, layout, radius, spacing, type } from '../../theme';
+import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 import { Icon } from '../ui';
 
 interface SectionLike {
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
   rowDisabled: { opacity: 0.35 },
   rowText: { gap: spacing[1] },
   rowLabel: { ...type.body, color: colors.text.primary },
-  rowLabelSelected: { fontFamily: type.cardTitle.fontFamily },
+  rowLabelSelected: { fontFamily: fonts.semiBold },
   rowMeta: { ...type.meta, color: colors.text.secondary },
 });

@@ -260,10 +260,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heroName: {
-    fontFamily: fonts.semiBold,
+    fontFamily: fonts.display,
     fontSize: 26,
     color: colors.overlay.onImage,
     lineHeight: 32,
+    letterSpacing: -0.26,
   },
   heroSub: { ...type.meta, color: colors.overlay.onImageMuted, marginTop: 2 },
 

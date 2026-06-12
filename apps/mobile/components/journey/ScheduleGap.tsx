@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { colors, layout, radius, spacing, type } from '../../theme';
+import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 import { Icon } from '../ui';
 
 interface Props {
@@ -135,5 +135,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border.default,
   },
-  pillLabel: { ...type.meta, fontFamily: type.cardTitle.fontFamily, color: colors.text.primary },
+  pillLabel: { ...type.meta, fontFamily: fonts.semiBold, color: colors.text.primary },
 });

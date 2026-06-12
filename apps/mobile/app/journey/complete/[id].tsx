@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     fontFamily: type.sectionHeader.fontFamily,
     fontSize: 22,
     lineHeight: 28,
+    letterSpacing: -0.22,
     color: colors.overlay.onImage,
     paddingTop: spacing[2],
   },

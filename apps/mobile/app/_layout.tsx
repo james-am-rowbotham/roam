@@ -2,10 +2,7 @@ import {
   BricolageGrotesque_600SemiBold,
   BricolageGrotesque_700Bold,
 } from '@expo-google-fonts/bricolage-grotesque';
-import {
-  GeistMono_400Regular,
-  GeistMono_500Medium,
-} from '@expo-google-fonts/geist-mono';
+import { GeistMono_400Regular, GeistMono_500Medium } from '@expo-google-fonts/geist-mono';
 import {
   HankenGrotesk_400Regular,
   HankenGrotesk_500Medium,
