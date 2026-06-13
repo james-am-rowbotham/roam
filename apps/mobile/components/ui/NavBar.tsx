@@ -4,7 +4,7 @@ import { RoamLogo } from './RoamLogo';
 export function NavBar() {
   return (
     <View style={styles.bar}>
-      <RoamLogo size={26} />
+      <RoamLogo size="sm" />
     </View>
   );
 }

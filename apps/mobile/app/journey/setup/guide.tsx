@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import { SetupFooter, SetupScaffold } from '../../../components/journey';
+import { EstimateRibbon, SetupFooter, SetupScaffold } from '../../../components/journey';
 import { OptionCard, Segmented } from '../../../components/ui';
 import { type GuidePreset, useJourneySetupStore } from '../../../store/journeySetupStore';
 import { colors, spacing, type } from '../../../theme';
@@ -27,6 +27,7 @@ export default function GuideStep() {
     <SetupScaffold
       step={4}
       onClose={() => router.back()}
+      ribbon={<EstimateRibbon />}
       onBack={() => router.back()}
       footer={
         <SetupFooter

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { JourneyCard } from '../../components/journey';
 import { TrailCard } from '../../components/trail';
-import { NavBar, SearchField, SectionHeader } from '../../components/ui';
+import { Button, NavBar, SearchField, SectionHeader } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { useJourneys, useTrails } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
@@ -16,7 +16,9 @@ export default function HomeScreen() {
 
   // Active journey (the navigated one) surface on Home.
   const { data: journeysData } = useJourneys({ userId: CURRENT_USER_ID });
-  const isActiveJourney = (journeysData?.data ?? []).find((j) => j.status === 'active');
+  const journeys = journeysData?.data ?? [];
+  const isActiveJourney = journeys.find((j) => j.status === 'active');
+  const firstRun = journeysData != null && journeys.length === 0;
   const trailName = (routeId: number): string => {
     const t = trails.find((x) => x.routeId === routeId);
     return t?.ref ?? t?.name ?? 'Journey';
@@ -49,7 +51,16 @@ export default function HomeScreen() {
       </ScrollView>
 
       <SectionHeader title="Active journey" />
-      {isActiveJourney ? (
+      {firstRun ? (
+        <View style={styles.welcomeCard}>
+          <Text style={styles.welcomeTitle}>Welcome to Roam</Text>
+          <Text style={styles.welcomeBody}>
+            Pick a trail, set your pace, and Roam plans the days — then walks them with you, fully
+            offline.
+          </Text>
+          <Button label="Browse trails" size="sm" onPress={() => router.push('/(tabs)/map')} />
+        </View>
+      ) : isActiveJourney ? (
         <JourneyCard
           key={isActiveJourney.id}
           journey={isActiveJourney}
@@ -85,4 +96,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: { ...type.body, color: colors.text.secondary },
+
+  welcomeCard: {
+    marginHorizontal: spacing[8],
+    padding: spacing[8],
+    backgroundColor: colors.status.progress.bg,
+    borderRadius: radius.lg,
+    gap: spacing[4],
+    alignItems: 'flex-start',
+  },
+  welcomeTitle: { ...type.cardTitle, color: colors.status.progress.text },
+  welcomeBody: { ...type.meta, color: colors.status.progress.text },
 });

@@ -4,19 +4,23 @@ import { colors, fonts, radius } from '../../theme';
 import { Icon, type IconName } from './Icon';
 
 // The Button component mirrors the Figma "Button" set (node 446:152):
-// Tone (default | danger) × Variant (solid | outline | ghost | text) × Size
-// (sm 36 | md 44 | lg 52). Sizes are padding-based so the height falls out of
-// padding + line-height; radius and font scale per size.
+// Variant (solid | outline) × Size (sm | md | lg), plus tone=danger for the
+// solid destructive button. Ghost/Text variants are deleted from the system —
+// use a plain pressable text styled meta/bodyStrong instead.
+// Labels: Small is Hanken SemiBold 13; Medium/Large are Bricolage 15/16 —
+// per the Figma masters (the transition doc's "always bodyStrong" lost).
 export type ButtonTone = 'default' | 'danger';
-export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'text';
+export type ButtonVariant = 'solid' | 'outline';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface SizeSpec {
   paddingH: number;
   paddingV: number;
   borderRadius: number;
+  fontFamily: string;
   fontSize: number;
   lineHeight: number;
+  letterSpacing?: number;
   icon: number;
   gap: number;
 }
@@ -26,27 +30,31 @@ const SIZES: Record<ButtonSize, SizeSpec> = {
     paddingH: 14,
     paddingV: 9,
     borderRadius: radius.lg,
+    fontFamily: fonts.semiBold,
     fontSize: 13,
     lineHeight: 18,
-    icon: 14,
+    icon: 16,
     gap: 6,
   },
   md: {
     paddingH: 18,
     paddingV: 12,
     borderRadius: radius.lg,
+    fontFamily: fonts.display,
     fontSize: 15,
     lineHeight: 20,
-    icon: 16,
-    gap: 6,
+    icon: 18,
+    gap: 8,
   },
   lg: {
     paddingH: 22,
     paddingV: 15,
     borderRadius: 10,
+    fontFamily: fonts.display,
     fontSize: 16,
     lineHeight: 22,
-    icon: 18,
+    letterSpacing: -0.08,
+    icon: 20,
     gap: 8,
   },
 };
@@ -61,25 +69,20 @@ interface Surface {
 // Tone × variant → background, label colour and (optional) border.
 function surfaceFor(tone: ButtonTone, variant: ButtonVariant): Surface {
   const danger = tone === 'danger';
-  // Non-solid variants colour the label by tone; solid uses on-accent text.
-  const toneText = danger ? colors.status.danger.text : colors.text.primary;
   switch (variant) {
     case 'solid':
       return {
-        bg: danger ? colors.status.danger.text : colors.accent,
+        // Danger solid fills with brand blaze-red per the Figma master.
+        bg: danger ? colors.brand.blazeRed : colors.accent,
         label: colors.text.onAccent,
       };
     case 'outline':
       return {
         bg: colors.bg.surface,
-        label: toneText,
+        label: danger ? colors.status.danger.text : colors.text.primary,
         borderColor: danger ? colors.status.danger.text : colors.border.default,
         borderWidth: 1,
       };
-    case 'ghost':
-      return { bg: danger ? colors.status.danger.bg : colors.bg.subtle, label: toneText };
-    case 'text':
-      return { bg: 'transparent', label: toneText };
   }
 }
 
@@ -123,9 +126,10 @@ export function Button({
     ...(fullWidth ? { alignSelf: 'stretch' } : null),
   };
   const labelStyle: TextStyle = {
-    fontFamily: fonts.semiBold,
+    fontFamily: s.fontFamily,
     fontSize: s.fontSize,
     lineHeight: s.lineHeight,
+    letterSpacing: s.letterSpacing,
     color: surface.label,
   };
 

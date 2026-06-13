@@ -10,7 +10,7 @@ export function journeyStatusChip(status: JourneyStatus): {
 } {
   switch (status) {
     case 'active':
-      return { label: 'Active', variant: 'info' };
+      return { label: 'Active', variant: 'progress' };
     case 'completed':
       return { label: 'Completed', variant: 'success' };
     case 'abandoned':

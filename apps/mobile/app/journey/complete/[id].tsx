@@ -1,11 +1,48 @@
+import { type StageDecision, forecastAfterDecision } from '@roam/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button, Icon } from '../../../components/ui';
+import { Button, Chip, Icon } from '../../../components/ui';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
-import { useJourney, useTrailSections, useTrails } from '../../../lib/hooks';
+import {
+  useJourney,
+  useTrailAccommodations,
+  useTrailSections,
+  useTrails,
+} from '../../../lib/hooks';
 import { sectionsForDay } from '../../../lib/sections';
-import { colors, layout, radius, spacing, type } from '../../../theme';
+import { useJourneyProgress } from '../../../lib/useJourneyProgress';
+import { colors, fonts, layout, radius, spacing, type } from '../../../theme';
+
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+function finishPhrase(iso: string | null): string {
+  if (!iso) return '';
+  const d = new Date(`${iso}T00:00:00`);
+  return `~${d.getDate()} ${MONTHS[d.getMonth()]}`;
+}
 
 interface SectionRange {
   id: number;
@@ -23,6 +60,9 @@ export default function StageCompleteScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  // The per-day decision for tomorrow. Walk-as-planned is preselected so the
+  // default flow (tap Continue) costs zero extra taps.
+  const [decision, setDecision] = useState<StageDecision>('asPlanned');
 
   const { data: journeyResponse, isLoading } = useJourney(id);
   const rawJourney = journeyResponse?.data;
@@ -33,6 +73,11 @@ export default function StageCompleteScreen() {
   const { data: sectionsResponse } = useTrailSections(String(trail?.id ?? 0), {
     query: { enabled: !!trail?.id },
   });
+  const { data: accResponse } = useTrailAccommodations(String(trail?.id ?? 0), {
+    query: { enabled: !!trail?.id },
+  });
+  const accommodations = Array.isArray(accResponse?.data) ? accResponse.data : [];
+  const { restDay, combine } = useJourneyProgress(id);
 
   if (isLoading || !journey) {
     return (
@@ -77,6 +122,40 @@ export default function StageCompleteScreen() {
     );
     nextDayNum = walkStages.findIndex((s) => s.id === nextStage.id) + 1;
   }
+
+  // Consequence preview — computed on-device BEFORE the decision is confirmed.
+  const today = new Date().toISOString().slice(0, 10);
+  const forecastStages = journey.stages.map((s) => ({
+    id: s.id,
+    orderIndex: s.orderIndex,
+    restDay: s.restDay ?? false,
+    completed: s.status === 'completed',
+    distanceM: s.distanceM ?? 0,
+    overnightAccommodationId: s.overnightAccommodationId ?? null,
+  }));
+  const pushForecast = forecastAfterDecision(forecastStages, 'pushOn', today);
+  const forecast = forecastAfterDecision(forecastStages, decision, today);
+  const skippedStop = accommodations.find((a) => a.id === forecast.skippedAccommodationId);
+  const bookingAffected = decision === 'pushOn' && !!skippedStop;
+
+  // Guide lead-in for the decision.
+  const shortDay = (nextStage?.distanceM ?? 0) > 0 && (nextStage?.distanceM ?? 0) < 16_000;
+  const leadIn = shortDay
+    ? 'Short day tomorrow — you could push on, or bank a rest.'
+    : 'Walk as planned, or shape the day — Roam reflows the rest.';
+
+  const decisionPending = restDay.isPending || combine.isPending;
+  const continueHome = () =>
+    router.canGoBack() ? router.back() : router.replace(`/journey/active/${id}`);
+  const applyDecision = () => {
+    if (decision === 'restDay') {
+      restDay.mutate(finishedStage.id, { onSuccess: continueHome });
+    } else if (decision === 'pushOn' && nextStage) {
+      combine.mutate(nextStage.id, { onSuccess: continueHome });
+    } else {
+      continueHome();
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -137,6 +216,51 @@ export default function StageCompleteScreen() {
                   {formatKm(nextStage.distanceM)} · ↑{formatElevationM(nextStage.ascentM)}
                 </Text>
               )}
+
+              {/* The decision moment — skippable; Walk as planned is preselected. */}
+              <Text style={styles.leadIn}>{leadIn}</Text>
+              <View style={styles.decisionRow}>
+                <Chip
+                  label="Walk as planned"
+                  selected={decision === 'asPlanned'}
+                  onPress={() => setDecision('asPlanned')}
+                />
+                {pushForecast.available && (
+                  <Chip
+                    label={`Push on +${formatKm(pushForecast.pushOnDistanceM ?? 0)}`}
+                    selected={decision === 'pushOn'}
+                    onPress={() => setDecision('pushOn')}
+                  />
+                )}
+                <Chip
+                  label="Rest day"
+                  selected={decision === 'restDay'}
+                  onPress={() => setDecision('restDay')}
+                />
+              </View>
+
+              {bookingAffected && skippedStop ? (
+                // Amber colors the consequence, never the choice.
+                <View style={styles.bookingWarn}>
+                  <Icon name="alert" size={16} color={colors.status.warn.text} />
+                  <Text style={styles.bookingWarnText}>
+                    Tonight's {skippedStop.name} booking would go unused · finish moves to{' '}
+                    {finishPhrase(forecast.finishDate)}
+                    {'  '}
+                    <Text
+                      style={styles.bookingWarnLink}
+                      onPress={() => router.push(`/poi/accommodation/${skippedStop.id}`)}
+                    >
+                      Review booking ›
+                    </Text>
+                  </Text>
+                </View>
+              ) : (
+                <Text style={styles.consequence}>
+                  Plan reflows automatically · finish {finishPhrase(forecast.finishDate)} · bookings
+                  unaffected
+                </Text>
+              )}
             </View>
           )}
         </View>
@@ -148,10 +272,9 @@ export default function StageCompleteScreen() {
           <Button label="View journey" onPress={() => router.replace(`/journey/${id}`)} />
         ) : (
           <Button
-            label="Continue"
-            onPress={() =>
-              router.canGoBack() ? router.back() : router.replace(`/journey/active/${id}`)
-            }
+            label={decisionPending ? 'Updating…' : 'Continue'}
+            disabled={decisionPending}
+            onPress={applyDecision}
           />
         )}
       </View>
@@ -185,6 +308,7 @@ const styles = StyleSheet.create({
     fontFamily: type.sectionHeader.fontFamily,
     fontSize: 22,
     lineHeight: 28,
+    letterSpacing: -0.22,
     color: colors.overlay.onImage,
     paddingTop: spacing[2],
   },
@@ -225,6 +349,30 @@ const styles = StyleSheet.create({
   },
   tomorrowTitle: { ...type.cardTitle, color: colors.text.primary },
   tomorrowMeta: { ...type.meta, color: colors.text.secondary },
+  leadIn: { ...type.meta, color: colors.text.secondary, paddingTop: spacing[2] },
+  decisionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[3],
+    paddingVertical: spacing[2],
+  },
+  consequence: { ...type.meta, fontSize: 11, lineHeight: 15, color: colors.text.secondary },
+  bookingWarn: {
+    flexDirection: 'row',
+    gap: spacing[3],
+    backgroundColor: colors.status.warn.bg,
+    borderRadius: radius.md,
+    padding: spacing[4],
+    alignItems: 'flex-start',
+  },
+  bookingWarnText: {
+    ...type.meta,
+    fontSize: 12,
+    lineHeight: 17,
+    color: colors.status.warn.text,
+    flex: 1,
+  },
+  bookingWarnLink: { fontFamily: fonts.semiBold, color: colors.status.warn.text },
 
   doneCard: {
     backgroundColor: colors.status.success.bg,

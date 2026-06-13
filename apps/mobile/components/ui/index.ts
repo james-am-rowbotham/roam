@@ -1,7 +1,9 @@
 export { Button } from './Button';
 export type { ButtonTone, ButtonVariant, ButtonSize } from './Button';
+export { Chip } from './Chip';
 export { Icon } from './Icon';
 export type { IconName } from './Icon';
+export { ListItem } from './ListItem';
 export { IconButton } from './IconButton';
 export type { IconButtonStyle, IconButtonSize } from './IconButton';
 export { NavBar } from './NavBar';

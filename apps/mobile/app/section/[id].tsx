@@ -215,7 +215,7 @@ export default function SectionDetailScreen() {
             <View style={styles.summaryRows}>
               <SummaryRow
                 color={colors.marker.refuge}
-                icon="home"
+                icon="stay"
                 title="Stay"
                 body="Check refuges along this section — book ahead in season."
               />
@@ -226,7 +226,7 @@ export default function SectionDetailScreen() {
                 body="Check water sources along this section before setting off."
               />
               <SummaryRow
-                color={colors.trail.local}
+                color={colors.marker.food}
                 icon="food"
                 title="Food"
                 body="Carry food for the full section unless refuges are confirmed open."
@@ -297,14 +297,14 @@ const styles = StyleSheet.create({
   heroLabel: {
     ...type.label,
     color: colors.overlay.onImageMuted,
-    letterSpacing: 0.8,
     marginBottom: 4,
   },
   heroName: {
-    fontFamily: fonts.semiBold,
+    fontFamily: fonts.display,
     fontSize: 22,
     color: colors.overlay.onImage,
     lineHeight: 28,
+    letterSpacing: -0.22,
   },
 
   stats: {
@@ -347,7 +347,13 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border.default,
   },
   statRowLabel: { ...type.body, color: colors.text.secondary, flex: 1 },
-  statRowValue: { ...type.cardTitle, color: colors.text.primary },
+  statRowValue: {
+    ...type.cardTitle,
+    fontFamily: fonts.monoMedium,
+    fontSize: 14,
+    letterSpacing: -0.07,
+    color: colors.text.primary,
+  },
 
   summaryRows: { gap: spacing[6] },
   summaryRow: { flexDirection: 'row', gap: spacing[6], alignItems: 'flex-start' },
