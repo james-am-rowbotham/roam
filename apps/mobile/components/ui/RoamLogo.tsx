@@ -14,7 +14,7 @@ export function RoamMark({ width = 19 }: { width?: number }) {
   const height = width * 0.68;
   const bar = height * 0.42;
   return (
-    <View style={{ width, height, justifyContent: 'space-between' }}>
+    <View style={{ width, height, justifyContent: 'space-between', alignItems: 'center' }}>
       <View style={[styles.bar, styles.cream, { height: bar, borderRadius: bar }]} />
       <View style={[styles.bar, styles.red, { height: bar, borderRadius: bar }]} />
     </View>

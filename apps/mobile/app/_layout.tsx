@@ -9,8 +9,8 @@ import {
   HankenGrotesk_600SemiBold,
   HankenGrotesk_700Bold,
 } from '@expo-google-fonts/hanken-grotesk';
-import { useFonts } from 'expo-font';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { colors } from '../theme';

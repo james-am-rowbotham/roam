@@ -1,15 +1,12 @@
 import { Tabs } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
 import { Icon, type IconName } from '../../components/ui';
-import { colors, radius, type } from '../../theme';
+import { colors, type } from '../../theme';
 
-// Active tab: green icon in a soft green pill; labels stay ink in both
-// states (text.tabActive) — the accent never reaches the label.
+// Active tab reads as the darkest text; inactive is muted. No pill/highlight —
+// the colour step alone carries the state, and the accent never reaches it.
 function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
   return (
-    <View style={[styles.iconWrap, focused && styles.iconWrapActive]}>
-      <Icon name={name} size={22} color={focused ? colors.accent : colors.text.secondary} />
-    </View>
+    <Icon name={name} size={22} color={focused ? colors.text.primary : colors.text.secondary} />
   );
 }
 
@@ -18,7 +15,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.text.tabActive,
+        tabBarActiveTintColor: colors.text.primary,
         tabBarInactiveTintColor: colors.text.secondary,
         tabBarStyle: { backgroundColor: colors.bg.surface },
         tabBarLabelStyle: { ...type.tab },
@@ -55,12 +52,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  iconWrap: {
-    paddingHorizontal: 12,
-    paddingVertical: 3,
-    borderRadius: radius.full,
-  },
-  iconWrapActive: { backgroundColor: colors.status.progress.bg },
-});
