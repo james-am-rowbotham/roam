@@ -129,7 +129,7 @@ export function OptionsSheet({
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, backgroundColor: colors.overlay.dark },
+  backdrop: { flex: 1 },
   sheet: {
     backgroundColor: colors.bg.surface,
     borderTopLeftRadius: radius.xl,

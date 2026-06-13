@@ -196,7 +196,7 @@ export default function MapScreen() {
             )}
           </>
         )}
-        {coords && <UserMarker coord={[coords.lng, coords.lat]} />}
+        {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
 
       {/* Search bar */}

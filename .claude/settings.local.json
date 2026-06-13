@@ -1,5 +1,11 @@
 {
   "permissions": {
-    "allow": ["Bash(bun install *)", "Bash(docker compose *)"]
+    "allow": [
+      "Bash(bun install *)",
+      "Bash(docker compose *)",
+      "mcp__claude_ai_Figma__get_screenshot",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)"
+    ]
   }
 }

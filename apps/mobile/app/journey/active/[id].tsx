@@ -230,7 +230,7 @@ export default function ActiveJourneyScreen() {
           annotationMode
           onPress={(aid) => router.push(`/poi/accommodation/${aid}`)}
         />
-        {coords && <UserMarker coord={[coords.lng, coords.lat]} />}
+        {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
 
       {/* Paused context chip — the Resume button is the state signal; this

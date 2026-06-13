@@ -23,10 +23,6 @@ import { colors, fonts, radius, spacing, type } from '../../../theme';
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const STAY_LABEL = { camping: 'Camping', refuge: 'Refuges', mixed: 'Mixed' } as const;
 
-// The Review itinerary is a read-only forecast — per-day decisions happen on
-// the trail at Stage Complete, not here. Show this many rows, then a footer.
-const VISIBLE_DAYS = 8;
-
 function SummaryCell({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.cell}>
@@ -68,7 +64,6 @@ export default function ReviewStep() {
 
   const totalDays = itinerary.length;
   const totalDistanceM = itinerary.reduce((a, s) => a + s.distanceM, 0);
-  const hiddenDays = Math.max(0, totalDays - VISIBLE_DAYS);
 
   const create = useMutation({
     mutationFn: () =>
@@ -104,7 +99,7 @@ export default function ReviewStep() {
       onBack={() => router.back()}
       footer={
         <Button
-          label={create.isPending ? 'Creating…' : 'Start journey'}
+          label={create.isPending ? 'Creating…' : 'Create journey'}
           grow
           disabled={create.isPending}
           onPress={() => create.mutate()}
@@ -117,7 +112,8 @@ export default function ReviewStep() {
         {totalDays} days · {formatKm(totalDistanceM)}
       </Text>
       <Text style={styles.forecastNote}>
-        This is a forecast, not a contract — Roam reflows your days as you actually walk.
+        This is a forecast based on your selections. You can adjust your pace or change your
+        itinerary after starting the journey.
       </Text>
 
       {/* Summary grid */}
@@ -138,7 +134,7 @@ export default function ReviewStep() {
         </TouchableOpacity>
       </View>
       <View style={styles.leadingLine} />
-      {itinerary.slice(0, VISIBLE_DAYS).map((s, i) => {
+      {itinerary.map((s, i) => {
         const overnight = accById.get(s.overnightAccommodationId ?? -1)?.name;
         const names = daySectionNames(s.sectionIds);
         return (
@@ -166,18 +162,23 @@ export default function ReviewStep() {
           </View>
         );
       })}
-      {hiddenDays > 0 && <Text style={styles.moreDays}>+ {hiddenDays} more days planned</Text>}
     </SetupScaffold>
   );
 }
 
 const styles = StyleSheet.create({
   eyebrow: { ...type.label, color: colors.text.secondary, paddingTop: spacing[2] },
-  name: { ...type.sectionHeader, color: colors.text.primary, paddingTop: spacing[1] },
+  name: { ...type.sectionHeader, color: colors.text.primary, paddingTop: spacing[2] },
   sub: { ...type.meta, color: colors.text.secondary },
   forecastNote: { ...type.meta, color: colors.text.secondary, paddingBottom: spacing[6] },
 
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[3], paddingBottom: spacing[6] },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[3],
+    paddingTop: spacing[2],
+    paddingBottom: spacing[6],
+  },
   cell: {
     width: '47%',
     flexGrow: 1,
