@@ -11,7 +11,9 @@ export interface ThemeColors {
   bg: { app: string; surface: string; subtle: string; input: string };
   border: { default: string };
   text: { primary: string; secondary: string; onAccent: string; tabActive: string };
-  trail: { international: string; national: string; gr: string; local: string };
+  /** Blaze palette — the three tokens every trail resolves into (§16/§17.8).
+   *  Mirrors TRAIL_PALETTE in packages/core. No blue or purple in the canon. */
+  trail: { gr: string; pr: string; sl: string };
   marker: { water: string; refuge: string; viewpoint: string; historic: string; food: string };
   status: {
     warn: StatusPair;

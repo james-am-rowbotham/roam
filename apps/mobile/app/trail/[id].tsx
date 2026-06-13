@@ -10,9 +10,9 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapView, TrailLayer } from '../../components/map';
+import { MapView, TrailLayer, Waymark } from '../../components/map';
+import { SummaryRow } from '../../components/trail';
 import { Button, Icon, RoamMark, StatPill } from '../../components/ui';
-import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailSections } from '../../lib/hooks';
 import { useJourneySetupStore } from '../../store/journeySetupStore';
@@ -20,30 +20,6 @@ import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 type Tab = 'overview' | 'sections';
-
-function SummaryRow({
-  color,
-  icon,
-  title,
-  body,
-}: {
-  color: string;
-  icon: IconName;
-  title: string;
-  body: string;
-}) {
-  return (
-    <View style={styles.summaryRow}>
-      <View style={[styles.summaryIcon, { backgroundColor: color }]}>
-        <Icon name={icon} size={18} color={colors.overlay.onImage} />
-      </View>
-      <View style={styles.summaryText}>
-        <Text style={styles.summaryTitle}>{title}</Text>
-        <Text style={styles.summaryBody}>{body}</Text>
-      </View>
-    </View>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Screen
@@ -76,6 +52,7 @@ export default function TrailDetailScreen() {
     );
   }
 
+  const trailColor = trail.waymark?.symbol?.wayColor ?? colors.map.route;
   const km = trail.distanceM ? Math.round(trail.distanceM / 1000) : '—';
   const elevK = trail.ascentM ? `${Math.round(trail.ascentM / 1000)}k` : '—';
   const days = trail.distanceM ? Math.round(trail.distanceM / 20_000) : '—';
@@ -97,9 +74,14 @@ export default function TrailDetailScreen() {
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Icon name="arrow-left" size={20} color={colors.accent} />
           </TouchableOpacity>
-          {/* Blaze placement (2): top-right of the trail hero photo. */}
+          {/* The trail's painted waymark (parsed osmc:symbol, §17.8), top-right of
+              the hero. Falls back to the brand mark if the route has no symbol. */}
           <View style={styles.heroBlaze}>
-            <RoamMark width={22} />
+            {trail.waymark?.symbol ? (
+              <Waymark symbol={trail.waymark.symbol} size={24} />
+            ) : (
+              <RoamMark width={22} />
+            )}
           </View>
           <Text style={styles.heroName}>{trail.ref ?? trail.name}</Text>
           {subtitle ? <Text style={styles.heroSub}>{subtitle}</Text> : null}
@@ -165,7 +147,7 @@ export default function TrailDetailScreen() {
                   <TrailLayer
                     id="trail-preview"
                     geojson={geojson as never}
-                    color={colors.trail.gr}
+                    color={trailColor}
                     width={2}
                   />
                 )}
@@ -310,18 +292,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     marginTop: spacing[2],
   },
-  summaryRow: { flexDirection: 'row', gap: spacing[6], alignItems: 'flex-start' },
-  summaryIcon: {
-    width: 34,
-    height: 34,
-    borderRadius: 34,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  summaryText: { flex: 1, gap: 2 },
-  summaryTitle: { ...type.cardTitle, color: colors.text.primary },
-  summaryBody: { ...type.meta, color: colors.text.secondary, lineHeight: 18 },
-
   sectionRow: {
     flexDirection: 'row',
     alignItems: 'center',

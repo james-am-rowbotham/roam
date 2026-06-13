@@ -11,9 +11,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapView, TrailLayer } from '../../components/map';
-import { ElevationChart } from '../../components/trail';
+import { ElevationChart, SummaryRow } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
-import type { IconName } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { geometryViewport } from '../../lib/geo';
 import { useSection, useTrails } from '../../lib/hooks';
@@ -32,25 +31,6 @@ function StatRow({ label, value }: { label: string; value: string }) {
     <View style={styles.statRow}>
       <Text style={styles.statRowLabel}>{label}</Text>
       <Text style={styles.statRowValue}>{value}</Text>
-    </View>
-  );
-}
-
-function SummaryRow({
-  color,
-  icon,
-  title,
-  body,
-}: { color: string; icon: IconName; title: string; body: string }) {
-  return (
-    <View style={styles.summaryRow}>
-      <View style={[styles.summaryIcon, { backgroundColor: color }]}>
-        <Icon name={icon} size={18} color={colors.overlay.onImage} />
-      </View>
-      <View style={styles.summaryText}>
-        <Text style={styles.summaryTitle}>{title}</Text>
-        <Text style={styles.summaryBody}>{body}</Text>
-      </View>
     </View>
   );
 }
@@ -185,7 +165,7 @@ export default function SectionDetailScreen() {
                       geometry: section.geometry as never,
                       properties: {},
                     }}
-                    color={colors.trail.gr}
+                    color={colors.map.route}
                     width={3}
                   />
                 )}
@@ -356,17 +336,6 @@ const styles = StyleSheet.create({
   },
 
   summaryRows: { gap: spacing[6] },
-  summaryRow: { flexDirection: 'row', gap: spacing[6], alignItems: 'flex-start' },
-  summaryIcon: {
-    width: 34,
-    height: 34,
-    borderRadius: 34,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  summaryText: { flex: 1, gap: 2 },
-  summaryTitle: { ...type.cardTitle, color: colors.text.primary },
-  summaryBody: { ...type.meta, color: colors.text.secondary, lineHeight: 18 },
 
   ctaWrap: { padding: layout.ctaBarPadding },
 });

@@ -63,16 +63,17 @@ export const colors: Theme['colors'] = {
     tabActive: palette.ink500,
   },
 
-  // Trail classification colors are functional wayfinding, not theme — unchanged.
+  // Blaze palette — the canonical FEDME/FFRP waymark colours every trail snaps
+  // into (§16/§17.8). Mirrors TRAIL_PALETTE in packages/core; keep in sync. The
+  // route LINE stays map.route ink — identity lives in the blaze, never the line.
   trail: {
-    international: '#C74538',
-    national: '#2E6EB0',
-    gr: '#7D57C2',
-    local: '#5C8C3D',
+    gr: '#C74538', // red — GR / long-distance
+    pr: '#D9B53A', // yellow — PR / day route
+    sl: '#5C8C3D', // green — SL / local
   },
 
   // POI marker palette. Markers never follow the accent: peaks render in
-  // text.primary, junction nodes in surface fill + trail.local ring/number.
+  // text.primary, junction nodes in surface fill + trail.sl ring/number.
   marker: {
     water: '#4D7A8C',
     refuge: '#A0683C',

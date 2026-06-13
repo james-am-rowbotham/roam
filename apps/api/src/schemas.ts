@@ -8,6 +8,31 @@ export const TrustSchema = z.object({
   manualOverride: z.boolean(),
 });
 
+// Parsed osmc:symbol waymark (§16/§17.8). Mirrors the @roam/core types so the
+// renderer can rebuild the painted sign. The colour comes from the data, not a
+// fixed palette; networkClass is sort/filter metadata only.
+export const OsmcMarkSchema = z.object({
+  color: z.string(),
+  colorName: z.string(),
+  shape: z.string().nullable(),
+});
+
+export const OsmcSymbolSchema = z.object({
+  wayColor: z.string().nullable(),
+  background: OsmcMarkSchema,
+  foregrounds: z.array(OsmcMarkSchema),
+  text: z.string().nullable(),
+  textColor: z.string().nullable(),
+});
+
+export const WaymarkSchema = z.object({
+  symbol: OsmcSymbolSchema.nullable(),
+  ref: z.string().nullable(),
+  network: z.string().nullable(),
+  networkClass: z.enum(['gr', 'pr', 'sl']).nullable(),
+  review: z.enum(['non-hiking-blue', 'unresolved']).optional(),
+});
+
 export const TrailListItemSchema = z.object({
   id: z.number(),
   routeId: z.number(),
@@ -20,6 +45,9 @@ export const TrailListItemSchema = z.object({
   distanceM: z.number().nullable(),
   ascentM: z.number().nullable(),
   descentM: z.number().nullable(),
+  // The route's painted waymark, parsed from osmc:symbol. The map line is ink;
+  // identity lives in this sign (§17.8).
+  waymark: WaymarkSchema,
 });
 
 export const TrailFeatureSchema = z.object({

@@ -4,7 +4,7 @@
 > navigate it stage-by-stage with offline maps, and get help from an on-trail
 > "Guide". This file is the canonical context for AI coding agents and humans.
 
-Links for figma designs and architectural designs:
+Links for Figma designs and architectural designs:
 
 https://www.figma.com/design/qooJ77tbwQb1dB7P3Htetf/Roam-Design?node-id=26-4&p=f&t=qmfn4isZO8yNlg2e-0
 
@@ -14,10 +14,17 @@ https://www.figma.com/board/7GOqbDRos3AI0LN2DPVMru/Roam-architecture?node-id=0-1
 
 ## 1. Product in one paragraph
 
-Roam turns a long-distance route into a personal, offline-capable journey. Two objective types share one engine: **multi-day trails** (e.g. the GR11) and **peaks** (e.g. Aneto, with several routes up). A user picks a route — a trail, a trail segment, or one of a peak’s lines — and sets direction, pace (or start/finish dates) and an accommodation style; Roam generates a day-by-day **stage** plan (combining stages when the pace is fast) and suggests overnight stops. On trail, a full-screen map shows the route, the user's position
+Roam turns a long-distance route into a personal, offline-capable journey. Two
+objective types share one engine: **multi-day trails** (e.g. the GR11) and **peaks**
+(e.g. Aneto, with several routes up). A user picks a route — a trail, a trail
+segment, or one of a peak's lines — and sets direction, pace (or start/finish dates)
+and an accommodation style; Roam generates a day-by-day **stage** plan and suggests
+overnight stops. On trail, a full-screen map shows the route, the user's position
 and nearby water/refuges, and a **Guide** answers questions ("where's the next
-water?", "will I make the refuge before dark?"). Progress can be overridden at any
-time: mark a stage complete, stop early and resume tomorrow, or add a rest day.
+water?", "will I make the refuge before dark?"). **The plan is a forecast, not a
+contract:** setup states preferences; per-day decisions (push on, rest, walk as
+planned) are made *on the trail* at Stage Complete, where Roam previews the
+consequence and reflows the remaining days.
 
 ---
 
@@ -65,14 +72,15 @@ spec. Three things this requires:
   MapLibre does not ship polished terrain/hillshade or a finished outdoor base
   style. Plan for: (1) a **terrain-RGB DEM** source + `hillshade`/`terrain` layers;
   (2) authoring an **outdoor base style** from an open starting point (Protomaps
-  basemap, OpenFreeMap, Versatiles, or a MapTiler open style) with the `trail/*`
-  and `marker/*` tokens baked in; (3) self-hosting **glyphs + sprites**.
+  basemap, OpenFreeMap, Versatiles, or a MapTiler open style) with the `map/*`,
+  `trail/*` and `marker/*` tokens baked in; (3) self-hosting **glyphs + sprites**,
+  including the trail-blaze sprite sheet (§17).
 - **Strict `MapView` wrapper.** No renderer-specific types leak into screens;
   tile/source/style URLs live in config. This keeps a future swap (to Mapbox or
   MapTiler) a config-and-style task, not a refactor.
-- **Middle option if early velocity matters:** MapTiler is MapLibre-based but sells
-  polished styles + terrain + hosted tiles, with self-host and offline
-  (MBTiles/PMTiles) paths.
+- **Map labeling is a designed system, not defaults** — see §17: four zoom bands
+  keyed to hiker intent, painted-blaze trail shields, three-state POI markers,
+  water-priority collision. Implemented in the style JSON + a thin overlay layer.
 
 ### Backend (API)
 - **Bun** runtime, **Hono** framework, deployed on **Fly.io**.
@@ -86,14 +94,21 @@ spec. Three things this requires:
 - **Auth:** Supabase Auth. User-owned data (journeys, stages, overrides) syncs
   after offline edits via a **mutation outbox** (persisted in MMKV/SQLite, replayed
   through TanStack Query when back online). Server is source of truth once synced;
-  last-write-wins is acceptable for V1. The outbox also carries **trail reports** — POI confirmations and condition updates captured offline ("help other hikers") queue locally and replay once back online. These are small JSON mutations, so the queue stays lightweight.
+  last-write-wins is acceptable for V1. The outbox also carries **trail reports** —
+  POI confirmations and condition updates captured offline ("help other hikers")
+  queue locally and replay once back online. These are small JSON mutations, so the
+  queue stays lightweight.
 
 ### Infrastructure
 - **Fly.io** — Hono API + background jobs (OSM import, weather refresh via Open-Meteo).
 - **Cloudflare** — CDN / DNS / (optionally Workers).
-- **Cloudflare R2** — offline package bundles, exported vector tiles (PMTiles), static trail assets, and **user photos** (POI evidence; §9, §15).
-- **Image handling** — on upload: resize + thumbnail; **light, report-driven moderation** (no heavy pipeline).
-- **Notifications** — push via **Expo Notifications** (APNs / FCM) for weather warnings and journey reminders. Forecasts come from **Open-Meteo**, refreshed by the Fly weather job above.
+- **Cloudflare R2** — offline package bundles, exported vector tiles (PMTiles),
+  static trail assets, and **user photos** (POI evidence; §9, §15).
+- **Image handling** — on upload: resize + thumbnail; **light, report-driven
+  moderation** (no heavy pipeline).
+- **Notifications** — push via **Expo Notifications** (APNs / FCM) for weather
+  warnings and journey reminders. Forecasts come from **Open-Meteo**, refreshed by
+  the Fly weather job above.
 
 ---
 
@@ -124,13 +139,21 @@ unit-tested in isolation and runs on device for offline planning.
 
 Primary chain: **Route → Journey → Stage**
 
-- **Route** — a curated walkable line (geometry + chainage + metadata): the generalised core entity. A long-distance **Trail** is one long Route (many sections); a **Peak** ascent is a short Route to a summit. Carries an optional **grade** and **gear** for alpine/glaciated lines.
+- **Route** — a curated walkable line (geometry + chainage + metadata): the
+  generalised core entity. A long-distance **Trail** is one long Route (many
+  sections); a **Peak** ascent is a short Route to a summit. Carries an optional
+  **grade** and **gear** for alpine/glaciated lines, and a **trail class** +
+  **waymark** spec derived from OSM (§16).
 - **Trail** — a long-distance Route, segmented into sections.
-- **Peak** — a summit objective (elevation, massif, location) that **groups several Routes** (the lines up). Everything downstream reuses Route machinery unchanged.
-- **Journey** — a user’s plan/attempt of a Route (preferences, dates, status).
-- **Stage** — a generated day of a journey (start/end, distance, ascent, suggested overnight stop, completion state). A peak is typically a 1–2 stage out-and-back.
+- **Peak** — a summit objective (elevation, massif, location) that **groups several
+  Routes** (the lines up). Everything downstream reuses Route machinery unchanged.
+- **Journey** — a user's plan/attempt of a Route (preferences, dates, status).
+- **Stage** — a generated day of a journey (start/end, distance, ascent, suggested
+  overnight stop, completion state). A peak is typically a 1–2 stage out-and-back.
 
-Supporting entities: **POI, Accommodation, WaterSource, Hazard, TransportPoint, Section**. A `Section` is the canonical curated segmentation of a Route; `Stage` is the per-journey plan derived from sections + pace.
+Supporting entities: **POI, Accommodation, WaterSource, Hazard, TransportPoint,
+Section**. A `Section` is the canonical curated segmentation of a Route; `Stage` is
+the per-journey plan derived from sections + pace.
 
 ---
 
@@ -194,9 +217,9 @@ GeoJSON API; ship full-resolution geometry only inside the offline package.
 ## 8. Content ingestion pipeline (`packages/pipeline` + `apps/admin`)
 
 Content acquisition — not engineering — is the real bottleneck for a content-heavy
-product. Treat ingestion as a **repeatable, config-driven pipeline**, not a per-trail
-script. Adding the 251st trail must cost almost nothing: it's a new **config row**,
-not new code.
+product. Treat ingestion as a **repeatable, config-driven pipeline**, not a
+per-trail script. Adding the 251st trail must cost almost nothing: it's a new
+**config row**, not new code.
 
 **Per-trail config** drives every run: `{ trail_id, osm_relation_id, country,
 source_urls[], variant_rules }` (GR11 = OSM relation `68861`). The same five stages
@@ -205,23 +228,33 @@ run for any trail from its config:
 1. **Extract (automated)** — pull the OSM route relation + members and nearby POIs
    (refuges `tourism=alpine_hut/wilderness_hut`, water `natural=spring` /
    `amenity=drinking_water`, campsites, peaks, `mountain_pass`, transport) via
-   `osmium`/Overpass into a **staging schema**, untouched.
+   `osmium`/Overpass into a **staging schema**, untouched. Capture the route's
+   `network`, `ref`, `name`, and `osmc:symbol` tags — these drive trail
+   classification and the waymark (§16).
 2. **Normalise (automated)** — transform staging → canonical tables; stitch members
-   into one ordered LineString, pick the canonical line per `variant_rules`, then run
-   **chainage** (§7). Stamp `source: osm`, `confidence: low`. This is the *draft
-   trail* — complete-looking in an afternoon.
+   into one ordered LineString, pick the canonical line per `variant_rules`, then
+   run **chainage** (§7). Resolve the **`waymark`** object by parsing `osmc:symbol`
+   into the painted sign and keep the raw `network` tier as metadata — the
+   symbol→parse→structure rule in §17.8.
+   Stamp `source: osm`, `confidence: low`. This is the *draft trail* —
+   complete-looking in an afternoon.
 3. **Enrich (model-assisted)** — an LLM extraction pass over curated `source_urls`
-   (official federation guides e.g. FEDME, refuge sites, park bulletins, public trip
-   reports) drafts the fields OSM lacks — refuge capacity/booking/season, water
-   seasonality — and writes the per-section Guide summaries. `source: model`,
+   (official federation guides e.g. FEDME/FFRP, refuge sites, park bulletins,
+   public trip reports) drafts the fields OSM lacks — refuge capacity/booking/season,
+   water seasonality — and writes the per-section Guide summaries. `source: model`,
    unverified. Humans review, never author.
-4. **Verify (human, via `apps/admin`)** — curators correct drafts, fix OSM gaps, and
-   mark trusted facts `manual_override`. Only done in full for flagship trails.
-5. **Seed the living layer** — pre-fill a few condition reports from public trip reports +
-   first-hand hikes (clearly attributed) so the living layer isn’t empty at launch;
-   the crowd flywheel (§6) then maintains it.
+4. **Verify (human, via `apps/admin`)** — curators correct drafts, fix OSM gaps,
+   and mark trusted facts `manual_override`. Only done in full for flagship trails.
+   OSM classification is regionally inconsistent (§16), so the waymark/class is one
+   of the things a curator confirms for flagship trails.
+5. **Seed the living layer** — pre-fill a few condition reports from public trip
+   reports + first-hand hikes (clearly attributed) so the living layer isn't empty
+   at launch; the crowd flywheel (§6) then maintains it.
 
-**Peaks run the same pipeline.** A summit (`natural=peak`) becomes an objective; each ascent **route** (OSM route relations / well-known paths, or curated) is normalised + chainaged like a short trail and grouped under the peak. Grade and gear are model-drafted, human-verified.
+**Peaks run the same pipeline.** A summit (`natural=peak`) becomes an objective;
+each ascent **route** (OSM route relations / well-known paths, or curated) is
+normalised + chainaged like a short trail and grouped under the peak. Grade and
+gear are model-drafted, human-verified.
 
 **Properties that make this scale to ~250 trails:**
 - **Idempotent + override-safe.** Stages 1–3 re-run automatically as OSM/sources
@@ -231,15 +264,16 @@ run for any trail from its config:
   crowd content coexist, and lets a trail **ship before it's hand-finished** —
   launched honestly as "OSM-grade, improving," upgraded in place.
 - **Human effort scales sub-linearly by triage.** The model drafts all trails;
-  curators touch only **low-confidence + high-consequence** items the system surfaces,
-  and deep-finish only trails with real usage. Effort tracks demand, not trail count.
-- **`apps/admin` is a first-class surface, not a script.** Reviewing drafts, resolving
-  conflicting reports, fixing geometry is constant, forever work —
-  it needs a real internal tool (authenticated CRUD over Postgres to start).
+  curators touch only **low-confidence + high-consequence** items the system
+  surfaces, and deep-finish only trails with real usage. Effort tracks demand, not
+  trail count.
+- **`apps/admin` is a first-class surface, not a script.** Reviewing drafts,
+  resolving conflicting reports, fixing geometry is constant, forever work — it
+  needs a real internal tool (authenticated CRUD over Postgres to start).
 
 **Strategy: depth-first.** Hand-finish **GR11** fully through the pipeline first —
-that forges the pipeline and admin tool. Then trails 2–20 are pipeline + light finish
-on the popular ones; 20–250 are mostly automated, human attention only where
+that forges the pipeline and admin tool. Then trails 2–20 are pipeline + light
+finish on the popular ones; 20–250 are mostly automated, human attention only where
 confidence is low and usage is high. Earn breadth by nailing depth once;
 thin-everywhere erodes the trust that is the moat.
 
@@ -248,15 +282,26 @@ thin-everywhere erodes the trust that is the moat.
 ## 9. Database tables
 
 `routes`, `trails`, `peaks`, `sections`, `accommodations`, `water_sources`,
-`transport_points`, `hazards`, `journeys`, `stages`. Each spatial/point table carries:
+`transport_points`, `hazards`, `journeys`, `stages`. Each spatial/point table
+carries:
 - `geom geometry(...)` for drawing/import, **and**
 - `chainage_m double precision` (distance along the parent trail, §7), plus the
   parent `route_id` and ordering.
 
-`routes` is the spine: a `trails` row **or** a `peaks` row links to one or more `routes` (`route.trail_id` xor `route.peak_id`), and a route carries optional `grade` + `gear`. `sections` segment a route.
+`routes` is the spine: a `trails` row **or** a `peaks` row links to one or more
+`routes` (`route.trail_id` xor `route.peak_id`), and a route carries optional
+`grade` + `gear`, plus the raw **`osmc_symbol`** + **`network`** tags. The
+**`waymark`** object — `{ symbol, ref, network, networkClass, review? }`, where
+`symbol` is the parsed painted blaze (background/foregrounds/text + colours) — is
+produced by `resolveWaymark` from those tags (§17.8). Store the raw tags; resolve at
+the API boundary (or cache the parsed `symbol`). `networkClass` (`gr|pr|sl`) is
+sort/filter metadata only, never the colour. `sections` segment a route.
 
 `journeys`/`stages` carry user ownership, status (`planned|active|completed`), and
 override fields (completed, completed_at, rest_day, stopped_early_at_chainage).
+**Note:** there is no `combined_stages` concept — the engine does not combine stages
+or place rest days at setup (§11,
+§16). Rest days are outputs of the on-trail reflow, not user-placed setup rows.
 
 **Trust fields on every knowledge fact** (water/accommodation/hazard/…):
 `source` (`osm|model|partner|community`), `confidence` (0–1, derived),
@@ -266,9 +311,14 @@ value from re-import).
 `reports` — crowd signals: `id`, `entity_type`, `entity_id`, `user_id`, `state`
 (e.g. `flowing|trickle|dry`, `open|full`), `note`, `location`, `created_at`. A
 fact's `confidence` + `last_confirmed_at` are recomputed from recent, weighted
-reports (recency · reporter reliability · agreement). Reports are lightweight text/state signals; user photos live in their own table.
+reports (recency · reporter reliability · agreement). Reports are lightweight
+text/state signals; user photos live in their own table.
 
-`photos` — **POI evidence**: `id`, `user_id`, `poi_id` (the place it documents), optional `report_id`, `r2_key`, `width`, `height`, `taken_at`, `moderation` (`pending|approved|removed`, report-driven). Added when confirming a spot ("help other hikers") — on POI Detail or the Stage Complete batch — and surfaced on POI Detail’s *Latest photos*. There is no personal journal/reflection layer.
+`photos` — **POI evidence**: `id`, `user_id`, `poi_id` (the place it documents),
+optional `report_id`, `r2_key`, `width`, `height`, `taken_at`, `moderation`
+(`pending|approved|removed`, report-driven). Added when confirming a spot ("help
+other hikers") — on POI Detail or the Stage Complete batch — and surfaced on POI
+Detail's *Latest photos*. There is no personal journal/reflection layer.
 
 ---
 
@@ -276,13 +326,19 @@ reports (recency · reporter reliability · agreement). Reports are lightweight 
 
 A trail package (downloaded, stored in SQLite + cached tiles) contains: geometry,
 sections, accommodation, water, food, transport, hazards, weather cache
-(timestamped, with expiry), Guide summaries. **Optional:** the Guide Mini model.
+(timestamped, with expiry), Guide summaries, and the resolved **waymark spec** per
+route. **Optional:** the Guide Mini model.
 
 - Bundle format: a versioned manifest + data files in **R2**; client downloads,
   verifies, writes to SQLite, and registers the MapLibre offline tile region (or
   bundles a PMTiles archive for the corridor).
+- The map style bundle ships the **trail-blaze sprite sheet** and glyphs so shields
+  render offline (§17).
 - Show download size and last-updated; re-download when a newer version exists.
-  Weather is the only part expected to go stale offline — label it.
+  **Bump the style version when marker/blaze styling changes** or already-downloaded
+  packs keep the old map styling. Weather is the only part expected to go stale
+  offline — label it. The download is a real flow with a Wi-Fi-only toggle,
+  progress, per-layer breakdown, pause, and background continuation (screen `12d`).
 
 ---
 
@@ -291,12 +347,25 @@ sections, accommodation, water, food, transport, hazards, weather cache
 Pure, deterministic, no I/O. The same code runs on the server (initial plan) and on
 device (offline replanning).
 
-- **Inputs:** trail (sections + chainage), direction, **start/finish stage** (segment), pace **or start + finish dates** (which imply pace), accommodation preference.
-- **Outputs:** ordered stages (with combined-stage days at faster pace) and
-  suggested overnight stops per night.
-- **Responsibilities:** journey creation, stage generation, progress tracking,
-  completion/override resolution (mark complete, stop early & resume tomorrow, add
-  rest day).
+- **Inputs:** trail (sections + chainage), direction, **start/finish stage**
+  (segment, only for partial journeys), pace **or start + finish dates** (which
+  imply pace), accommodation preference.
+- **Outputs:** ordered stages and suggested overnight stops per night. This is a
+  **forecast** — see the reflow model below.
+- **Responsibilities:** journey creation, stage generation, progress tracking, and
+  **on-trail reflow**: given (remaining stages, pace prefs, today's decision) →
+  updated forecast with a new finish date.
+- **The decision model:** the plan is a forecast, not a hand-edited contract. There
+  is **no setup-time stage combining or rest-day placement**. Instead:
+  - Setup states global preferences (pace, rest-day frequency, dates). Review is
+    **read-only** with an "Adjust pace" link back to the pace step.
+  - Per-day decisions happen **on the trail** at Stage Complete: *Walk as planned*
+    (default, zero-effort), *Push on +N km*, or *Rest day*. The engine reflows the
+    remaining forecast and recomputes the finish date.
+  - The reflow must compute a **consequence preview before the user confirms**:
+    finish-date delta and any booking impact. If a decision strands a booking, the
+    UI shows an amber warning (the choice stays available; amber colors the
+    consequence, not the choice).
 - Deterministic given the same inputs; heavily unit-tested.
 
 ---
@@ -332,7 +401,21 @@ the chainage data so the exact same tool runs on device and on the server.
 `getNextWater()`, `getNextAccommodation()`, `getUpcomingHazards()`,
 `getCurrentWeather()`, `getSunsetTime()`.
 
-**Entity references (clickable Guide answers).** Tools return entities with their stable `id` and `type` (`poi` / `water_source` / `accommodation` / `hazard` / `section` / `stage`), not just prose, so Guide answers reference them inline and the client renders them as **tappable links** into the entity’s detail screen — e.g. a `getNextWater()` answer naming *Fuente de Góriz* links straight to POI Detail. Wire format: the Guide emits `[label](roam://water_source/<id>)`-style links (or an equivalent `{ text, entities: [{ span, type, id }] }` payload) so links resolve from **stable ids, never by string-matching the name**; the client maps each `type` to its screen and resolves the link against the **local package, offline**. Core templates the references directly; Cloud/Mini are instructed to cite only ids returned by tools — no invented links.
+**Entity references (clickable Guide answers).** Tools return entities with their
+stable `id` and `type` (`poi` / `water_source` / `accommodation` / `hazard` /
+`section` / `stage`), not just prose, so Guide answers reference them inline and the
+client renders them as **tappable links** into the entity's detail screen — e.g. a
+`getNextWater()` answer naming *Fuente de Góriz* links straight to POI Detail. Wire
+format: the Guide emits `[label](roam://water_source/<id>)`-style links (or an
+equivalent `{ text, entities: [{ span, type, id }] }` payload) so links resolve from
+**stable ids, never by string-matching the name**; the client maps each `type` to
+its screen and resolves the link against the **local package, offline**. Core
+templates the references directly; Cloud/Mini are instructed to cite only ids
+returned by tools — no invented links.
+
+**Look-ahead drives the map.** The "upcoming POIs" the Guide talks about and the
+POIs the map labels at navigation time come from the **same selector**, so the map
+and Guide never disagree (§17.5).
 
 ---
 
@@ -349,14 +432,23 @@ the chainage data so the exact same tool runs on device and on the server.
 - Client holds: Supabase anon key only. Map tiles/styles are our own (R2/CDN); no
   third-party map token. If a CDN needs signed tile URLs, sign them server-side.
 - All Guide model calls and privileged data go through the Hono API.
-- **Photos = POI evidence.** Photos exist only as evidence attached to a POI confirmation ("help other hikers"), added on POI Detail or the Stage Complete batch — never a personal journal. Upload direct to **R2 via presigned URLs** issued by the API; resize + thumbnail on ingest. Moderation is **light and report-driven** (`pending|approved|removed`); only approved photos surface publicly.
-- **No in-app social feed.** The "community" lives in the trail data (reports → confidence), not likes/follows. An optional **journey share card** (route + stats) goes out to the OS share sheet; nothing is published to an in-app feed.
+- **Photos = POI evidence.** Photos exist only as evidence attached to a POI
+  confirmation ("help other hikers"), added on POI Detail or the Stage Complete
+  batch — never a personal journal. Upload direct to **R2 via presigned URLs**
+  issued by the API; resize + thumbnail on ingest. Moderation is **light and
+  report-driven** (`pending|approved|removed`); only approved photos surface
+  publicly.
+- **No in-app social feed.** The "community" lives in the trail data (reports →
+  confidence), not likes/follows. An optional **journey share card** (route + stats)
+  goes out to the OS share sheet; nothing is published to an in-app feed.
 
 ---
 
-## 16. Design source (Figma)
+## 16. Design system & source (Figma)
 
 The UI is fully designed — pull screens from Figma rather than inventing layouts.
+This section is the canonical summary of the design system; the Figma file is the
+source of truth for anything not captured here.
 
 - **File key:** `qooJ77tbwQb1dB7P3Htetf`
 - **Access from Claude Code:** install the Figma MCP server, then reference a frame
@@ -364,78 +456,358 @@ The UI is fully designed — pull screens from Figma rather than inventing layou
   seat**, and one of:
   - `claude plugin install figma@claude-plugins-official` (recommended), or
   - `claude mcp add --transport http figma-remote-mcp https://mcp.figma.com/mcp`, or
-  - the local Dev Mode server at `http://127.0.0.1:3845` (Figma → Preferences →
-    *Enable Dev Mode MCP Server*).
+  - the local Dev Mode server at `http://127.0.0.1:3845`.
   Then `/mcp` to authenticate. Generate code from a selected frame, one screen at a
-  time; assemble multi-screen flows screen-by-screen.
+  time.
 
-### Design tokens → typed theme (`apps/mobile/theme` or `packages/core`)
-Mirror these Figma variables exactly:
-- **Type (Inter):** Title SB 17 · Section Header SB 18 (-0.36) · Card Title SB 15 ·
-  Stat Value SB 17 · Body Large R 17 · Body R 15 · Meta R 13 · Label SB 11 (0.6
-  tracking) · Tab SB 11.
-- **Radius:** sm 6 · md 7 · lg 8 · xl 12 · full 360.
-- **Spacing:** 2 · 4 · 6 · 8 · 10 · 12 · 16 · 24.
-- **Semantic colors:** `accent #494949` · `bg/app #f7f5f4` · `bg/surface #fdfcfc` ·
-  `bg/subtle` · `bg/input` · `border/default` · `text/primary #494949` ·
-  `text/secondary` · `text/on-accent #ffffff`.
-- **Trail colors:** international `#c74538` · national `#2e6eb0` · gr `#7d57c2` ·
-  local `#5c8c3d`.
-- **Marker colors:** water `#3385bf` · refuge `#cc7333` · viewpoint `#2e9e8f` ·
-  historic `#5c6b8f`.
-- **Status (bg/text pairs):** warn (`#faeeda`/`#854f0b`), danger
-  (`#fcebeb`/`#a32d2d`), info (`#e6f1fb`/`#185fa5`), success (`#e3efd9`/`#4a7a33`).
-  Convention: **green = done, blue/info = active/current, neutral = upcoming,
-  amber = caution/partial.**
+### The design language in one paragraph
+The type stack is **Bricolage Grotesque** (display/headings), **Hanken Grotesk**
+(body/UI), **Geist Mono** (numerals, stats, uppercase labels) — no Inter. Neutrals
+are warm (paper/charcoal, not cool gray). A **single green accent** drives all
+primary actions, toggles, the active tab tint, and progress UI; there is no blue in
+the system. The brand mark is a **blaze waymark** (red/cream GR bars). POI markers
+are warm and carry white icons.
+
+### Design tokens → typed theme (`apps/mobile/theme`)
+Mirror these Figma variables exactly. A single `theme` object — no feature flag.
+
+- **Type:**
+  - Display: **Bricolage Grotesque** SemiBold 600. Title 17 (-0.085) · Section
+    Header 18 (-0.09) · Card Title 15.
+  - Body/UI: **Hanken Grotesk** 400/500/600/700. Body Large 17 · Body 15 · Meta 13 ·
+    Body Strong 600 13 · Tab 500 10.
+  - Mono: **Geist Mono** 400/500. Stat Value 500 16 (-0.08) · Data S 500 12 ·
+    Data Meta 400 12 (+0.12) · Label 500 9.5 (+0.19).
+  - Rule of thumb: digits and ALL-CAPS are mono; headings are Bricolage; language is
+    Hanken. Never use Bricolage below 15px.
+- **Radius:** sm 6 · md 7 · lg 8 · xl 12 · full 360. (Bound throughout component
+  masters — consume tokens, never inline.)
+- **Spacing:** 2 · 4 · 6 · 8 · 10 · 12 · 16 · 24. (Likewise bound.)
+- **Semantic colors:** `accent #3D5A3F` (green) · `bg/app #FAF7F1` ·
+  `bg/surface #FFFEFB` · `bg/input rgba(58,47,30,0.05)` ·
+  `bg/subtle rgba(58,47,30,0.04)` · `border/default rgba(58,51,40,0.13)` ·
+  `text/primary #26231E` · `text/secondary #6F6A60` (opaque) ·
+  `text/on-accent #FFFFFF` · `text/tab-active #6F6A60`.
+- **Brand:** `brand/blaze-red #D63A22` · `brand/blaze-cream #FAF4E8`.
+- **Overlay (discovered in code, keep):** `dark rgba(28,24,20,0.35)` ·
+  `darkStrong rgba(28,24,20,0.45)` · `frosted rgba(255,254,251,0.92)` ·
+  `onImage #FFFFFF` · `onImageMuted rgba(255,255,255,0.85)`.
+- **Status (bg/text pairs):** warn (`#FAEEDA`/`#854F0B`), danger
+  (`#FCEBEB`/`#A32D2D`), success (`#E2EAE0`/`#3D5A3F`), **progress**
+  (`#E2EAE0`/`#3D5A3F`). Convention: **green = done AND active/current/progress**
+  (one accent), neutral = upcoming, amber = caution/partial. `status/info` is renamed
+  `status/progress` (it only ever means "your progress"); blue is gone.
+- **Map surfaces (unchanged):** `map/base #E8E4D8` · `map/road #FFFFFF` ·
+  `map/green #D4E6C3` · `map/route #26231E` · `map/water #AACBD8` ·
+  `map/contour #D8CFBE`.
+- **Marker colors (warm):** `water #4D7A8C` · `refuge #A0683C` · `viewpoint #58836B`
+  · `historic #7C6E5C` · `food #6B8456`. Markers do **not** use the accent: peak
+  markers are `text/primary` charcoal; junction nodes are `bg/surface` fill + 2px
+  `trail/sl` ring + `trail/sl` number.
+
+### Trail classification & waymark (from OSM; full map treatment in §17, pipeline in §17.8)
+Two independent things come from OSM, and conflating them is a mistake:
+- **Class** comes from the **`network`** tag: `iwn` (international) · `nwn` (national)
+  · `rwn` (regional) · `lwn` (local). This is metadata — it drives sorting,
+  filtering, and zoom priority (`networkClass`: `iwn`/`nwn`→`gr`, `rwn`→`pr`,
+  `lwn`→`sl`). E-paths (E6, E9…) are `iwn`. It does **not** pick a colour.
+- **The blaze** comes from the **`osmc:symbol`** tag — the literal encoding of the
+  painted waymark on the ground. We **parse it in full and rebuild the actual sign**;
+  we do **not** snap it to a fixed palette.
+
+**The waymark is built from the data, not bucketed (literal-symbol model).** A
+pure parser in `packages/core` (`parseOsmcSymbol`, shared by map/legend/admin)
+turns `osmc:symbol` (`waycolour:background[:foreground…][:text[:textcolour]]`) into
+its painted parts — background plate, foreground marks (colour + shape), text and
+text colour — each colour resolved through the **full osmc colour vocabulary**
+(`red green yellow blue white black orange brown gray purple` → tuned hexes), plus
+literal `#hex`. The renderer reconstructs the real sign from that structure. So GR11's
+`red:white:red_lower:11:black` builds a **white plate with a red lower bar and "11"
+in black** — its actual blaze — and any trail's colours come straight from its data.
+There is **no three-token snap**: `networkClass` (`gr|pr|sl`) survives only as
+sort/filter metadata, never as the colour.
+
+When `osmc:symbol` is absent there is no symbol to build — the route carries only its
+`networkClass`, and a curator decides the blaze in admin. Concurrency (two trails
+sharing a path, e.g. GR11/HRP) renders as **stacked blazes**, one parsed symbol per
+trail, mirroring real trail posts. Cap at two; 3+ shows the primary only.
+
+**Blue is a non-hiking flag, not a colour to render.** A blue `osmc:symbol`
+(equestrian/bike, or Swiss alpine difficulty) is flagged `review: non-hiking-blue`
+in admin, not drawn as a trail. Route **lines** on the map are drawn in the
+`osmc:symbol` **way colour** (`symbol.wayColor`, the first field — GR11 → red),
+falling back to `map/route` ink when a route has no symbol. The blaze carries the
+full painted sign; the line carries its colour.
+
+### Components (`components/ui/`, `components/trail/`)
+The component library. Reuse these; don't reinvent:
+- **`Button`** — 7 variants: Solid (S/M/L, green) · Outline (S/M/L) · Danger Solid
+  (M, red). There is no Ghost, Text, or separate CTA button — a full-width primary
+  CTA is `<Button variant="solid" size="lg">`.
+- **`IconButton`** — 3 variants: Surface M(34)/L(44) (surface fill, hairline, soft
+  shadow — for buttons over maps/photos) · Subtle M (input tint — inline). The
+  route flip/switch control, map/toolbar buttons, the active-journey •••.
+- **`Chip`** (Option Chip) — Default/Selected, `label` prop, token-bound. All filter
+  pills, season chips, search suggestions, and the **Stage Complete decision chips**.
+  Selected = green fill. (The setup wizard's segmented controls are a separate
+  pattern, intentionally not chips.)
+- **`ListItem`** — Detail (value + chevron) / Toggle / Toggle Off, props
+  `title`, `value`, `icon` (swap), `showIcon` (boolean). All settings rows: Profile,
+  Journey Settings, the Wi-Fi-only download row.
+- **`AddPhoto`** — the photo-evidence tile (Help-other-hikers confirmations, POI
+  Detail *Latest photos*).
+- **`Waymark`** — the painted-waymark badge, **reconstructed from a parsed
+  `osmc:symbol`** (§17.8): background plate + foreground marks + text, in the literal
+  parsed colours (GR11 = white plate, red lower bar, "11"). Takes an `OsmcSymbol` prop.
+  Renders above the route line on the map and in the legend; not a UI chrome element.
+- **Icons:** 24px grid, 2.0px stroke, round caps/joins, `text/primary` on paper,
+  white on colored tiles. `icon/stay` (hut), `icon/water-bottle` (droplet+ripple),
+  `icon/food` (pot), `icon/guide` (compass). Filled
+  play/pause/more are intentionally solid.
 
 ### Screen inventory (node IDs in the file above)
+Screens live on the Screens page (`26:4`) in six labeled rows; state/edge-case
+screens sit inline beside their happy-path siblings.
+
 | Screen | Node |
 |---|---|
-| 01 Home | `44:2` |
-| 02 Search | `51:90` |
-| 03 Map · 03b Map Filters | `141:672` · `211:745` |
+| 00 Location permission | `637:1424` |
+| 01 Home · 01c First-run | `44:2` · `636:1375` |
+| 02 Search · 02c No-results | `51:90` · `637:1446` |
+| 03 Map · 03b Filters | `141:672` · `211:745` |
+| 03c Section focus · 03d Full trail · 03f Offline | `647:1527` · `647:1616` · `637:1403` |
 | 04 Trail Detail — Overview | `53:205` |
 | 05 Trail Detail — Sections | `96:547` |
 | 06 Section Detail | `172:709` |
-| 07 Peak route detail — Aneto (Vía Normal) | `173:720` |
-| 07b Peak — Aneto · Overview / Routes | `307:1031` · `310:1038` |
-| 08–12 Journey Setup (Step 1 → Review) | `63:295` · `65:330` · `67:375` · `68:390` · `81:411` |
-| 13a Active Journey (full-screen map) · stats collapsed | `83:430` · `373:1112` |
-| 13b Active Journey — Paused · Options (•••) sheet | `224:1001` · `511:1344` |
-| 13c Active Journey — Itinerary / Settings tabs | `410:1201` · `407:1186` |
-| 13d Active Journey — Finish (•••) sheet | `481:1257` |
-| 14 Stage Complete | `76:419` |
-| 15/16 My Journeys (Active/Completed) | `77:425` · `85:439` |
-| 17 Profile | `87:479` |
+| 07 Peak route detail — Aneto | `173:720` |
+| 20 Peak Overview · 20b Routes | `307:1031` · `310:1038` |
+| 08–11 Journey Setup (Steps 1–4) | `63:295` · `65:330` · `67:375` · `68:390` |
+| 12 Review (read-only forecast) · 12d Download sheet | `612:49` · `639:1514` |
+| 13a Active (map) · stats collapsed | `83:430` · `373:1112` |
+| 13b Paused · Options sheet | `224:1001` · `511:1344` |
+| 13c Itinerary / Settings tabs | `410:1201` · `407:1186` |
+| 13d Finish sheet | `481:1257` |
+| 14 Stage Complete · 14b Booking affected | `612:174` · `615:79` |
+| 15 Journeys · 15c Empty · 16 Completed | `77:425` · `636:1308` · `85:439` |
+| 17 Profile (with Account/sync row) | `87:479` |
 | 18 POI Detail | `164:651` |
-| 19 Landing (web) · 19b Filters popover | `126:628` · `212:879` |
+| 19 Landing (web) | `126:628` |
 
-**Shared components (this iteration).** `Button` — the text-button system: **Tone** (Default / Danger) × **Variant** (Solid / Outline / Ghost / Text) × **Size** (Small 36 / Medium 44 / Large 52), with an optional **leading icon** slot. `IconButton` — a circular icon button with Style variants Subtle / Surface / Ghost × Size (Small 32 / Medium 40 / Large 48) and a swappable icon (the route **flip / switch** control; reusable for map and toolbar buttons; also the active-journey **•••**). `Add Photo` — the photo-**evidence** tile (beside each Help-other-hikers confirmation, and on POI Detail’s *Latest photos*). A **peak reuses the trail-detail components verbatim** — hero, Stat Pills, scroll-tabs, Hazard Tag, list items, `section-row`, CTA Button — with the middle tab **Sections → Routes**; that tab swap is the only structural difference between a trail and a peak.
+**A peak reuses the trail-detail components verbatim** — hero, stat pills,
+scroll-tabs, hazard tag, list items, `section-row`, Button — with the middle tab
+**Sections → Routes**; that tab swap is the only structural difference.
 
-Step 1 shows the route as start → finish locations (**Irun → Cadaqués**) with a **flip** control to reverse it, plus **Start from / Finish at stage** pickers so a journey can cover any stage range; the pace step adds **Start / Finish dates** that imply daily distance (budgeted days → km/day). The Review step
-shows the generated itinerary with **combined days** (fast pace) and a
-**stay-options** chooser. The active journey shares one **control bar** across the map
-(`83:430`) and the itinerary (`410:1201`): **Pause** (outline) ⇄ **Resume** (solid) — an
-**immediate, reversible toggle** (no menu, no confirm; this absorbs the old "stop here
-for today") — beside a **••• (More)** button (`IconButton` Surface, Large on the map /
-Medium on the itinerary). The paused state has **no status chip**; the Resume button alone
-signals it. Everything secondary lives in one **••• options sheet** (`511:1344` on the map,
-`481:1257` on the itinerary) — identical except its top navigation row (**Itinerary** on
-the map, **Map** on the itinerary): **Itinerary/Map · Ask guide · Finish stage · Finish
-journey**. **Finish stage** marks the current stage complete and advances (→ Stage Complete
-`76:419`); **Finish journey** is **danger** and gated behind a confirm. The itinerary itself
-(`410:1201`) still carries schedule overrides (add rest day / combine / split /
-tap-to-complete).
-
-**Trust UI (the curation model, §6, made visible).** POI Detail (`164:651`) is the
-home of it: a **reliability card** (state + freshness + confidence, in status
-colors), one-tap **Flowing / Trickle / Dry** report buttons (with an optional short note), and a recent-reports list. Map markers encode
-confidence (solid = confirmed, muted/dashed = unconfirmed). The Guide phrases
-answers by confidence — "flowing 2 days ago" vs "unconfirmed since May" (see the tip on `83:430`), and renders POI / water / refuge mentions as **tappable links** into their detail screens (§13). Stage Complete (`76:419`) marks the stage done and unlocks the next; below that primary action sits an **optional, de-emphasised "Help other hikers"** card for batch POI confirmation. POI confirmation happens **two ways**: in-the-moment on POI Detail (primary, accurate) and this optional end-of-day batch (a safety net) — the report chip is a **shared component** across both, and each confirmation can carry a **photo as evidence** — the reusable **Add Photo** tile, shrunk in beside the state chips here and reused at the end of POI Detail’s *Latest photos* strip. There is **no personal journal or reflection layer**: completed journeys show a **summary** (`244:1034`) of stats + the stage list, and an optional **share card** (`247:1049`) — route + stats out to the OS share sheet, never an in-app feed (§15).
+### Key flow notes
+- **Journey Setup.** Step 1 shows the route as start → finish (**Irun → Cadaqués**)
+  with a flip control; the Start/Finish **stage pickers only appear for "Specific
+  section,"** not for the full trail. The pace step adds Start/Finish dates implying
+  daily distance. Steps 2 & 4 carry a persistent **estimate ribbon** (live
+  completion forecast). **Review (`12`) is read-only** — the itinerary, no editing
+  controls, a "forecast not a contract" note, and an **Adjust pace ›** link back to
+  Step 3. (Add-rest-day / combine-days are gone — §11.)
+- **Active journey.** One **control bar** across map (`83:430`) and itinerary
+  (`410:1201`): **Pause** (outline) ⇄ **Resume** (solid) — immediate, reversible, no
+  confirm — beside a **••• (More)** button (IconButton Surface). Paused state has
+  **no status chip** except a small context chip ("PAUSED · DAY 11 · …"); the Resume
+  button signals it. Secondary actions live in the ••• sheet (`511:1344` map /
+  `481:1257` itinerary): Itinerary/Map · Ask guide · Finish stage · Finish journey.
+  **Finish stage** → Stage Complete; **Finish journey** is danger + confirm. The
+  itinerary and finish lists are **read-only progress views** (done ✓ / current /
+  upcoming) — no insert/edit affordances.
+- **Stage Complete (`14`)** is the per-day decision moment: stage info, a Guide
+  lead-in, three decision **Chips** (*Walk as planned* default · *Push on +N km* ·
+  *Rest day*), and a consequence line (finish-date delta + booking status). **`14b`**
+  is the booking-affected state: the consequence line becomes an amber `status/warn`
+  banner with a "Review booking ›" link; the chip selection stays green. Below the
+  primary action sits an optional, de-emphasised **"Help other hikers"** card for
+  batch POI confirmation (shared report chip + AddPhoto tile).
+- **Trust UI.** POI Detail (`164:651`) is the home: a reliability card (state +
+  freshness + confidence, in status colors), one-tap Flowing/Trickle/Dry report
+  buttons (+ optional note), recent-reports list, and *Latest photos*. Map markers
+  encode confidence (solid = confirmed, muted = unconfirmed). The Guide phrases by
+  confidence ("flowing 2 days ago" vs "unconfirmed since May") and renders POI/water/
+  refuge mentions as tappable links (§13).
+- **No personal journal.** Completed journeys show a stats **summary** + stage list
+  and an optional **share card** to the OS share sheet — never an in-app feed (§15).
 
 ---
 
-## 17. Build order (walking skeleton)
+## 17. Map labeling (MapLibre)
+
+What the map shows at each zoom is a designed system, not renderer defaults. Label
+density is keyed to **hiker intent** and expressed as MapLibre zoom-stop expressions
+in the style JSON — the renderer does the work; the app only overrides for two
+context cases (§17.6). Principle: at any zoom, show only what the hiker can act on at
+that zoom (zoomed out they orient — which trail, where; zoomed in they decide — is
+there water before that climb).
+
+### 17.1 Four zoom bands
+Boundaries are tunable; the *content rules* are the contract.
+
+| Band | Zoom | Intent | Trail blaze | Section names | POI markers |
+|---|---|---|---|---|---|
+| Overview | 0–8 | which trail, where | one, at the start terminus | hidden | hidden |
+| Regional | 9–11 | plan the days | repeating, wide spacing | midpoint pill labels | major refuge + day-end towns, as dots |
+| Tactical | 12–14 | today | repeating, normal spacing | fade out | all types, icon-only pins, no text |
+| Detail | 15+ | the next hour | repeating, normal spacing | hidden | pins + text labels + reliability dot |
+
+Two terminus blaze waymarks (start/end) are always present at all bands as point
+symbols.
+
+### 17.2 The trail blaze (`Waymark`, §16)
+The repeating waymark riding above the route line — the most distinctive element of
+the map, and what lets section names stay off the line entirely (the route carries
+its own identity continuously). It is the **reconstructed painted sign**, built from
+the parsed `osmc:symbol` (§17.8): a background **plate** (its colour + shape), the
+**foreground marks** over it (each its own colour + shape, e.g. a red `lower` bar),
+and the **text** in its text colour. GR11 (`red:white:red_lower:11:black`) is a white
+plate with a red lower bar and "11". Every colour is the literal parsed colour — there
+is no per-class palette. The plate renders **directly above the line point** (no stem)
+and stays upright regardless of line angle (`*-rotation-alignment: viewport`).
+
+**Rendering — sprite per unique symbol.** The painted sign is too structured for a
+plain text-fit sprite, but the set of distinct `osmc:symbol` values in a pack is small
+(a trail usually has exactly one). So a build step renders **one sprite per unique
+parsed symbol** — drawing plate + marks + text to a PNG — and the route feature
+carries a stable `symbolKey` (a hash of the parsed structure). The layer keys
+`icon-image` off `symbolKey`; placement is `symbol-placement: line`, `symbol-spacing`
+~400px at z8 → ~200px at z14 (tune on device), `symbol-avoid-edges: true`,
+`*-allow-overlap: false`. Drive the sprite drawing from the **same `parseOsmcSymbol`
+output and colour vocabulary** as the RN `Waymark` component, so map and UI never
+drift. Few-at-a-time cases (terminus blazes, concurrency) render as RN `Waymark`
+overlays (§17.5) reading the same parsed structure.
+
+```js
+// Trail blaze layer (sketch) — one pre-rendered sprite per distinct parsed symbol
+{
+  id: 'trail-blaze', type: 'symbol', source: 'trails', 'source-layer': 'route',
+  layout: {
+    'symbol-placement': 'line',
+    'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 8, 400, 11, 260, 14, 200],
+    'icon-image': ['concat', 'blaze-', ['get', 'symbolKey']], // hash of the parsed osmc:symbol
+    'icon-offset': [0, -6],
+    'icon-rotation-alignment': 'viewport',
+    'symbol-avoid-edges': true, 'icon-allow-overlap': false,
+  },
+}
+```
+
+Tile data: the route source exposes `symbolKey` per feature (text lives inside the
+pre-rendered sprite, not as a separate `text-field`).
+
+**Concurrency.** Where two trails share a path (e.g. GR11/HRP in the Pyrenees),
+render **stacked waymarks** — one parsed sign per trail, vertically — mirroring real
+trail posts. Cap at two; for 3+ show only the primary trail's blaze (secondaries are
+discoverable by tapping the line). Stacked blazes are the few-at-a-time case, so
+render them as RN `Waymark` overlays (§17.5) on concurrency segments.
+
+### 17.3 POI markers — three states
+One concept, three rendered states by zoom + context (§16 marker colors; white icon
+on the tile):
+
+| State | When | Render |
+|---|---|---|
+| Dot | Regional band, `Essential` density, or collision-thinned | tinted circle ~9px, white 1.5px ring, no icon |
+| Pin | Tactical band | tinted circle 26px, white 2px ring, white icon (~56% of pin), soft shadow |
+| Labeled | Detail band, or selected, or next-ahead | pin + label chip (surface fill, hairline, name in Geist Mono ~10px; water adds a reliability dot) |
+
+Two markers stay off the tinted-pin pattern (§16): **peak** = `text/primary`
+charcoal; **junction node** = `bg/surface` fill + 2px `trail/sl` ring + number.
+
+Labels fade rather than pop:
+`'text-opacity': ['interpolate', ['linear'], ['zoom'], 14, 0, 15, 1]`.
+
+**Priority & collision.** Water always wins a label collision (a missed water source
+is the only dangerous POI mistake):
+
+```js
+'symbol-sort-key': ['match', ['get', 'poiType'],
+  'water', 1, 'refuge', 2, 'junction', 3, 'food', 4, 'viewpoint', 5, 'historic', 6, 9],
+'text-allow-overlap': false, 'icon-allow-overlap': false, // lower = higher priority
+```
+
+A label that loses a collision does not vanish — the marker stays a pin/dot, only the
+text drops. That is the designed "dropped" state.
+
+### 17.4 Native layers vs RN overlays
+- **Native MapLibre symbol layers:** trail blazes, POI dots/pins, terminus blazes —
+  numerous, need native collision + zoom expressions, live in the style JSON.
+- **RN overlays (`MarkerView`):** selected-POI callout, next-ahead labels, stacked
+  concurrency blazes — few at a time, need exact token match + tap interaction.
+- Rule of thumb: >~20 possible on screen → native symbol layer; a handful that must
+  look like a UI component → RN overlay.
+
+### 17.5 Context overrides (app-driven, ignore zoom)
+1. **Active-journey look-ahead** — the next 2–3 POIs ahead on the route always show
+   labels (even at Tactical band) because the Guide is talking about them. Drive the
+   map and the Guide from the **same "upcoming POIs" selector** (§13) so they never
+   disagree. Implement via a `lookahead` feature-state or RN overlays.
+2. **Tap to promote** — tapping a marker promotes it to a full labeled callout (RN
+   overlay) with name + reliability + type and dims the others; tap-away dismisses.
+
+### 17.6 Density toggle & section names
+- **Density toggle** — a Subtle `IconButton` on the map cycles `Essential` (water +
+  refuge only, dots) / `Standard` (the band rules, default) / `All` (labels one band
+  earlier). Persist per user. `Essential` is also the performance floor for old
+  phones deep in a pack.
+- **Section names** appear only at Regional band, as faint paper midpoint pills
+  (`bg/app` ~92%, Geist Mono ~9px) — never path-following (unreadable on switchbacks;
+  the blaze carries continuous identity). Fade out by z12, where the on-trail stage
+  label takes over.
+
+### 17.7 Deferred (not blocking)
+- A dedicated reliability scale (flowing / low / unconfirmed) instead of the water
+  dot borrowing `trail/sl` green.
+- Concurrency sprite-vs-overlay final call depends on how many distinct pairs exist
+  in the catalog — count, then choose.
+- Band zoom boundaries are first-guess; calibrate on device against GR11 tiles.
+
+### 17.8 Rendering trail colours & blazes (data-driven, literal-symbol)
+The blaze is **not** a fixed enum keyed off trail class, and **not** a snap to a
+three-colour palette — it is the **actual painted sign parsed out of each route's OSM
+`osmc:symbol`** and rebuilt. We parse the symbol once (shared pure function), store
+the raw tag, and render the reconstructed sign. The flow:
+
+**symbol → parse → structure → store → build sign.**
+
+1. **Extract** (pipeline, §8) — capture the route relation's `network`, `ref`, `name`,
+   and `osmc:symbol` tags into staging. These live on the **relation**, not the member
+   ways (only a few ways carry them incidentally) — read them from the relation.
+2. **Parse** (`parseOsmcSymbol` / `resolveWaymark`, pure in `packages/core`, shared by
+   map/legend/admin) — turn `osmc:symbol`
+   (`waycolour:background[:foreground…][:text[:textcolour]]`) into an `OsmcSymbol`:
+   - `wayColor`, `background` (colour + shape), `foregrounds[]` (each colour + shape),
+     `text`, `textColor` — every colour resolved through the **full osmc colour
+     vocabulary** (`red green yellow blue white black orange brown gray purple` → tuned
+     hexes) or a literal `#hex`. **No snap to gr/pr/sl.**
+   - `networkClass` (`iwn`/`nwn`→`gr`, `rwn`→`pr`, `lwn`→`sl`) is computed **separately**
+     as sort/filter metadata — it is never the colour.
+   - **Blue is a flag, not a colour:** a blue trail/background sets
+     `review: 'non-hiking-blue'` (bike/horse/Swiss alpine) — surfaced in admin, not
+     drawn as a hiking trail.
+   - No `osmc:symbol` → `symbol: null` (nothing to build; curator decides), keeping
+     `networkClass`. No symbol and no network → `review: 'unresolved'`.
+3. **Store** — write raw `osmc_symbol` + `network` on the route row (§9). Resolve to the
+   `waymark` object at the API boundary, or cache the parsed `symbol`.
+4. **Serve** — the route feature carries the resolved `waymark` (the parsed `symbol`,
+   `ref`, `networkClass`) plus a stable `symbolKey` (hash of the parsed structure).
+5. **Build the sign** (on device, offline) — the RN `Waymark` component draws the plate
+   + foreground marks + text from the structure; the map uses a sprite pre-rendered
+   per distinct `symbolKey` from the *same* parser output (§17.2). One drawing
+   definition, three surfaces (map sprite, RN overlay, legend).
+
+**Why the sprite set stays small without snapping.** The set of *distinct*
+`osmc:symbol` values in a pack is tiny (a trail typically has exactly one), so
+rendering one sprite per unique parsed symbol is finite in practice — we keep the
+literal sign *and* a bounded sprite sheet. **E-paths are not a special case:** the E9
+across the Pyrenees carries the GR11's `red:white:red_lower:…` symbol, so it builds the
+same red-and-white sign — while keeping `network: iwn` as separate metadata. The parser
+is the one piece of real judgment; it lives in `packages/core` as a pure, tested
+function so map, legend, and admin share exactly one definition.
+
+---
+
+## 18. Build order (walking skeleton)
 
 Build **one trail end-to-end (GR11)** before adding breadth. Each phase is
 shippable/demoable.
@@ -446,49 +818,44 @@ native + offline parts of the stack before committing to structure.
 - **Backend** — Bun + Hono + Drizzle over Postgres/PostGIS (Supabase or local
   Docker). One `trails` table with a `geom` column; seed a single GR11 LineString;
   expose `GET /trails/:id` returning it as GeoJSON via `ST_AsGeoJSON(ST_Simplify(...))`.
-  Proves Drizzle connects and raw PostGIS SQL works.
 - **Frontend** — Expo **custom dev client** (not Expo Go) + MapLibre + TanStack
   Query + Zustand + MMKV + SQLite (`op-sqlite`). Render a MapLibre map with an open
-  base style, fetch the GeoJSON via TanStack Query and draw it as a line layer,
-  then write the response to SQLite and read it back.
+  base style, fetch the GeoJSON, draw it as a line layer, write to SQLite and read
+  it back.
 - **Done when:** the GR11 line renders on a real device from the API online, and
-  still renders from SQLite with networking off (airplane mode). Anything that
-  fights you here — MapLibre native build, dev client, PostGIS GeoJSON — gets
-  solved cheaply now, not in phase 5.
+  still renders from SQLite with networking off (airplane mode).
 
 0. **Scaffold** — monorepo, TS strict, lint/format, `packages/core` + `db` + `api`
-   + `apps/mobile`. Expo dev client building locally. Theme file from §16 tokens.
+   + `apps/mobile`. Expo dev client building locally. **Theme file from §16 tokens.**
 1. **Data spine (thin seed)** — Drizzle schema + PostGIS on Supabase; hand-seed or
-   thin-import a small GR11 subset *just to develop against*; compute chainage (§7).
-   The real content build is its own phase (7), not this.
+   thin-import a small GR11 subset just to develop against; compute chainage (§7).
 2. **Read API** — Hono endpoints: `GET /trails`, `/trails/:id` (+ sections, POIs,
    water as simplified GeoJSON), typed via shared `packages/core`.
 3. **Map skeleton** — mobile app renders GR11 on MapLibre (open base style +
-   markers) behind the `MapView` wrapper, plus the Trail Detail + Sections screens.
-   Navigation + Zustand + TanStack Query wired.
+   markers) behind the `MapView` wrapper, plus Trail Detail + Sections. The map
+   labeling system (§17) starts here: trail blaze + basic POI pins. Navigation +
+   Zustand + TanStack Query wired.
 4. **Journey Engine** — stage generation in `packages/core` (pure, tested); wire the
-   Setup flow (08–12) and Review (combined days + stay options).
+   Setup flow (Steps 1–4) and the **read-only Review** + on-trail reflow model (§11).
 5. **Offline package** — bundle GR11 to R2; download into SQLite + register the
    offline map region; app works in airplane mode. Build the terrain + base-style
-   workstream (§3) and the mutation outbox here.
-6. **Active journey + overrides** — full-screen map (`83:430`), itinerary tabs
-   (`410:1201`), the shared Pause/Resume · ••• control bar, the ••• options sheet
-   (`511:1344` / `481:1257`), Stage Complete.
-7. **Content ingestion + admin — the distinct content workstream (§8).** This is its
-   own phase because content acquisition, not engineering, is the real bottleneck.
-   Build the **config-driven pipeline** (`packages/pipeline`) and the **curation tool**
-   (`apps/admin`), then run **GR11 fully through it**: OSM extract → normalise +
-   chainage → model-enrich → **hand-finish GR11** in admin → seed a few condition reports so
-   the living layer isn’t empty. Doing GR11 by hand *forges* the pipeline + admin tool
-   that later scale to ~250 trails, where a new trail = a new config row (§8). Runs
-   partly in parallel with 3–6, but the full build and hand-finish land here.
-8. **Guide Core** — implement the §13 tools over chainage data; simple Q&A UI.
+   workstream + blaze sprite sheet (§3, §16) and the mutation outbox here. Real
+   download flow (`12d`).
+6. **Active journey + decisions** — full-screen map (`83:430`), itinerary tabs
+   (`410:1201`, read-only), the shared Pause/Resume · ••• control bar, the ••• sheet,
+   **Stage Complete decision card + booking-affected state** (§11).
+7. **Content ingestion + admin — the distinct content workstream (§8).** Build the
+   config-driven pipeline (`packages/pipeline`) and curation tool (`apps/admin`),
+   then run **GR11 fully through it**: OSM extract (incl. `network`/`osmc:symbol`) →
+   normalise + chainage + class/waymark resolution → model-enrich → hand-finish in
+   admin → seed a few condition reports. Runs partly in parallel with 3–6.
+8. **Guide Core** — implement the §13 tools over chainage data; Q&A UI; entity links.
 9. **Guide Cloud** — `/guide` proxy to Anthropic with the same tool schema.
 10. **Guide Mini** — on-device spike (only after the rest are solid).
 
 ---
 
-## 18. Conventions
+## 19. Conventions
 
 - TypeScript **strict**; no `any` in `packages/core`.
 - Shared types flow from `packages/core`/`db`; do not redefine API shapes in the app.
@@ -498,29 +865,28 @@ native + offline parts of the stack before committing to structure.
   `bun run db:migrate`, `bun run db:seed`, `bun run typecheck`, `bun test`.
 
 ### Mobile styling rules (`apps/mobile`)
-- **No hardcoded colours.** Every colour must come from `colors` or `colors.overlay` in
-  `apps/mobile/theme/index.ts`. Never write `'#fff'`, `'rgba(...)'`, or any hex string
-  directly in a component or screen file.
-- **No hardcoded font strings.** Every `fontFamily` must reference `fonts.regular`,
-  `fonts.semiBold`, or `fonts.bold` from the theme — never write `'Inter_600SemiBold'`
-  or any font name directly. Use `type.*` tokens wherever they exist; add a new token
-  to the theme when a combination is needed more than once.
-- **No `fontWeight` overrides.** React Native custom fonts do not respond to `fontWeight`
-  the same way as the web. Use the correct font face (`fonts.semiBold` / `fonts.bold`)
-  instead of overriding weight on top of a different face.
-- **Screens are thin.** Screens fetch data and compose components. Rendering logic lives
-  in `components/ui/` (generic) or `components/trail/` (trail-specific). Extract any
+- **No hardcoded colours.** Every colour comes from `colors` / `colors.overlay` in
+  `apps/mobile/theme/index.ts`. Never write `'#fff'`, `'rgba(...)'`, or any hex
+  directly in a component or screen.
+- **No hardcoded font strings.** Every `fontFamily` references the theme `fonts.*`
+  (Bricolage/Hanken/Geist Mono faces) — never write `'HankenGrotesk_400Regular'`
+  directly. Use `type.*` tokens where they exist; add a token when a combination
+  recurs.
+- **No `fontWeight` overrides.** RN custom fonts don't respond to `fontWeight` like
+  the web. Use the correct face (e.g. `fonts.body.semibold`) instead.
+- **Screens are thin.** Screens fetch + compose; rendering logic lives in
+  `components/ui/` (generic) or `components/trail/` (trail-specific). Extract any
   sub-component used more than once.
-- **API shapes come from Orval.** Never hand-write API response types in the mobile app.
-  Run `npm run codegen` after any API schema change; import types from `lib/hooks.ts`.
+- **API shapes come from codegen.** Never hand-write API response types in the
+  mobile app. Run codegen after any API schema change; import generated types.
 
 ---
 
-## 19. Roadmap (post-V1)
+## 20. Roadmap (post-V1)
 
-- **Phase 2:** *grow* the curation flywheel — richer community reports, water-reliability
-  reporting, accommodation updates. The confidence model + report ingestion are
-  **core (§6, §9), present from V1** — Phase 2 scales the loop, it doesn't invent it.
+- **Phase 2:** *grow* the curation flywheel — richer community reports,
+  water-reliability reporting, accommodation updates. The confidence model + report
+  ingestion are **core (§6, §9), present from V1** — Phase 2 scales the loop.
 - **Phase 3:** trail graph, custom route generation, alternative routes. *(First
   point at which a routing graph is justified — see principle 4.)*
 - **Phase 4:** global trail-knowledge platform, community-contributed intelligence,

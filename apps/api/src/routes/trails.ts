@@ -1,4 +1,5 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
+import { resolveWaymark } from '@roam/core';
 import { accommodations, asc, db, eq, routes, sections, sql, trails, waterSources } from '@roam/db';
 import {
   AccommodationSchema,
@@ -11,6 +12,15 @@ import {
 } from '../schemas';
 
 export const trailsRouter = new OpenAPIHono();
+
+// Fold the raw OSM tags into the parsed `waymark` the client renders (§17.8).
+// Resolve at the boundary so the painted sign is built from one shared definition.
+function withWaymark<
+  T extends { ref: string | null; osmcSymbol: string | null; network: string | null },
+>(row: T): Omit<T, 'osmcSymbol' | 'network'> & { waymark: ReturnType<typeof resolveWaymark> } {
+  const { osmcSymbol, network, ...rest } = row;
+  return { ...rest, waymark: resolveWaymark({ osmcSymbol, network, ref: row.ref }) };
+}
 
 // GET /trails
 trailsRouter.openapi(
@@ -40,11 +50,13 @@ trailsRouter.openapi(
         distanceM: routes.distanceM,
         ascentM: routes.ascentM,
         descentM: routes.descentM,
+        osmcSymbol: routes.osmcSymbol,
+        network: routes.network,
       })
       .from(trails)
       .innerJoin(routes, eq(trails.routeId, routes.id))
       .orderBy(asc(trails.id));
-    return c.json(rows, 200);
+    return c.json(rows.map(withWaymark), 200);
   },
 );
 
@@ -79,6 +91,8 @@ trailsRouter.openapi(
         distanceM: routes.distanceM,
         ascentM: routes.ascentM,
         descentM: routes.descentM,
+        osmcSymbol: routes.osmcSymbol,
+        network: routes.network,
       })
       .from(trails)
       .innerJoin(routes, eq(trails.routeId, routes.id))
@@ -92,7 +106,11 @@ trailsRouter.openapi(
     `)) as unknown as Array<{ geometry: object }>;
 
     return c.json(
-      { type: 'Feature' as const, geometry: geomRows[0]?.geometry ?? null, properties: trail },
+      {
+        type: 'Feature' as const,
+        geometry: geomRows[0]?.geometry ?? null,
+        properties: withWaymark(trail),
+      },
       200,
     );
   },

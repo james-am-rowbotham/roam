@@ -88,6 +88,7 @@
       "name": "@roam/db",
       "version": "0.0.1",
       "dependencies": {
+        "@roam/core": "workspace:*",
         "drizzle-orm": "^0.40.0",
         "postgres": "^3.4.0",
       },

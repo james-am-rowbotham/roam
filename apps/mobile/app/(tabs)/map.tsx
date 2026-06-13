@@ -6,9 +6,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   MapView,
   type MapViewHandle,
-  POILayer,
+  MarkerImages,
+  NativePOILayer,
   TrailLayer,
   UserMarker,
+  Waymark,
 } from '../../components/map';
 import { Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
@@ -66,7 +68,6 @@ export default function MapScreen() {
     setViewport,
     trailVisible,
     activeTrailId,
-    activeTrailLabel,
     activeTrailGeomCenter,
     activeSectionId,
     activeSectionLabel,
@@ -102,6 +103,11 @@ export default function MapScreen() {
   const firstTrail = trailsResponse?.data?.[0];
   const firstTrailId = firstTrail?.id;
   const trailLabel = firstTrail?.ref ?? firstTrail?.name ?? 'Trail';
+  // The route's painted waymark (§17.8) — the real GR11 sign, parsed from OSM.
+  const waymarkSymbol = firstTrail?.waymark?.symbol ?? null;
+  // The route line is drawn in the osmc:symbol way colour (GR11 → red), falling
+  // back to ink when a route has no symbol.
+  const trailColor = waymarkSymbol?.wayColor ?? colors.map.route;
   const enabled = { query: { enabled: !!firstTrailId } };
 
   const trailIdStr = String(firstTrailId ?? 0);
@@ -139,6 +145,8 @@ export default function MapScreen() {
     <View style={styles.screen}>
       {/* Full-screen map */}
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
+        {/* Register marker glyphs once so the native POI SymbolLayers can draw them. */}
+        <MarkerImages />
         {/* Trail (GR11) and everything attached to it — hidden when the trail
             filter is removed. Section highlight is dimmed against the full line. */}
         {trailVisible && (
@@ -147,9 +155,10 @@ export default function MapScreen() {
               <TrailLayer
                 id="gr11"
                 geojson={geojson as never}
-                color={colors.trail.gr}
+                color={trailColor}
                 width={isSectionActive ? 2 : 3}
                 opacity={isSectionActive ? 0.2 : 0.9}
+                corridor
               />
             )}
             {/* Section highlight */}
@@ -157,35 +166,37 @@ export default function MapScreen() {
               <TrailLayer
                 id="section-highlight"
                 geojson={{ type: 'Feature', geometry: activeSectionGeom as never, properties: {} }}
-                color={colors.trail.gr}
+                color={trailColor}
                 width={4}
                 opacity={1}
               />
             )}
-            {/* POIs */}
-            <POILayer
+            {/* POIs — native layers self-disclose: discs fade in at the
+                Tactical tier (z12), labels at the Detail tier (z15). Confidence
+                drives the muted look (§9). */}
+            <NativePOILayer
               id="water"
+              kind="water"
               pois={water}
-              color={colors.marker.water}
-              radius={6}
-              annotationMode={isSectionActive}
               onPress={(id) => router.push(`/poi/water/${id}`)}
             />
-            <POILayer
+            <NativePOILayer
               id="accommodations"
+              kind="accommodation"
               pois={accommodations}
-              color={colors.marker.refuge}
-              radius={7}
-              annotationMode
               onPress={(id) => router.push(`/poi/accommodation/${id}`)}
             />
-            {/* Geometry labels — tap to navigate to detail */}
-            {activeTrailGeomCenter && activeTrailLabel && (
-              <GeometryLabel
-                center={activeTrailGeomCenter}
-                label={activeTrailLabel}
-                onPress={() => router.push(`/trail/${activeTrailId}`)}
-              />
+            {/* Trail waymark (the parsed osmc:symbol sign) + section label —
+                tap to navigate to detail */}
+            {activeTrailGeomCenter && waymarkSymbol && (
+              <Marker id="trail-waymark" lngLat={activeTrailGeomCenter}>
+                <TouchableOpacity
+                  onPress={() => router.push(`/trail/${activeTrailId}`)}
+                  activeOpacity={0.85}
+                >
+                  <Waymark symbol={waymarkSymbol} />
+                </TouchableOpacity>
+              </Marker>
             )}
             {activeSectionGeomCenter && activeSectionLabel && (
               <GeometryLabel
@@ -289,9 +300,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     gap: 4,
-    borderWidth: 1.5,
-    borderColor: colors.trail.gr,
-    shadowColor: '#000',
+    borderWidth: 1,
+    borderColor: colors.border.default,
+    shadowColor: colors.text.primary,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
@@ -301,12 +312,12 @@ const styles = StyleSheet.create({
     fontFamily: fonts.monoMedium,
     fontSize: 11,
     letterSpacing: 0.22,
-    color: colors.trail.gr,
+    color: colors.text.secondary,
   },
   geoLabelArrow: {
     fontFamily: fonts.monoMedium,
     fontSize: 11,
-    color: colors.trail.gr,
+    color: colors.text.secondary,
     opacity: 0.5,
   },
 

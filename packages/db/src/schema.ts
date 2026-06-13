@@ -25,6 +25,12 @@ export const routes = pgTable('routes', {
   // MultiLineString when ways don't fully connect; LineString when they do.
   // Full-resolution geometry for the offline package; API serves simplified versions.
   geom: geometry('geom', { srid: 4326 }),
+  // Raw OSM waymark tags (§16/§17.8). `osmcSymbol` is the literal painted-blaze
+  // encoding (e.g. "red:white:red_lower:11:black"), parsed into the sign by
+  // resolveWaymark() in @roam/core at the API boundary; `network` is the tier
+  // (iwn|nwn|rwn|lwn) kept as sort/filter metadata. The route LINE renders ink.
+  osmcSymbol: text('osmc_symbol'),
+  network: text('network'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

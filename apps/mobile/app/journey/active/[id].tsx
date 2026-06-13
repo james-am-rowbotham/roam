@@ -14,7 +14,8 @@ import { ActiveControlBar, OptionsSheet } from '../../../components/journey';
 import {
   MapView,
   type MapViewHandle,
-  POILayer,
+  MarkerImages,
+  NativePOILayer,
   TrailLayer,
   UserMarker,
 } from '../../../components/map';
@@ -88,6 +89,8 @@ export default function ActiveJourneyScreen() {
 
   const { data: trailsData } = useTrails();
   const trail = trailsData?.data?.find((t) => t.routeId === journey?.routeId);
+  // Route line in the osmc:symbol way colour (GR11 → red), fallback ink.
+  const trailColor = trail?.waymark?.symbol?.wayColor ?? colors.map.route;
   const trailIdStr = String(trail?.id ?? 0);
   const enabled = { query: { enabled: !!trail?.id } };
   const { data: trailResponse } = useTrail(trailIdStr, enabled);
@@ -196,38 +199,37 @@ export default function ActiveJourneyScreen() {
   return (
     <View style={styles.screen}>
       <MapView ref={mapRef} center={viewport?.center} zoom={viewport?.zoom}>
+        {/* Register marker glyphs once for the native POI SymbolLayers. */}
+        <MarkerImages />
         {geojson && (
           <TrailLayer
             id="trail-full"
             geojson={geojson as never}
-            color={colors.trail.gr}
+            color={trailColor}
             width={2}
             opacity={0.25}
+            corridor
           />
         )}
         {stageGeom && (
           <TrailLayer
             id="stage-line"
             geojson={{ type: 'Feature', geometry: stageGeom as never, properties: {} }}
-            color={colors.trail.gr}
+            color={trailColor}
             width={4}
             opacity={1}
           />
         )}
-        <POILayer
+        <NativePOILayer
           id="active-water"
+          kind="water"
           pois={water}
-          color={colors.marker.water}
-          radius={6}
-          annotationMode
           onPress={(wid) => router.push(`/poi/water/${wid}`)}
         />
-        <POILayer
+        <NativePOILayer
           id="active-accomm"
+          kind="accommodation"
           pois={accomm}
-          color={colors.marker.refuge}
-          radius={7}
-          annotationMode
           onPress={(aid) => router.push(`/poi/accommodation/${aid}`)}
         />
         {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}

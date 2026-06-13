@@ -1,9 +1,41 @@
+import { resolveWaymark } from '@roam/core';
 import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
 import { accommodations, routes, sections, trails, waterSources } from './schema';
 
 type LonLat = [number, number];
+
+// The single most common value of an OSM tag across the member ways — the
+// fallback for waymark resolution when the relation tags aren't available.
+function dominantTag(ways: OverpassWay[], key: string): string | null {
+  const counts = new Map<string, number>();
+  for (const w of ways) {
+    const v = w.tags?.[key];
+    if (v) counts.set(v, (counts.get(v) ?? 0) + 1);
+  }
+  let best: string | null = null;
+  let bestN = 0;
+  for (const [v, n] of counts) {
+    if (n > bestN) {
+      best = v;
+      bestN = n;
+    }
+  }
+  return best;
+}
+
+// The GR11 route relation's own tags (§8/§17.8). osmc:symbol, network and ref
+// live on the relation — NOT the member ways, only ~3 of which carry them
+// incidentally — so this is the authoritative waymark source. Captured from the
+// "Senda Pirenaica" stage relations (E01–E37), which all share these tags; the
+// pre-2020 relation 68861 in CLAUDE.md §8 is stale. Refresh with:
+//   relation["type"="route"]["ref"="GR 11"](42,-2.5,43.5,3.5); out tags;
+async function loadRelationTags(): Promise<Record<string, string> | null> {
+  const file = Bun.file(`${import.meta.dir}/../data/gr11-relation.json`);
+  if (!(await file.exists())) return null;
+  return (await file.json()) as Record<string, string>;
+}
 
 // ---------------------------------------------------------------------------
 // Config
@@ -71,6 +103,7 @@ interface OverpassWay {
   type: 'way';
   id: number;
   geometry: Array<{ lat: number; lon: number }>;
+  tags?: Record<string, string>;
 }
 
 interface OverpassNode {
@@ -234,6 +267,24 @@ async function seedRoute(): Promise<number> {
     `  Ordered ${rawPieces.length} pieces → ${Math.round(lengthM / 1000)} km single line`,
   );
 
+  // Capture the raw waymark tags (§17.8). Prefer the route relation's own tags
+  // (authoritative); fall back to the dominant member-way tags. The API parses
+  // osmc:symbol into the painted sign — we store it raw. GR11 is
+  // "red:white:red_lower:11:black" (white plate, red lower bar, "11"), network nwn.
+  const relTags = await loadRelationTags();
+  const osmcSymbol = relTags?.['osmc:symbol'] ?? dominantTag(ways, 'osmc:symbol');
+  const network = relTags?.network ?? dominantTag(ways, 'network');
+  const sign = resolveWaymark({ osmcSymbol, network, ref: 'GR11' }).symbol;
+  console.log(
+    `  Waymark: ${
+      sign
+        ? `${sign.background.colorName} plate + ${sign.foregrounds
+            .map((f) => `${f.colorName} ${f.shape}`)
+            .join(', ')}${sign.text ? ` "${sign.text}"` : ''}`
+        : 'none'
+    } · network ${network ?? '—'}`,
+  );
+
   const inserted = await db
     .insert(routes)
     .values({
@@ -243,6 +294,8 @@ async function seedRoute(): Promise<number> {
       ascentM: 47_000,
       descentM: 47_000,
       geom: sql`ST_GeomFromText(${wkt}, 4326)`,
+      osmcSymbol,
+      network,
     })
     .returning({ id: routes.id }); // exclude geom — Drizzle can't parse the EWKB back
 
