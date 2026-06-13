@@ -163,3 +163,67 @@ export function resolveWaymark(input: WaymarkInput): Waymark {
   else if (!symbol && !networkClass) waymark.review = 'unresolved';
   return waymark;
 }
+
+// ---------------------------------------------------------------------------
+// Drawing — the single shared definition of how a parsed symbol is painted.
+// Produces an SVG string in a 100×100 viewBox, so it renders identically in RN
+// (react-native-svg) and as a rasterized map sprite (resvg, build/ingest). One
+// definition, every surface — §17.2.
+// ---------------------------------------------------------------------------
+
+const INK = '#26231E'; // default text colour when osmc:symbol omits one
+const HAIRLINE = 'rgba(0,0,0,0.10)'; // subtle plate edge for contrast on the map
+
+function escapeXml(s: string): string {
+  return s.replace(/[<>&"']/g, (c) =>
+    c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '&' ? '&amp;' : c === '"' ? '&quot;' : '&#39;',
+  );
+}
+
+// A foreground mark in the 100-unit plate. Half-fills span edge-to-edge so they
+// reach the plate exactly; rings/frames are stroked. Unknown → a centred bar.
+function markSvg(shape: string | null, color: string): string {
+  switch (shape) {
+    case 'lower':
+      return `<rect y="50" width="100" height="50" fill="${color}"/>`;
+    case 'upper':
+      return `<rect width="100" height="50" fill="${color}"/>`;
+    case 'left':
+      return `<rect width="50" height="100" fill="${color}"/>`;
+    case 'right':
+      return `<rect x="50" width="50" height="100" fill="${color}"/>`;
+    case 'bar':
+      return `<rect y="33" width="100" height="34" fill="${color}"/>`;
+    case 'stripe':
+      return `<rect x="33" width="34" height="100" fill="${color}"/>`;
+    case 'dot':
+      return `<circle cx="50" cy="50" r="21" fill="${color}"/>`;
+    case 'circle':
+    case 'ring':
+      return `<circle cx="50" cy="50" r="34" fill="none" stroke="${color}" stroke-width="11"/>`;
+    case 'frame':
+      return `<rect x="6" y="6" width="88" height="88" fill="none" stroke="${color}" stroke-width="12"/>`;
+    default:
+      return `<rect y="33" width="100" height="34" fill="${color}"/>`;
+  }
+}
+
+// Render a parsed waymark to an SVG string. `fontFamily` lets each surface pass
+// its own font (RN passes the loaded Geist Mono; resvg passes a font file name).
+export function waymarkSvg(symbol: OsmcSymbol, opts?: { fontFamily?: string }): string {
+  const font = opts?.fontFamily ?? 'monospace';
+  const round = symbol.background.shape === 'circle' || symbol.background.shape === 'round';
+  const plateShape = round
+    ? '<circle cx="50" cy="50" r="50"/>'
+    : '<rect width="100" height="100"/>';
+  const marks = symbol.foregrounds.map((f) => markSvg(f.shape, f.color)).join('');
+  const text = symbol.text
+    ? `<text x="50" y="50" font-family="${font}" font-size="44" font-weight="600" fill="${
+        symbol.textColor ?? INK
+      }" text-anchor="middle" dominant-baseline="central">${escapeXml(symbol.text)}</text>`
+    : '';
+  const border = round
+    ? `<circle cx="50" cy="50" r="49" fill="none" stroke="${HAIRLINE}" stroke-width="2"/>`
+    : `<rect x="1" y="1" width="98" height="98" fill="none" stroke="${HAIRLINE}" stroke-width="2"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><clipPath id="wm">${plateShape}</clipPath></defs><g clip-path="url(#wm)"><g fill="${symbol.background.color}">${plateShape}</g>${marks}</g>${border}${text}</svg>`;
+}

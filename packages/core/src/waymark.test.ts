@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { type OsmcSymbol, parseOsmcSymbol, resolveWaymark } from './waymark';
+import { type OsmcSymbol, parseOsmcSymbol, resolveWaymark, waymarkSvg } from './waymark';
 
 describe('parseOsmcSymbol — the painted parts', () => {
   it('parses the GR11 sign (white plate, red lower bar, "11" in black)', () => {
@@ -71,5 +71,24 @@ describe('resolveWaymark — literal symbol + metadata', () => {
     expect(w.symbol).toBeNull();
     expect(w.networkClass).toBe('sl');
     expect(w.review).toBeUndefined();
+  });
+});
+
+describe('waymarkSvg — the shared drawing', () => {
+  it('paints the GR11 sign (white plate, red lower bar, "11")', () => {
+    const symbol = parseOsmcSymbol('red:white:red_lower:11:black') as OsmcSymbol;
+    const svg = waymarkSvg(symbol);
+    expect(svg).toContain('viewBox="0 0 100 100"');
+    expect(svg).toContain('fill="#FDFCFC"'); // white plate
+    expect(svg).toContain('<rect y="50" width="100" height="50" fill="#C74538"'); // red lower bar
+    expect(svg).toContain('>11</text>');
+    expect(svg).toContain('fill="#26231E"'); // black → ink text
+  });
+
+  it('escapes text and passes through the font family', () => {
+    const symbol = parseOsmcSymbol('red:white:white_bar:A&B') as OsmcSymbol;
+    const svg = waymarkSvg(symbol, { fontFamily: 'GeistMono' });
+    expect(svg).toContain('font-family="GeistMono"');
+    expect(svg).toContain('A&amp;B');
   });
 });
