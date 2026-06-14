@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { resolveWaymark } from '@roam/core';
+import { downsampleElevation, resolveWaymark } from '@roam/core';
 import { accommodations, asc, db, eq, routes, sections, sql, trails, waterSources } from '@roam/db';
 import {
   AccommodationSchema,
@@ -52,11 +52,22 @@ trailsRouter.openapi(
         descentM: routes.descentM,
         osmcSymbol: routes.osmcSymbol,
         network: routes.network,
+        elevationProfile: routes.elevationProfile,
       })
       .from(trails)
       .innerJoin(routes, eq(trails.routeId, routes.id))
       .orderBy(asc(trails.id));
-    return c.json(rows.map(withWaymark), 200);
+    // Fold in the waymark and a light elevation silhouette; drop the full profile.
+    return c.json(
+      rows.map(({ elevationProfile, ...row }) => ({
+        ...withWaymark(row),
+        elevation: downsampleElevation(
+          (elevationProfile ?? []).map((p) => p.e),
+          48,
+        ),
+      })),
+      200,
+    );
   },
 );
 
@@ -93,6 +104,7 @@ trailsRouter.openapi(
         descentM: routes.descentM,
         osmcSymbol: routes.osmcSymbol,
         network: routes.network,
+        elevationProfile: routes.elevationProfile,
       })
       .from(trails)
       .innerJoin(routes, eq(trails.routeId, routes.id))
@@ -109,7 +121,13 @@ trailsRouter.openapi(
       {
         type: 'Feature' as const,
         geometry: geomRows[0]?.geometry ?? null,
-        properties: withWaymark(trail),
+        properties: {
+          ...withWaymark(trail),
+          elevation: downsampleElevation(
+            (trail.elevationProfile ?? []).map((p) => p.e),
+            48,
+          ),
+        },
       },
       200,
     );

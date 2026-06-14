@@ -65,6 +65,7 @@ export default function HomeScreen() {
           key={isActiveJourney.id}
           journey={isActiveJourney}
           trailName={trailName(isActiveJourney.routeId)}
+          elevation={trails.find((t) => t.routeId === isActiveJourney.routeId)?.elevation ?? []}
           compact
           onOpen={() => router.push(`/journey/${isActiveJourney.id}`)}
           onMap={() => router.push(`/journey/active/${isActiveJourney.id}`)}

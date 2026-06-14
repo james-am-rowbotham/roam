@@ -561,6 +561,14 @@ The component library. Reuse these; don't reinvent:
   `osmc:symbol`** (§17.8): background plate + foreground marks + text, in the literal
   parsed colours (GR11 = white plate, red lower bar, "11"). Takes an `OsmcSymbol` prop.
   Renders above the route line on the map and in the legend; not a UI chrome element.
+- **`ElevationProfile`** — the elevation silhouette (filled area chart, react-native-svg)
+  in three modes from one component: **preview** (whole profile — `accent` fill @0.18 +
+  `accent` line 1.75px; trail/section detail), **progress** (walked split — walked =
+  `accent` fill @0.22 + `accent` line; remaining = `text/primary` fill @0.10 + ink line
+  @0.28 1.25px; an `accent` marker dot with a 2px `bg/surface` ring at the walked point;
+  journey cards), and **complete** (whole profile `accent` fill @0.22 + line; completed
+  cards). Props: `data: number[]`, `mode`, `progress?` 0–1, `height?`. Downsamples to
+  ~32 pts; the route profile comes from the stored DEM samples (§7).
 - **Icons:** 24px grid, 2.0px stroke, round caps/joins, `text/primary` on paper,
   white on colored tiles. `icon/stay` (hut), `icon/water-bottle` (droplet+ripple),
   `icon/food` (pot), `icon/guide` (compass). Filled

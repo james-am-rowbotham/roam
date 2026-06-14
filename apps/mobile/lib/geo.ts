@@ -20,8 +20,12 @@ export function flattenCoords(geometry: Record<string, unknown>): Coords2D[] {
   return [];
 }
 
-// Bounding box [minLng, minLat, maxLng, maxLat]
-function geometryBbox(geometry: Record<string, unknown>): [number, number, number, number] | null {
+// Bounding box [minLng, minLat, maxLng, maxLat] — same order as MapLibre's
+// LngLatBounds ([west, south, east, north]), so it feeds Camera `bounds` directly.
+export function geometryBbox(
+  geometry: Record<string, unknown> | null | undefined,
+): [number, number, number, number] | null {
+  if (!geometry) return null;
   const pts = flattenCoords(geometry);
   if (pts.length === 0) return null;
   let minLng = Number.POSITIVE_INFINITY;

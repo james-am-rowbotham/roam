@@ -1,12 +1,16 @@
+import { progressFraction } from '@roam/core';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { formatKm } from '../../lib/format';
 import type { JourneyListItem } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
+import { ElevationProfile } from '../trail';
 import { Button, StatusChip } from '../ui';
 
 interface Props {
   journey: JourneyListItem;
   trailName: string;
+  /** The route's elevation silhouette (from the trail list). */
+  elevation: number[];
   /** Open the journey (itinerary / settings). */
   onOpen: () => void;
   /** Open the full-screen active map (active/paused journeys only). */
@@ -15,7 +19,7 @@ interface Props {
   compact?: boolean;
 }
 
-export function JourneyCard({ journey, trailName, onOpen, onMap, compact }: Props) {
+export function JourneyCard({ journey, trailName, elevation, onOpen, onMap, compact }: Props) {
   const title = journey.name?.trim() || trailName;
   const isActive = journey.status === 'active';
   const isPaused = journey.status === 'paused';
@@ -26,8 +30,9 @@ export function JourneyCard({ journey, trailName, onOpen, onMap, compact }: Prop
   const total = journey.totalDays || 0;
   const done = journey.completedDays || 0;
   const currentDay = Math.min(done + 1, total || 1);
-  const pct = isCompleted ? 100 : total > 0 ? Math.round((done / total) * 100) : 0;
-  const barColor = isCompleted ? colors.status.success.text : colors.status.progress.text;
+  // Elevation silhouette: walked split for in-progress, all-green when finished.
+  const epMode = isCompleted ? 'complete' : inProgress ? 'progress' : 'preview';
+  const walked = progressFraction(journey.doneDistanceM ?? 0, journey.totalDistanceM ?? 0);
 
   const chip = isCompleted
     ? { label: '✓ Complete', variant: 'success' as const }
@@ -52,9 +57,9 @@ export function JourneyCard({ journey, trailName, onOpen, onMap, compact }: Prop
         <StatusChip label={chip.label} variant={chip.variant} />
       </View>
 
-      <View style={styles.track}>
-        <View style={[styles.fill, { width: `${pct}%`, backgroundColor: barColor }]} />
-      </View>
+      {elevation.length > 0 && (
+        <ElevationProfile data={elevation} mode={epMode} progress={walked} />
+      )}
 
       <Text style={styles.meta} numberOfLines={1}>
         {meta}
@@ -87,14 +92,6 @@ const styles = StyleSheet.create({
     gap: spacing[3],
   },
   title: { ...type.cardTitle, color: colors.text.primary, flex: 1 },
-
-  track: {
-    height: 4,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.subtle,
-    overflow: 'hidden',
-  },
-  fill: { height: 4, borderRadius: radius.full },
 
   meta: { ...type.meta, color: colors.text.secondary },
 

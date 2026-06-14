@@ -47,12 +47,23 @@ export const TrailListItemSchema = z.object({
   // The route's painted waymark, parsed from osmc:symbol. The map line is ink;
   // identity lives in this sign (§17.8).
   waymark: WaymarkSchema,
+  // Light downsampled elevation silhouette (~48 pts) for journey-card profiles.
+  // The full profile is on the trail detail (elevationProfile).
+  elevation: z.array(z.number()),
+});
+
+// One sampled point of an elevation profile: distance-from-start + elevation (m).
+export const ElevationPointSchema = z.object({ d: z.number(), e: z.number() });
+
+// Trail detail adds the real elevation profile (heavy — not on the list).
+export const TrailDetailSchema = TrailListItemSchema.extend({
+  elevationProfile: z.array(ElevationPointSchema).nullable(),
 });
 
 export const TrailFeatureSchema = z.object({
   type: z.literal('Feature'),
   geometry: z.record(z.string(), z.unknown()).nullable(),
-  properties: TrailListItemSchema,
+  properties: TrailDetailSchema,
 });
 
 export const SectionSchema = z.object({

@@ -1,3 +1,4 @@
+import { symbolKey } from '@roam/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -10,11 +11,11 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapView, TrailLayer, Waymark } from '../../components/map';
-import { ElevationChart, SummaryRow } from '../../components/trail';
+import { MapImages, MapView, TrailLayer, Waymark } from '../../components/map';
+import { ElevationProfile, SummaryRow } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
-import { geometryViewport } from '../../lib/geo';
+import { geometryBbox, geometryViewport } from '../../lib/geo';
 import { useSection, useTrails } from '../../lib/hooks';
 import { useJourneySetupStore } from '../../store/journeySetupStore';
 import { useMapStore } from '../../store/mapStore';
@@ -64,6 +65,9 @@ export default function SectionDetailScreen() {
   // The parent trail's painted waymark (§17.8), looked up via the section's route.
   const trailSymbol =
     trailsData?.data?.find((t) => t.routeId === section.routeId)?.waymark?.symbol ?? null;
+  const trailColor = trailSymbol?.wayColor ?? colors.map.route;
+  const blazeImage = trailSymbol ? `blaze-${symbolKey(trailSymbol)}` : undefined;
+  const sectionBounds = sectionGeom ? (geometryBbox(sectionGeom) ?? undefined) : undefined;
   const distanceKm = section.distanceM ? (section.distanceM / 1000).toFixed(1) : '—';
   const ascentM = section.ascentM ? `+${Math.round(section.ascentM)} m` : '—';
   const descentM = section.descentM ? `−${Math.round(section.descentM)} m` : '—';
@@ -161,10 +165,12 @@ export default function SectionDetailScreen() {
               }}
             >
               <MapView
+                bounds={sectionBounds}
                 center={sectionViewport?.center}
                 zoom={sectionViewport?.zoom ?? 8}
                 interactive={false}
               >
+                <MapImages />
                 {'geometry' in section && section.geometry && (
                   <TrailLayer
                     id="section-preview"
@@ -173,18 +179,20 @@ export default function SectionDetailScreen() {
                       geometry: section.geometry as never,
                       properties: {},
                     }}
-                    color={colors.map.route}
+                    color={trailColor}
                     width={3}
+                    corridor
+                    blazeImage={blazeImage}
                   />
                 )}
               </MapView>
             </TouchableOpacity>
 
-            {/* Elevation chart */}
-            <ElevationChart
-              ascentM={section.ascentM}
-              descentM={section.descentM}
-              distanceM={section.distanceM}
+            {/* Elevation profile — the real sampled terrain for this section */}
+            <ElevationProfile
+              data={(section.elevationProfile ?? []).map((p) => p.e)}
+              mode="preview"
+              height={64}
             />
 
             {/* Full stats */}

@@ -3,11 +3,16 @@ import {
   doublePrecision,
   geometry,
   integer,
+  jsonb,
   pgTable,
   serial,
   text,
   timestamp,
 } from 'drizzle-orm/pg-core';
+
+// One sampled point on a route's elevation profile: distance-from-start (chainage,
+// §7) and elevation, both metres. Sampled along the line at ingest (DEM).
+export type ElevationPoint = { d: number; e: number };
 
 // ---------------------------------------------------------------------------
 // Geography
@@ -31,6 +36,9 @@ export const routes = pgTable('routes', {
   // (iwn|nwn|rwn|lwn) kept as sort/filter metadata. The route LINE renders ink.
   osmcSymbol: text('osmc_symbol'),
   network: text('network'),
+  // Real elevation profile sampled along the line at ingest (§7) — ordered points
+  // of { d: chainage_m, e: elevation_m }. Powers the trail/section elevation chart.
+  elevationProfile: jsonb('elevation_profile').$type<ElevationPoint[]>(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

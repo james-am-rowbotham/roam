@@ -12,6 +12,11 @@ import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM, MAP_STYLE_URL } from '../../confi
 interface Props {
   center?: [number, number];
   zoom?: number;
+  /**
+   * Frame the camera to a geographic box [west, south, east, north] with padding,
+   * instead of center/zoom — used by preview maps to fit a route/section exactly.
+   */
+  bounds?: [number, number, number, number];
   children?: ReactNode;
   /** When false, disables all pan/zoom/rotate — use for thumbnail preview maps */
   interactive?: boolean;
@@ -33,6 +38,7 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
   {
     center = MAP_DEFAULT_CENTER,
     zoom = MAP_DEFAULT_ZOOM,
+    bounds,
     children,
     interactive = true,
     onZoomChanged,
@@ -63,11 +69,18 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
       onRegionIsChanging={emitZoom}
       onRegionDidChange={emitZoom}
     >
-      <Camera ref={cameraRef} center={center} zoom={zoom} />
+      {bounds ? (
+        <Camera ref={cameraRef} bounds={bounds} padding={BOUNDS_PADDING} />
+      ) : (
+        <Camera ref={cameraRef} center={center} zoom={zoom} />
+      )}
       {children}
     </MapComponent>
   );
 });
+
+// Inset so a route framed by `bounds` doesn't touch the preview edges.
+const BOUNDS_PADDING = { top: 28, right: 28, bottom: 28, left: 28 };
 
 const styles = StyleSheet.create({
   map: { flex: 1 },

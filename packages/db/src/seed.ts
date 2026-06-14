@@ -2,6 +2,7 @@ import { resolveWaymark } from '@roam/core';
 import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
+import { buildElevationProfile } from './elevation';
 import { accommodations, routes, sections, trails, waterSources } from './schema';
 
 type LonLat = [number, number];
@@ -309,6 +310,16 @@ async function seedRoute(): Promise<number> {
     region: 'Pyrenees',
     imageUrl: TRAIL_IMAGE,
   });
+
+  // Real elevation profile sampled along the line (§7). Non-fatal: a network
+  // failure just leaves it null (the chart falls back to a flat line).
+  try {
+    const profile = await buildElevationProfile(ordered, 1000);
+    await db.update(routes).set({ elevationProfile: profile }).where(eq(routes.id, route.id));
+    console.log(`  Elevation: ${profile.length} points sampled`);
+  } catch (err) {
+    console.warn(`  Elevation sampling failed (${String(err).slice(0, 60)}) — skipping`);
+  }
 
   await client.end();
   return route.id;

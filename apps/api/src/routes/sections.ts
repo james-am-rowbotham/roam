@@ -1,7 +1,7 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { asc, db, eq, routes, sections, sql, trails } from '@roam/db';
 
-import { ErrorSchema, IdParamSchema, SectionSchema } from '../schemas';
+import { ElevationPointSchema, ErrorSchema, IdParamSchema, SectionSchema } from '../schemas';
 
 export const sectionsRouter = new OpenAPIHono();
 
@@ -12,6 +12,8 @@ const SectionDetailSchema = SectionSchema.extend({
   distanceM: z.number(),
   // GeoJSON geometry for just this section, extracted via ST_LineSubstring
   geometry: z.record(z.string(), z.unknown()).nullable(),
+  // The route's elevation profile sliced to this section, distance rebased to 0.
+  elevationProfile: z.array(ElevationPointSchema).nullable(),
 });
 
 // GET /sections/:id
@@ -54,6 +56,18 @@ sectionsRouter.openapi(
     const start = section.startChainageM ?? 0;
     const end = section.endChainageM ?? 0;
 
+    // Slice the route's elevation profile to this section, rebasing distance to 0.
+    const [routeRow] = await db
+      .select({ elevationProfile: routes.elevationProfile })
+      .from(routes)
+      .where(eq(routes.id, section.routeId));
+    const lo = Math.min(start, end);
+    const hi = Math.max(start, end);
+    const elevationProfile =
+      routeRow?.elevationProfile
+        ?.filter((p) => p.d >= lo && p.d <= hi)
+        .map((p) => ({ d: Math.round(p.d - lo), e: p.e })) ?? null;
+
     const geomRows = (await db.execute(sql`
       SELECT ST_AsGeoJSON(
         ST_SimplifyPreserveTopology(
@@ -75,6 +89,7 @@ sectionsRouter.openapi(
         totalSections: allSections.length,
         trailId: trail?.id ?? 0,
         geometry: geomRows[0]?.geometry ?? null,
+        elevationProfile,
       },
       200,
     );

@@ -43,6 +43,8 @@ export default function JourneysScreen() {
     const t = trails.find((x) => x.routeId === routeId);
     return t?.ref ?? t?.name ?? 'Journey';
   };
+  const trailElevation = (routeId: number): number[] =>
+    trails.find((x) => x.routeId === routeId)?.elevation ?? [];
 
   // Active = in-progress (the one being navigated + any paused). Planned = never
   // started. Completed = finished or abandoned.
@@ -124,6 +126,7 @@ export default function JourneysScreen() {
             key={j.id}
             journey={j}
             trailName={trailName(j.routeId)}
+            elevation={trailElevation(j.routeId)}
             onOpen={() => router.push(`/journey/${j.id}`)}
             onMap={() => router.push(`/journey/active/${j.id}`)}
           />

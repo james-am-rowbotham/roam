@@ -1,3 +1,4 @@
+import { symbolKey } from '@roam/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -10,10 +11,11 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapView, TrailLayer, Waymark } from '../../components/map';
+import { MapImages, MapView, TrailLayer, Waymark } from '../../components/map';
 import { SummaryRow } from '../../components/trail';
 import { Button, Icon, RoamMark, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailSections } from '../../lib/hooks';
 import { useJourneySetupStore } from '../../store/journeySetupStore';
 import { useMapStore } from '../../store/mapStore';
@@ -53,6 +55,8 @@ export default function TrailDetailScreen() {
   }
 
   const trailColor = trail.waymark?.symbol?.wayColor ?? colors.map.route;
+  const blazeImage = trail.waymark?.symbol ? `blaze-${symbolKey(trail.waymark.symbol)}` : undefined;
+  const trailBounds = geojson ? (geometryBbox(geojson as never) ?? undefined) : undefined;
   const km = trail.distanceM ? Math.round(trail.distanceM / 1000) : '—';
   const elevK = trail.ascentM ? `${Math.round(trail.ascentM / 1000)}k` : '—';
   const days = trail.distanceM ? Math.round(trail.distanceM / 20_000) : '—';
@@ -142,13 +146,16 @@ export default function TrailDetailScreen() {
                 router.push('/(tabs)/map');
               }}
             >
-              <MapView zoom={6} interactive={false}>
+              <MapView bounds={trailBounds} zoom={6} interactive={false}>
+                <MapImages />
                 {geojson && (
                   <TrailLayer
                     id="trail-preview"
                     geojson={geojson as never}
                     color={trailColor}
-                    width={2}
+                    width={3}
+                    corridor
+                    blazeImage={blazeImage}
                   />
                 )}
               </MapView>
