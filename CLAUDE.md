@@ -199,7 +199,17 @@ model is core engineering**, present from the start, not a Phase 2 nicety.
 ## 7. GIS architecture
 
 - **V1:** OSM → import pipeline → PostGIS → **GeoJSON API** → MapLibre.
-- **V2:** PostGIS → **Martin** → **vector tiles (PMTiles on R2)** → MapLibre.
+- **V2:** OSM → MVT (planetiler/tippecanoe, or **Martin** from PostGIS) → **z/x/y tiles**
+  → MapLibre.
+
+**Tile strategy (decided — see §10 for offline).** Self-host our own vector tiles;
+never pack third-party tiles (MapTiler meters/caps offline; OpenFreeMap isn't an
+offline-pack source — §3). Store the corridor as a **PMTiles archive on R2** (cheap
+single file), fronted by a **Cloudflare Worker serving standard z/x/y MVT** — because
+**`@maplibre/maplibre-react-native` cannot read PMTiles directly** (no `addProtocol`
+on the native SDK). So PMTiles is the *storage* format; the device always consumes
+**z/x/y**, online and offline. Ship our own outdoor base **style** + self-hosted
+**glyphs + sprite sheet** (incl. blazes, §17) so everything resolves offline.
 
 **Linear referencing (the core simplification).** Compute a **distance-from-start
 (chainage)** value for the trail line and project every point feature (water,
@@ -340,9 +350,12 @@ sections, accommodation, water, food, transport, hazards, weather cache
 (timestamped, with expiry), Guide summaries, and the resolved **waymark spec** per
 route. **Optional:** the Guide Mini model.
 
-- Bundle format: a versioned manifest + data files in **R2**; client downloads,
-  verifies, writes to SQLite, and registers the MapLibre offline tile region (or
-  bundles a PMTiles archive for the corridor).
+- Two independent parts: **(a) data package** — a versioned manifest + data files in
+  **R2**; client downloads, verifies, and writes to **SQLite** (low-risk, no tiles).
+  **(b) map tiles** — `OfflineManager.createPack({ styleURL, bounds, minZoom, maxZoom })`
+  downloads the corridor from **our own style** (§7) into MapLibre's **native offline
+  pack**. NB: the device packs **z/x/y** tiles, not PMTiles (RN MapLibre can't read
+  PMTiles); PMTiles is only the R2 storage behind the z/x/y Worker.
 - The map style bundle ships the **trail-blaze sprite sheet** and glyphs so shields
   render offline (§17).
 - Show download size and last-updated; re-download when a newer version exists.
