@@ -188,11 +188,14 @@ export default function SectionDetailScreen() {
               </MapView>
             </TouchableOpacity>
 
-            {/* Elevation profile — the real sampled terrain for this section */}
+            {/* Elevation profile — the real sampled terrain for this section,
+                with min/max + distance scale labels for reference */}
             <ElevationProfile
               data={(section.elevationProfile ?? []).map((p) => p.e)}
               mode="preview"
-              height={64}
+              height={72}
+              scale
+              distanceM={section.distanceM}
             />
 
             {/* Full stats */}

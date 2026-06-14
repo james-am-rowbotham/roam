@@ -30,8 +30,10 @@ export function JourneyCard({ journey, trailName, elevation, onOpen, onMap, comp
   const total = journey.totalDays || 0;
   const done = journey.completedDays || 0;
   const currentDay = Math.min(done + 1, total || 1);
-  // Elevation silhouette: walked split for in-progress, all-green when finished.
-  const epMode = isCompleted ? 'complete' : inProgress ? 'progress' : 'preview';
+  // Elevation silhouette: all-green when finished, otherwise the walked split.
+  // Planned journeys are progress at 0% — all muted (terrain ahead, not started),
+  // never the full-green preview (which reads as "done").
+  const epMode = isCompleted ? 'complete' : 'progress';
   const walked = progressFraction(journey.doneDistanceM ?? 0, journey.totalDistanceM ?? 0);
 
   const chip = isCompleted
