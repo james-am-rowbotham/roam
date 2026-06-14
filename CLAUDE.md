@@ -212,6 +212,16 @@ and routing graphs entirely. Raw geometry is kept only for drawing.
 Serve route geometry **simplified** (`ST_Simplify` / zoom-appropriate) from the
 GeoJSON API; ship full-resolution geometry only inside the offline package.
 
+**Elevation profile.** Sample the route line against a DEM at ingest and store an
+ordered `{ chainage_m, elevation_m }` profile on the route (`routes.elevation_profile`);
+the API serves the trail's full profile and each section's slice, and
+`<ElevationProfile>` renders it. **Dev uses a coarse 1 km sample via the Open-Meteo
+API** (rate-limits bursts → low-resolution; GR11 was backfilled at ~2 km). **In
+production the pipeline must sample much finer (≈100–250 m, or DEM-native) against a
+local DEM (ASTER/SRTM)** — no rate limit, smooth profiles. Only the sampler/source in
+`packages/db/src/elevation.ts` changes; the API slice and component handle any
+resolution.
+
 ---
 
 ## 8. Content ingestion pipeline (`packages/pipeline` + `apps/admin`)

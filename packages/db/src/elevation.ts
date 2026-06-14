@@ -3,6 +3,13 @@ import type { ElevationPoint } from './schema';
 // Build a route's elevation profile by sampling the line at a fixed interval and
 // looking each point up against a DEM (Open-Meteo, free, no key). Runs at ingest
 // (§7) so the device renders a real profile, never a synthetic one.
+//
+// PRODUCTION NOTE: the default interval here is coarse (1 km) and Open-Meteo
+// rate-limits bursts, so dev profiles are low-resolution. The real pipeline
+// should sample much finer (≈100–250 m, or DEM-native) against a LOCAL DEM
+// (ASTER/SRTM per §7) — no per-request rate limit, granular terrain. Swap the
+// fetch for a local DEM read and drop `intervalM` accordingly before scaling
+// past GR11.
 
 type LonLat = [number, number];
 
