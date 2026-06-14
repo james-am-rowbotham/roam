@@ -13,20 +13,7 @@ import { groupStagesIntoDays } from '@roam/core';
 import { orientRoute } from './format';
 import { regionAt, regionsForTrail } from './trailRegions';
 
-const MONTHS = [
-  'JAN',
-  'FEB',
-  'MAR',
-  'APR',
-  'MAY',
-  'JUN',
-  'JUL',
-  'AUG',
-  'SEP',
-  'OCT',
-  'NOV',
-  'DEC',
-];
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 /** A curated trail stage (etapa) as the itinerary needs it. */
 export interface StageInput {
@@ -241,7 +228,11 @@ export function buildItineraryDays(
     if (!st.region) continue;
     const r = regionRange.get(st.region);
     if (!r) regionRange.set(st.region, { min: st.number, max: st.number });
-    else regionRange.set(st.region, { min: Math.min(r.min, st.number), max: Math.max(r.max, st.number) });
+    else
+      regionRange.set(st.region, {
+        min: Math.min(r.min, st.number),
+        max: Math.max(r.max, st.number),
+      });
   }
 
   // Completed stages group by the day they were actually walked (same day → one

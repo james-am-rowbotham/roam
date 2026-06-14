@@ -3,8 +3,7 @@ import { groupStagesIntoDays } from './days';
 
 // Stage lengths given in km for readability; converted to metres for the call.
 const stages = (km: number[]) => km.map((d) => ({ distanceM: d * 1000 }));
-const km = (days: { distanceM: number }[][]) =>
-  days.map((d) => d.map((s) => s.distanceM / 1000));
+const km = (days: { distanceM: number }[][]) => days.map((d) => d.map((s) => s.distanceM / 1000));
 
 describe('groupStagesIntoDays', () => {
   it('puts one stage per day when the target is one stage long', () => {

@@ -89,8 +89,18 @@ describe('buildItineraryDays', () => {
       doneDistanceM: 40_000, // stages 1 & 2 done
       paceTargetM: 20_000, // one stage per day
       completedStages: [
-        { startChainageM: 0, endChainageM: 20_000, completedAt: '2026-06-12T18:00:00', elapsedSeconds: 7 * 3600 + 10 * 60 },
-        { startChainageM: 20_000, endChainageM: 40_000, completedAt: '2026-06-13T17:00:00', elapsedSeconds: 5 * 3600 + 20 * 60 },
+        {
+          startChainageM: 0,
+          endChainageM: 20_000,
+          completedAt: '2026-06-12T18:00:00',
+          elapsedSeconds: 7 * 3600 + 10 * 60,
+        },
+        {
+          startChainageM: 20_000,
+          endChainageM: 40_000,
+          completedAt: '2026-06-13T17:00:00',
+          elapsedSeconds: 5 * 3600 + 20 * 60,
+        },
       ],
     });
     // Single-stage completed day → real date on the left, walking time on the right.
@@ -107,8 +117,18 @@ describe('buildItineraryDays', () => {
       doneDistanceM: 40_000,
       paceTargetM: 40_000, // two stages per day → day 1 = stages 1+2
       completedStages: [
-        { startChainageM: 0, endChainageM: 20_000, completedAt: '2026-06-14T12:00:00', elapsedSeconds: 4 * 3600 },
-        { startChainageM: 20_000, endChainageM: 40_000, completedAt: '2026-06-14T18:00:00', elapsedSeconds: 4 * 3600 + 30 * 60 },
+        {
+          startChainageM: 0,
+          endChainageM: 20_000,
+          completedAt: '2026-06-14T12:00:00',
+          elapsedSeconds: 4 * 3600,
+        },
+        {
+          startChainageM: 20_000,
+          endChainageM: 40_000,
+          completedAt: '2026-06-14T18:00:00',
+          elapsedSeconds: 4 * 3600 + 30 * 60,
+        },
       ],
     });
     expect(m.days[0]?.stages).toHaveLength(2);

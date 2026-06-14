@@ -1,5 +1,12 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ElevationProfile } from '../../../components/trail';
 import { Icon } from '../../../components/ui';
@@ -128,7 +135,13 @@ export default function DayStatsScreen() {
 
         {slice.length > 1 && (
           <View style={styles.elevation}>
-            <ElevationProfile data={slice} mode="complete" height={64} scale distanceM={distanceM} />
+            <ElevationProfile
+              data={slice}
+              mode="complete"
+              height={64}
+              scale
+              distanceM={distanceM}
+            />
           </View>
         )}
 
@@ -146,9 +159,11 @@ export default function DayStatsScreen() {
                 Stage {stage.number} · {stage.name}
               </Text>
               <Text style={styles.stageMeta}>
-                {[formatKm(stage.distanceM), `${formatElevationM(stage.ascentM)} ↑`, stage.grade].join(
-                  ' · ',
-                )}
+                {[
+                  formatKm(stage.distanceM),
+                  `${formatElevationM(stage.ascentM)} ↑`,
+                  stage.grade,
+                ].join(' · ')}
               </Text>
             </View>
           </View>

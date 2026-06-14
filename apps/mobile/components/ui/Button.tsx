@@ -149,7 +149,11 @@ export function Button({
       activeOpacity={0.85}
     >
       {pending ? (
-        <ActivityIndicator size="small" color={surface.label} style={{ width: s.icon, height: s.icon }} />
+        <ActivityIndicator
+          size="small"
+          color={surface.label}
+          style={{ width: s.icon, height: s.icon }}
+        />
       ) : (
         icon && <Icon name={icon} size={s.icon} color={surface.label} />
       )}

@@ -30,8 +30,8 @@ import {
 } from '../../lib/hooks';
 import { buildItineraryDays } from '../../lib/itineraryDays';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
+import { type GuidePreset, PACE_TARGET_M, type Pace } from '../../store/journeySetupStore';
 import { useMapStore } from '../../store/mapStore';
-import { PACE_TARGET_M, type GuidePreset, type Pace } from '../../store/journeySetupStore';
 import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
@@ -253,7 +253,14 @@ export default function JourneyDetailScreen() {
     const geom = sec ? stageSubGeometry(geojson, lo, hi, trail?.distanceM ?? null) : null;
     const vp = sec ? stageViewport(geojson, lo, hi, trail?.distanceM ?? null) : null;
     if (sec && geom && vp) {
-      setSectionFilter(sectionId, sec.name, vp.center, geom as Record<string, unknown>, [lo, hi], vp);
+      setSectionFilter(
+        sectionId,
+        sec.name,
+        vp.center,
+        geom as Record<string, unknown>,
+        [lo, hi],
+        vp,
+      );
       router.push('/(tabs)/map');
     } else {
       router.push(`/section/${sectionId}`);
