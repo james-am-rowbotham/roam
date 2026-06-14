@@ -1,9 +1,11 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ElevationProfile } from '../../../components/trail';
 import { Button, Icon } from '../../../components/ui';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
 import { useJourney, useTrailSections, useTrails } from '../../../lib/hooks';
+import { formatElapsed } from '../../../lib/itineraryDays';
 import { sectionsForDay } from '../../../lib/sections';
 import { colors, layout, radius, spacing, type } from '../../../theme';
 
@@ -66,6 +68,22 @@ export default function StageCompleteScreen() {
   const fLabel = routeLabel(fSecs, reverse, `Stage ${stageNum}`);
   const heroImage = fSecs.find((s) => s.imageUrl)?.imageUrl ?? null;
 
+  // The completed stage's terrain — slice the trail elevation profile to its chainage.
+  const elevation = trail?.elevation ?? [];
+  const trailTotalM = trail?.distanceM ?? 0;
+  const eLo = Math.min(finishedStage.startChainageM, finishedStage.endChainageM);
+  const eHi = Math.max(finishedStage.startChainageM, finishedStage.endChainageM);
+  const elevationSlice =
+    elevation.length > 1 && trailTotalM > 0
+      ? elevation.slice(
+          Math.floor((eLo / trailTotalM) * elevation.length),
+          Math.max(
+            Math.ceil((eHi / trailTotalM) * elevation.length),
+            Math.floor((eLo / trailTotalM) * elevation.length) + 2,
+          ),
+        )
+      : [];
+
   const journeyDone = journey.status === 'completed' || !nextStage;
   let nextLabel = '';
   let nextStageNum = stageNum + 1;
@@ -106,25 +124,39 @@ export default function StageCompleteScreen() {
           </View>
         </View>
 
-        {/* Stats */}
+        {/* Full stats for the stage just walked */}
         <View style={styles.stats}>
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>{formatKm(finishedStage.distanceM)}</Text>
-            <Text style={styles.statLabel}>walked</Text>
-          </View>
+          <Stat value={formatKm(finishedStage.distanceM)} label="walked" />
           <View style={styles.statDivider} />
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>↑{formatElevationM(finishedStage.ascentM)}</Text>
-            <Text style={styles.statLabel}>ascent</Text>
-          </View>
+          <Stat value={`↑${formatElevationM(finishedStage.ascentM)}`} label="ascent" />
           <View style={styles.statDivider} />
-          <View style={styles.stat}>
-            <Text style={styles.statValue}>
-              {completed.length} / {walkStages.length}
-            </Text>
-            <Text style={styles.statLabel}>stages done</Text>
-          </View>
+          <Stat value={`↓${formatElevationM(finishedStage.descentM)}`} label="descent" />
+          <View style={styles.statDivider} />
+          <Stat
+            value={
+              finishedStage.elapsedSeconds != null
+                ? formatElapsed(finishedStage.elapsedSeconds)
+                : '—'
+            }
+            label="time"
+          />
         </View>
+
+        {elevationSlice.length > 1 && (
+          <View style={styles.elevation}>
+            <ElevationProfile
+              data={elevationSlice}
+              mode="complete"
+              height={64}
+              scale
+              distanceM={finishedStage.distanceM ?? 0}
+            />
+          </View>
+        )}
+
+        <Text style={styles.progressLine}>
+          {completed.length} of {walkStages.length} stages done
+        </Text>
 
         {/* Next stage / journey complete */}
         <View style={styles.content}>
@@ -178,6 +210,15 @@ export default function StageCompleteScreen() {
   );
 }
 
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <View style={styles.stat}>
+      <Text style={styles.statValue}>{value}</Text>
+      <Text style={styles.statLabel}>{label}</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg.app },
   loading: {
@@ -217,16 +258,30 @@ const styles = StyleSheet.create({
   stats: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing[8],
+    paddingTop: spacing[8],
+    paddingBottom: spacing[4],
     paddingHorizontal: layout.screenPadding,
     backgroundColor: colors.bg.surface,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border.default,
   },
   stat: { flex: 1, alignItems: 'center', gap: spacing[1] },
   statValue: { ...type.statValue, color: colors.text.primary },
   statLabel: { ...type.meta, color: colors.text.secondary },
   statDivider: { width: 1, height: 28, backgroundColor: colors.border.default },
+
+  elevation: {
+    paddingHorizontal: layout.screenPadding,
+    paddingBottom: spacing[2],
+    backgroundColor: colors.bg.surface,
+  },
+  progressLine: {
+    ...type.meta,
+    color: colors.text.secondary,
+    textAlign: 'center',
+    paddingVertical: spacing[5],
+    backgroundColor: colors.bg.surface,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border.default,
+  },
 
   content: { padding: layout.screenPadding, gap: spacing[6] },
   cardEyebrow: { ...type.label, color: colors.text.secondary },
