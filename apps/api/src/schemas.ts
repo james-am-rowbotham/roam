@@ -10,7 +10,7 @@ export const TrustSchema = z.object({
 
 // Parsed osmc:symbol waymark (§16/§17.8). Mirrors the @roam/core types so the
 // renderer can rebuild the painted sign. The colour comes from the data, not a
-// fixed palette; networkClass is sort/filter metadata only.
+// fixed palette; `network` is the raw OSM tier, kept as-is for sort/filter.
 export const OsmcMarkSchema = z.object({
   color: z.string(),
   colorName: z.string(),
@@ -29,7 +29,6 @@ export const WaymarkSchema = z.object({
   symbol: OsmcSymbolSchema.nullable(),
   ref: z.string().nullable(),
   network: z.string().nullable(),
-  networkClass: z.enum(['gr', 'pr', 'sl']).nullable(),
   review: z.enum(['non-hiking-blue', 'unresolved']).optional(),
 });
 

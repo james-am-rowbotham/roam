@@ -291,11 +291,12 @@ carries:
 `routes` is the spine: a `trails` row **or** a `peaks` row links to one or more
 `routes` (`route.trail_id` xor `route.peak_id`), and a route carries optional
 `grade` + `gear`, plus the raw **`osmc_symbol`** + **`network`** tags. The
-**`waymark`** object — `{ symbol, ref, network, networkClass, review? }`, where
-`symbol` is the parsed painted blaze (background/foregrounds/text + colours) — is
-produced by `resolveWaymark` from those tags (§17.8). Store the raw tags; resolve at
-the API boundary (or cache the parsed `symbol`). `networkClass` (`gr|pr|sl`) is
-sort/filter metadata only, never the colour. `sections` segment a route.
+**`waymark`** object — `{ symbol, ref, network, review? }`, where `symbol` is the
+parsed painted blaze (background/foregrounds/text + colours) — is produced by
+`resolveWaymark` from those tags (§17.8). It **mirrors the OSM data**: store the raw
+tags; resolve at the API boundary (or cache the parsed `symbol`). `network` is the
+raw OSM tier (`iwn|nwn|rwn|lwn`), kept as-is for sort/filter, never the colour.
+`sections` segment a route.
 
 `journeys`/`stages` carry user ownership, status (`planned|active|completed`), and
 override fields (completed, completed_at, rest_day, stopped_early_at_chainage).
@@ -508,9 +509,9 @@ Mirror these Figma variables exactly. A single `theme` object — no feature fla
 ### Trail classification & waymark (from OSM; full map treatment in §17, pipeline in §17.8)
 Two independent things come from OSM, and conflating them is a mistake:
 - **Class** comes from the **`network`** tag: `iwn` (international) · `nwn` (national)
-  · `rwn` (regional) · `lwn` (local). This is metadata — it drives sorting,
-  filtering, and zoom priority (`networkClass`: `iwn`/`nwn`→`gr`, `rwn`→`pr`,
-  `lwn`→`sl`). E-paths (E6, E9…) are `iwn`. It does **not** pick a colour.
+  · `rwn` (regional) · `lwn` (local). We keep this **raw, as-is** — it's metadata
+  that drives sorting, filtering, and zoom priority. E-paths (E6, E9…) are `iwn`. It
+  does **not** pick a colour, and we do **not** relabel it (mirror OSM closely).
 - **The blaze** comes from the **`osmc:symbol`** tag — the literal encoding of the
   painted waymark on the ground. We **parse it in full and rebuild the actual sign**;
   we do **not** snap it to a fixed palette.
@@ -524,11 +525,11 @@ text colour — each colour resolved through the **full osmc colour vocabulary**
 literal `#hex`. The renderer reconstructs the real sign from that structure. So GR11's
 `red:white:red_lower:11:black` builds a **white plate with a red lower bar and "11"
 in black** — its actual blaze — and any trail's colours come straight from its data.
-There is **no three-token snap**: `networkClass` (`gr|pr|sl`) survives only as
-sort/filter metadata, never as the colour.
+There is **no three-token snap** and no derived class: the raw `network` tier is the
+only sort/filter metadata, never the colour.
 
 When `osmc:symbol` is absent there is no symbol to build — the route carries only its
-`networkClass`, and a curator decides the blaze in admin. Concurrency (two trails
+raw `network` tier, and a curator decides the blaze in admin. Concurrency (two trails
 sharing a path, e.g. GR11/HRP) renders as **stacked blazes**, one parsed symbol per
 trail, mirroring real trail posts. Cap at two; 3+ shows the primary only.
 
@@ -780,17 +781,17 @@ the raw tag, and render the reconstructed sign. The flow:
      `text`, `textColor` — every colour resolved through the **full osmc colour
      vocabulary** (`red green yellow blue white black orange brown gray purple` → tuned
      hexes) or a literal `#hex`. **No snap to gr/pr/sl.**
-   - `networkClass` (`iwn`/`nwn`→`gr`, `rwn`→`pr`, `lwn`→`sl`) is computed **separately**
-     as sort/filter metadata — it is never the colour.
+   - The raw `network` tier is carried through **as-is** (no relabelling) as
+     sort/filter metadata — it is never the colour.
    - **Blue is a flag, not a colour:** a blue trail/background sets
      `review: 'non-hiking-blue'` (bike/horse/Swiss alpine) — surfaced in admin, not
      drawn as a hiking trail.
    - No `osmc:symbol` → `symbol: null` (nothing to build; curator decides), keeping
-     `networkClass`. No symbol and no network → `review: 'unresolved'`.
+     the raw `network`. No symbol and no network → `review: 'unresolved'`.
 3. **Store** — write raw `osmc_symbol` + `network` on the route row (§9). Resolve to the
    `waymark` object at the API boundary, or cache the parsed `symbol`.
 4. **Serve** — the route feature carries the resolved `waymark` (the parsed `symbol`,
-   `ref`, `networkClass`) plus a stable `symbolKey` (hash of the parsed structure).
+   `ref`, raw `network`) plus a stable `symbolKey` (hash of the parsed structure).
 5. **Build the sign** (on device, offline) — the RN `Waymark` component draws the plate
    + foreground marks + text from the structure; the map uses a sprite pre-rendered
    per distinct `symbolKey` from the *same* parser output (§17.2). One drawing

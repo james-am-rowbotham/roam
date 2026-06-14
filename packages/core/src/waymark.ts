@@ -1,8 +1,7 @@
 // osmc:symbol parsing & waymark resolution (§16, §17.8 — literal-symbol model).
 //
-// The blaze is BUILT from the real painted waymark encoded in OSM `osmc:symbol`,
-// not bucketed into a fixed gr/pr/sl palette. We parse the tag into its parts —
-// the background plate, the foreground marks, the text and their colours — so the
+// The blaze is BUILT from the real painted waymark encoded in OSM `osmc:symbol`.
+// We parse the tag into its parts — the background plate, the foreground marks, the text and their colours — so the
 // renderer can reconstruct the actual sign (e.g. GR11 = a white plate with a red
 // lower bar and "11" in black). Pure and shared by pipeline, map, legend and
 // admin — one definition.
@@ -13,7 +12,7 @@
 
 // osmc:symbol colour vocabulary → the hex we paint each named colour. The DATA
 // chooses the colour name; this only fixes how each name renders (tuned to the
-// app palette). The full colour set — not a three-class snap.
+// app palette). Unknown names fall back to a neutral plate rather than disappearing entirely.
 export const OSMC_COLORS: Record<string, string> = {
   black: '#26231E',
   blue: '#2E6EB0',
@@ -130,16 +129,6 @@ export function symbolKey(symbol: OsmcSymbol): string {
   return raw.replace(/[^a-z0-9-]/g, '');
 }
 
-// network tier → class. This is sort/filter/zoom-priority metadata (§16) — it is
-// NOT the blaze colour, which comes from the parsed symbol above.
-export type NetworkClass = 'gr' | 'pr' | 'sl';
-const NETWORK_CLASS: Record<string, NetworkClass> = {
-  iwn: 'gr',
-  nwn: 'gr',
-  rwn: 'pr',
-  lwn: 'sl',
-};
-
 export interface WaymarkInput {
   osmcSymbol?: string | null;
   network?: string | null;
@@ -147,14 +136,14 @@ export interface WaymarkInput {
   name?: string | null;
 }
 
-// The resolved waymark stored per route (§9). `symbol` is the painted blaze the
-// renderer builds from; `networkClass` is separate metadata; `review` flags a
+// The resolved waymark stored per route (§9) — a close mirror of the OSM tags.
+// `symbol` is the painted blaze the renderer builds from; `network` is the raw
+// OSM tier (iwn|nwn|rwn|lwn), kept as-is for sorting/filtering; `review` flags a
 // route a curator must look at (a blue/non-hiking blaze, or no signal at all).
 export interface Waymark {
   symbol: OsmcSymbol | null;
   ref: string | null;
   network: string | null;
-  networkClass: NetworkClass | null;
   review?: 'non-hiking-blue' | 'unresolved';
 }
 
@@ -165,13 +154,12 @@ function isBlueTrail(symbol: OsmcSymbol | null): boolean {
 
 export function resolveWaymark(input: WaymarkInput): Waymark {
   const ref = input.ref?.trim() || null;
-  const network = input.network?.trim()?.toLowerCase() || null;
-  const networkClass = (network && NETWORK_CLASS[network]) || null;
+  const network = input.network?.trim() || null;
   const symbol = input.osmcSymbol ? parseOsmcSymbol(input.osmcSymbol) : null;
 
-  const waymark: Waymark = { symbol, ref, network, networkClass };
+  const waymark: Waymark = { symbol, ref, network };
   if (isBlueTrail(symbol)) waymark.review = 'non-hiking-blue';
-  else if (!symbol && !networkClass) waymark.review = 'unresolved';
+  else if (!symbol && !network) waymark.review = 'unresolved';
   return waymark;
 }
 

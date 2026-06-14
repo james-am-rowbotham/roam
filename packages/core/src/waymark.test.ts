@@ -52,7 +52,7 @@ describe('resolveWaymark — literal symbol + metadata', () => {
     });
     expect(w.symbol?.foregrounds[0]?.color).toBe('#C74538');
     expect(w.symbol?.text).toBe('11');
-    expect(w.networkClass).toBe('gr'); // metadata only, not the colour source
+    expect(w.network).toBe('nwn'); // raw OSM tier, mirrored as-is
     expect(w.review).toBeUndefined();
   });
 
@@ -66,10 +66,10 @@ describe('resolveWaymark — literal symbol + metadata', () => {
     expect(resolveWaymark({ ref: 'Path 3' }).review).toBe('unresolved');
   });
 
-  it('keeps networkClass when osmc:symbol is absent (no symbol to build)', () => {
+  it('mirrors network as-is when osmc:symbol is absent (no symbol to build)', () => {
     const w = resolveWaymark({ network: 'lwn', ref: 'SL-A 1' });
     expect(w.symbol).toBeNull();
-    expect(w.networkClass).toBe('sl');
+    expect(w.network).toBe('lwn');
     expect(w.review).toBeUndefined();
   });
 });
