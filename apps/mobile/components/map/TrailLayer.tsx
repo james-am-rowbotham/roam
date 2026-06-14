@@ -1,4 +1,9 @@
-import { GeoJSONSource, Layer, type LineLayerSpecification } from '@maplibre/maplibre-react-native';
+import {
+  GeoJSONSource,
+  Layer,
+  type LineLayerSpecification,
+  type SymbolLayerSpecification,
+} from '@maplibre/maplibre-react-native';
 import { colors } from '../../theme';
 
 interface Props {
@@ -12,7 +17,25 @@ interface Props {
    * Strategy"). Use on the primary route only — not section/stage highlights.
    */
   corridor?: boolean;
+  /**
+   * Repeat the painted blaze sign along the route (§17.2). Pass a registered
+   * sprite name (`blaze-<symbolKey>`, see blazeIcons.tsx). Primary route only.
+   */
+  blazeImage?: string;
 }
+
+// The repeating waymark riding the line — placed along the route, spaced by zoom
+// (sparse far out → denser zoomed in), kept upright. The sprite is pre-rendered
+// from the same waymarkSvg() the RN Waymark uses (§17.2).
+const blazeLayout = (image: string) => ({
+  'symbol-placement': 'line',
+  'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 8, 400, 11, 260, 14, 200],
+  'icon-image': image,
+  'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.7, 14, 1],
+  'icon-rotation-alignment': 'viewport',
+  'icon-allow-overlap': false,
+  'symbol-avoid-edges': true,
+});
 
 // A wide, soft green band hugging the route — the corridor that orients the user
 // at the Overview tier. line-blur feathers the edges; width grows with zoom.
@@ -30,6 +53,7 @@ export function TrailLayer({
   width = 3,
   opacity = 0.9,
   corridor = false,
+  blazeImage,
 }: Props) {
   return (
     <>
@@ -50,6 +74,14 @@ export function TrailLayer({
         paint={{ 'line-color': color, 'line-width': width, 'line-opacity': opacity }}
         layout={{ 'line-join': 'round', 'line-cap': 'round' }}
       />
+      {blazeImage && (
+        <Layer
+          id={`${id}-blaze`}
+          type="symbol"
+          source={id}
+          layout={blazeLayout(blazeImage) as unknown as SymbolLayerSpecification['layout']}
+        />
+      )}
     </>
   );
 }

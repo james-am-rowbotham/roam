@@ -1,16 +1,17 @@
 import { Marker } from '@maplibre/maplibre-react-native';
+import { symbolKey } from '@roam/core';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  BlazeImages,
   MapView,
   type MapViewHandle,
   MarkerImages,
   NativePOILayer,
   TrailLayer,
   UserMarker,
-  Waymark,
 } from '../../components/map';
 import { Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
@@ -67,8 +68,6 @@ export default function MapScreen() {
     pendingViewport,
     setViewport,
     trailVisible,
-    activeTrailId,
-    activeTrailGeomCenter,
     activeSectionId,
     activeSectionLabel,
     activeSectionGeomCenter,
@@ -108,6 +107,8 @@ export default function MapScreen() {
   // The route line is drawn in the osmc:symbol way colour (GR11 → red), falling
   // back to ink when a route has no symbol.
   const trailColor = waymarkSymbol?.wayColor ?? colors.map.route;
+  // The repeating blaze sprite riding the line (§17.2) — named by the symbol.
+  const blazeImage = waymarkSymbol ? `blaze-${symbolKey(waymarkSymbol)}` : undefined;
   const enabled = { query: { enabled: !!firstTrailId } };
 
   const trailIdStr = String(firstTrailId ?? 0);
@@ -145,8 +146,9 @@ export default function MapScreen() {
     <View style={styles.screen}>
       {/* Full-screen map */}
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
-        {/* Register marker glyphs once so the native POI SymbolLayers can draw them. */}
+        {/* Register glyph + blaze sprites once for the native SymbolLayers. */}
         <MarkerImages />
+        <BlazeImages />
         {/* Trail (GR11) and everything attached to it — hidden when the trail
             filter is removed. Section highlight is dimmed against the full line. */}
         {trailVisible && (
@@ -159,6 +161,7 @@ export default function MapScreen() {
                 width={isSectionActive ? 2 : 3}
                 opacity={isSectionActive ? 0.2 : 0.9}
                 corridor
+                blazeImage={blazeImage}
               />
             )}
             {/* Section highlight */}
@@ -186,18 +189,8 @@ export default function MapScreen() {
               pois={accommodations}
               onPress={(id) => router.push(`/poi/accommodation/${id}`)}
             />
-            {/* Trail waymark (the parsed osmc:symbol sign) + section label —
-                tap to navigate to detail */}
-            {activeTrailGeomCenter && waymarkSymbol && (
-              <Marker id="trail-waymark" lngLat={activeTrailGeomCenter}>
-                <TouchableOpacity
-                  onPress={() => router.push(`/trail/${activeTrailId}`)}
-                  activeOpacity={0.85}
-                >
-                  <Waymark symbol={waymarkSymbol} />
-                </TouchableOpacity>
-              </Marker>
-            )}
+            {/* The trail waymark repeats along the line via the blaze sprite on
+                TrailLayer above (§17.2) — no single midpoint marker. */}
             {activeSectionGeomCenter && activeSectionLabel && (
               <GeometryLabel
                 center={activeSectionGeomCenter}

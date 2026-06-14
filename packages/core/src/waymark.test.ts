@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { type OsmcSymbol, parseOsmcSymbol, resolveWaymark, waymarkSvg } from './waymark';
+import { type OsmcSymbol, parseOsmcSymbol, resolveWaymark, symbolKey, waymarkSvg } from './waymark';
 
 describe('parseOsmcSymbol — the painted parts', () => {
   it('parses the GR11 sign (white plate, red lower bar, "11" in black)', () => {
@@ -71,6 +71,20 @@ describe('resolveWaymark — literal symbol + metadata', () => {
     expect(w.symbol).toBeNull();
     expect(w.networkClass).toBe('sl');
     expect(w.review).toBeUndefined();
+  });
+});
+
+describe('symbolKey — sprite naming', () => {
+  it('names GR11 by its structure', () => {
+    const s = parseOsmcSymbol('red:white:red_lower:11:black') as OsmcSymbol;
+    expect(symbolKey(s)).toBe('white-red-lower-11');
+  });
+
+  it('is stable for identical signs and sanitised', () => {
+    const a = parseOsmcSymbol('yellow:white:yellow_bar:PR 30') as OsmcSymbol;
+    const b = parseOsmcSymbol('yellow:white:yellow_bar:PR 30') as OsmcSymbol;
+    expect(symbolKey(a)).toBe(symbolKey(b));
+    expect(symbolKey(a)).toMatch(/^[a-z0-9-]+$/);
   });
 });
 

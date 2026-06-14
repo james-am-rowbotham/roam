@@ -119,6 +119,17 @@ export function parseOsmcSymbol(raw: string): OsmcSymbol | null {
   return { wayColor, background, foregrounds, text, textColor };
 }
 
+// A stable, human-readable key for a distinct painted sign — names the map sprite
+// (one sprite per unique symbol, §17.2). Same structure → same key, so identical
+// signs share a sprite. GR11 → "white-red-lower-11".
+export function symbolKey(symbol: OsmcSymbol): string {
+  const bg =
+    symbol.background.colorName + (symbol.background.shape ? `-${symbol.background.shape}` : '');
+  const fgs = symbol.foregrounds.map((f) => `${f.colorName}-${f.shape ?? 'fill'}`);
+  const raw = [bg, ...fgs, symbol.text ?? ''].filter(Boolean).join('-').toLowerCase();
+  return raw.replace(/[^a-z0-9-]/g, '');
+}
+
 // network tier → class. This is sort/filter/zoom-priority metadata (§16) — it is
 // NOT the blaze colour, which comes from the parsed symbol above.
 export type NetworkClass = 'gr' | 'pr' | 'sl';

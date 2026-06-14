@@ -1,3 +1,4 @@
+export { BlazeImages } from './blazeIcons';
 export { MapView } from './MapView';
 export type { MapViewHandle } from './MapView';
 export {

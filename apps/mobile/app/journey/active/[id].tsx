@@ -1,3 +1,4 @@
+import { symbolKey } from '@roam/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
@@ -12,6 +13,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveControlBar, OptionsSheet } from '../../../components/journey';
 import {
+  BlazeImages,
   MapView,
   type MapViewHandle,
   MarkerImages,
@@ -91,6 +93,10 @@ export default function ActiveJourneyScreen() {
   const trail = trailsData?.data?.find((t) => t.routeId === journey?.routeId);
   // Route line in the osmc:symbol way colour (GR11 → red), fallback ink.
   const trailColor = trail?.waymark?.symbol?.wayColor ?? colors.map.route;
+  // The repeating blaze sprite riding the line (§17.2), named by the symbol.
+  const blazeImage = trail?.waymark?.symbol
+    ? `blaze-${symbolKey(trail.waymark.symbol)}`
+    : undefined;
   const trailIdStr = String(trail?.id ?? 0);
   const enabled = { query: { enabled: !!trail?.id } };
   const { data: trailResponse } = useTrail(trailIdStr, enabled);
@@ -199,8 +205,9 @@ export default function ActiveJourneyScreen() {
   return (
     <View style={styles.screen}>
       <MapView ref={mapRef} center={viewport?.center} zoom={viewport?.zoom}>
-        {/* Register marker glyphs once for the native POI SymbolLayers. */}
+        {/* Register glyph + blaze sprites for the native SymbolLayers. */}
         <MarkerImages />
+        <BlazeImages />
         {geojson && (
           <TrailLayer
             id="trail-full"
@@ -209,6 +216,7 @@ export default function ActiveJourneyScreen() {
             width={2}
             opacity={0.25}
             corridor
+            blazeImage={blazeImage}
           />
         )}
         {stageGeom && (
