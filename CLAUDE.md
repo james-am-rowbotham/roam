@@ -18,13 +18,12 @@ Roam turns a long-distance route into a personal, offline-capable journey. Two
 objective types share one engine: **multi-day trails** (e.g. the GR11) and **peaks**
 (e.g. Aneto, with several routes up). A user picks a route — a trail, a trail
 segment, or one of a peak's lines — and sets direction, pace (or start/finish dates)
-and an accommodation style; Roam generates a day-by-day **stage** plan and suggests
-overnight stops. On trail, a full-screen map shows the route, the user's position
-and nearby water/refuges, and a **Guide** answers questions ("where's the next
-water?", "will I make the refuge before dark?"). **The plan is a forecast, not a
-contract:** setup states preferences; per-day decisions (push on, rest, walk as
-planned) are made *on the trail* at Stage Complete, where Roam previews the
-consequence and reflows the remaining days.
+and an accommodation style; Roam **groups the trail's curated stages (etapas) into
+days** by pace and suggests overnight stops. On trail, a full-screen map shows the
+route, the user's position and nearby water/refuges, and a **Guide** answers questions
+("where's the next water?", "will I make the refuge before dark?"). **Progress is
+counted in stages, not days:** you complete a stage when you reach its end; pace is a
+soft grouping hint (days re-group freely, pausing is a non-event), never a contract.
 
 ---
 
@@ -137,23 +136,37 @@ unit-tested in isolation and runs on device for offline planning.
 
 ## 5. Core domain model
 
-Primary chain: **Route → Journey → Stage**
+Curated chain (all trail data): **Route → Section → Stage**. A **Journey** then
+groups stages into **Days**. **This supersedes any earlier framing where a "stage"
+was a generated per-journey day** — stages are curated trail facts, not generated.
+
+The model is **three distinct concepts** (see §11 for the journey side):
+
+| Concept | Answers | Granularity | Owner | Progress? |
+|---|---|---|---|---|
+| **Section** | which region am I in | coarse (~5 on GR11) | trail data | No — a label |
+| **Stage** | today's walk (the etapa) | fine (~47 on GR11) | trail data | **Yes — the spine** |
+| **Day** | how I group stages by pace | per-journey | the journey | No — planning layer |
 
 - **Route** — a curated walkable line (geometry + chainage + metadata): the
-  generalised core entity. A long-distance **Trail** is one long Route (many
-  sections); a **Peak** ascent is a short Route to a summit. Carries an optional
-  **grade** and **gear** for alpine/glaciated lines, and a **trail class** +
-  **waymark** spec derived from OSM (§16).
-- **Trail** — a long-distance Route, segmented into sections.
-- **Peak** — a summit objective (elevation, massif, location) that **groups several
-  Routes** (the lines up). Everything downstream reuses Route machinery unchanged.
+  generalised core entity. A long-distance **Trail** is one long Route; a **Peak**
+  ascent is a short Route to a summit. Carries an optional **grade** and **gear** for
+  alpine/glaciated lines, and a **trail class** + **waymark** spec derived from OSM (§16).
+- **Section** — a named **region** of the trail (e.g. GR11's Basque Country, Navarra,
+  Aragon, Andorra, Catalonia), each owning a contiguous **range of stages**. Coarse,
+  curated, orientation-only — **never counted as progress**.
+- **Stage** — a curated unit of the trail (the official **etapa**: start/end chainage,
+  distance, ascent, name like *Espinal → Burguete*, completion state). **The progress
+  spine** — "Stage 14 of 47". Stages are trail data (official etapas, or a segmentation
+  computed once at ingest for trails without one), **shared by every hiker, never
+  generated per journey**. A peak is typically a 1–2 stage out-and-back.
+- **Peak** — a summit objective that **groups several Routes** (the lines up).
 - **Journey** — a user's plan/attempt of a Route (preferences, dates, status).
-- **Stage** — a generated day of a journey (start/end, distance, ascent, suggested
-  overnight stop, completion state). A peak is typically a 1–2 stage out-and-back.
+- **Day** — a **per-journey grouping** of consecutive stages by pace (one stage/day
+  relaxed; two–three packed fast). Derived, not stored; carries no progress (§11).
 
-Supporting entities: **POI, Accommodation, WaterSource, Hazard, TransportPoint,
-Section**. A `Section` is the canonical curated segmentation of a Route; `Stage` is
-the per-journey plan derived from sections + pace.
+Supporting entities: **POI, Accommodation, WaterSource, Hazard, TransportPoint**.
+**Progress is only ever counted in stages** — never "section N of 5", never "day 11".
 
 ---
 
@@ -301,9 +314,24 @@ thin-everywhere erodes the trust that is the moat.
 
 ## 9. Database tables
 
-`routes`, `trails`, `peaks`, `sections`, `accommodations`, `water_sources`,
-`transport_points`, `hazards`, `journeys`, `stages`. Each spatial/point table
-carries:
+`routes`, `trails`, `peaks`, `sections`, `stages`, `accommodations`, `water_sources`,
+`transport_points`, `hazards`, `journeys`. **`sections` and `stages` are both curated
+trail data** (§5): a route owns ordered `sections` (named regions), each owning a
+contiguous range of ordered `stages` (the etapas: `start/end_chainage_m`, `distance_m`,
+`ascent_m`, `name`, `completed`, `completed_at`, `elapsed_seconds`). The Journey Engine
+**does not generate stages** — it groups them into days (§11).
+
+> **Implementation status (current schema).** The above is the target naming. Today the
+> `sections` table *is* the etapas (fine "Stage" layer); the coarse "Section" layer is a
+> normalized **`regions`** table (`route_id`, `name`, `description`, `image_url`,
+> `order_index`) that `sections.region_id` references (nullable FK — a stage may have no
+> region). The API joins `regions.name` onto each section as `regionName`. The
+> per-journey day-windows table is (confusingly) still named `stages` and carries
+> **`elapsed_seconds`**; `journeys` carries **`pace`** (`relaxed|moderate|fast`). The
+> remaining cleanup is purely the **rename** (`sections`→`stages`, `regions`→`sections`)
+> — the relational model is now correct; only the names lag.
+
+Each spatial/point table carries:
 - `geom geometry(...)` for drawing/import, **and**
 - `chainage_m double precision` (distance along the parent trail, §7), plus the
   parent `route_id` and ordering.
@@ -316,13 +344,15 @@ parsed painted blaze (background/foregrounds/text + colours) — is produced by
 `resolveWaymark` from those tags (§17.8). It **mirrors the OSM data**: store the raw
 tags; resolve at the API boundary (or cache the parsed `symbol`). `network` is the
 raw OSM tier (`iwn|nwn|rwn|lwn`), kept as-is for sort/filter, never the colour.
-`sections` segment a route.
+`sections` (regions) own a contiguous range of a route's `stages`.
 
-`journeys`/`stages` carry user ownership, status (`planned|active|completed`), and
-override fields (completed, completed_at, rest_day, stopped_early_at_chainage).
-**Note:** there is no `combined_stages` concept — the engine does not combine stages
-or place rest days at setup (§11,
-§16). Rest days are outputs of the on-trail reflow, not user-placed setup rows.
+`journeys` carry user ownership, status (`planned|active|paused|completed|abandoned`),
+direction, pace and start/resume date. **Progress lives on the curated `stages`**
+(`completed`, `completed_at`, `elapsed_seconds`) and is counted in stages + distance.
+**Days are a derived per-journey grouping (§11) — there is no `day_index` on stages, no
+stored day dates, and no `combined_stages`.** A multi-stage day is just a day whose
+grouping references >1 stage; both stages stay first-class. Trail completion is computed
+across journeys from walked stages, never a stored flag.
 
 **Trust fields on every knowledge fact** (water/accommodation/hazard/…):
 `source` (`osm|model|partner|community`), `confidence` (0–1, derived),
@@ -368,29 +398,35 @@ route. **Optional:** the Guide Mini model.
 
 ## 11. Journey Engine (`packages/core`)
 
-Pure, deterministic, no I/O. The same code runs on the server (initial plan) and on
-device (offline replanning).
+Pure, deterministic, no I/O. The same code runs on the server and on device (offline).
 
-- **Inputs:** trail (sections + chainage), direction, **start/finish stage**
-  (segment, only for partial journeys), pace **or start + finish dates** (which
-  imply pace), accommodation preference.
-- **Outputs:** ordered stages and suggested overnight stops per night. This is a
-  **forecast** — see the reflow model below.
-- **Responsibilities:** journey creation, stage generation, progress tracking, and
-  **on-trail reflow**: given (remaining stages, pace prefs, today's decision) →
-  updated forecast with a new finish date.
-- **The decision model:** the plan is a forecast, not a hand-edited contract. There
-  is **no setup-time stage combining or rest-day placement**. Instead:
-  - Setup states global preferences (pace, rest-day frequency, dates). Review is
-    **read-only** with an "Adjust pace" link back to the pace step.
-  - Per-day decisions happen **on the trail** at Stage Complete: *Walk as planned*
-    (default, zero-effort), *Push on +N km*, or *Rest day*. The engine reflows the
-    remaining forecast and recomputes the finish date.
-  - The reflow must compute a **consequence preview before the user confirms**:
-    finish-date delta and any booking impact. If a decision strands a booking, the
-    UI shows an amber warning (the choice stays available; amber colors the
-    consequence, not the choice).
+**The engine does NOT generate stages** — stages are curated trail data (§5). Its job
+is the **day grouping** and progress, not stage creation.
+
+- **`groupStagesIntoDays(stages, pace)`** (`packages/core/src/days.ts`) — the core pure
+  function: packs consecutive **whole** stages into days targeting a pace distance per
+  day (one stage/day relaxed; two–three packed fast). A stage is **never split** across
+  days, so the official etapa numbering stays intact. One stage longer than the target
+  stands alone.
+- **Progress is counted in stages + distance** ("Stage 14 of 47 · 228/820 km"), read
+  from the curated stages' `completed` state. It survives pauses untouched.
+- **Days are a forecast, not a contract.** Day dates are **derived** from
+  `(start or resume date) + the grouping`, never stored. Pace is a **soft hint** that
+  re-groups remaining stages — there is no "behind", no penalty, no booking-stranding
+  logic. **Scheduling/finish-date forecasting was cut** — keep day dates quiet, no
+  prominent finish forecast on the itinerary.
+- **Pausing is a non-event.** Pause for days, resume navigation → stage progress
+  unchanged; day dates simply re-anchor to the new "today" (recompute on resume).
+  Nothing persisted, no catch-up, no dormant special-casing for progress.
+- **Stage Complete fires per stage** (you complete a stage when you reach its end), even
+  when a day groups two stages. Setup states global pace/dates only; Review is read-only.
 - Deterministic given the same inputs; heavily unit-tested.
+
+> **Superseded:** earlier drafts of this section had the engine *generate* per-journey
+> stages and an at-Stage-Complete decision tree (*Walk as planned / Push on +N km /
+> Rest day*) with booking-stranding warnings. That model is gone — no combine/split, no
+> rest-day placement, no booking warnings. Stages are curated; days are a derived
+> grouping; Stage Complete just starts the next stage.
 
 ---
 
@@ -572,9 +608,9 @@ The component library. Reuse these; don't reinvent:
   shadow — for buttons over maps/photos) · Subtle M (input tint — inline). The
   route flip/switch control, map/toolbar buttons, the active-journey •••.
 - **`Chip`** (Option Chip) — Default/Selected, `label` prop, token-bound. All filter
-  pills, season chips, search suggestions, and the **Stage Complete decision chips**.
-  Selected = green fill. (The setup wizard's segmented controls are a separate
-  pattern, intentionally not chips.)
+  pills, season chips, and search suggestions. Selected = green fill. (The setup
+  wizard's segmented controls are a separate pattern, intentionally not chips. The old
+  Stage Complete decision chips are gone — §11.)
 - **`ListItem`** — Detail (value + chevron) / Toggle / Toggle Off, props
   `title`, `value`, `icon` (swap), `showIcon` (boolean). All settings rows: Profile,
   Journey Settings, the Wi-Fi-only download row.
@@ -619,7 +655,7 @@ screens sit inline beside their happy-path siblings.
 | 13b Paused · Options sheet | `224:1001` · `511:1344` |
 | 13c Itinerary / Settings tabs | `410:1201` · `407:1186` |
 | 13d Finish sheet | `481:1257` |
-| 14 Stage Complete · 14b Booking affected | `612:174` · `615:79` |
+| 14 Stage Complete (per stage; 14b Booking-affected removed — §11) | `612:174` |
 | 15 Journeys · 15c Empty · 16 Completed | `77:425` · `636:1308` · `85:439` |
 | 17 Profile (with Account/sync row) | `87:479` |
 | 18 POI Detail | `164:651` |
@@ -633,26 +669,41 @@ scroll-tabs, hazard tag, list items, `section-row`, Button — with the middle t
 - **Journey Setup.** Step 1 shows the route as start → finish (**Irun → Cadaqués**)
   with a flip control; the Start/Finish **stage pickers only appear for "Specific
   section,"** not for the full trail. The pace step adds Start/Finish dates implying
-  daily distance. Steps 2 & 4 carry a persistent **estimate ribbon** (live
-  completion forecast). **Review (`12`) is read-only** — the itinerary, no editing
+  daily distance. (The old per-step **estimate ribbon** is removed — scheduling was
+  cut, §11.) **Review (`12`) is read-only** — the itinerary, no editing
   controls, a "forecast not a contract" note, and an **Adjust pace ›** link back to
   Step 3. (Add-rest-day / combine-days are gone — §11.)
 - **Active journey.** One **control bar** across map (`83:430`) and itinerary
   (`410:1201`): **Pause** (outline) ⇄ **Resume** (solid) — immediate, reversible, no
   confirm — beside a **••• (More)** button (IconButton Surface). Paused state has
-  **no status chip** except a small context chip ("PAUSED · DAY 11 · …"); the Resume
+  **no status chip** except a small context chip ("PAUSED · STAGE 5 · …"); the Resume
   button signals it. Secondary actions live in the ••• sheet (`511:1344` map /
   `481:1257` itinerary): Itinerary/Map · Ask guide · Finish stage · Finish journey.
   **Finish stage** → Stage Complete; **Finish journey** is danger + confirm. The
-  itinerary and finish lists are **read-only progress views** (done ✓ / current /
-  upcoming) — no insert/edit affordances.
-- **Stage Complete (`14`)** is the per-day decision moment: stage info, a Guide
-  lead-in, three decision **Chips** (*Walk as planned* default · *Push on +N km* ·
-  *Rest day*), and a consequence line (finish-date delta + booking status). **`14b`**
-  is the booking-affected state: the consequence line becomes an amber `status/warn`
-  banner with a "Review booking ›" link; the chip selection stays green. Below the
-  primary action sits an optional, de-emphasised **"Help other hikers"** card for
-  batch POI confirmation (shared report chip + AddPhoto tile).
+  itinerary is a **day-grouped, read-only progress view** (§16 itinerary: section
+  region bands › day-group headers › stage rows; done ✓ / current / upcoming) — no
+  insert/edit affordances.
+- **Itinerary (`410:1201`, mock `846:1752`).** Progress header — "Stage N of M" +
+  distance, the **ElevationProfile** (progress mode), and a quiet **pace line** (the
+  only place pace surfaces; no "Day N of M", no prominent finish forecast). Then the
+  list interleaves **section region bands** ("Basque Country · STAGES 1–7", a hairline
+  rule marks each region crossing), **day-group headers** (`DAY 3 · 14 JUN` +
+  `2 STAGES · 8H 30M` done / `DAY 5` + `2 STAGES · 38 KM · 900M ↑` upcoming; time-taken
+  lives on the day), and **stage rows** (28×28 fixed badge; "Stage N · Place → Place";
+  meta `18 km · 650m ↑ · Easy`). History stays visible.
+- **Pace (Settings tab).** A segmented **Relaxed / Moderate / Fast** in the journey
+  Settings, adjustable mid-journey. Changing it **re-groups only the remaining (unwalked)
+  stages into days** — completed days and stage progress are untouched (history is real),
+  the current day is the boundary, only the future regroups. A **soft consequence note**
+  shows the shift ("…regroups your remaining days — finishing about 5 days sooner.") —
+  informational, never an "are you sure"; reversible and un-punishing (pace is a soft
+  hint, §11). Persisted on the **`journey.pace`** column via `updateJourney` (with an
+  optimistic draft for instant regrouping).
+- **Stage Complete (`14`)** fires **per stage** when you reach its end: "STAGE N
+  COMPLETE", the leg + stage stats, a Guide lead-in about the **next stage** ("NEXT
+  STAGE"), and a single **"Start now"** CTA. **No day-decision chips, no rest-day/
+  push-on, no booking-affected `14b`** (all removed — §11). An optional, de-emphasised
+  **"Help other hikers"** card for batch POI confirmation can sit below.
 - **Trust UI.** POI Detail (`164:651`) is the home: a reliability card (state +
   freshness + confidence, in status colors), one-tap Flowing/Trickle/Dry report
   buttons (+ optional note), recent-reports list, and *Latest photos*. Map markers
@@ -867,8 +918,9 @@ native + offline parts of the stack before committing to structure.
    markers) behind the `MapView` wrapper, plus Trail Detail + Sections. The map
    labeling system (§17) starts here: trail blaze + basic POI pins. Navigation +
    Zustand + TanStack Query wired.
-4. **Journey Engine** — stage generation in `packages/core` (pure, tested); wire the
-   Setup flow (Steps 1–4) and the **read-only Review** + on-trail reflow model (§11).
+4. **Journey Engine** — `groupStagesIntoDays` day-grouping in `packages/core` (pure,
+   tested; the engine groups curated stages, it does not generate them — §11); wire the
+   Setup flow (Steps 1–4) and the **read-only Review** + the day-grouped itinerary (§16).
 5. **Offline package** — bundle GR11 to R2; download into SQLite + register the
    offline map region; app works in airplane mode. Build the terrain + base-style
    workstream + blaze sprite sheet (§3, §16) and the mutation outbox here. Real

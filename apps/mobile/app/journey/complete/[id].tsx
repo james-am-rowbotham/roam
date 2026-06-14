@@ -1,48 +1,11 @@
-import { type StageDecision, forecastAfterDecision } from '@roam/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Button, Chip, Icon } from '../../../components/ui';
+import { Button, Icon } from '../../../components/ui';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
-import {
-  useJourney,
-  useTrailAccommodations,
-  useTrailSections,
-  useTrails,
-} from '../../../lib/hooks';
+import { useJourney, useTrailSections, useTrails } from '../../../lib/hooks';
 import { sectionsForDay } from '../../../lib/sections';
-import { useJourneyProgress } from '../../../lib/useJourneyProgress';
-import { colors, fonts, layout, radius, spacing, type } from '../../../theme';
-
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
-
-function finishPhrase(iso: string | null): string {
-  if (!iso) return '';
-  const d = new Date(`${iso}T00:00:00`);
-  return `~${d.getDate()} ${MONTHS[d.getMonth()]}`;
-}
+import { colors, layout, radius, spacing, type } from '../../../theme';
 
 interface SectionRange {
   id: number;
@@ -60,9 +23,6 @@ export default function StageCompleteScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  // The per-day decision for tomorrow. Walk-as-planned is preselected so the
-  // default flow (tap Continue) costs zero extra taps.
-  const [decision, setDecision] = useState<StageDecision>('asPlanned');
 
   const { data: journeyResponse, isLoading } = useJourney(id);
   const rawJourney = journeyResponse?.data;
@@ -73,11 +33,6 @@ export default function StageCompleteScreen() {
   const { data: sectionsResponse } = useTrailSections(String(trail?.id ?? 0), {
     query: { enabled: !!trail?.id },
   });
-  const { data: accResponse } = useTrailAccommodations(String(trail?.id ?? 0), {
-    query: { enabled: !!trail?.id },
-  });
-  const accommodations = Array.isArray(accResponse?.data) ? accResponse.data : [];
-  const { restDay, combine } = useJourneyProgress(id);
 
   if (isLoading || !journey) {
     return (
@@ -93,7 +48,7 @@ export default function StageCompleteScreen() {
   ) as SectionRange[];
   const walkStages = journey.stages.filter((s) => !s.restDay);
 
-  // The day just finished = the highest-ordered completed walking day.
+  // The stage just finished = the highest-ordered completed walking stage.
   const completed = walkStages.filter((s) => s.status === 'completed');
   const finishedStage = completed[completed.length - 1] ?? walkStages[0];
   const nextStage = walkStages.find((s) => s.status !== 'completed') ?? null;
@@ -106,56 +61,32 @@ export default function StageCompleteScreen() {
     );
   }
 
-  const dayNum = Math.max(1, walkStages.findIndex((s) => s.id === finishedStage.id) + 1);
+  const stageNum = Math.max(1, walkStages.findIndex((s) => s.id === finishedStage.id) + 1);
   const fSecs = sectionsForDay(sections, finishedStage.startChainageM, finishedStage.endChainageM);
-  const fLabel = routeLabel(fSecs, reverse, `Day ${dayNum}`);
+  const fLabel = routeLabel(fSecs, reverse, `Stage ${stageNum}`);
   const heroImage = fSecs.find((s) => s.imageUrl)?.imageUrl ?? null;
 
   const journeyDone = journey.status === 'completed' || !nextStage;
   let nextLabel = '';
-  let nextDayNum = dayNum + 1;
+  let nextStageNum = stageNum + 1;
   if (nextStage) {
     nextLabel = routeLabel(
       sectionsForDay(sections, nextStage.startChainageM, nextStage.endChainageM),
       reverse,
-      'Next day',
+      'Next stage',
     );
-    nextDayNum = walkStages.findIndex((s) => s.id === nextStage.id) + 1;
+    nextStageNum = walkStages.findIndex((s) => s.id === nextStage.id) + 1;
   }
 
-  // Consequence preview — computed on-device BEFORE the decision is confirmed.
-  const today = new Date().toISOString().slice(0, 10);
-  const forecastStages = journey.stages.map((s) => ({
-    id: s.id,
-    orderIndex: s.orderIndex,
-    restDay: s.restDay ?? false,
-    completed: s.status === 'completed',
-    distanceM: s.distanceM ?? 0,
-    overnightAccommodationId: s.overnightAccommodationId ?? null,
-  }));
-  const pushForecast = forecastAfterDecision(forecastStages, 'pushOn', today);
-  const forecast = forecastAfterDecision(forecastStages, decision, today);
-  const skippedStop = accommodations.find((a) => a.id === forecast.skippedAccommodationId);
-  const bookingAffected = decision === 'pushOn' && !!skippedStop;
+  // Guide lead-in for the next stage — phrased about the stage, not "tomorrow".
+  const shortNext = (nextStage?.distanceM ?? 0) > 0 && (nextStage?.distanceM ?? 0) < 16_000;
+  const leadIn = shortNext
+    ? 'A short stage next — an easy one whenever you set off.'
+    : 'The next stage is ready — start it when you are.';
 
-  // Guide lead-in for the decision.
-  const shortDay = (nextStage?.distanceM ?? 0) > 0 && (nextStage?.distanceM ?? 0) < 16_000;
-  const leadIn = shortDay
-    ? 'Short day tomorrow — you could push on, or bank a rest.'
-    : 'Walk as planned, or shape the day — Roam reflows the rest.';
-
-  const decisionPending = restDay.isPending || combine.isPending;
-  const continueHome = () =>
-    router.canGoBack() ? router.back() : router.replace(`/journey/active/${id}`);
-  const applyDecision = () => {
-    if (decision === 'restDay') {
-      restDay.mutate(finishedStage.id, { onSuccess: continueHome });
-    } else if (decision === 'pushOn' && nextStage) {
-      combine.mutate(nextStage.id, { onSuccess: continueHome });
-    } else {
-      continueHome();
-    }
-  };
+  // Start the next stage = back on the live map. No day decisions, no bookings,
+  // no combine/split — the screen is "here's the next stage, start it when ready".
+  const startNext = () => router.replace(`/journey/active/${id}`);
 
   return (
     <View style={styles.screen}>
@@ -170,7 +101,7 @@ export default function StageCompleteScreen() {
           )}
           <View style={styles.heroOverlay} />
           <View style={[styles.heroContent, { paddingTop: insets.top + spacing[12] }]}>
-            <Text style={styles.heroEyebrow}>DAY {dayNum} COMPLETE</Text>
+            <Text style={styles.heroEyebrow}>STAGE {stageNum} COMPLETE</Text>
             <Text style={styles.heroTitle}>{fLabel}</Text>
           </View>
         </View>
@@ -179,7 +110,7 @@ export default function StageCompleteScreen() {
         <View style={styles.stats}>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{formatKm(finishedStage.distanceM)}</Text>
-            <Text style={styles.statLabel}>today</Text>
+            <Text style={styles.statLabel}>walked</Text>
           </View>
           <View style={styles.statDivider} />
           <View style={styles.stat}>
@@ -191,76 +122,32 @@ export default function StageCompleteScreen() {
             <Text style={styles.statValue}>
               {completed.length} / {walkStages.length}
             </Text>
-            <Text style={styles.statLabel}>days done</Text>
+            <Text style={styles.statLabel}>stages done</Text>
           </View>
         </View>
 
-        {/* Tomorrow / journey complete */}
+        {/* Next stage / journey complete */}
         <View style={styles.content}>
           {journeyDone ? (
             <View style={styles.doneCard}>
               <Text style={styles.doneEmoji}>🎉</Text>
               <Text style={styles.doneTitle}>Journey complete</Text>
               <Text style={styles.doneBody}>
-                You've finished every day of this journey. It stays in your journeys.
+                You've finished every stage of this journey. It stays in your journeys.
               </Text>
             </View>
           ) : (
-            <View style={styles.tomorrowCard}>
-              <Text style={styles.cardEyebrow}>TOMORROW</Text>
-              <Text style={styles.tomorrowTitle}>
-                Day {nextDayNum} · {nextLabel}
+            <View style={styles.nextCard}>
+              <Text style={styles.cardEyebrow}>NEXT STAGE</Text>
+              <Text style={styles.nextTitle}>
+                Stage {nextStageNum} · {nextLabel}
               </Text>
               {nextStage && (
-                <Text style={styles.tomorrowMeta}>
+                <Text style={styles.nextMeta}>
                   {formatKm(nextStage.distanceM)} · ↑{formatElevationM(nextStage.ascentM)}
                 </Text>
               )}
-
-              {/* The decision moment — skippable; Walk as planned is preselected. */}
               <Text style={styles.leadIn}>{leadIn}</Text>
-              <View style={styles.decisionRow}>
-                <Chip
-                  label="Walk as planned"
-                  selected={decision === 'asPlanned'}
-                  onPress={() => setDecision('asPlanned')}
-                />
-                {pushForecast.available && (
-                  <Chip
-                    label={`Push on +${formatKm(pushForecast.pushOnDistanceM ?? 0)}`}
-                    selected={decision === 'pushOn'}
-                    onPress={() => setDecision('pushOn')}
-                  />
-                )}
-                <Chip
-                  label="Rest day"
-                  selected={decision === 'restDay'}
-                  onPress={() => setDecision('restDay')}
-                />
-              </View>
-
-              {bookingAffected && skippedStop ? (
-                // Amber colors the consequence, never the choice.
-                <View style={styles.bookingWarn}>
-                  <Icon name="alert" size={16} color={colors.status.warn.text} />
-                  <Text style={styles.bookingWarnText}>
-                    Tonight's {skippedStop.name} booking would go unused · finish moves to{' '}
-                    {finishPhrase(forecast.finishDate)}
-                    {'  '}
-                    <Text
-                      style={styles.bookingWarnLink}
-                      onPress={() => router.push(`/poi/accommodation/${skippedStop.id}`)}
-                    >
-                      Review booking ›
-                    </Text>
-                  </Text>
-                </View>
-              ) : (
-                <Text style={styles.consequence}>
-                  Plan reflows automatically · finish {finishPhrase(forecast.finishDate)} · bookings
-                  unaffected
-                </Text>
-              )}
             </View>
           )}
         </View>
@@ -271,11 +158,15 @@ export default function StageCompleteScreen() {
         {journeyDone ? (
           <Button label="View journey" onPress={() => router.replace(`/journey/${id}`)} />
         ) : (
-          <Button
-            label={decisionPending ? 'Updating…' : 'Continue'}
-            disabled={decisionPending}
-            onPress={applyDecision}
-          />
+          <>
+            <Button label="Start now" onPress={startNext} />
+            {/* An exit that isn't "start walking" — review the plan, rest, decide later. */}
+            <Button
+              variant="outline"
+              label="Back to itinerary"
+              onPress={() => router.replace(`/journey/${id}`)}
+            />
+          </>
         )}
       </View>
 
@@ -339,7 +230,7 @@ const styles = StyleSheet.create({
 
   content: { padding: layout.screenPadding, gap: spacing[6] },
   cardEyebrow: { ...type.label, color: colors.text.secondary },
-  tomorrowCard: {
+  nextCard: {
     backgroundColor: colors.bg.surface,
     borderRadius: radius.lg,
     borderWidth: 1,
@@ -347,32 +238,9 @@ const styles = StyleSheet.create({
     padding: spacing[6],
     gap: spacing[2],
   },
-  tomorrowTitle: { ...type.cardTitle, color: colors.text.primary },
-  tomorrowMeta: { ...type.meta, color: colors.text.secondary },
+  nextTitle: { ...type.cardTitle, color: colors.text.primary },
+  nextMeta: { ...type.meta, color: colors.text.secondary },
   leadIn: { ...type.meta, color: colors.text.secondary, paddingTop: spacing[2] },
-  decisionRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: spacing[3],
-    paddingVertical: spacing[2],
-  },
-  consequence: { ...type.meta, fontSize: 11, lineHeight: 15, color: colors.text.secondary },
-  bookingWarn: {
-    flexDirection: 'row',
-    gap: spacing[3],
-    backgroundColor: colors.status.warn.bg,
-    borderRadius: radius.md,
-    padding: spacing[4],
-    alignItems: 'flex-start',
-  },
-  bookingWarnText: {
-    ...type.meta,
-    fontSize: 12,
-    lineHeight: 17,
-    color: colors.status.warn.text,
-    flex: 1,
-  },
-  bookingWarnLink: { fontFamily: fonts.semiBold, color: colors.status.warn.text },
 
   doneCard: {
     backgroundColor: colors.status.success.bg,
@@ -388,6 +256,7 @@ const styles = StyleSheet.create({
   ctaWrap: {
     paddingHorizontal: layout.screenPadding,
     paddingTop: spacing[4],
+    gap: spacing[3],
     borderTopWidth: 1,
     borderTopColor: colors.border.default,
     backgroundColor: colors.bg.surface,

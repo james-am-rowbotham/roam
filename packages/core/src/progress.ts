@@ -70,7 +70,10 @@ export function applyProgress(
       if (target) {
         target.status = 'completed';
         target.completedAt = action.at;
-        status = allWalkDone() ? 'completed' : 'active';
+        // Finishing the last walking day completes the journey. Otherwise keep
+        // the journey's current status — completing a day must not silently
+        // un-pause a paused journey (it left the Pause/Resume button stale).
+        if (allWalkDone()) status = 'completed';
       }
       break;
     }

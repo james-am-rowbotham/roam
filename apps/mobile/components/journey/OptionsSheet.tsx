@@ -14,9 +14,9 @@ interface Props {
   context: 'map' | 'itinerary';
   /** Journey name, e.g. "GR11 2027". */
   journeyName: string;
-  /** Progress line, e.g. "Day 11 of 40 · 228 of 820 km walked". */
+  /** Progress line, e.g. "Stage 11 of 40 · 228 of 820 km walked". */
   progressLabel: string;
-  /** Subtitle for Finish stage, e.g. "Mark Day 3 complete and unlock Day 4." */
+  /** Subtitle for Finish stage, e.g. "Mark Stage 3 complete and start the next." */
   finishStageSubtitle: string;
   pending?: boolean;
   /** Itinerary (from map) or Map (from itinerary). */
@@ -92,7 +92,7 @@ export function OptionsSheet({
             iconColor={colors.text.secondary}
             iconBg={colors.bg.subtle}
             title={onMap ? 'Itinerary' : 'Map'}
-            subtitle={onMap ? 'View all stages and your progress.' : 'Back to the live map.'}
+            subtitle={onMap ? 'View all days and your progress.' : 'Back to the live map.'}
             onPress={onNavigate}
           />
           <Row

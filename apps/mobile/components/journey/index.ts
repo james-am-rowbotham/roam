@@ -1,5 +1,5 @@
 export { ActiveControlBar } from './ActiveControlBar';
-export { EstimateRibbon } from './EstimateRibbon';
+export { ItineraryDayList } from './ItineraryDayList';
 export { JourneyCard } from './JourneyCard';
 export { OptionsSheet } from './OptionsSheet';
 export { SetupFooter } from './SetupFooter';

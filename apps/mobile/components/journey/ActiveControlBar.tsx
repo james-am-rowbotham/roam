@@ -18,12 +18,12 @@ export function ActiveControlBar({ paused, pending, moreSize = 'lg', onToggle, o
   return (
     <View style={styles.row}>
       <Button
-        label={paused ? 'Resume' : 'Pause'}
+        label={pending ? (paused ? 'Resuming…' : 'Pausing…') : paused ? 'Resume' : 'Pause'}
         icon={paused ? 'play' : 'pause'}
         variant={paused ? 'solid' : 'outline'}
         size="lg"
         grow
-        disabled={pending}
+        pending={pending}
         onPress={onToggle}
       />
       <IconButton icon="more" style="surface" size={moreSize} onPress={onMore} />

@@ -7,7 +7,7 @@ import { PACE_TARGET_M, type Pace, useJourneySetupStore } from '../../../store/j
 import { colors, spacing, type } from '../../../theme';
 
 const PACE_INFO: Record<Pace, { label: string; perDay: string; note: string }> = {
-  relaxed: { label: 'Relaxed', perDay: '~15–18 km/day', note: 'extra rest days' },
+  relaxed: { label: 'Relaxed', perDay: '~15–18 km/day', note: 'leisurely pace' },
   moderate: { label: 'Moderate', perDay: '~20–22 km/day', note: 'standard GR11' },
   fast: { label: 'Fast', perDay: '~28–32 km/day', note: 'experienced hikers' },
 };

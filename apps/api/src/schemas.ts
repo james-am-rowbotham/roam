@@ -77,6 +77,20 @@ export const SectionSchema = z.object({
   endChainageM: z.number(),
   ascentM: z.number().nullable(),
   descentM: z.number().nullable(),
+  regionId: z.number().nullable(),
+  // Joined from the region for convenient rendering (band labels, §16).
+  regionName: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const RegionSchema = z.object({
+  id: z.number(),
+  routeId: z.number(),
+  name: z.string(),
+  description: z.string().nullable(),
+  imageUrl: z.string().nullable(),
+  orderIndex: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -126,6 +140,7 @@ export const StageSchema = z.object({
   overnightAccommodationId: z.number().nullable(),
   status: z.enum(['planned', 'active', 'completed']),
   completedAt: z.string().nullable(),
+  elapsedSeconds: z.number().nullable(),
   restDay: z.boolean(),
   stoppedEarlyAtChainageM: z.number().nullable(),
   createdAt: z.string(),
@@ -142,6 +157,7 @@ export const JourneySchema = z.object({
   endDate: z.string().nullable(),
   status: z.enum(['planned', 'active', 'paused', 'completed', 'abandoned']),
   accommodation: z.enum(['refuge', 'camping', 'mixed']).nullable(),
+  pace: z.enum(['relaxed', 'moderate', 'fast']).nullable(),
   guidePreset: z.enum(['silent', 'guided', 'full']),
   startChainageM: z.number().nullable(),
   endChainageM: z.number().nullable(),
@@ -200,6 +216,7 @@ export const CreateJourneySchema = z.object({
 export const UpdateJourneySchema = z.object({
   name: z.string().optional(),
   guidePreset: z.enum(['silent', 'guided', 'full']).optional(),
+  pace: z.enum(['relaxed', 'moderate', 'fast']).optional(),
 });
 
 // Progress / override actions on an active journey. `at` timestamps are stamped

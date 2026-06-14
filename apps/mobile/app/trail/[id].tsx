@@ -78,15 +78,6 @@ export default function TrailDetailScreen() {
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Icon name="arrow-left" size={20} color={colors.accent} />
           </TouchableOpacity>
-          {/* The trail's painted waymark (parsed osmc:symbol, §17.8), top-right of
-              the hero. Falls back to the brand mark if the route has no symbol. */}
-          <View style={styles.heroBlaze}>
-            {trail.waymark?.symbol ? (
-              <Waymark symbol={trail.waymark.symbol} size={24} />
-            ) : (
-              <RoamMark width={22} />
-            )}
-          </View>
           <Text style={styles.heroName}>{trail.ref ?? trail.name}</Text>
           {subtitle ? <Text style={styles.heroSub}>{subtitle}</Text> : null}
         </View>
@@ -241,7 +232,6 @@ const styles = StyleSheet.create({
     padding: spacing[8],
   },
   heroOverlay: { ...StyleSheet.absoluteFill, backgroundColor: colors.overlay.dark },
-  heroBlaze: { position: 'absolute', top: 57, right: 24 },
   backBtn: {
     position: 'absolute',
     top: 51,

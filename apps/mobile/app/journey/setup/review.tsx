@@ -62,7 +62,7 @@ export default function ReviewStep() {
   });
   const itinerary = fromPlan(plan.stages);
 
-  const totalDays = itinerary.length;
+  const totalStages = itinerary.length;
   const totalDistanceM = itinerary.reduce((a, s) => a + s.distanceM, 0);
 
   const create = useMutation({
@@ -109,7 +109,7 @@ export default function ReviewStep() {
       <Text style={styles.eyebrow}>STEP 5 OF 5 · REVIEW</Text>
       <Text style={styles.name}>{name || `${trailRef} journey`}</Text>
       <Text style={styles.sub}>
-        {totalDays} days · {formatKm(totalDistanceM)}
+        {totalStages} stages · {formatKm(totalDistanceM)}
       </Text>
       <Text style={styles.forecastNote}>
         This is a forecast based on your selections. You can adjust your pace or change your
@@ -119,7 +119,7 @@ export default function ReviewStep() {
       {/* Summary grid */}
       <View style={styles.grid}>
         <SummaryCell label="Trail" value={trailRef} />
-        <SummaryCell label="Duration" value={`${totalDays} days`} />
+        <SummaryCell label="Stages" value={`${totalStages}`} />
         <SummaryCell label="Pace" value={cap(pace)} />
         <SummaryCell label="Stay" value={STAY_LABEL[accommodation]} />
         <SummaryCell label="Guide" value={cap(guide)} />

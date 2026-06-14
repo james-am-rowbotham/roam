@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import type { TextStyle, ViewStyle } from 'react-native';
 import { colors, fonts, radius } from '../../theme';
 import { Icon, type IconName } from './Icon';
@@ -99,6 +99,7 @@ interface Props {
   grow?: boolean;
   /** Stretch to the parent's width (full-width CTA). */
   fullWidth?: boolean;
+  pending?: boolean; // show a spinner and disable the button, but keep the label (e.g. "Submitting...")
 }
 
 export function Button({
@@ -111,6 +112,7 @@ export function Button({
   disabled,
   grow,
   fullWidth,
+  pending,
 }: Props) {
   const s = SIZES[size];
   const surface = surfaceFor(tone, variant);
@@ -135,12 +137,22 @@ export function Button({
 
   return (
     <TouchableOpacity
-      style={[styles.base, container, { gap: s.gap }, disabled && styles.disabled]}
+      style={[
+        styles.base,
+        container,
+        { gap: s.gap },
+        disabled && styles.disabled,
+        pending && !disabled && styles.pending,
+      ]}
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || pending}
       activeOpacity={0.85}
     >
-      {icon && <Icon name={icon} size={s.icon} color={surface.label} />}
+      {pending ? (
+        <ActivityIndicator size="small" color={surface.label} style={{ width: s.icon, height: s.icon }} />
+      ) : (
+        icon && <Icon name={icon} size={s.icon} color={surface.label} />
+      )}
       <Text style={labelStyle}>{label}</Text>
     </TouchableOpacity>
   );
@@ -153,4 +165,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   disabled: { opacity: 0.5 },
+  pending: { opacity: 0.7 },
 });

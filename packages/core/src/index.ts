@@ -1,4 +1,5 @@
 export * from './types';
+export * from './days';
 export * from './journey';
 export * from './progress';
 export * from './reflow';

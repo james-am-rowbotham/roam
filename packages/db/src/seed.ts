@@ -3,7 +3,7 @@ import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
 import { buildElevationProfile } from './elevation';
-import { accommodations, routes, sections, trails, waterSources } from './schema';
+import { accommodations, regions, routes, sections, trails, waterSources } from './schema';
 
 type LonLat = [number, number];
 
@@ -419,10 +419,19 @@ const WAYPOINTS = [
   'Cadaqués',
 ];
 
+// GR11's five regions (the coarse "Section" layer), in order, with their upper bound as
+// a fraction of the trail — breakpoints mirror the 47 official stages: Basque (1–7) ·
+// Navarra (8–11) · Aragon (12–24) · Andorra (25–29) · Catalonia (30–47).
+const GR11_REGIONS: { name: string; untilFraction: number }[] = [
+  { name: 'Basque Country', untilFraction: 7 / 47 },
+  { name: 'Navarra', untilFraction: 11 / 47 },
+  { name: 'Aragon', untilFraction: 24 / 47 },
+  { name: 'Andorra', untilFraction: 29 / 47 },
+  { name: 'Catalonia', untilFraction: 1 },
+];
+
 function regionFor(fraction: number): string {
-  if (fraction < 1 / 3) return 'Western Pyrenees';
-  if (fraction < 2 / 3) return 'Central Pyrenees';
-  return 'Eastern Pyrenees';
+  return GR11_REGIONS.find((r) => fraction < r.untilFraction)?.name ?? 'Catalonia';
 }
 
 function sectionName(i: number): string {
@@ -451,12 +460,21 @@ async function seedSections(routeId: number): Promise<void> {
   const ascentMean = (route.ascentM ?? 0) / SECTION_COUNT;
   const descentMean = (route.descentM ?? 0) / SECTION_COUNT;
 
+  // The coarse region layer: one row per region, then map name → id for the FK.
+  const regionRows = await db
+    .insert(regions)
+    .values(GR11_REGIONS.map((r, i) => ({ routeId, name: r.name, orderIndex: i + 1 })))
+    .returning({ id: regions.id, name: regions.name });
+  const regionId = new Map(regionRows.map((r) => [r.name, r.id]));
+  console.log(`  Inserted ${regionRows.length} regions`);
+
   const rows = Array.from({ length: SECTION_COUNT }, (_, i) => {
     const startChainageM = (i * total) / SECTION_COUNT;
     const endChainageM = ((i + 1) * total) / SECTION_COUNT;
     const region = regionFor((i + 0.5) / SECTION_COUNT);
     return {
       routeId,
+      regionId: regionId.get(region) ?? null,
       name: sectionName(i),
       description: `${region} · km ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)}`,
       orderIndex: i + 1,

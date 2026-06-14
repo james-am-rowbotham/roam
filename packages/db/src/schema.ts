@@ -79,13 +79,33 @@ export const peakRoutes = pgTable('peak_routes', {
     .references(() => routes.id),
 });
 
-// Named segments of a route. Start/end are 1-D chainage positions — no geometry
-// needed for queries ("what section am I in?", "how far to next section?").
+// The coarse "Section" layer (§5): a named region of a trail (e.g. GR11's "Aragon"),
+// owning a contiguous, ordered range of the route's stages. Curated trail data; carries
+// region-level content (description, image) and drives the itinerary region bands (§16)
+// and the Trail Detail Sections tab. A stage's region is the FK on `sections` below.
+export const regions = pgTable('regions', {
+  id: serial('id').primaryKey(),
+  routeId: integer('route_id')
+    .notNull()
+    .references(() => routes.id),
+  name: text('name').notNull(),
+  description: text('description'),
+  imageUrl: text('image_url'),
+  // Order of the region along the route (Basque = 1 … Catalonia = 5 on the GR11).
+  orderIndex: integer('order_index').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+// The fine "Stage" layer (§5): the trail's etapas. Start/end are 1-D chainage positions
+// — no geometry needed for queries ("what stage am I in?", "how far to the next?").
 export const sections = pgTable('sections', {
   id: serial('id').primaryKey(),
   routeId: integer('route_id')
     .notNull()
     .references(() => routes.id),
+  // The coarse region this stage belongs to (§5). Null until curated/ingested.
+  regionId: integer('region_id').references(() => regions.id),
   name: text('name').notNull(),
   description: text('description'),
   imageUrl: text('image_url'),
@@ -228,6 +248,9 @@ export const journeys = pgTable('journeys', {
     .notNull()
     .default('planned'),
   accommodation: text('accommodation', { enum: ['refuge', 'camping', 'mixed'] }),
+  // Pace is a soft hint that groups the trail's stages into days (§11). Adjustable
+  // mid-journey from Settings; re-groups only the remaining stages. Never enforced.
+  pace: text('pace', { enum: ['relaxed', 'moderate', 'fast'] }),
   // How proactive the Guide is — collected in setup, editable in journey Settings.
   guidePreset: text('guide_preset', { enum: ['silent', 'guided', 'full'] })
     .notNull()
@@ -258,6 +281,9 @@ export const stages = pgTable('stages', {
     .notNull()
     .default('planned'),
   completedAt: timestamp('completed_at'),
+  // Wall-clock time spent walking this stage (set on completion). Drives the
+  // itinerary's per-day "time taken" (§16); null until tracked.
+  elapsedSeconds: integer('elapsed_seconds'),
   restDay: boolean('rest_day').notNull().default(false),
   stoppedEarlyAtChainageM: doublePrecision('stopped_early_at_chainage_m'),
   createdAt: timestamp('created_at').defaultNow().notNull(),

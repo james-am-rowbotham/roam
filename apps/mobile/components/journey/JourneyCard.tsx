@@ -27,9 +27,11 @@ export function JourneyCard({ journey, trailName, elevation, onOpen, onMap, comp
   // Active and paused journeys are both "in progress" — only the action differs.
   const inProgress = isActive || isPaused;
 
-  const total = journey.totalDays || 0;
+  // Progress is stages, not days. totalDays/completedDays are the API's stage
+  // counts (one stage per planned walking day); days are forecast-only now.
+  const totalStages = journey.totalDays || 0;
   const done = journey.completedDays || 0;
-  const currentDay = Math.min(done + 1, total || 1);
+  const currentStageNum = Math.min(done + 1, totalStages || 1);
   // Elevation silhouette: all-green when finished, otherwise the walked split.
   // Planned journeys are progress at 0% — all muted (terrain ahead, not started),
   // never the full-green preview (which reads as "done").
@@ -39,16 +41,16 @@ export function JourneyCard({ journey, trailName, elevation, onOpen, onMap, comp
   const chip = isCompleted
     ? { label: '✓ Complete', variant: 'success' as const }
     : isPaused
-      ? { label: `Paused · Day ${currentDay}`, variant: 'warn' as const }
+      ? { label: `Paused · Stage ${currentStageNum}`, variant: 'warn' as const }
       : isActive
-        ? { label: `Day ${currentDay} of ${total}`, variant: 'progress' as const }
+        ? { label: `Stage ${currentStageNum} of ${totalStages}`, variant: 'progress' as const }
         : { label: 'Planned', variant: 'progress' as const };
 
   const meta = inProgress
     ? `${formatKm(journey.doneDistanceM || 0)} of ${formatKm(journey.totalDistanceM || 0)}`
     : isCompleted
-      ? `${total} days · ${formatKm(journey.totalDistanceM || 0)} · all sections complete`
-      : `${total} days · ${formatKm(journey.totalDistanceM || 0)}`;
+      ? `${totalStages} stages · ${formatKm(journey.totalDistanceM || 0)} · all sections complete`
+      : `${totalStages} stages · ${formatKm(journey.totalDistanceM || 0)}`;
 
   return (
     <TouchableOpacity style={styles.card} onPress={onOpen} activeOpacity={0.9}>

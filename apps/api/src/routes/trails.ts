@@ -1,6 +1,18 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { downsampleElevation, resolveWaymark } from '@roam/core';
-import { accommodations, asc, db, eq, routes, sections, sql, trails, waterSources } from '@roam/db';
+import {
+  accommodations,
+  asc,
+  db,
+  eq,
+  getTableColumns,
+  regions,
+  routes,
+  sections,
+  sql,
+  trails,
+  waterSources,
+} from '@roam/db';
 import {
   AccommodationSchema,
   ErrorSchema,
@@ -158,8 +170,9 @@ trailsRouter.openapi(
       .where(eq(trails.id, id));
     if (!trail) return c.json({ error: 'not found' }, 404);
     const rows = await db
-      .select()
+      .select({ ...getTableColumns(sections), regionName: regions.name })
       .from(sections)
+      .leftJoin(regions, eq(regions.id, sections.regionId))
       .where(eq(sections.routeId, trail.routeId))
       .orderBy(asc(sections.orderIndex));
     return c.json(rows, 200);

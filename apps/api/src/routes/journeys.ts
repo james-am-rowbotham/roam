@@ -286,6 +286,7 @@ journeysRouter.openapi(
     const patch: Partial<typeof journeys.$inferInsert> = { updatedAt: new Date() };
     if (body.name !== undefined) patch.name = body.name.trim() || null;
     if (body.guidePreset !== undefined) patch.guidePreset = body.guidePreset;
+    if (body.pace !== undefined) patch.pace = body.pace;
     await db.update(journeys).set(patch).where(eq(journeys.id, id));
 
     return c.json(await journeyWithStages(id), 200);

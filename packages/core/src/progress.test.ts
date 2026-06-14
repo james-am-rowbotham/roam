@@ -85,6 +85,16 @@ describe('applyProgress — completeStage', () => {
     expect(current.map((s) => s.id)).toEqual([2, 4]);
   });
 
+  it('keeps a paused journey paused — completing a day must not un-pause it', () => {
+    const r = applyProgress({ status: 'paused' }, makeStages(3), {
+      type: 'completeStage',
+      stageId: 1,
+      at: AT,
+    });
+    expect(r.stages[0]?.status).toBe('completed');
+    expect(r.journey.status).toBe('paused');
+  });
+
   it('completes the journey when every walking stage is done', () => {
     let state = applyProgress(planned, makeStages(2), { type: 'start' });
     state = applyProgress(state.journey, state.stages, {

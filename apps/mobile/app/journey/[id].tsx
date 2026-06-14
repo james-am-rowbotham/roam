@@ -1,6 +1,7 @@
+import { groupStagesIntoDays, progressFraction } from '@roam/core';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -11,23 +12,26 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ActiveControlBar, OptionsSheet } from '../../components/journey';
+import { ActiveControlBar, ItineraryDayList, OptionsSheet } from '../../components/journey';
+import { ElevationProfile } from '../../components/trail';
 import { Button, Icon, Segmented, StatPill } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
-import { formatElevationM, formatKm, orientRoute, routeEndpoints } from '../../lib/format';
+import { stageSubGeometry, stageViewport } from '../../lib/activeJourney';
+import { formatElevationM, formatKm } from '../../lib/format';
 import {
   deleteJourney,
   journeyQueryKey,
   journeysQueryKey,
   updateJourney,
   useJourney,
-  useTrailAccommodations,
+  useTrail,
   useTrailSections,
   useTrails,
 } from '../../lib/hooks';
-import { sectionsForDay as sectionsForDayOf } from '../../lib/sections';
+import { buildItineraryDays } from '../../lib/itineraryDays';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
-import type { GuidePreset } from '../../store/journeySetupStore';
+import { useMapStore } from '../../store/mapStore';
+import { PACE_TARGET_M, type GuidePreset, type Pace } from '../../store/journeySetupStore';
 import { colors, fonts, layout, radius, spacing, type } from '../../theme';
 
 const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
@@ -35,6 +39,26 @@ const GUIDE_OPTIONS: { value: GuidePreset; label: string }[] = [
   { value: 'guided', label: 'Guided' },
   { value: 'full', label: 'Full' },
 ];
+
+const PACE_OPTIONS: { value: Pace; label: string }[] = [
+  { value: 'relaxed', label: 'Relaxed' },
+  { value: 'moderate', label: 'Moderate' },
+  { value: 'fast', label: 'Fast' },
+];
+
+// The journey's implied pace = the preset closest to its planned km/day.
+function nearestPace(targetM: number): Pace {
+  let best: Pace = 'moderate';
+  let bestGap = Number.POSITIVE_INFINITY;
+  for (const p of Object.keys(PACE_TARGET_M) as Pace[]) {
+    const gap = Math.abs(PACE_TARGET_M[p] - targetM);
+    if (gap < bestGap) {
+      best = p;
+      bestGap = gap;
+    }
+  }
+  return best;
+}
 
 function confirmDelete(remove: () => void) {
   Alert.alert('Delete journey?', 'This permanently removes the journey and its itinerary.', [
@@ -67,6 +91,8 @@ export default function JourneyDetailScreen() {
   const queryClient = useQueryClient();
   const [tab, setTab] = useState<'itinerary' | 'settings'>('itinerary');
   const [guideDraft, setGuideDraft] = useState<GuidePreset | null>(null);
+  // Optimistic pace for instant regrouping; persisted to journey.pace via update.
+  const [paceDraft, setPaceDraft] = useState<Pace | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
 
   const remove = useMutation({
@@ -76,8 +102,9 @@ export default function JourneyDetailScreen() {
       router.replace('/(tabs)/journeys');
     },
   });
+  // Journey Settings patches — guide preset and pace (the soft, re-grouping hint).
   const update = useMutation({
-    mutationFn: (guidePreset: GuidePreset) => updateJourney(id, { guidePreset }),
+    mutationFn: (patch: { guidePreset?: GuidePreset; pace?: Pace }) => updateJourney(id, patch),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: journeyQueryKey(id) }),
   });
 
@@ -89,25 +116,15 @@ export default function JourneyDetailScreen() {
   const trail = trailsData?.data?.find((t) => t.routeId === journey?.routeId);
   const trailId = trail?.id;
 
-  // Resolve overnight accommodation ids → names for the itinerary list.
-  const { data: accommodationsData } = useTrailAccommodations(String(trailId ?? 0), {
-    query: { enabled: !!trailId },
-  });
-  const accommodations = Array.isArray(accommodationsData?.data) ? accommodationsData.data : [];
-  const accommodationName = (accId: number | null): string | null => {
-    if (accId == null) return null;
-    return accommodations.find((a) => a.id === accId)?.name ?? null;
-  };
-
-  // Sections define where a day can be split (so splits snap to the trail's grid).
+  // The trail's curated stages (etapas) — the itinerary lists these, grouped into days.
   const { data: sectionsData } = useTrailSections(String(trailId ?? 0), {
     query: { enabled: !!trailId },
   });
   const sectionRanges = Array.isArray(sectionsData?.data) ? sectionsData.data : [];
 
-  // Sections a day represents, in walking order — shown as links into section detail.
-  const sectionsForDay = (start: number, end: number) =>
-    sectionsForDayOf(sectionRanges, start, end);
+  // Trail geometry — to focus the full map on a tapped stage (same path as Section Detail).
+  const { data: trailGeoData } = useTrail(String(trailId ?? 0), { query: { enabled: !!trailId } });
+  const setSectionFilter = useMapStore((s) => s.setSectionFilter);
 
   if (isLoading || !journey) {
     return (
@@ -127,39 +144,67 @@ export default function JourneyDetailScreen() {
   const inProgress = isActive || isPaused;
   const reverse = journey.direction === 'reverse';
 
+  // walkStages = the journey's planned day-windows; their count gives the chosen pace.
   const walkStages = stages.filter((s) => !s.restDay);
-  const completedCount = walkStages.filter((s) => s.status === 'completed').length;
   const doneDistanceM = walkStages
     .filter((s) => s.status === 'completed')
     .reduce((a, s) => a + (s.distanceM ?? 0), 0);
-  // The "current" day is derived: the first walking day that isn't done. There is
-  // therefore only ever one, and completing a day never auto-starts another.
-  const currentStage = inProgress
+  // The current journey-window — what "Finish stage" completes (progress is recorded
+  // on the journey's stage rows; the itinerary's stage display comes from trail data).
+  const currentJourneyStage = inProgress
     ? (stages.find((s) => !s.restDay && s.status !== 'completed') ?? null)
     : null;
-  const currentWalkIndex = currentStage
-    ? walkStages.findIndex((s) => s.id === currentStage.id)
-    : completedCount;
-  const currentDay = Math.min(currentWalkIndex + 1, walkStages.length);
-  const progressPct = walkStages.length
-    ? Math.round((completedCount / walkStages.length) * 100)
-    : 0;
+
+  // The itinerary lists the trail's curated stages (etapas) grouped into days (§5/§11).
+  // Progress is counted in stages; pace only seeds the day grouping. The journey's
+  // baseline pace comes from its planned km/day; a Settings override re-groups the
+  // remaining stages (completed days keep the baseline grouping).
+  const baselineTargetM = totalDistanceM / Math.max(1, walkStages.length);
+  const baselinePace = nearestPace(baselineTargetM);
+  // Pace: optimistic draft → persisted journey.pace → the baseline implied by the plan.
+  const pace = paceDraft ?? journey.pace ?? baselinePace;
+  const paceTargetM = PACE_TARGET_M[pace];
+  const itinerary = buildItineraryDays(sectionRanges, {
+    reverse,
+    doneDistanceM,
+    paceTargetM,
+    donePaceTargetM: baselineTargetM,
+    startDateISO: journey.startDate ?? null,
+    trailRef: trail?.ref ?? null,
+    // Completed day-windows carry the real completion date + walking time taken.
+    completedStages: walkStages
+      .filter((s) => s.status === 'completed')
+      .map((s) => ({
+        startChainageM: s.startChainageM,
+        endChainageM: s.endChainageM,
+        completedAt: s.completedAt,
+        elapsedSeconds: s.elapsedSeconds,
+      })),
+  });
+  // Soft consequence of the current pace vs the baseline — how many days it shifts the
+  // finish. Computed from the remaining (unwalked) stages only.
+  const remainingStages = itinerary.days
+    .flatMap((d) => d.stages)
+    .filter((s) => s.status !== 'done');
+  const paceDelta =
+    groupStagesIntoDays(remainingStages, baselineTargetM).length -
+    groupStagesIntoDays(remainingStages, paceTargetM).length;
+  const currentStageNum = itinerary.currentStageNumber;
+  const totalStages = itinerary.totalStages;
+  // Pace line (the only place pace surfaces — a quiet, soft description).
+  const numDays = Math.max(1, itinerary.days.length);
+  const stagesPerDay = Math.max(1, Math.round(totalStages / numDays));
+  const kmPerDay = totalDistanceM / numDays;
+  const paceWord = kmPerDay < 18_000 ? 'relaxed' : kmPerDay < 26_000 ? 'moderate' : 'fast';
+
   const trailName = trail?.ref ?? trail?.name ?? 'Journey';
   const title = journey.name?.trim() || trailName;
-
-  // "Section Y of M": the section the current day starts in, in walking order.
-  const totalSections = sectionRanges.length;
-  const currentSections = currentStage
-    ? sectionsForDay(currentStage.startChainageM, currentStage.endChainageM)
-    : [];
-  const currentSectionOrder = currentSections[0]?.orderIndex ?? 0;
-  const currentSectionNum = reverse ? totalSections - currentSectionOrder + 1 : currentSectionOrder;
 
   const guideValue = guideDraft ?? journey.guidePreset;
 
   // Active-journey controls (shared model with the map): Pause is an immediate
   // toggle; the ••• sheet holds navigation, guide, finish stage and finish journey.
-  const progressLabel = `Day ${currentDay} of ${walkStages.length} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
+  const progressLabel = `Stage ${currentStageNum} of ${totalStages} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
   // Resuming from the itinerary drops you onto the live map; pausing stays put.
   const toggleNavigation = () => {
     if (isPaused) {
@@ -172,9 +217,9 @@ export default function JourneyDetailScreen() {
     }
   };
   const finishStage = () => {
-    if (!currentStage) return;
+    if (!currentJourneyStage) return;
     progress.mutate(
-      { type: 'completeStage', stageId: currentStage.id },
+      { type: 'completeStage', stageId: currentJourneyStage.id },
       {
         onSuccess: () => {
           setSheetOpen(false);
@@ -195,6 +240,24 @@ export default function JourneyDetailScreen() {
         },
       ),
     );
+  };
+
+  // Tapping a stage opens the full map focused on it: slice the trail line to the
+  // stage's chainage and hand the map a section filter (same path as Section Detail).
+  // Falls back to Section Detail if the geometry hasn't loaded yet.
+  const geojson = trailGeoData?.data && 'type' in trailGeoData.data ? trailGeoData.data : null;
+  const openStageOnMap = (sectionId: number) => {
+    const sec = sectionRanges.find((s) => s.id === sectionId);
+    const lo = sec ? Math.min(sec.startChainageM, sec.endChainageM) : 0;
+    const hi = sec ? Math.max(sec.startChainageM, sec.endChainageM) : 0;
+    const geom = sec ? stageSubGeometry(geojson, lo, hi, trail?.distanceM ?? null) : null;
+    const vp = sec ? stageViewport(geojson, lo, hi, trail?.distanceM ?? null) : null;
+    if (sec && geom && vp) {
+      setSectionFilter(sectionId, sec.name, vp.center, geom as Record<string, unknown>, [lo, hi], vp);
+      router.push('/(tabs)/map');
+    } else {
+      router.push(`/section/${sectionId}`);
+    }
   };
 
   return (
@@ -239,24 +302,27 @@ export default function JourneyDetailScreen() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: layout.contentPaddingBottom + insets.bottom }}
         >
-          {/* In-progress progress bar, or planned/completed totals */}
+          {/* Progress header: stages + distance, elevation, a quiet pace line. */}
           {inProgress ? (
             <View style={styles.progressHeader}>
               <View style={styles.progressTopRow}>
-                <Text style={styles.progressDay}>
-                  Day {currentDay} of {walkStages.length}
+                <Text style={styles.progressStage}>
+                  Stage {currentStageNum} of {totalStages}
                 </Text>
-                {totalSections > 0 && currentSectionNum > 0 && (
-                  <Text style={styles.progressDone}>
-                    Section {currentSectionNum} of {totalSections}
-                  </Text>
-                )}
+                <Text style={styles.progressDone}>
+                  {Math.round(doneDistanceM / 1000)} / {Math.round(totalDistanceM / 1000)} KM
+                </Text>
               </View>
-              <View style={styles.progressTrack}>
-                <View style={[styles.progressFill, { width: `${progressPct}%` }]} />
-              </View>
-              <Text style={styles.progressMeta}>
-                {formatKm(doneDistanceM)} of {formatKm(totalDistanceM)} · {completedCount} days done
+              {trail?.elevation && trail.elevation.length > 0 && (
+                <ElevationProfile
+                  data={trail.elevation}
+                  mode="progress"
+                  progress={progressFraction(doneDistanceM, totalDistanceM)}
+                  height={48}
+                />
+              )}
+              <Text style={styles.progressPace}>
+                Walking {paceWord} pace · grouping stages into ~{stagesPerDay} a day
               </Text>
             </View>
           ) : (
@@ -265,97 +331,17 @@ export default function JourneyDetailScreen() {
               <View style={styles.divider} />
               <StatPill value={formatElevationM(totalAscentM)} label="ascent" />
               <View style={styles.divider} />
-              <StatPill value={String(walkStages.length)} label="days" />
+              <StatPill value={String(totalStages)} label="stages" />
             </View>
           )}
 
-          {/* Itinerary */}
+          {/* Day-grouped itinerary — trail stages packed into days (§5/§11). */}
           <View style={styles.leadingLine} />
-          {/* Read-only progress view: done / current / upcoming. Per-day decisions
-              happen at Stage Complete; legacy rest days still render. */}
-          {stages.map((s) => {
-            if (s.restDay) {
-              return (
-                <View key={s.id} style={styles.restRow}>
-                  <View style={styles.restBadge}>
-                    <Icon name="calendar" size={14} color={colors.text.secondary} />
-                  </View>
-                  <Text style={styles.restLabel}>Rest day</Text>
-                </View>
-              );
-            }
-
-            const overnight = accommodationName(s.overnightAccommodationId);
-            const done = s.status === 'completed';
-            const current = currentStage?.id === s.id;
-            const daySections = sectionsForDay(s.startChainageM, s.endChainageM);
-            // A connected waypoint chain for the day; each place links to its section.
-            const chain: { place: string; sectionId: number }[] = [];
-            daySections.forEach((sec, idx) => {
-              const [from, to] = routeEndpoints(orientRoute(sec.name, reverse));
-              if (idx === 0) chain.push({ place: from, sectionId: sec.id });
-              chain.push({ place: to, sectionId: sec.id });
-            });
-            return (
-              <View key={s.id} style={[styles.stage, current && styles.stageCurrent]}>
-                <View style={styles.stageMain}>
-                  <View
-                    style={[
-                      styles.dayBadge,
-                      done && styles.dayBadgeDone,
-                      current && styles.dayBadgeActive,
-                    ]}
-                  >
-                    {done ? (
-                      <Icon name="check" size={16} color={colors.status.success.text} />
-                    ) : (
-                      <Text style={[styles.dayNum, current && styles.dayNumActive]}>
-                        {s.orderIndex}
-                      </Text>
-                    )}
-                  </View>
-                  <View style={styles.stageBody}>
-                    <View style={styles.sectionList}>
-                      {chain.length > 0 ? (
-                        chain.map((node, idx) => (
-                          <Fragment key={`${node.place}-${idx}`}>
-                            {idx > 0 && <Text style={styles.sectionSep}>→</Text>}
-                            <TouchableOpacity
-                              onPress={() => router.push(`/section/${node.sectionId}`)}
-                              hitSlop={{ top: 6, bottom: 6, left: 2, right: 2 }}
-                            >
-                              <Text style={[styles.sectionLink, done && styles.sectionLinkDone]}>
-                                {node.place}
-                              </Text>
-                            </TouchableOpacity>
-                          </Fragment>
-                        ))
-                      ) : (
-                        <Text style={[styles.stageTitle, done && styles.sectionLinkDone]}>
-                          Day {s.orderIndex}
-                        </Text>
-                      )}
-                    </View>
-                    <Text style={styles.stageMeta}>
-                      {[
-                        formatKm(s.distanceM),
-                        `${formatElevationM(s.ascentM)} ↑`,
-                        `${formatElevationM(s.descentM)} ↓`,
-                      ].join('  ·  ')}
-                    </Text>
-                    {overnight && (
-                      <View style={styles.overnight}>
-                        <Icon name="stay" size={13} color={colors.marker.refuge} />
-                        <Text style={styles.overnightText} numberOfLines={1}>
-                          {overnight}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </View>
-              </View>
-            );
-          })}
+          <ItineraryDayList
+            days={itinerary.days}
+            onPressStage={openStageOnMap}
+            onOpenDay={(n) => router.push(`/journey/day/${id}?day=${n}`)}
+          />
         </ScrollView>
       ) : (
         <ScrollView
@@ -365,14 +351,35 @@ export default function JourneyDetailScreen() {
             paddingBottom: layout.contentPaddingBottom + insets.bottom,
           }}
         >
+          {/* Pace — a soft hint; re-groups the remaining stages into days (§11). */}
+          <Text style={styles.listHeader}>PACE</Text>
+          <View style={styles.segWrap}>
+            <Segmented
+              value={pace}
+              onChange={(p) => {
+                setPaceDraft(p);
+                update.mutate({ pace: p });
+              }}
+              options={PACE_OPTIONS}
+            />
+          </View>
+          <Text style={styles.settingsBlurb}>
+            Sets how many stages group into a day. Changing it regroups your remaining days
+            {paceDelta !== 0
+              ? ` — finishing about ${Math.abs(paceDelta)} day${
+                  Math.abs(paceDelta) === 1 ? '' : 's'
+                } ${paceDelta > 0 ? 'sooner' : 'later'}.`
+              : '.'}
+          </Text>
+
           {/* Guide level — mirrors the setup Guide preset */}
-          <Text style={styles.listHeader}>GUIDE LEVEL</Text>
+          <Text style={[styles.listHeader, styles.detailsHeader]}>GUIDE LEVEL</Text>
           <View style={styles.segWrap}>
             <Segmented
               value={guideValue}
               onChange={(v) => {
                 setGuideDraft(v);
-                update.mutate(v);
+                update.mutate({ guidePreset: v });
               }}
               options={GUIDE_OPTIONS}
             />
@@ -386,6 +393,7 @@ export default function JourneyDetailScreen() {
           <View style={styles.dangerWrap}>
             <Button
               tone="danger"
+              pending={remove.isPending}
               label={remove.isPending ? 'Deleting…' : 'Delete journey'}
               onPress={() => confirmDelete(() => remove.mutate())}
               disabled={remove.isPending}
@@ -402,6 +410,7 @@ export default function JourneyDetailScreen() {
       {tab === 'itinerary' && isPlanned && (
         <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
           <Button
+            pending={progress.isPending}
             label={progress.isPending ? 'Starting…' : 'Start journey'}
             onPress={() =>
               progress.mutate(
@@ -431,7 +440,7 @@ export default function JourneyDetailScreen() {
         context="itinerary"
         journeyName={title}
         progressLabel={progressLabel}
-        finishStageSubtitle={`Mark Day ${currentDay} complete and unlock Day ${currentDay + 1}.`}
+        finishStageSubtitle={`Mark Stage ${currentStageNum} complete and start the next.`}
         pending={progress.isPending}
         onNavigate={() => {
           setSheetOpen(false);
@@ -497,20 +506,9 @@ const styles = StyleSheet.create({
     gap: spacing[3],
   },
   progressTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  progressDay: { ...type.cardTitle, color: colors.text.primary },
-  progressDone: { ...type.meta, color: colors.text.secondary },
-  progressTrack: {
-    height: 6,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.subtle,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    height: 6,
-    borderRadius: radius.full,
-    backgroundColor: colors.status.progress.text,
-  },
-  progressMeta: { ...type.meta, color: colors.text.secondary },
+  progressStage: { ...type.cardTitle, color: colors.text.primary },
+  progressDone: { ...type.dataMeta, color: colors.text.secondary },
+  progressPace: { ...type.meta, color: colors.text.secondary },
 
   listHeader: {
     ...type.label,
@@ -523,55 +521,6 @@ const styles = StyleSheet.create({
     marginHorizontal: layout.screenPadding,
     backgroundColor: colors.border.default,
   },
-  stage: {
-    paddingVertical: spacing[8],
-    paddingHorizontal: layout.screenPadding,
-  },
-  stageCurrent: { backgroundColor: colors.status.progress.bg },
-  stageMain: { flexDirection: 'row', gap: spacing[4], alignItems: 'flex-start' },
-  dayBadge: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.subtle,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dayBadgeDone: { backgroundColor: colors.status.success.bg },
-  dayBadgeActive: { backgroundColor: colors.status.progress.text },
-  dayNum: {
-    ...type.cardTitle,
-    fontFamily: fonts.monoMedium,
-    fontSize: 14,
-    color: colors.text.primary,
-  },
-  dayNumActive: { color: colors.text.onAccent },
-  stageBody: { flex: 1, gap: spacing[2] },
-  sectionList: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: spacing[2] },
-  stageTitle: { ...type.cardTitle, color: colors.text.primary },
-  sectionLink: { ...type.cardTitle, color: colors.text.primary, textDecorationLine: 'underline' },
-  sectionLinkDone: { color: colors.text.secondary, textDecorationLine: 'none' },
-  sectionSep: { ...type.cardTitle, color: colors.text.secondary },
-  stageMeta: { ...type.meta, color: colors.text.secondary },
-  overnight: { flexDirection: 'row', alignItems: 'center', gap: spacing[2], marginTop: spacing[1] },
-  overnightText: { ...type.meta, color: colors.text.primary, flex: 1 },
-  restRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing[4],
-    paddingVertical: spacing[8],
-    paddingHorizontal: layout.screenPadding,
-  },
-  restBadge: {
-    width: 30,
-    height: 30,
-    borderRadius: radius.full,
-    backgroundColor: colors.bg.subtle,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  restLabel: { ...type.cardTitle, color: colors.text.secondary, flex: 1 },
-  restRemove: { ...type.meta, color: colors.text.secondary },
 
   ctaWrap: {
     paddingHorizontal: layout.screenPadding,

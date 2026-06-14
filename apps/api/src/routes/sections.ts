@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { asc, db, eq, routes, sections, sql, trails } from '@roam/db';
+import { asc, db, eq, getTableColumns, regions, routes, sections, sql, trails } from '@roam/db';
 
 import { ElevationPointSchema, ErrorSchema, IdParamSchema, SectionSchema } from '../schemas';
 
@@ -35,7 +35,11 @@ sectionsRouter.openapi(
   async (c) => {
     const { id } = c.req.valid('param');
 
-    const [section] = await db.select().from(sections).where(eq(sections.id, id));
+    const [section] = await db
+      .select({ ...getTableColumns(sections), regionName: regions.name })
+      .from(sections)
+      .leftJoin(regions, eq(regions.id, sections.regionId))
+      .where(eq(sections.id, id));
     if (!section) return c.json({ error: 'not found' }, 404);
 
     // Get trail id and total sections count for "Section X of Y"

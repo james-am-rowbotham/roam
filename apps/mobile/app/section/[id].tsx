@@ -91,11 +91,6 @@ export default function SectionDetailScreen() {
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Icon name="arrow-left" size={20} color={colors.accent} />
           </TouchableOpacity>
-          {trailSymbol && (
-            <View style={styles.heroBlaze}>
-              <Waymark symbol={trailSymbol} size={24} />
-            </View>
-          )}
           <Text style={styles.heroLabel}>
             SECTION {section.orderIndex} OF {section.totalSections}
           </Text>
@@ -293,7 +288,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  heroBlaze: { position: 'absolute', top: 58, right: 16 },
   heroLabel: {
     ...type.label,
     color: colors.overlay.onImageMuted,

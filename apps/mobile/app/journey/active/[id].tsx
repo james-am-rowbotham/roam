@@ -124,7 +124,7 @@ export default function ActiveJourneyScreen() {
     );
   }
 
-  const dayNum = Math.max(1, walkStages.findIndex((s) => s.id === currentStage.id) + 1);
+  const stageNum = Math.max(1, walkStages.findIndex((s) => s.id === currentStage.id) + 1);
   const lo = Math.min(currentStage.startChainageM, currentStage.endChainageM);
   const hi = Math.max(currentStage.startChainageM, currentStage.endChainageM);
 
@@ -147,7 +147,7 @@ export default function ActiveJourneyScreen() {
   );
   const routeLabel =
     routeChainPlaces(daySections.map((s) => orientRoute(s.name, reverse))).join(' → ') ||
-    `Day ${dayNum}`;
+    `Stage ${stageNum}`;
 
   const isPaused = journey.status === 'paused';
   const journeyName = journey.name?.trim() || trail?.ref || trail?.name || 'Journey';
@@ -155,7 +155,7 @@ export default function ActiveJourneyScreen() {
   const doneDistanceM = walkStages
     .filter((s) => s.status === 'completed')
     .reduce((a, s) => a + (s.distanceM ?? 0), 0);
-  const progressLabel = `Day ${dayNum} of ${walkStages.length} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
+  const progressLabel = `Stage ${stageNum} of ${walkStages.length} · ${formatKm(doneDistanceM)} of ${formatKm(totalDistanceM)} walked`;
 
   // Live position: project GPS onto the route → chainage (§7), then derive the
   // current-stage distances by 1-D subtraction. Ignored when off-route or no fix.
@@ -246,7 +246,7 @@ export default function ActiveJourneyScreen() {
       {isPaused && (
         <View style={[styles.pausedChip, { top: insets.top + spacing[4] }]} pointerEvents="none">
           <Text style={styles.pausedChipText}>
-            {`PAUSED · DAY ${dayNum} · ${routeLabel.toUpperCase()}`}
+            {`PAUSED · STAGE ${stageNum} · ${routeLabel.toUpperCase()}`}
           </Text>
         </View>
       )}
@@ -280,11 +280,11 @@ export default function ActiveJourneyScreen() {
             <>
               <View style={styles.grabber} />
               <View style={styles.stageSummary}>
-                {/* Blaze placement (3): the chip beside "DAY n OF m". */}
+                {/* Blaze placement (3): the chip beside "STAGE n OF m". */}
                 <View style={styles.summaryDayRow}>
                   <RoamMark width={14} />
                   <Text style={styles.summaryDay}>
-                    DAY {dayNum} OF {walkStages.length}
+                    STAGE {stageNum} OF {walkStages.length}
                   </Text>
                 </View>
                 <Text style={styles.summaryTitle} numberOfLines={1}>
@@ -323,8 +323,8 @@ export default function ActiveJourneyScreen() {
             <View style={styles.statsCollapsed}>
               <View style={styles.grabber} />
               <Text style={styles.statsCollapsedText} numberOfLines={1}>
-                {formatKm(currentStage.distanceM)} · ↑{formatElevationM(currentStage.ascentM)} · Day{' '}
-                {dayNum}/{walkStages.length}
+                {formatKm(currentStage.distanceM)} · ↑{formatElevationM(currentStage.ascentM)} ·
+                Stage {stageNum}/{walkStages.length}
               </Text>
             </View>
           )}
@@ -344,7 +344,7 @@ export default function ActiveJourneyScreen() {
         context="map"
         journeyName={journeyName}
         progressLabel={progressLabel}
-        finishStageSubtitle={`Mark Day ${dayNum} complete and unlock Day ${dayNum + 1}.`}
+        finishStageSubtitle={`Mark Stage ${stageNum} complete and start the next.`}
         pending={progress.isPending}
         onNavigate={() => {
           setSheetOpen(false);

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import { EstimateRibbon, SetupFooter, SetupScaffold } from '../../../components/journey';
+import { SetupFooter, SetupScaffold } from '../../../components/journey';
 import { Icon, Segmented } from '../../../components/ui';
 import { useTrailAccommodations } from '../../../lib/hooks';
 import { type Accommodation, useJourneySetupStore } from '../../../store/journeySetupStore';
@@ -36,7 +36,6 @@ export default function AccommodationStep() {
     <SetupScaffold
       step={2}
       onClose={() => router.back()}
-      ribbon={<EstimateRibbon />}
       onBack={() => router.back()}
       footer={
         <SetupFooter
