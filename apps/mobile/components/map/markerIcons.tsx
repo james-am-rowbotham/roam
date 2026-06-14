@@ -1,10 +1,10 @@
-import { Images } from '@maplibre/maplibre-react-native';
 import { colors } from '../../theme';
 
 // Marker glyphs registered with the map style so native SymbolLayers can draw
 // them via `icon-image`. White-on-transparent PNGs (24 / @2x / @3x) rasterized
 // from assets/markers/src/*.svg (the Figma icon masters). RN resolves the right
-// density per device. To regenerate, see assets/markers/README.md.
+// density per device. Registered on the map by <MapImages>. To regenerate, see
+// assets/markers/README.md.
 export const MARKER_GLYPHS = {
   'glyph-water': require('../../assets/markers/glyph-water.png'),
   'glyph-stay': require('../../assets/markers/glyph-stay.png'),
@@ -26,9 +26,3 @@ export const MARKER_STYLE = {
 } as const satisfies Record<string, { glyph: MarkerGlyph; color: string }>;
 
 export type MarkerKind = keyof typeof MARKER_STYLE;
-
-// Registers all glyph images on the map. Render once inside <MapView>; any
-// SymbolLayer below it can then reference a MarkerGlyph name as its icon-image.
-export function MarkerImages() {
-  return <Images images={MARKER_GLYPHS} />;
-}

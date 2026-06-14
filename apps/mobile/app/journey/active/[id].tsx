@@ -13,10 +13,9 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveControlBar, OptionsSheet } from '../../../components/journey';
 import {
-  BlazeImages,
+  MapImages,
   MapView,
   type MapViewHandle,
-  MarkerImages,
   NativePOILayer,
   TrailLayer,
   UserMarker,
@@ -205,9 +204,8 @@ export default function ActiveJourneyScreen() {
   return (
     <View style={styles.screen}>
       <MapView ref={mapRef} center={viewport?.center} zoom={viewport?.zoom}>
-        {/* Register glyph + blaze sprites for the native SymbolLayers. */}
-        <MarkerImages />
-        <BlazeImages />
+        {/* Register all map sprites for the native SymbolLayers. */}
+        <MapImages />
         {geojson && (
           <TrailLayer
             id="trail-full"

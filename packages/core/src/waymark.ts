@@ -216,10 +216,13 @@ export function waymarkSvg(symbol: OsmcSymbol, opts?: { fontFamily?: string }): 
     ? '<circle cx="50" cy="50" r="50"/>'
     : '<rect width="100" height="100"/>';
   const marks = symbol.foregrounds.map((f) => markSvg(f.shape, f.color)).join('');
+  // Centre the text by placing the baseline manually (≈ centre + half cap-height)
+  // rather than `dominant-baseline`, which react-native-svg ignores — so RN and
+  // resvg agree. font-size 44 → baseline ≈ 65.
   const text = symbol.text
-    ? `<text x="50" y="50" font-family="${font}" font-size="44" font-weight="600" fill="${
+    ? `<text x="50" y="65" font-family="${font}" font-size="44" font-weight="600" fill="${
         symbol.textColor ?? INK
-      }" text-anchor="middle" dominant-baseline="central">${escapeXml(symbol.text)}</text>`
+      }" text-anchor="middle">${escapeXml(symbol.text)}</text>`
     : '';
   const border = round
     ? `<circle cx="50" cy="50" r="49" fill="none" stroke="${HAIRLINE}" stroke-width="2"/>`

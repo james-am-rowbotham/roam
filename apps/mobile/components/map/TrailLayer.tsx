@@ -22,6 +22,8 @@ interface Props {
    * sprite name (`blaze-<symbolKey>`, see blazeIcons.tsx). Primary route only.
    */
   blazeImage?: string;
+  /** Tapping the line or blaze fires this (e.g. open the trail detail). */
+  onPress?: () => void;
 }
 
 // The repeating waymark riding the line — placed along the route, spaced by zoom
@@ -29,7 +31,9 @@ interface Props {
 // from the same waymarkSvg() the RN Waymark uses (§17.2).
 const blazeLayout = (image: string) => ({
   'symbol-placement': 'line',
-  'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 8, 400, 11, 260, 14, 200],
+  // Spacing in px between repeats — kept wide so the blaze punctuates the route
+  // rather than crowding it (a couple on screen, not a chain).
+  'symbol-spacing': ['interpolate', ['linear'], ['zoom'], 8, 900, 11, 700, 14, 560],
   'icon-image': image,
   'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.7, 14, 1],
   'icon-rotation-alignment': 'viewport',
@@ -54,15 +58,15 @@ export function TrailLayer({
   opacity = 0.9,
   corridor = false,
   blazeImage,
+  onPress,
 }: Props) {
+  // Layers are nested in the source so a tap on the line/blaze fires its onPress.
   return (
-    <>
-      <GeoJSONSource id={id} data={geojson} />
+    <GeoJSONSource id={id} data={geojson} onPress={onPress ? () => onPress() : undefined}>
       {corridor && (
         <Layer
           id={`${id}-corridor`}
           type="line"
-          source={id}
           paint={corridorPaint as unknown as LineLayerSpecification['paint']}
           layout={{ 'line-join': 'round', 'line-cap': 'round' }}
         />
@@ -70,7 +74,6 @@ export function TrailLayer({
       <Layer
         id={`${id}-line`}
         type="line"
-        source={id}
         paint={{ 'line-color': color, 'line-width': width, 'line-opacity': opacity }}
         layout={{ 'line-join': 'round', 'line-cap': 'round' }}
       />
@@ -78,10 +81,9 @@ export function TrailLayer({
         <Layer
           id={`${id}-blaze`}
           type="symbol"
-          source={id}
           layout={blazeLayout(blazeImage) as unknown as SymbolLayerSpecification['layout']}
         />
       )}
-    </>
+    </GeoJSONSource>
   );
 }

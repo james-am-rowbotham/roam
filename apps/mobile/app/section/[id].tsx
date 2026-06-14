@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapView, TrailLayer } from '../../components/map';
+import { MapView, TrailLayer, Waymark } from '../../components/map';
 import { ElevationChart, SummaryRow } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
@@ -61,6 +61,9 @@ export default function SectionDetailScreen() {
 
   const sectionGeom = 'geometry' in section ? (section.geometry as Record<string, unknown>) : null;
   const sectionViewport = geometryViewport(sectionGeom);
+  // The parent trail's painted waymark (§17.8), looked up via the section's route.
+  const trailSymbol =
+    trailsData?.data?.find((t) => t.routeId === section.routeId)?.waymark?.symbol ?? null;
   const distanceKm = section.distanceM ? (section.distanceM / 1000).toFixed(1) : '—';
   const ascentM = section.ascentM ? `+${Math.round(section.ascentM)} m` : '—';
   const descentM = section.descentM ? `−${Math.round(section.descentM)} m` : '—';
@@ -84,6 +87,11 @@ export default function SectionDetailScreen() {
           <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
             <Icon name="arrow-left" size={20} color={colors.accent} />
           </TouchableOpacity>
+          {trailSymbol && (
+            <View style={styles.heroBlaze}>
+              <Waymark symbol={trailSymbol} size={24} />
+            </View>
+          )}
           <Text style={styles.heroLabel}>
             SECTION {section.orderIndex} OF {section.totalSections}
           </Text>
@@ -274,6 +282,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  heroBlaze: { position: 'absolute', top: 58, right: 16 },
   heroLabel: {
     ...type.label,
     color: colors.overlay.onImageMuted,

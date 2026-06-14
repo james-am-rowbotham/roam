@@ -5,10 +5,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  BlazeImages,
+  MapImages,
   MapView,
   type MapViewHandle,
-  MarkerImages,
   NativePOILayer,
   TrailLayer,
   UserMarker,
@@ -146,9 +145,8 @@ export default function MapScreen() {
     <View style={styles.screen}>
       {/* Full-screen map */}
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
-        {/* Register glyph + blaze sprites once for the native SymbolLayers. */}
-        <MarkerImages />
-        <BlazeImages />
+        {/* Register all map sprites once for the native SymbolLayers. */}
+        <MapImages />
         {/* Trail (GR11) and everything attached to it — hidden when the trail
             filter is removed. Section highlight is dimmed against the full line. */}
         {trailVisible && (
@@ -162,6 +160,7 @@ export default function MapScreen() {
                 opacity={isSectionActive ? 0.2 : 0.9}
                 corridor
                 blazeImage={blazeImage}
+                onPress={firstTrailId ? () => router.push(`/trail/${firstTrailId}`) : undefined}
               />
             )}
             {/* Section highlight */}
@@ -174,9 +173,9 @@ export default function MapScreen() {
                 opacity={1}
               />
             )}
-            {/* POIs — native layers self-disclose: discs fade in at the
-                Tactical tier (z12), labels at the Detail tier (z15). Confidence
-                drives the muted look (§9). */}
+            {/* POIs — native layers self-disclose: discs appear at the Tactical
+                tier (z12), labels at the Detail tier (z15). Confidence drives the
+                muted look (§9). */}
             <NativePOILayer
               id="water"
               kind="water"

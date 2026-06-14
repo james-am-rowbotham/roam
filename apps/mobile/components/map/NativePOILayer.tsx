@@ -26,16 +26,14 @@ interface Props {
   onPress?: (poiId: number) => void;
 }
 
-// Zoom breakpoints come straight from the tier model so the on-map fades line up
-// exactly with the JS tier used by RN chrome (Figma "Map Strategy", node 710:50).
+// Zoom breakpoints from the tier model (Figma "Map Strategy", node 710:50).
+// Markers appear all at once at the Tactical tier (a clean minzoom cutoff, no
+// opacity ramp); labels switch on at the Detail tier.
 const { tactical: TACTICAL, detail: DETAIL } = MAP_TIER_MIN_ZOOM;
-const FADE_IN = TACTICAL - 1; // markers ramp 0→1 across this → tactical
-const LABEL_FADE_IN = DETAIL - 1; // labels ramp 0→1 across this → detail
+const LABEL_FADE_IN = DETAIL - 1;
 const CONFIRMED = 0.5; // confidence ≥ this reads as confirmed (full strength)
 
-// A marker is unconfirmed → drawn muted. As the *output* of a zoom interpolate
-// this is allowed: zoom stays the top-level input, the stop value reads feature
-// data. Lets one expression both fade by zoom and mute by confidence.
+// Unconfirmed facts draw muted — a static state, not a fade (§9 trust model).
 const confidenceOpacity = (confirmed: number, unconfirmed: number) => [
   'case',
   ['>=', ['get', 'confidence'], CONFIRMED],
@@ -62,7 +60,7 @@ function toFeatureCollection(pois: NativePOI[]): GeoJSON.FeatureCollection<GeoJS
 
 // A POI type rendered as native MapLibre layers (not RN views), so disclosure,
 // collision and fades run on the render thread. Three reads of one source:
-//   • disc  — CircleLayer, fades in at the Tactical tier, muted when unconfirmed
+//   • disc  — CircleLayer, appears at the Tactical tier, muted when unconfirmed
 //   • glyph — SymbolLayer icon (white, from MARKER_STYLE), tracks the disc
 //   • label — same SymbolLayer's text, switches on at the Detail tier
 export function NativePOILayer({ id, kind, pois, onPress }: Props) {
@@ -84,32 +82,16 @@ export function NativePOILayer({ id, kind, pois, onPress }: Props) {
   const discPaint = {
     'circle-color': color,
     'circle-stroke-color': colors.text.onAccent,
-    'circle-radius': ['interpolate', ['linear'], ['zoom'], TACTICAL, 9, DETAIL, 12],
-    'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], TACTICAL, 2, DETAIL, 3],
-    // Fade in across FADE_IN→TACTICAL; at full zoom, muted if unconfirmed.
-    'circle-opacity': [
-      'interpolate',
-      ['linear'],
-      ['zoom'],
-      FADE_IN,
-      0,
-      TACTICAL,
-      confidenceOpacity(1, 0.5),
-    ],
-    'circle-stroke-opacity': [
-      'interpolate',
-      ['linear'],
-      ['zoom'],
-      FADE_IN,
-      0,
-      TACTICAL,
-      confidenceOpacity(1, 0.4),
-    ],
+    'circle-radius': ['interpolate', ['linear'], ['zoom'], TACTICAL, 12, DETAIL, 15],
+    'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], TACTICAL, 2.5, DETAIL, 3.5],
+    // Full strength; muted only when unconfirmed (no zoom fade — minzoom gates it).
+    'circle-opacity': confidenceOpacity(1, 0.5),
+    'circle-stroke-opacity': confidenceOpacity(1, 0.4),
   };
 
   const glyphLayout = {
     'icon-image': glyph,
-    'icon-size': ['interpolate', ['linear'], ['zoom'], TACTICAL, 0.75, DETAIL, 0.95],
+    'icon-size': ['interpolate', ['linear'], ['zoom'], TACTICAL, 0.95, DETAIL, 1.2],
     'icon-anchor': 'center',
     // Every disc keeps its glyph — no collision between icon and disc.
     'icon-allow-overlap': true,
@@ -126,15 +108,7 @@ export function NativePOILayer({ id, kind, pois, onPress }: Props) {
   };
 
   const glyphPaint = {
-    'icon-opacity': [
-      'interpolate',
-      ['linear'],
-      ['zoom'],
-      FADE_IN,
-      0,
-      TACTICAL,
-      confidenceOpacity(1, 0.6),
-    ],
+    'icon-opacity': confidenceOpacity(1, 0.6),
     'text-color': colors.text.primary,
     'text-halo-color': colors.text.onAccent,
     'text-halo-width': 1.4,
@@ -147,11 +121,13 @@ export function NativePOILayer({ id, kind, pois, onPress }: Props) {
       <Layer
         id={`${id}-disc`}
         type="circle"
+        minzoom={TACTICAL}
         paint={discPaint as unknown as CircleLayerSpecification['paint']}
       />
       <Layer
         id={`${id}-glyph`}
         type="symbol"
+        minzoom={TACTICAL}
         layout={glyphLayout as unknown as SymbolLayerSpecification['layout']}
         paint={glyphPaint as unknown as SymbolLayerSpecification['paint']}
       />
