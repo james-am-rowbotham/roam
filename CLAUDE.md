@@ -136,15 +136,21 @@ unit-tested in isolation and runs on device for offline planning.
 
 ## 5. Core domain model
 
-Curated chain (all trail data): **Route → Section → Stage**. A **Journey** then
+Curated chain (all trail data): **Route → Region → Stage**. A **Journey** then
 groups stages into **Days**. **This supersedes any earlier framing where a "stage"
 was a generated per-journey day** — stages are curated trail facts, not generated.
+
+> **Naming.** The coarse layer is **Region**, not "Section" (earlier drafts). "Region"
+> is the more generic term and scales to trails worldwide — a long trail's coarse
+> divisions are not always called "sections," but "region" reads naturally anywhere.
+> In the schema this is the **`regions`** table; the **`sections`** table holds the
+> fine **Stage** layer (the etapas), kept as a legacy table name — see §9.
 
 The model is **three distinct concepts** (see §11 for the journey side):
 
 | Concept | Answers | Granularity | Owner | Progress? |
 |---|---|---|---|---|
-| **Section** | which region am I in | coarse (~5 on GR11) | trail data | No — a label |
+| **Region** | which region am I in | coarse (~5 on GR11) | trail data | No — a label |
 | **Stage** | today's walk (the etapa) | fine (~47 on GR11) | trail data | **Yes — the spine** |
 | **Day** | how I group stages by pace | per-journey | the journey | No — planning layer |
 
@@ -152,9 +158,10 @@ The model is **three distinct concepts** (see §11 for the journey side):
   generalised core entity. A long-distance **Trail** is one long Route; a **Peak**
   ascent is a short Route to a summit. Carries an optional **grade** and **gear** for
   alpine/glaciated lines, and a **trail class** + **waymark** spec derived from OSM (§16).
-- **Section** — a named **region** of the trail (e.g. GR11's Basque Country, Navarra,
+- **Region** — a named **region** of the trail (e.g. GR11's Basque Country, Navarra,
   Aragon, Andorra, Catalonia), each owning a contiguous **range of stages**. Coarse,
-  curated, orientation-only — **never counted as progress**.
+  curated, orientation-only — **never counted as progress**. (Chosen over "Section"
+  as the generic, worldwide-portable term; stored in the `regions` table, §9.)
 - **Stage** — a curated unit of the trail (the official **etapa**: start/end chainage,
   distance, ascent, name like *Espinal → Burguete*, completion state). **The progress
   spine** — "Stage 14 of 47". Stages are trail data (official etapas, or a segmentation
@@ -166,7 +173,7 @@ The model is **three distinct concepts** (see §11 for the journey side):
   relaxed; two–three packed fast). Derived, not stored; carries no progress (§11).
 
 Supporting entities: **POI, Accommodation, WaterSource, Hazard, TransportPoint**.
-**Progress is only ever counted in stages** — never "section N of 5", never "day 11".
+**Progress is only ever counted in stages** — never "region N of 5", never "day 11".
 
 ---
 
@@ -314,22 +321,24 @@ thin-everywhere erodes the trust that is the moat.
 
 ## 9. Database tables
 
-`routes`, `trails`, `peaks`, `sections`, `stages`, `accommodations`, `water_sources`,
-`transport_points`, `hazards`, `journeys`. **`sections` and `stages` are both curated
-trail data** (§5): a route owns ordered `sections` (named regions), each owning a
-contiguous range of ordered `stages` (the etapas: `start/end_chainage_m`, `distance_m`,
-`ascent_m`, `name`, `completed`, `completed_at`, `elapsed_seconds`). The Journey Engine
+`routes`, `trails`, `peaks`, `regions`, `sections`, `accommodations`, `water_sources`,
+`transport_points`, `hazards`, `journeys`. **`regions` and `sections` are both curated
+trail data** (§5): a route owns ordered `regions` (the coarse **Region** layer), each
+owning a contiguous range of ordered `sections` (the **Stage** layer — the etapas:
+`start/end_chainage_m`, `distance_m`, `ascent_m`, `name`). The Journey Engine
 **does not generate stages** — it groups them into days (§11).
 
-> **Implementation status (current schema).** The above is the target naming. Today the
-> `sections` table *is* the etapas (fine "Stage" layer); the coarse "Section" layer is a
-> normalized **`regions`** table (`route_id`, `name`, `description`, `image_url`,
-> `order_index`) that `sections.region_id` references (nullable FK — a stage may have no
-> region). The API joins `regions.name` onto each section as `regionName`. The
-> per-journey day-windows table is (confusingly) still named `stages` and carries
-> **`elapsed_seconds`**; `journeys` carries **`pace`** (`relaxed|moderate|fast`). The
-> remaining cleanup is purely the **rename** (`sections`→`stages`, `regions`→`sections`)
-> — the relational model is now correct; only the names lag.
+> **Naming (decided).** The coarse layer is **Region** → the **`regions`** table
+> (`route_id`, `name`, `description`, `image_url`, `order_index`); the fine **Stage**
+> layer (the etapas) is the **`sections`** table, which carries a nullable
+> `region_id` FK up to `regions` (a stage may have no region). The API joins
+> `regions.name` onto each section as `regionName`. "Region" is canonical (§5,
+> generic/worldwide-portable) — the earlier plan to rename `regions`→`sections` is
+> **dropped**; `sections` stays the Stage table as an accepted legacy name. *Still
+> open (model debt, not naming):* a separate per-journey **`stages`** table currently
+> holds generated day-windows (with `elapsed_seconds`) — the superseded generate-stages
+> model; §11's target is days **derived**, not stored, with per-journey progress kept
+> off the shared `sections` rows. `journeys` carries **`pace`** (`relaxed|moderate|fast`).
 
 Each spatial/point table carries:
 - `geom geometry(...)` for drawing/import, **and**
@@ -344,11 +353,12 @@ parsed painted blaze (background/foregrounds/text + colours) — is produced by
 `resolveWaymark` from those tags (§17.8). It **mirrors the OSM data**: store the raw
 tags; resolve at the API boundary (or cache the parsed `symbol`). `network` is the
 raw OSM tier (`iwn|nwn|rwn|lwn`), kept as-is for sort/filter, never the colour.
-`sections` (regions) own a contiguous range of a route's `stages`.
+`regions` own a contiguous range of a route's `sections` (the Stage layer).
 
 `journeys` carry user ownership, status (`planned|active|paused|completed|abandoned`),
-direction, pace and start/resume date. **Progress lives on the curated `stages`**
-(`completed`, `completed_at`, `elapsed_seconds`) and is counted in stages + distance.
+direction, pace and start/resume date. **Progress is counted in stages** (the `sections`
+units) + distance — `completed`/`completed_at`/`elapsed_seconds` are per-journey progress,
+kept off the shared curated `sections` rows (see the naming note above).
 **Days are a derived per-journey grouping (§11) — there is no `day_index` on stages, no
 stored day dates, and no `combined_stages`.** A multi-stage day is just a day whose
 grouping references >1 stage; both stages stay first-class. Trail completion is computed
@@ -463,7 +473,7 @@ the chainage data so the exact same tool runs on device and on the server.
 
 **Entity references (clickable Guide answers).** Tools return entities with their
 stable `id` and `type` (`poi` / `water_source` / `accommodation` / `hazard` /
-`section` / `stage`), not just prose, so Guide answers reference them inline and the
+`region` / `stage`), not just prose, so Guide answers reference them inline and the
 client renders them as **tappable links** into the entity's detail screen — e.g. a
 `getNextWater()` answer naming *Fuente de Góriz* links straight to POI Detail. Wire
 format: the Guide emits `[label](roam://water_source/<id>)`-style links (or an
@@ -686,7 +696,7 @@ scroll-tabs, hazard tag, list items, `section-row`, Button — with the middle t
 - **Itinerary (`410:1201`, mock `846:1752`).** Progress header — "Stage N of M" +
   distance, the **ElevationProfile** (progress mode), and a quiet **pace line** (the
   only place pace surfaces; no "Day N of M", no prominent finish forecast). Then the
-  list interleaves **section region bands** ("Basque Country · STAGES 1–7", a hairline
+  list interleaves **region bands** ("Basque Country · STAGES 1–7", a hairline
   rule marks each region crossing), **day-group headers** (`DAY 3 · 14 JUN` +
   `2 STAGES · 8H 30M` done / `DAY 5` + `2 STAGES · 38 KM · 900M ↑` upcoming; time-taken
   lives on the day), and **stage rows** (28×28 fixed badge; "Stage N · Place → Place";
@@ -727,7 +737,7 @@ there water before that climb).
 ### 17.1 Four zoom bands
 Boundaries are tunable; the *content rules* are the contract.
 
-| Band | Zoom | Intent | Trail blaze | Section names | POI markers |
+| Band | Zoom | Intent | Trail blaze | Region names | POI markers |
 |---|---|---|---|---|---|
 | Overview | 0–8 | which trail, where | one, at the start terminus | hidden | hidden |
 | Regional | 9–11 | plan the days | repeating, wide spacing | midpoint pill labels | major refuge + day-end towns, as dots |
@@ -739,7 +749,7 @@ symbols.
 
 ### 17.2 The trail blaze (`Waymark`, §16)
 The repeating waymark riding above the route line — the most distinctive element of
-the map, and what lets section names stay off the line entirely (the route carries
+the map, and what lets region names stay off the line entirely (the route carries
 its own identity continuously). It is the **reconstructed painted sign**, built from
 the parsed `osmc:symbol` (§17.8): a background **plate** (its colour + shape), the
 **foreground marks** over it (each its own colour + shape, e.g. a red `lower` bar),
@@ -828,12 +838,12 @@ text drops. That is the designed "dropped" state.
 2. **Tap to promote** — tapping a marker promotes it to a full labeled callout (RN
    overlay) with name + reliability + type and dims the others; tap-away dismisses.
 
-### 17.6 Density toggle & section names
+### 17.6 Density toggle & region names
 - **Density toggle** — a Subtle `IconButton` on the map cycles `Essential` (water +
   refuge only, dots) / `Standard` (the band rules, default) / `All` (labels one band
   earlier). Persist per user. `Essential` is also the performance floor for old
   phones deep in a pack.
-- **Section names** appear only at Regional band, as faint paper midpoint pills
+- **Region names** appear only at Regional band, as faint paper midpoint pills
   (`bg/app` ~92%, Geist Mono ~9px) — never path-following (unreadable on switchbacks;
   the blaze carries continuous identity). Fade out by z12, where the on-trail stage
   label takes over.
@@ -975,3 +985,174 @@ native + offline parts of the stack before committing to structure.
   point at which a routing graph is justified — see principle 4.)*
 - **Phase 4:** global trail-knowledge platform, community-contributed intelligence,
   trail-specific recommendations.
+
+---
+
+## 21. Content strategy (read content / trail guides)
+
+The curated **read layer**: a rich, illustrated guide to a trail, its regions, and its
+stages — culture, customs, terrain, flora, fauna, kit, season, places. Generated from the
+open web, knitted into narrative by an AI pass, curated in `apps/admin`, frozen into the
+offline package, and rendered on the public web as the acquisition net. It is **not a new
+system** — it extends the §8 **Enrich** stage (which already drafts fields and writes the
+per-section Guide summaries) into reader-facing content, on the same pipeline, the same
+confidence currency, the same idempotent + override-safe rule, the same depth-first tiering.
+It is also the Guide's knowledge corpus (§12, §13). The wedge is **depth, not breadth**: be
+the definitive read on the GR11, GR10, HRP — the routes nobody covers well — where Komoot's
+templated guide pages are thin. "The place to read up about the GR11" is a winnable search
+term and a real top-of-funnel.
+
+### 21.1 The boundary (read vs live) — the scoping contract
+Roam already has a **live layer** (water, navigation, hazards, conditions) maintained by the
+report flywheel and the confidence model (§6, §9). Content is the opposite mode: slow-changing
+knowledge a hiker reads *around* a trail. Holding this line is the most important scoping
+decision — it keeps the content pipeline from owning anything that goes stale by the hour.
+
+| | **Content (this section)** — *understand + plan* | **Live (§6)** — *operate* |
+|---|---|---|
+| Lenses | culture, customs, terrain, flora, fauna, kit, season, places | water, navigation, hazards, conditions |
+| Change rate | seasons / years | hours / days |
+| Source | web research → AI compose → curation | crowd reports + passive signals |
+| Surfaces | app read views + **public web** | map markers, POI Detail, Guide |
+
+They **fuse only at the POI/map level** — a water source carries editorial "what you're
+seeing" content *and* its live reliability. Everywhere else, separate.
+
+### 21.2 The model — lens × scope × season
+**Lenses (eight), two tiers** by read-moment:
+
+| Lens | Read when | Primary scope | Dominant source |
+|---|---|---|---|
+| Terrain | on-trail | Stage/Region | derived (DEM/slope/geology) + authored character |
+| Flora | on-trail | Region, by elevation band | derived (landcover/NDVI) seed + AI |
+| Fauna | on-trail | Region / Route | AI/authored + protected-area data |
+| Culture | on-trail | Region | authored + AI-extended |
+| Customs | on-trail | Region / Route | authored + AI draft |
+| Recommended kit | pre-trip | Route + Region, seasonal | **composed** from terrain+altitude+water+season |
+| Time of year | pre-trip | Route + Region | derived (snow/sun/weather windows) + best window |
+| Places to visit | pre-trip | Region + POI | curated highlight/detour POIs (reuses POI model) |
+
+**Kit is composed, not authored** — `kit = f(terrain, altitude, water-carry, season)`,
+auto-drafted and human-approved, so it stays consistent across 47 stages without 47
+hand-written lists. **Places reuses the POI model** — highlight/detour-tagged POIs, the seam
+where a graduated discovery (reporting) becomes a candidate place.
+
+**Scope = the curated chain (§5):** content attaches to **Route → Region → Stage → POI** and
+**inherits downward** — write Aragón's geology once at the Region, every crossing Stage
+inherits it; the model doesn't re-research per stage. A Stage page is an **assembled query**
+(own blocks + inherited Region/Route context), never an authored monolith. *(Deferred option:
+a cross-route shared Region so a future HRP references the same Pyrenees content
+instead of duplicating it — the same Region reused by more than one route.)*
+
+**Season is an axis, not a lens** — a validity range on every block (`season_from`/`season_to`,
+null = all-year) plus a UI selector ("this stage in June vs September" re-renders the rest).
+Never a ninth chip.
+
+**Stored as typed blocks, generated as narrative** — independently regenerable, editable,
+provenance-stamped: `narrative` (the voice), `fact` (derived spec strip), `callout` (seasonal
+note/non-operational caution), `media` (image + attribution), `what_you_see` (geology/ecology
+explainer pinned to a POI or chainage point), `faq` (Q&A — doubles as Guide retrieval fuel).
+
+### 21.3 Generation pipeline (extends §8 Enrich)
+A sibling of the §8 stages, run during/after **Enrich** for each `(scope, lens)`:
+
+1. **Research (automated)** — fan-out retrieval over curated `source_urls` + open sources
+   (Wikipedia/Wikivoyage, federation guides, park/protected-area data, public trip reports).
+   **Capture sources per claim.**
+2. **Compose (AI)** — knit material into narrative in Roam's voice, structured into typed
+   blocks, inheriting parent-scope context. Emits `source: model`, a derived `confidence`, and
+   `source_refs[]`. **Sourced, not free-floating** (§21.10).
+3. **Curate (human, `apps/admin`)** — per block: edit · **regenerate** · accept · delete. An
+   edited/accepted block is stamped `manual_override` and protected from re-generation. Review,
+   don't author.
+4. **Illustrate** — the editorial-image pipeline (§21.4).
+5. **Publish** — version, freeze into the pack manifest (§10) and render the web guide (§21.7).
+
+Inherits §8's defining property — **idempotent + override-safe**: sources improve → re-run 1–2
+→ model blocks refresh, `manual_override` work is never clobbered.
+
+### 21.4 Images — editorial vs evidence, license as a hard gate
+Photography is half the product on the web and a real differentiator in-app. **Two distinct
+classes — do not conflate:** **editorial media** (new — curated, licensed images of
+regions/terrain/places for guides + web) vs **evidence photos** (the existing §9 `photos`
+table — user POI confirmations, unchanged).
+
+**License is a hard gate enforced in the schema** (license fields `NOT NULL`): every editorial
+image carries `source_site`, `license`, `license_url`, `author`, `attribution_text` — anything
+that can't fill them never enters the repo. Legal safety, and exactly the structured data the
+web pages need to credit. Safe v1 sources: **Wikimedia Commons, Openverse, Flickr (CC-filtered),
+park/government open data.** Pipeline: query → **license filter** → quality/relevance rank →
+**AI vision pass** (caption, geo-match to chainage, reject blurry/indoor/watermarked/wrong-place)
+→ human picks hero + set → freeze.
+
+### 21.5 Provenance, confidence & tiering
+Content rides the §6/§9 trust model: `source` (`model|partner`, with the same `manual_override`
+boolean that protects a curated value from re-import), a derived `confidence`/`review_status`,
+`last_reviewed_at`, `source_refs`. Triage is identical — humans touch only **low-confidence +
+high-consequence** blocks and **deep-finish only trails with real usage**. Flagship trails get
+rich content; the long tail ships **AI-grade, labelled honestly by confidence**, so trust
+degrades transparently. Effort tracks demand, not trail count.
+
+### 21.6 The Guide corpus (convergence)
+The generated content **is** the Guide's knowledge base. Ship the content **and precomputed
+embeddings inside the pack** (§10) and Guide Core/Mini retrieve against grounded content
+**offline** instead of hallucinating (§12) — the offline-RAG path, for free, because content
+and RAG are the same project. The short per-section Guide summaries (§6) become a derived
+extractive subset; Guide Cloud uses the same corpus online. One artifact, three readers (app
+read view, web page, Guide).
+
+### 21.7 Two renderers (app + web)
+One repo, two surfaces, from one source. **App read view** — lean, offline, content-block
+components in the §16 type system; lands on **Section Detail (`172:709`)** and **Trail Detail —
+Overview (`53:205`)**, with `what_you_see` inline on **POI Detail (`164:651`)**. **Public web
+guide** — the SEO net, image-heavy, schema.org-marked-up (`Article`/`TouristAttraction`/
+`ImageObject`), extending **Landing (`126:628`)**. The season-axis and lens structure drive
+both. Flywheel: web pulls people in → app is what they take up the mountain → the live layer
+makes it trustworthy → more hikers. Write once, render twice.
+
+### 21.8 Schema additions
+Both tables carry the §9 trust fields and key to the curated chain.
+
+- **`content_blocks`** — `scope_type` (`route|region|stage|poi`) + `scope_id`, `lens`,
+  `block_type` (§21.2), `title?`, `body`, `order_index`, `season_from?`/`season_to?`
+  (null = all-year), `source` (`model|partner`), `confidence`, `review_status`
+  (`draft|reviewed|published|flagged`), `source_refs jsonb` (`{url,title,retrieved_at}[]`),
+  `manual_override`, `last_reviewed_at?`, `embedding vector?` (§21.6), `version`.
+- **`content_media`** — `scope_type`+`scope_id`, `lens?`, `role` (`hero|inline|gallery`),
+  `order_index`, `r2_key`, `width`, `height`, `geo?` (chainage/lat-lng if matched),
+  `source_site`, `license`, `license_url`, `author`, `attribution_text` (**all `NOT NULL`**),
+  `source_url`, `caption`, `caption_source` (`ai|human`), `alt_text`, `review_status`
+  (`pending|approved|removed`). Distinct from `photos` (§9): editorial vs evidence.
+
+### 21.9 Design surfaces
+Same approach as the reporting build — a small set of blocks the read views compose from.
+- **Content-block library** (`components/trail/`): `NarrativeBlock`, `FactStrip` (reuse
+  `ElevationProfile` for terrain), `Callout`, `WhatYouSeeCard`, `MediaBlock`/`Gallery` (with a
+  required `Attribution` line), `FaqAccordion` — all in the §16 type system, warm neutrals,
+  overlay tokens on hero images.
+- **Lens as a UI primitive** — a `Chip` row to read a stage through one lens, which can also
+  light up the map. Only possible because content is lens-tagged.
+- **Season selector** — a segmented/`Chip` control that re-renders season-scoped blocks.
+- **Read flow** — Trail Overview → Section Detail → POI "what you're seeing": region context →
+  section character → fact strip → what-to-see in walking order → places.
+- **Review/edit** (`apps/admin`) — blocks with per-block regenerate/edit/accept, provenance +
+  source-refs visible, image picker with license badges.
+
+### 21.10 Decisions & build order
+**Locked decisions:** (1) **sourced per block** — a confidently-wrong "wild camping tolerated
+here" is worse than nothing; sourcing makes the pipeline reviewable and feeds Guide grounding.
+(2) **admin-authored canon that ships to all** — consistent with the curation model + offline
+packs; user-on-demand generation is a later online-only feature. (3) **strict-licensed images
+for v1** — accept thinner coverage, fill gaps later. (4) **web renderer: plan now, surface
+later** — build the model web-ready (cheap now, painful to retrofit); ship the surface after
+the app content works. (5) **companion drafts under review, never auto-publishes.**
+
+**Build order (content workstream — extends §18 Phase 7, shares pipeline + admin):**
+- **C1** — content schema (`content_blocks` + `content_media` + provenance) + `apps/admin`
+  block editor (regenerate/edit/accept, override-safe).
+- **C2** — research + compose for **one lens on GR11** (terrain), end-to-end, sourced,
+  idempotent + override-safe.
+- **C3** — editorial image pipeline (license gate + vision pass).
+- **C4** — all core lenses on GR11; season axis; freeze into pack; app read views render blocks.
+- **C5** — Guide corpus + embeddings in the pack (offline RAG, §21.6).
+- **C6** — web renderer (SEO guide pages), extending Landing.
