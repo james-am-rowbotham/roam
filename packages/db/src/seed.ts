@@ -1,30 +1,21 @@
 import { resolveWaymark } from '@roam/core';
+import {
+  GR11,
+  GR11_ETAPAS,
+  type LonLat,
+  type OverpassNode,
+  type OverpassWay,
+  assignEtapaChainage,
+  orderIntoLine,
+  overpass,
+  resolveRouteWaymark,
+  toPieces,
+} from '@roam/pipeline';
 import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
 import { buildElevationProfile } from './elevation';
 import { accommodations, regions, routes, sections, trails, waterSources } from './schema';
-
-type LonLat = [number, number];
-
-// The single most common value of an OSM tag across the member ways — the
-// fallback for waymark resolution when the relation tags aren't available.
-function dominantTag(ways: OverpassWay[], key: string): string | null {
-  const counts = new Map<string, number>();
-  for (const w of ways) {
-    const v = w.tags?.[key];
-    if (v) counts.set(v, (counts.get(v) ?? 0) + 1);
-  }
-  let best: string | null = null;
-  let bestN = 0;
-  for (const [v, n] of counts) {
-    if (n > bestN) {
-      best = v;
-      bestN = n;
-    }
-  }
-  return best;
-}
 
 // The GR11 route relation's own tags (§8/§17.8). osmc:symbol, network and ref
 // live on the relation — NOT the member ways, only ~3 of which carry them
@@ -39,18 +30,11 @@ async function loadRelationTags(): Promise<Record<string, string> | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Config
+// Config — the GR11 ingestion config (§8) drives the corridor + metadata.
 // ---------------------------------------------------------------------------
 
-const OVERPASS_MIRRORS = [
-  'https://overpass.openstreetmap.fr/api/interpreter',
-  'https://overpass-api.de/api/interpreter',
-  'https://overpass.kumi.systems/api/interpreter',
-];
-const HEADERS = { 'User-Agent': 'roam-app/0.1 (trail data seed, contact: dev@roam.app)' };
-
-// Pyrenees bounding box for POI queries
-const BBOX = { south: 42.2, west: -1.9, north: 43.6, east: 3.5 };
+// Pyrenees bounding box for POI queries + the route's ref-based way filter.
+const BBOX = GR11.bbox;
 
 // ---------------------------------------------------------------------------
 // Imagery — curated, theme-appropriate Unsplash photos assigned deterministically
@@ -95,117 +79,6 @@ const WATER_IMAGES = [
 
 // Cycle through a pool by index — stable across re-seeds, no randomness.
 const pick = (pool: string[], i: number): string => pool[i % pool.length] ?? pool[0] ?? TRAIL_IMAGE;
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-interface OverpassWay {
-  type: 'way';
-  id: number;
-  geometry: Array<{ lat: number; lon: number }>;
-  tags?: Record<string, string>;
-}
-
-interface OverpassNode {
-  type: 'node';
-  id: number;
-  lat: number;
-  lon: number;
-  tags?: Record<string, string>;
-}
-
-// ---------------------------------------------------------------------------
-// Overpass helper — tries each mirror in order
-// ---------------------------------------------------------------------------
-
-async function overpass(query: string): Promise<{ elements: Array<OverpassWay | OverpassNode> }> {
-  for (const mirror of OVERPASS_MIRRORS) {
-    try {
-      const res = await fetch(`${mirror}?data=${encodeURIComponent(query.trim())}`, {
-        headers: HEADERS,
-        signal: AbortSignal.timeout(300_000),
-      });
-      if (!res.ok) continue;
-      const data = (await res.json()) as { elements: Array<OverpassWay | OverpassNode> };
-      if (data.elements.length > 0) return data;
-      console.log(`  ${mirror} returned empty — trying next…`);
-    } catch {
-      console.log(`  ${mirror} failed — trying next…`);
-    }
-  }
-  throw new Error('All Overpass mirrors failed');
-}
-
-// ---------------------------------------------------------------------------
-// Geometry ordering — OSM ways merge into several disconnected pieces (small
-// gaps), and their ST_Dump order is NOT walking order, which corrupts chainage.
-// Stitch them into one west→east ordered line so chainage is monotonic.
-// ---------------------------------------------------------------------------
-
-interface Piece {
-  coords: LonLat[];
-  start: LonLat;
-  end: LonLat;
-}
-
-function toPieces(raw: LonLat[][]): Piece[] {
-  const out: Piece[] = [];
-  for (const coords of raw) {
-    const start = coords[0];
-    const end = coords[coords.length - 1];
-    if (start && end && coords.length >= 2) out.push({ coords, start, end });
-  }
-  return out;
-}
-
-// Greedy nearest-neighbour chain. GR11 runs Atlantic→Mediterranean, so start at
-// the westernmost endpoint and repeatedly append the nearest remaining piece,
-// flipping it when its far end is the closer join.
-function orderIntoLine(pieces: Piece[]): LonLat[] {
-  const d2 = (a: LonLat, b: LonLat) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2;
-
-  let seed: { piece: Piece; coords: LonLat[] } | null = null;
-  let minLon = Number.POSITIVE_INFINITY;
-  for (const p of pieces) {
-    if (p.start[0] < minLon) {
-      minLon = p.start[0];
-      seed = { piece: p, coords: p.coords };
-    }
-    if (p.end[0] < minLon) {
-      minLon = p.end[0];
-      seed = { piece: p, coords: [...p.coords].reverse() };
-    }
-  }
-  if (!seed) return [];
-
-  const used = new Set<Piece>([seed.piece]);
-  const chain: LonLat[] = [...seed.coords];
-  let tail = chain[chain.length - 1] ?? null;
-
-  while (used.size < pieces.length && tail) {
-    let best: { piece: Piece; coords: LonLat[] } | null = null;
-    let bestD = Number.POSITIVE_INFINITY;
-    for (const p of pieces) {
-      if (used.has(p)) continue;
-      const ds = d2(tail, p.start);
-      const de = d2(tail, p.end);
-      if (ds < bestD) {
-        bestD = ds;
-        best = { piece: p, coords: p.coords };
-      }
-      if (de < bestD) {
-        bestD = de;
-        best = { piece: p, coords: [...p.coords].reverse() };
-      }
-    }
-    if (!best) break;
-    used.add(best.piece);
-    chain.push(...best.coords.slice(1));
-    tail = chain[chain.length - 1] ?? tail;
-  }
-  return chain;
-}
 
 // ---------------------------------------------------------------------------
 // Step 1: Route geometry
@@ -273,9 +146,8 @@ async function seedRoute(): Promise<number> {
   // osmc:symbol into the painted sign — we store it raw. GR11 is
   // "red:white:red_lower:11:black" (white plate, red lower bar, "11"), network nwn.
   const relTags = await loadRelationTags();
-  const osmcSymbol = relTags?.['osmc:symbol'] ?? dominantTag(ways, 'osmc:symbol');
-  const network = relTags?.network ?? dominantTag(ways, 'network');
-  const sign = resolveWaymark({ osmcSymbol, network, ref: 'GR11' }).symbol;
+  const { osmcSymbol, network } = resolveRouteWaymark(relTags, ways, GR11);
+  const sign = resolveWaymark({ osmcSymbol, network, ref: GR11.ref }).symbol;
   console.log(
     `  Waymark: ${
       sign
@@ -289,8 +161,8 @@ async function seedRoute(): Promise<number> {
   const inserted = await db
     .insert(routes)
     .values({
-      name: 'GR11',
-      description: 'Sendero de los Pirineos — Hendaye to Cap de Creus',
+      name: GR11.name,
+      description: GR11.description,
       distanceM: lengthM,
       ascentM: 47_000,
       descentM: 47_000,
@@ -305,9 +177,9 @@ async function seedRoute(): Promise<number> {
 
   await db.insert(trails).values({
     routeId: route.id,
-    ref: 'GR11',
-    country: 'Spain',
-    region: 'Pyrenees',
+    ref: GR11.ref,
+    country: GR11.country,
+    region: GR11.region,
     imageUrl: TRAIL_IMAGE,
   });
 
@@ -367,130 +239,94 @@ async function computeChainage(routeId: number, lon: number, lat: number): Promi
 // Step 3: Sections
 // ---------------------------------------------------------------------------
 
-// The GR11 walks as ~40 day-stages between refuges and villages. We don't have
-// the official étape endpoints yet (that's the Phase 7 ingestion pipeline), so
-// approximate them as even ~21 km splits and name each by its endpoints from a
-// curated west→east list of real GR11 waypoints. These place names are dev
-// placeholders (not chainage-accurate) until ingestion supplies real étapes.
-const SECTION_COUNT = 40;
-
-// 41 waypoints (Atlantic → Mediterranean) → 40 named sections.
-const WAYPOINTS = [
-  'Irun',
-  'Bera',
-  'Elizondo',
-  'Burguete',
-  'Roncesvalles',
-  'Ochagavía',
-  'Isaba',
-  'Zuriza',
-  'Candanchú',
-  'Canfranc',
-  'Sallent de Gállego',
-  'Panticosa',
-  'Bujaruelo',
-  'Refugio de Góriz',
-  'Pineta',
-  'Parzán',
-  'Refugio de Biadós',
-  'Refugio de Estós',
-  'Benasque',
-  'Refugio de Llauset',
-  'Refugio de Conangles',
-  'Refugi de la Restanca',
-  'Refugi de Colomèrs',
-  'Salardú',
-  "Alós d'Isil",
-  'Àreu',
-  'Tavascan',
-  'Estaon',
-  'Refugi de Vallferrera',
-  'El Serrat',
-  'Arinsal',
-  'Encamp',
-  "Refugi de l'Illa",
-  'Puigcerdà',
-  'Núria',
-  'Queralbs',
-  'Setcases',
-  'Beget',
-  'Albanyà',
-  'La Jonquera',
-  'Cadaqués',
+// GR11's five regions (the coarse Region layer, §5) — curated contiguous groupings
+// of the official etapas, west→east, each owning an inclusive stage range. Regions
+// are orientation-only labels (never progress, §5).
+const GR11_REGIONS: { name: string; description: string; untilStage: number }[] = [
+  {
+    name: 'Basque Country & Navarre',
+    description: 'From Cabo Higuer, passing through forests and coastal hills.',
+    untilStage: 8,
+  },
+  {
+    name: 'Aragonese Pyrenees',
+    description:
+      'Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.',
+    untilStage: 15,
+  },
+  {
+    name: 'Ordesa & High Country',
+    description:
+      'Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.',
+    untilStage: 22,
+  },
+  {
+    name: 'Andorra & Pallars High Country',
+    description:
+      'Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.',
+    untilStage: 34,
+  },
+  {
+    name: 'Eastern Pyrenees',
+    description:
+      'Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.',
+    untilStage: 46,
+  },
 ];
 
-// GR11's five regions (the coarse "Section" layer), in order, with their upper bound as
-// a fraction of the trail — breakpoints mirror the 47 official stages: Basque (1–7) ·
-// Navarra (8–11) · Aragon (12–24) · Andorra (25–29) · Catalonia (30–47).
-const GR11_REGIONS: { name: string; untilFraction: number }[] = [
-  { name: 'Basque Country', untilFraction: 7 / 47 },
-  { name: 'Navarra', untilFraction: 11 / 47 },
-  { name: 'Aragon', untilFraction: 24 / 47 },
-  { name: 'Andorra', untilFraction: 29 / 47 },
-  { name: 'Catalonia', untilFraction: 1 },
-];
-
-function regionFor(fraction: number): string {
-  return GR11_REGIONS.find((r) => fraction < r.untilFraction)?.name ?? 'Catalonia';
+function regionFor(stage: number): string {
+  return GR11_REGIONS.find((r) => stage <= r.untilStage)?.name ?? 'Eastern Pyrenees';
 }
 
-function sectionName(i: number): string {
-  const from = WAYPOINTS[i] ?? `km ${i}`;
-  const to = WAYPOINTS[i + 1] ?? 'end';
-  return `${from} → ${to}`;
-}
-
-// Deterministic per-section weight in ~[0.55, 1.45], averaging ~1, so seeded
-// elevation varies between sections instead of every day reading identically.
-function elevationWeight(i: number, salt: number): number {
-  const h = ((i * 2_654_435_761 + salt * 40_503) >>> 0) % 1000;
-  return 0.55 + (h / 1000) * 0.9;
-}
-
+// The fine Stage layer (§5): the 46 official GR11 etapas, laid onto the route's
+// chainage axis by cumulative published distance (@roam/pipeline). Real names,
+// boundaries and per-stage elevation — replaces the earlier synthetic even splits.
 async function seedSections(routeId: number): Promise<void> {
-  console.log('Generating sections…');
+  console.log('Generating sections (official etapas)…');
 
   const [route] = await db
-    .select({ distanceM: routes.distanceM, ascentM: routes.ascentM, descentM: routes.descentM })
+    .select({ distanceM: routes.distanceM })
     .from(routes)
     .where(eq(routes.id, routeId));
   if (!route?.distanceM) throw new Error('Route has no length — cannot generate sections');
 
   const total = route.distanceM;
-  const ascentMean = (route.ascentM ?? 0) / SECTION_COUNT;
-  const descentMean = (route.descentM ?? 0) / SECTION_COUNT;
 
   // The coarse region layer: one row per region, then map name → id for the FK.
   const regionRows = await db
     .insert(regions)
-    .values(GR11_REGIONS.map((r, i) => ({ routeId, name: r.name, orderIndex: i + 1 })))
+    .values(
+      GR11_REGIONS.map((r, i) => ({
+        routeId,
+        name: r.name,
+        description: r.description,
+        orderIndex: i + 1,
+      })),
+    )
     .returning({ id: regions.id, name: regions.name });
   const regionId = new Map(regionRows.map((r) => [r.name, r.id]));
   console.log(`  Inserted ${regionRows.length} regions`);
 
-  const rows = Array.from({ length: SECTION_COUNT }, (_, i) => {
-    const startChainageM = (i * total) / SECTION_COUNT;
-    const endChainageM = ((i + 1) * total) / SECTION_COUNT;
-    const region = regionFor((i + 0.5) / SECTION_COUNT);
+  const staged = assignEtapaChainage(GR11_ETAPAS, total);
+  const rows = staged.map((e, i) => {
+    const region = regionFor(e.stage);
     return {
       routeId,
       regionId: regionId.get(region) ?? null,
-      name: sectionName(i),
-      description: `${region} · km ${Math.round(startChainageM / 1000)}–${Math.round(endChainageM / 1000)}`,
-      orderIndex: i + 1,
-      startChainageM,
-      endChainageM,
-      // Vary per section so days differ — deterministic placeholder until the
-      // ingestion pipeline (§8) computes real per-section elevation.
-      ascentM: Math.round(ascentMean * elevationWeight(i, 1)),
-      descentM: Math.round(descentMean * elevationWeight(i, 7)),
+      name: e.name,
+      description: `${region} · Etapa ${e.stage} · ${Math.round(e.distanceM / 1000)} km`,
+      orderIndex: e.stage,
+      startChainageM: e.startChainageM,
+      endChainageM: e.endChainageM,
+      ascentM: e.ascentM,
+      descentM: e.descentM,
       imageUrl: pick(MOUNTAIN_IMAGES, i),
     };
   });
 
   await db.insert(sections).values(rows);
   console.log(
-    `  Inserted ${SECTION_COUNT} sections (~${Math.round(total / SECTION_COUNT / 1000)} km each)`,
+    `  Inserted ${rows.length} sections (official etapas, ${Math.round(total / 1000)} km)`,
   );
 }
 
@@ -613,6 +449,21 @@ async function seedWaterSources(routeId: number): Promise<void> {
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
+
+// `bun src/seed.ts sections` re-seeds only the curated Region+Stage layer for the
+// existing route (regions + sections), leaving the route geometry and POIs intact.
+// Used to roll the trail's curated stages forward to the official etapas without a
+// full re-import. Nothing FKs to sections/regions, so the replace is safe.
+if (process.argv[2] === 'sections') {
+  const [route] = await db.select({ id: routes.id }).from(routes).limit(1);
+  if (!route) throw new Error('No route to re-seed — run the full seed first');
+  await db.delete(sections).where(eq(sections.routeId, route.id));
+  await db.delete(regions).where(eq(regions.routeId, route.id));
+  console.log('Cleared existing regions + sections');
+  await seedSections(route.id);
+  console.log('\nGR11 sections re-seed complete ✓');
+  process.exit(0);
+}
 
 const existing = await db.select().from(trails).limit(1);
 if (existing.length > 0) {
