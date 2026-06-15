@@ -11,13 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  MapImages,
-  MapView,
-  SectionEndpoints,
-  TrailBlaze,
-  TrailLayer,
-} from '../../components/map';
+import { MapImages, MapView, SectionEndpoints, TrailBlaze, TrailLayer } from '../../components/map';
 import { ElevationProfile, SummaryRow } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';

@@ -81,7 +81,9 @@ export function TrailBlaze({ id, geojson, image, centered = false }: BlazeProps)
     if (!mid) return null;
     const data: GeoJSON.FeatureCollection<GeoJSON.Point> = {
       type: 'FeatureCollection',
-      features: [{ type: 'Feature', geometry: { type: 'Point', coordinates: mid }, properties: {} }],
+      features: [
+        { type: 'Feature', geometry: { type: 'Point', coordinates: mid }, properties: {} },
+      ],
     };
     return (
       <GeoJSONSource id={id} data={data}>
