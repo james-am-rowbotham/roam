@@ -155,7 +155,7 @@ function groupCompletedByDate(
 }
 
 // Ascent per km → a coarse grade. Placeholder until stages carry a curated grade.
-function gradeLabel(distanceM: number, ascentM: number): string {
+export function gradeLabel(distanceM: number, ascentM: number): string {
   const km = distanceM / 1000;
   if (km <= 0) return 'Easy';
   const perKm = ascentM / km;

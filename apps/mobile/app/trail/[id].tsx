@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapImages, MapView, TrailLayer, Waymark } from '../../components/map';
-import { SummaryRow } from '../../components/trail';
+import { SummaryRow, TrailStageList } from '../../components/trail';
 import { Button, Icon, RoamMark, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { geometryBbox } from '../../lib/geo';
@@ -176,25 +176,11 @@ export default function TrailDetailScreen() {
         )}
 
         {activeTab === 'sections' && (
-          <View style={styles.tabContent}>
-            {sections.map((s) => (
-              <TouchableOpacity
-                key={s.id}
-                style={styles.sectionRow}
-                onPress={() => router.push(`/section/${s.id}`)}
-                activeOpacity={0.7}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.sectionName}>{s.name}</Text>
-                  <Text style={styles.sectionMeta}>
-                    {Math.round((s.startChainageM ?? 0) / 1000)}–
-                    {Math.round((s.endChainageM ?? 0) / 1000)} km
-                  </Text>
-                  {s.description ? <Text style={styles.sectionDesc}>{s.description}</Text> : null}
-                </View>
-                <Icon name="chevron-right" size={16} color={colors.text.secondary} />
-              </TouchableOpacity>
-            ))}
+          <View style={styles.sectionsTab}>
+            <TrailStageList
+              sections={sections}
+              onPressStage={(sid) => router.push(`/section/${sid}`)}
+            />
           </View>
         )}
       </ScrollView>
@@ -289,17 +275,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     marginTop: spacing[2],
   },
-  sectionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing[4],
-    borderBottomWidth: 0.5,
-    borderBottomColor: colors.border.default,
-    gap: spacing[4],
-  },
-  sectionName: { ...type.cardTitle, color: colors.text.primary },
-  sectionMeta: { ...type.meta, color: colors.text.secondary },
-  sectionDesc: { ...type.meta, color: colors.text.secondary, marginTop: 2 },
+  // Sections tab uses the region-banded TrailStageList; only horizontal padding here.
+  sectionsTab: { paddingHorizontal: spacing[8], paddingTop: spacing[2], paddingBottom: spacing[6] },
 
   ctaWrap: { padding: layout.ctaBarPadding },
 });
