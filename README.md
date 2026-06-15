@@ -62,10 +62,6 @@ pipeline** rather than by hand: OSM extract → normalise + chainage → model-e
 → publish, with every fact carrying provenance, freshness and a derived confidence. Hikers at the
 spring become the curators — one-tap reports keep water and refuge data live.
 
-<div align="center">
-<img src="docs/media/navigation-flow.png" alt="Section-focus navigation flow" width="900" />
-<br/><em>One flow through the app: from a trail's stages to a focused section on the map.</em>
-</div>
 
 ---
 
