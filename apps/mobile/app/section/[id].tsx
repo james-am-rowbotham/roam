@@ -11,7 +11,13 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapImages, MapView, TrailLayer, Waymark } from '../../components/map';
+import {
+  MapImages,
+  MapView,
+  SectionEndpoints,
+  TrailBlaze,
+  TrailLayer,
+} from '../../components/map';
 import { ElevationProfile, SummaryRow } from '../../components/trail';
 import { Button, Icon, StatPill } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
@@ -167,18 +173,31 @@ export default function SectionDetailScreen() {
               >
                 <MapImages />
                 {'geometry' in section && section.geometry && (
-                  <TrailLayer
-                    id="section-preview"
-                    geojson={{
-                      type: 'Feature',
-                      geometry: section.geometry as never,
-                      properties: {},
-                    }}
-                    color={trailColor}
-                    width={3}
-                    corridor
-                    blazeImage={blazeImage}
-                  />
+                  <>
+                    <TrailLayer
+                      id="section-preview"
+                      geojson={{
+                        type: 'Feature',
+                        geometry: section.geometry as never,
+                        properties: {},
+                      }}
+                      color={trailColor}
+                      width={3}
+                    />
+                    {blazeImage && (
+                      <TrailBlaze
+                        id="section-preview-blaze"
+                        geojson={{
+                          type: 'Feature',
+                          geometry: section.geometry as never,
+                          properties: {},
+                        }}
+                        image={blazeImage}
+                        centered
+                      />
+                    )}
+                    <SectionEndpoints geom={sectionGeom} />
+                  </>
                 )}
               </MapView>
             </TouchableOpacity>

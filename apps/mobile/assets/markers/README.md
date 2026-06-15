@@ -6,7 +6,9 @@ raster images for `icon-image`, so these are rasterized from the vector sources.
 
 - `src/glyph-*.svg` — editable vector sources (white stroke, 24×24, transparent).
   These are the Figma icon masters (`icon/water-bottle`, `icon/stay`, `icon/food`,
-  `icon/mountain`) recoloured white with the master background removed.
+  `icon/mountain`) recoloured white with the master background removed. `glyph-start`
+  (play) and `glyph-finish` (flag) are the route termini drawn on the start/finish
+  discs by `components/map/SectionEndpoints.tsx`.
 - `glyph-*.png`, `glyph-*@2x.png`, `glyph-*@3x.png` — generated rasters (24 / 48 /
   72 px). RN resolves the right density per device automatically.
 
@@ -22,7 +24,7 @@ npx @resvg/resvg-js  # (used via the snippet below; no repo dependency)
 // scratch script — run with node
 const { Resvg } = require('@resvg/resvg-js');
 const fs = require('fs');
-for (const g of ['water', 'stay', 'food', 'mountain']) {
+for (const g of ['water', 'stay', 'food', 'mountain', 'start', 'finish']) {
   const svg = fs.readFileSync(`src/glyph-${g}.svg`);
   for (const [suffix, px] of [['', 24], ['@2x', 48], ['@3x', 72]]) {
     const png = new Resvg(svg, { fitTo: { mode: 'width', value: px } }).render().asPng();

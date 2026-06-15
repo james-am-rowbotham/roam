@@ -9,6 +9,8 @@ import {
   MapView,
   type MapViewHandle,
   NativePOILayer,
+  SectionEndpoints,
+  TrailBlaze,
   TrailLayer,
   UserMarker,
 } from '../../components/map';
@@ -156,14 +158,15 @@ export default function MapScreen() {
                 id="gr11"
                 geojson={geojson as never}
                 color={trailColor}
-                width={isSectionActive ? 2 : 3}
-                opacity={isSectionActive ? 0.2 : 0.9}
-                corridor
-                blazeImage={blazeImage}
+                // Full strength when it's the focus; dimmed back only when a
+                // section is highlighted over it.
+                width={isSectionActive ? 2 : 4}
+                opacity={isSectionActive ? 0.2 : 1}
                 onPress={firstTrailId ? () => router.push(`/trail/${firstTrailId}`) : undefined}
               />
             )}
-            {/* Section highlight */}
+            {/* Section highlight — the focused section drawn full-strength over
+                the dimmed full trail, with start/finish pins at either end. */}
             {activeSectionGeom && (
               <TrailLayer
                 id="section-highlight"
@@ -172,6 +175,18 @@ export default function MapScreen() {
                 width={4}
                 opacity={1}
               />
+            )}
+            {/* The blaze rides ABOVE both the full line and the section
+                highlight — drawn last so a highlight never covers it (§17.2). */}
+            {geojson && blazeImage && (
+              <TrailBlaze id="gr11-blaze" geojson={geojson as never} image={blazeImage} />
+            )}
+            {/* Start/finish pins — at the focused section's ends when one is
+                active, otherwise at the full trail's two termini. */}
+            {activeSectionGeom ? (
+              <SectionEndpoints geom={activeSectionGeom} />
+            ) : (
+              geojson && <SectionEndpoints geom={geojson as unknown as Record<string, unknown>} />
             )}
             {/* POIs — native layers self-disclose: discs appear at the Tactical
                 tier (z12), labels at the Detail tier (z15). Confidence drives the

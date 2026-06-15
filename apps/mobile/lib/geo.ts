@@ -54,17 +54,6 @@ function bboxZoom(bbox: [number, number, number, number]): number {
   return 6;
 }
 
-// Compute the approximate centre of a GeoJSON geometry.
-export function geometryCenter(
-  geometry: Record<string, unknown> | null | undefined,
-): Coords2D | null {
-  if (!geometry) return null;
-  const pts = flattenCoords(geometry);
-  if (pts.length === 0) return null;
-  const mid = pts[Math.floor(pts.length / 2)];
-  return mid ?? null;
-}
-
 // Compute center + zoom that frames the full geometry.
 export function geometryViewport(
   geometry: Record<string, unknown> | null | undefined,

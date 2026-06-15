@@ -17,6 +17,8 @@ import {
   MapView,
   type MapViewHandle,
   NativePOILayer,
+  SectionEndpoints,
+  TrailBlaze,
   TrailLayer,
   UserMarker,
 } from '../../../components/map';
@@ -211,10 +213,11 @@ export default function ActiveJourneyScreen() {
             id="trail-full"
             geojson={geojson as never}
             color={trailColor}
-            width={2}
-            opacity={0.25}
-            corridor
-            blazeImage={blazeImage}
+            // The whole trail stays clearly visible around the active stage —
+            // thicker and brighter than a faint context line, just dialled back
+            // enough that the stage reads as the foreground.
+            width={3.5}
+            opacity={0.55}
           />
         )}
         {stageGeom && (
@@ -222,10 +225,19 @@ export default function ActiveJourneyScreen() {
             id="stage-line"
             geojson={{ type: 'Feature', geometry: stageGeom as never, properties: {} }}
             color={trailColor}
-            width={4}
+            // The active stage — full strength and noticeably wider so it lifts
+            // off the rest of the trail.
+            width={6}
             opacity={1}
           />
         )}
+        {/* The blaze rides above both lines — drawn last so the stage line
+            never covers it (§17.2). */}
+        {geojson && blazeImage && (
+          <TrailBlaze id="trail-full-blaze" geojson={geojson as never} image={blazeImage} />
+        )}
+        {/* Start/finish pins at the current stage's two ends. */}
+        {stageGeom && <SectionEndpoints geom={stageGeom as Record<string, unknown>} />}
         <NativePOILayer
           id="active-water"
           kind="water"

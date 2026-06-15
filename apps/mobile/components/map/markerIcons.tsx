@@ -10,6 +10,9 @@ export const MARKER_GLYPHS = {
   'glyph-stay': require('../../assets/markers/glyph-stay.png'),
   'glyph-food': require('../../assets/markers/glyph-food.png'),
   'glyph-mountain': require('../../assets/markers/glyph-mountain.png'),
+  // Route termini — the play/flag signs on the start/finish discs (§17.1).
+  'glyph-start': require('../../assets/markers/glyph-start.png'),
+  'glyph-finish': require('../../assets/markers/glyph-finish.png'),
 } as const;
 
 export type MarkerGlyph = keyof typeof MARKER_GLYPHS;
