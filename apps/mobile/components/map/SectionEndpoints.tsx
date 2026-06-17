@@ -1,25 +1,25 @@
-import {
-  type CircleLayerSpecification,
-  GeoJSONSource,
-  Layer,
-  type SymbolLayerSpecification,
-} from '@maplibre/maplibre-react-native';
-import { MAP_LABEL_FONT } from '../../config/map';
+import { Marker } from '@maplibre/maplibre-react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { flattenCoords } from '../../lib/geo';
-import { colors } from '../../theme';
+import { colors, fonts } from '../../theme';
+import { Icon } from '../ui';
 
 interface Props {
   /** The focused line's geometry — its first/last vertex are start/finish. */
   geom: Record<string, unknown> | null | undefined;
-  /** Unique prefix for this layer's source + layers. */
+  /** Unique prefix for this overlay's markers. */
   id?: string;
 }
 
 // Start/finish termini at either end of the focused line (a section, or the
-// whole trail). Rendered as native MapLibre layers — a CircleLayer disc + an SDF
-// text label — not RN `Marker` views: on iOS a Marker rasterises its view into a
-// snapshot bitmap (blurry/pixelated), whereas vector layers stay crisp at every
-// zoom and ride the render thread. Start = accent green, Finish = charcoal.
+// whole trail). Rendered as RN `Marker` overlays (live vector views drawn above
+// the map), NOT native symbol layers: the painted glyph used to ride a native
+// SymbolLayer via an `icon-image` sprite, but runtime-registered sprites
+// (<MapImages>) don't reliably resolve on these maps — the disc + text drew while
+// the play/flag glyph silently went missing. A Marker renders the real `Icon`
+// component (SVG, crisp, no Annotation rasterisation), so the sign always shows.
+// Only two markers per map — §17.4's "a handful that must look like UI" case.
+// Start = accent green + play; Finish = charcoal + flag.
 export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
   if (!geom) return null;
   const pts = flattenCoords(geom);
@@ -28,87 +28,73 @@ export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
   const start = pts[0] as [number, number];
   const finish = pts[pts.length - 1] as [number, number];
 
-  const data: GeoJSON.FeatureCollection<GeoJSON.Point> = {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: start },
-        properties: { role: 'start' },
-      },
-      {
-        type: 'Feature',
-        geometry: { type: 'Point', coordinates: finish },
-        properties: { role: 'finish' },
-      },
-    ],
-  };
-
-  // Expression literals can't be narrowed to the strict style-spec union by TS,
-  // so these are authored untyped and asserted at the <Layer> boundary.
-  const discPaint = {
-    'circle-color': ['match', ['get', 'role'], 'start', colors.accent, colors.text.primary],
-    'circle-stroke-color': colors.text.onAccent,
-    'circle-radius': ['interpolate', ['linear'], ['zoom'], 7, 8, 14, 13],
-    'circle-stroke-width': 3,
-    // Termini are always present at every band (§17.1) — no zoom gating.
-  };
-
-  // The white play/flag sign riding the disc (§17.1). `icon-image` must be a
-  // CONSTANT string, never `['get', …]`: the native SDK only resolves runtime-
-  // registered sprites (<MapImages>) for a literal name, so a data-driven image
-  // silently draws nothing — which is why the glyphs went missing. We therefore
-  // render one symbol layer per terminus, each with its own constant glyph.
-  const symbolLayout = (glyph: string, label: string) => ({
-    'icon-image': glyph,
-    'icon-size': ['interpolate', ['linear'], ['zoom'], 7, 0.55, 14, 0.82],
-    'icon-anchor': 'center',
-    'icon-allow-overlap': true,
-    'icon-ignore-placement': true,
-    'text-field': label,
-    'text-font': MAP_LABEL_FONT,
-    'text-size': 10,
-    'text-letter-spacing': 0.1,
-    'text-anchor': 'top',
-    // Sit the label just below the (now larger) disc.
-    'text-offset': [0, 1.5],
-    // Termini labels must always show — they anchor the route's two ends.
-    'text-allow-overlap': true,
-    'text-ignore-placement': true,
-  });
-
-  const labelPaint = {
-    'text-color': colors.text.primary,
-    // Paper halo stands the label off the map (the pill effect, vector-crisp).
-    'text-halo-color': colors.bg.app,
-    'text-halo-width': 1.8,
-  };
-
   return (
-    <GeoJSONSource id={id} data={data}>
-      <Layer
-        id={`${id}-disc`}
-        type="circle"
-        paint={discPaint as unknown as CircleLayerSpecification['paint']}
-      />
-      <Layer
-        id={`${id}-start`}
-        type="symbol"
-        filter={['==', 'role', 'start']}
-        layout={
-          symbolLayout('glyph-start', 'START') as unknown as SymbolLayerSpecification['layout']
-        }
-        paint={labelPaint as unknown as SymbolLayerSpecification['paint']}
-      />
-      <Layer
-        id={`${id}-finish`}
-        type="symbol"
-        filter={['==', 'role', 'finish']}
-        layout={
-          symbolLayout('glyph-finish', 'FINISH') as unknown as SymbolLayerSpecification['layout']
-        }
-        paint={labelPaint as unknown as SymbolLayerSpecification['paint']}
-      />
-    </GeoJSONSource>
+    <>
+      <Terminus id={`${id}-start`} coord={start} kind="start" />
+      <Terminus id={`${id}-finish`} coord={finish} kind="finish" />
+    </>
   );
 }
+
+function Terminus({
+  id,
+  coord,
+  kind,
+}: { id: string; coord: [number, number]; kind: 'start' | 'finish' }) {
+  const isStart = kind === 'start';
+  return (
+    // Default 'center' anchor puts the disc's centre on the point; the label
+    // hangs below it (absolutely positioned, so it never shifts the disc off it).
+    <Marker id={id} lngLat={coord}>
+      <View style={styles.box} pointerEvents="none">
+        <View
+          style={[styles.disc, { backgroundColor: isStart ? colors.accent : colors.text.primary }]}
+        >
+          <Icon name={isStart ? 'play' : 'flag'} size={13} color={colors.text.onAccent} />
+        </View>
+        <View style={styles.labelWrap}>
+          <Text style={styles.label}>{isStart ? 'START' : 'FINISH'}</Text>
+        </View>
+      </View>
+    </Marker>
+  );
+}
+
+const DISC = 26;
+
+const styles = StyleSheet.create({
+  box: { width: DISC, height: DISC, alignItems: 'center', justifyContent: 'center' },
+  disc: {
+    width: DISC,
+    height: DISC,
+    borderRadius: DISC / 2,
+    borderWidth: 2,
+    borderColor: colors.text.onAccent,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.text.primary,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  // Centred under the disc with room for the label text either side of the 26px box.
+  labelWrap: {
+    position: 'absolute',
+    top: DISC + 3,
+    left: -40,
+    right: -40,
+    alignItems: 'center',
+  },
+  label: {
+    fontFamily: fonts.monoMedium,
+    fontSize: 10,
+    letterSpacing: 0.2,
+    color: colors.text.primary,
+    backgroundColor: colors.bg.app,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+});
