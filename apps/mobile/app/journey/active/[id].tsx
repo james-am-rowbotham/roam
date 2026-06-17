@@ -253,16 +253,6 @@ export default function ActiveJourneyScreen() {
         {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
 
-      {/* Paused context chip — the Resume button is the state signal; this
-          pins where you are while paused. */}
-      {isPaused && (
-        <View style={[styles.pausedChip, { top: insets.top + spacing[4] }]} pointerEvents="none">
-          <Text style={styles.pausedChipText}>
-            {`PAUSED · STAGE ${stageNum} · ${routeLabel.toUpperCase()}`}
-          </Text>
-        </View>
-      )}
-
       {/* Back */}
       <TouchableOpacity
         style={[styles.backBtn, { top: insets.top + 8 }]}
@@ -344,7 +334,12 @@ export default function ActiveJourneyScreen() {
 
         <ActiveControlBar
           paused={isPaused}
-          pending={progress.isPending}
+          // Only the pause/resume toggle owns the error here; finish actions show
+          // their failure in the options sheet.
+          error={
+            progress.isError &&
+            (progress.variables?.type === 'pause' || progress.variables?.type === 'resume')
+          }
           moreSize="lg"
           onToggle={toggleNavigation}
           onMore={() => setSheetOpen(true)}
@@ -358,6 +353,10 @@ export default function ActiveJourneyScreen() {
         progressLabel={progressLabel}
         finishStageSubtitle={`Mark Stage ${stageNum} complete and start the next.`}
         pending={progress.isPending}
+        error={
+          progress.isError &&
+          (progress.variables?.type === 'completeStage' || progress.variables?.type === 'end')
+        }
         onNavigate={() => {
           setSheetOpen(false);
           router.push(`/journey/${id}`);

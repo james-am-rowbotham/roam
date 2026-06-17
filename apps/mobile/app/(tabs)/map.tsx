@@ -49,7 +49,9 @@ function GeometryLabel({
   onPress: () => void;
 }) {
   return (
-    <Marker id={`label-${label}`} lngLat={center}>
+    // key forces a remount when the label changes: MapLibre's native Marker
+    // rejects an `id` change after mount, so we swap the instance instead.
+    <Marker key={`label-${label}`} id={`label-${label}`} lngLat={center}>
       <TouchableOpacity style={styles.geoLabel} onPress={onPress} activeOpacity={0.85}>
         <Text style={styles.geoLabelText}>{label}</Text>
       </TouchableOpacity>

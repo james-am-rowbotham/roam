@@ -76,11 +76,10 @@ export function TrailStageList({ sections, onPressStage }: Props) {
                 <Text style={styles.badgeNum}>{number}</Text>
               </View>
               <View style={styles.body}>
-                <Text style={styles.title}>
-                  Stage {number} · {s.name}
-                </Text>
+                <Text style={styles.title}>{s.name}</Text>
                 <Text style={styles.meta}>
                   {[
+                    `Stage ${number}`,
                     formatKm(distanceM),
                     `${formatElevationM(ascentM)} ↑`,
                     gradeLabel(distanceM, ascentM),
@@ -128,7 +127,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   badgeNum: { fontFamily: fonts.monoMedium, fontSize: 12, color: colors.text.primary },
-  body: { flex: 1, gap: spacing[1] },
+  body: {
+    flex: 1,
+    gap: spacing[1],
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   title: { ...type.cardTitle, color: colors.text.primary },
   meta: { ...type.dataMeta, color: colors.text.secondary },
 });

@@ -99,6 +99,14 @@ spec. Three things this requires:
   queue stays lightweight.
 
 ### Infrastructure
+- **Domain — `roamhike.com`.** Registered at **Squarespace** (registrar only);
+  `@`/`www` currently park on Squarespace's site-builder defaults, harmless until we
+  deploy. **DNS will move to Cloudflare** (point the nameservers; keep Squarespace as
+  registrar) so the tile Worker, R2 custom domains, and the Fly API share one control
+  plane (§7, §10). Optionally transfer the registration to **Cloudflare Registrar**
+  (at-cost renewals) once the ICANN 60-day new-registration transfer lock lifts
+  (~mid-Aug 2026). The `SPF -all` / `DMARC p=reject` email defaults block spoofing —
+  loosen only when the domain needs to *send* mail.
 - **Fly.io** — Hono API + background jobs (OSM import, weather refresh via Open-Meteo).
 - **Cloudflare** — CDN / DNS / (optionally Workers).
 - **Cloudflare R2** — offline package bundles, exported vector tiles (PMTiles),

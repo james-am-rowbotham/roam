@@ -41,8 +41,7 @@ function formatContext(ctx?: Record<string, unknown>): string {
       if (value.stack) trailer += `\n${dim(value.stack)}`;
       continue;
     }
-    const rendered =
-      typeof value === 'object' ? JSON.stringify(value) : String(value);
+    const rendered = typeof value === 'object' ? JSON.stringify(value) : String(value);
     parts.push(`${dim(`${key}=`)}${rendered}`);
   }
   return (parts.length ? ` ${parts.join(' ')}` : '') + trailer;

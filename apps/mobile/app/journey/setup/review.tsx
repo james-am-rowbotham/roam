@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SetupScaffold } from '../../../components/journey';
-import { Button } from '../../../components/ui';
+import { CtaButton } from '../../../components/ui';
 import { CURRENT_USER_ID } from '../../../config/user';
 import { formatElevationM, formatKm, orientRoute, routeChainPlaces } from '../../../lib/format';
 import {
@@ -66,8 +66,8 @@ export default function ReviewStep() {
   const totalDistanceM = itinerary.reduce((a, s) => a + s.distanceM, 0);
 
   const create = useMutation({
-    mutationFn: () =>
-      createJourney({
+    mutationFn: async () => {
+      const res = await createJourney({
         routeId: routeId ?? 0,
         userId: CURRENT_USER_ID,
         name: name.trim() || undefined,
@@ -77,11 +77,14 @@ export default function ReviewStep() {
         startSectionId: scope === 'section' ? (setup.startSectionId ?? undefined) : undefined,
         endSectionId: scope === 'section' ? (setup.endSectionId ?? undefined) : undefined,
         stages: toCreateStages(itinerary),
-      }),
-    onSuccess: (res) => {
-      if ('error' in res.data) return;
+      });
+      // Surface API-level errors as a thrown error so the CTA flips to its retry state.
+      if ('error' in res.data) throw new Error('Failed to create journey');
+      return res.data;
+    },
+    onSuccess: (journey) => {
       queryClient.invalidateQueries({ queryKey: journeysQueryKey({ userId: CURRENT_USER_ID }) });
-      router.replace(`/journey/${res.data.id}`);
+      router.replace(`/journey/${journey.id}`);
     },
   });
 
@@ -98,10 +101,13 @@ export default function ReviewStep() {
       onClose={() => router.back()}
       onBack={() => router.back()}
       footer={
-        <Button
-          label={create.isPending ? 'Creating…' : 'Create journey'}
+        <CtaButton
+          label="Create journey"
+          pendingLabel="Creating…"
+          errorMessage="Couldn't create your journey. Check your connection and try again."
+          pending={create.isPending}
+          error={create.isError}
           grow
-          disabled={create.isPending}
           onPress={() => create.mutate()}
         />
       }

@@ -100,6 +100,10 @@ interface Props {
   /** Stretch to the parent's width (full-width CTA). */
   fullWidth?: boolean;
   pending?: boolean; // show a spinner and disable the button, but keep the label (e.g. "Submitting...")
+  // The action failed and the button is offering a retry: swaps the leading icon
+  // for an alert glyph. The button stays tappable (tapping = retry) — pair with a
+  // "Try again" label (CtaButton does this for you). `pending` wins over `error`.
+  error?: boolean;
 }
 
 export function Button({
@@ -113,6 +117,7 @@ export function Button({
   grow,
   fullWidth,
   pending,
+  error,
 }: Props) {
   const s = SIZES[size];
   const surface = surfaceFor(tone, variant);
@@ -154,6 +159,8 @@ export function Button({
           color={surface.label}
           style={{ width: s.icon, height: s.icon }}
         />
+      ) : error ? (
+        <Icon name="alert" size={s.icon} color={surface.label} />
       ) : (
         icon && <Icon name={icon} size={s.icon} color={surface.label} />
       )}

@@ -34,12 +34,12 @@ export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
       {
         type: 'Feature',
         geometry: { type: 'Point', coordinates: start },
-        properties: { role: 'start', label: 'START', glyph: 'glyph-start' },
+        properties: { role: 'start' },
       },
       {
         type: 'Feature',
         geometry: { type: 'Point', coordinates: finish },
-        properties: { role: 'finish', label: 'FINISH', glyph: 'glyph-finish' },
+        properties: { role: 'finish' },
       },
     ],
   };
@@ -54,15 +54,18 @@ export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
     // Termini are always present at every band (§17.1) — no zoom gating.
   };
 
-  const labelLayout = {
-    // The white play/flag sign riding the disc (§17.1) — a sprite, so it stays
-    // crisp where an RN Marker's rasterised view would blur.
-    'icon-image': ['get', 'glyph'],
+  // The white play/flag sign riding the disc (§17.1). `icon-image` must be a
+  // CONSTANT string, never `['get', …]`: the native SDK only resolves runtime-
+  // registered sprites (<MapImages>) for a literal name, so a data-driven image
+  // silently draws nothing — which is why the glyphs went missing. We therefore
+  // render one symbol layer per terminus, each with its own constant glyph.
+  const symbolLayout = (glyph: string, label: string) => ({
+    'icon-image': glyph,
     'icon-size': ['interpolate', ['linear'], ['zoom'], 7, 0.55, 14, 0.82],
     'icon-anchor': 'center',
     'icon-allow-overlap': true,
     'icon-ignore-placement': true,
-    'text-field': ['get', 'label'],
+    'text-field': label,
     'text-font': MAP_LABEL_FONT,
     'text-size': 10,
     'text-letter-spacing': 0.1,
@@ -72,7 +75,7 @@ export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
     // Termini labels must always show — they anchor the route's two ends.
     'text-allow-overlap': true,
     'text-ignore-placement': true,
-  };
+  });
 
   const labelPaint = {
     'text-color': colors.text.primary,
@@ -89,9 +92,21 @@ export function SectionEndpoints({ geom, id = 'section-endpoints' }: Props) {
         paint={discPaint as unknown as CircleLayerSpecification['paint']}
       />
       <Layer
-        id={`${id}-label`}
+        id={`${id}-start`}
         type="symbol"
-        layout={labelLayout as unknown as SymbolLayerSpecification['layout']}
+        filter={['==', 'role', 'start']}
+        layout={
+          symbolLayout('glyph-start', 'START') as unknown as SymbolLayerSpecification['layout']
+        }
+        paint={labelPaint as unknown as SymbolLayerSpecification['paint']}
+      />
+      <Layer
+        id={`${id}-finish`}
+        type="symbol"
+        filter={['==', 'role', 'finish']}
+        layout={
+          symbolLayout('glyph-finish', 'FINISH') as unknown as SymbolLayerSpecification['layout']
+        }
         paint={labelPaint as unknown as SymbolLayerSpecification['paint']}
       />
     </GeoJSONSource>

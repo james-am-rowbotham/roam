@@ -68,15 +68,17 @@ function StageRow({ stage, onPress }: { stage: ItineraryStage; onPress: () => vo
       </View>
       <View style={styles.body}>
         <Text style={[styles.title, done && styles.titleDone]} numberOfLines={2}>
-          Stage {stage.number} · {stage.name}
+          {stage.name}
         </Text>
         <Text style={styles.meta}>
-          {[formatKm(stage.distanceM), `${formatElevationM(stage.ascentM)} ↑`, stage.grade].join(
-            ' · ',
-          )}
+          {[
+            `Stage ${stage.number}`,
+            formatKm(stage.distanceM),
+            `${formatElevationM(stage.ascentM)} ↑`,
+            stage.grade,
+          ].join(' · ')}
         </Text>
       </View>
-      {upcoming && <View style={styles.ring} />}
     </TouchableOpacity>
   );
 }

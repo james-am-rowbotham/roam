@@ -1,5 +1,6 @@
 export { Button } from './Button';
 export type { ButtonTone, ButtonVariant, ButtonSize } from './Button';
+export { CtaButton } from './CtaButton';
 export { Chip } from './Chip';
 export { Icon } from './Icon';
 export type { IconName } from './Icon';

@@ -19,6 +19,8 @@ interface Props {
   /** Subtitle for Finish stage, e.g. "Mark Stage 3 complete and start the next." */
   finishStageSubtitle: string;
   pending?: boolean;
+  /** A finish stage/journey action failed — show a retry note; the rows stay tappable. */
+  error?: boolean;
   /** Itinerary (from map) or Map (from itinerary). */
   onNavigate: () => void;
   onAskGuide: () => void;
@@ -68,6 +70,7 @@ export function OptionsSheet({
   progressLabel,
   finishStageSubtitle,
   pending,
+  error,
   onNavigate,
   onAskGuide,
   onFinishStage,
@@ -85,6 +88,15 @@ export function OptionsSheet({
         <Text style={styles.eyebrow}>OPTIONS</Text>
         <Text style={styles.title}>{journeyName}</Text>
         <Text style={styles.meta}>{progressLabel}</Text>
+
+        {error && !pending && (
+          <View style={styles.errorNote}>
+            <Icon name="alert" size={15} color={colors.status.danger.text} />
+            <Text style={styles.errorNoteText}>
+              That didn't go through. Check your connection and tap to try again.
+            </Text>
+          </View>
+        )}
 
         <View style={styles.rows}>
           <Row
@@ -148,6 +160,17 @@ const styles = StyleSheet.create({
   eyebrow: { ...type.label, color: colors.text.secondary },
   title: { ...type.sectionHeader, color: colors.text.primary, paddingTop: spacing[1] },
   meta: { ...type.meta, color: colors.text.secondary, paddingTop: spacing[1] },
+
+  errorNote: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[3],
+    marginTop: spacing[5],
+    padding: spacing[4],
+    borderRadius: radius.lg,
+    backgroundColor: colors.status.danger.bg,
+  },
+  errorNoteText: { ...type.meta, color: colors.status.danger.text, flex: 1 },
 
   rows: { gap: spacing[4], paddingTop: spacing[6] },
   row: {

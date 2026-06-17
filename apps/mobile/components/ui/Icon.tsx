@@ -20,6 +20,7 @@ import {
   Pause,
   Play,
   Plus,
+  RotateCw,
   Route,
   Search,
   TriangleAlert,
@@ -101,6 +102,7 @@ export type IconName =
   | 'guide'
   | 'route'
   | 'alert'
+  | 'retry'
   | 'wifi-off';
 
 interface Props {
@@ -138,6 +140,7 @@ const icons: Record<IconName, React.ElementType> = {
   guide: Compass,
   route: Route,
   alert: TriangleAlert,
+  retry: RotateCw,
   'wifi-off': WifiOff,
 };
 
