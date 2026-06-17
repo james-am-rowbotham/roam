@@ -14,7 +14,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ActiveControlBar, ItineraryDayList, OptionsSheet } from '../../components/journey';
 import { ElevationProfile } from '../../components/trail';
-import { Button, Icon, Segmented, StatPill } from '../../components/ui';
+import { CtaButton, Icon, Segmented, StatPill } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
 import { stageSubGeometry, stageViewport } from '../../lib/activeJourney';
 import { formatElevationM, formatKm } from '../../lib/format';
@@ -170,6 +170,10 @@ export default function JourneyDetailScreen() {
     paceTargetM,
     donePaceTargetM: baselineTargetM,
     startDateISO: journey.startDate ?? null,
+    // A journey under way has a "today" — stages finished today fold into it and the
+    // forecast counts forward from it. A planned journey has none (forecast runs from
+    // its start date instead).
+    todayISO: inProgress ? new Date().toISOString() : null,
     trailRef: trail?.ref ?? null,
     // Completed day-windows carry the real completion date + walking time taken.
     completedStages: walkStages
@@ -398,12 +402,14 @@ export default function JourneyDetailScreen() {
           {/* Journey — danger */}
           <Text style={[styles.listHeader, styles.detailsHeader]}>JOURNEY</Text>
           <View style={styles.dangerWrap}>
-            <Button
+            <CtaButton
               tone="danger"
+              label="Delete journey"
+              pendingLabel="Deleting…"
+              errorMessage="Couldn't delete this journey. Check your connection and try again."
               pending={remove.isPending}
-              label={remove.isPending ? 'Deleting…' : 'Delete journey'}
+              error={remove.isError}
               onPress={() => confirmDelete(() => remove.mutate())}
-              disabled={remove.isPending}
               fullWidth
             />
           </View>
@@ -416,9 +422,12 @@ export default function JourneyDetailScreen() {
       {/* Start CTA — never-started journeys. */}
       {tab === 'itinerary' && isPlanned && (
         <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
-          <Button
+          <CtaButton
+            label="Start journey"
+            pendingLabel="Starting…"
+            errorMessage="Couldn't start your journey. Check your connection and try again."
             pending={progress.isPending}
-            label={progress.isPending ? 'Starting…' : 'Start journey'}
+            error={progress.isError}
             onPress={() =>
               progress.mutate(
                 { type: 'start' },
@@ -434,7 +443,12 @@ export default function JourneyDetailScreen() {
         <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + spacing[4] }]}>
           <ActiveControlBar
             paused={isPaused}
-            pending={progress.isPending}
+            // Only attribute the shared progress mutation's error to the toggle when
+            // a pause/resume was what failed (finish actions error in the sheet).
+            error={
+              progress.isError &&
+              (progress.variables?.type === 'pause' || progress.variables?.type === 'resume')
+            }
             moreSize="md"
             onToggle={toggleNavigation}
             onMore={() => setSheetOpen(true)}
@@ -449,6 +463,10 @@ export default function JourneyDetailScreen() {
         progressLabel={progressLabel}
         finishStageSubtitle={`Mark Stage ${currentStageNum} complete and start the next.`}
         pending={progress.isPending}
+        error={
+          progress.isError &&
+          (progress.variables?.type === 'completeStage' || progress.variables?.type === 'end')
+        }
         onNavigate={() => {
           setSheetOpen(false);
           router.push(`/journey/active/${id}`);

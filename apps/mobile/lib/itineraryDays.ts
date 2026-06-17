@@ -97,8 +97,12 @@ interface BuildOptions {
   /** Target for already-walked stages — keeps completed days fixed when pace changes
    *  mid-journey (history is real). Defaults to `paceTargetM`. */
   donePaceTargetM?: number;
-  /** Journey start date (ISO) for derived day dates, or null. */
+  /** Journey start date (ISO) — dates the forecast for a journey not yet started. */
   startDateISO?: string | null;
+  /** "Today" (ISO) — the day the current stage is being walked. Stages finished
+   *  today share this day with the current stage; the forecast counts forward from
+   *  here. Omit/null for a journey that hasn't started (then dates run from start). */
+  todayISO?: string | null;
   /** Trail ref (e.g. "GR11") — drives the curated region bands. */
   trailRef?: string | null;
   /** The journey's completed day-windows — real completion date + walking time taken,
@@ -113,45 +117,32 @@ export function formatElapsed(seconds: number): string {
   return `${h}H ${m}M`;
 }
 
-// The completed window whose chainage span contains a stage's midpoint.
-function windowFor(stage: ItineraryStage, windows: CompletedWindow[]): CompletedWindow | undefined {
-  const mid = (stage.startChainageM + stage.endChainageM) / 2;
+// The chainage at which a stage is finished, in walking direction: the high end
+// walking forward, the low end walking in reverse. A stage is "done" the moment you
+// cross this point.
+function walkEndChainageM(stage: ItineraryStage, reverse: boolean): number {
+  return reverse
+    ? Math.min(stage.startChainageM, stage.endChainageM)
+    : Math.max(stage.startChainageM, stage.endChainageM);
+}
+
+// The completed journey window you were in when you finished this stage (i.e. when
+// you crossed its walking-end). NB: we match on the stage's END, not its midpoint —
+// a stage straddling a window boundary has its midpoint in the EARLIER window, which
+// dated it (and its whole day) to the day before. Matching on the end point dates the
+// stage to the day you actually finished it, so same-day stages group together and
+// nothing leaks back into the previous day.
+function windowFor(
+  stage: ItineraryStage,
+  windows: CompletedWindow[],
+  reverse: boolean,
+): CompletedWindow | undefined {
+  const end = walkEndChainageM(stage, reverse);
   return windows.find((w) => {
     const lo = Math.min(w.startChainageM, w.endChainageM);
     const hi = Math.max(w.startChainageM, w.endChainageM);
-    return mid >= lo && mid <= hi;
+    return end >= lo && end <= hi;
   });
-}
-
-// Completed stages are grouped by the calendar day they were actually walked — stages
-// finished on the same day form one multi-stage day (history is real, not a pace guess).
-// Falls back to pace grouping when completion dates aren't recorded yet.
-function groupCompletedByDate(
-  done: ItineraryStage[],
-  windows: CompletedWindow[],
-  fallbackTargetM: number,
-): ItineraryStage[][] {
-  const dateKey = (stage: ItineraryStage): string | null => {
-    const at = windowFor(stage, windows)?.completedAt;
-    if (!at) return null;
-    const d = new Date(at);
-    return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-  };
-  if (done.every((s) => dateKey(s) == null)) return groupStagesIntoDays(done, fallbackTargetM);
-
-  const out: ItineraryStage[][] = [];
-  let current: ItineraryStage[] | null = null;
-  let key: string | null = null;
-  for (const stage of done) {
-    const k = dateKey(stage) ?? '∅';
-    if (!current || k !== key) {
-      current = [];
-      out.push(current);
-      key = k;
-    }
-    current.push(stage);
-  }
-  return out;
 }
 
 // Ascent per km → a coarse grade. Placeholder until stages carry a curated grade.
@@ -181,6 +172,7 @@ export function buildItineraryDays(
     paceTargetM,
     donePaceTargetM,
     startDateISO,
+    todayISO,
     trailRef,
     completedStages = [],
   }: BuildOptions,
@@ -235,65 +227,118 @@ export function buildItineraryDays(
       });
   }
 
-  // Completed stages group by the day they were actually walked (same day → one
-  // multi-stage day); remaining stages group by pace (the forecast). The current day is
-  // the boundary, so changing pace only regroups the future — history is fixed.
-  const doneGroup = stages.filter((s) => s.status === 'done');
-  const restGroup = stages.filter((s) => s.status !== 'done');
-  const groups = [
-    ...groupCompletedByDate(doneGroup, completedStages, donePaceTargetM ?? paceTargetM),
-    ...groupStagesIntoDays(restGroup, paceTargetM),
-  ];
+  // --- Group stages into days ------------------------------------------------
+  // A "day" is a real walking day. Completed stages group by the calendar day they
+  // were finished (same day → one multi-stage day). The CURRENT stage shares "today"
+  // with anything else finished today, so finishing a stage never spawns a fresh day
+  // — today's day just grows. Upcoming stages are a pace-grouped forecast dated
+  // FORWARD from today (never from the original start date, which would collide with
+  // the real dates once you're days into the trail).
+  const dayKey = (d: Date): string => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  const completedDateOf = (st: ItineraryStage): Date | null => {
+    const at = windowFor(st, completedStages, reverse)?.completedAt;
+    return at ? new Date(at) : null;
+  };
+
+  type DayGroup = { stages: ItineraryStage[]; date: Date | null };
+  const groups: DayGroup[] = [];
+
+  const today = todayISO ? new Date(todayISO) : null;
+  const todayKey = today ? dayKey(today) : null;
+  const underway = today != null; // the journey is being walked → there's a "today"
+
+  // Partition completed stages: those finished today fold into the TODAY day (so
+  // finishing a stage grows today instead of spawning a new day); the rest are past
+  // days. Undated completed stages count as past.
+  const isToday = (st: ItineraryStage): boolean => {
+    const d = completedDateOf(st);
+    return d != null && todayKey != null && dayKey(d) === todayKey;
+  };
+  const doneStageList = stages.filter((s) => s.status === 'done');
+  const pastDone = doneStageList.filter((s) => !isToday(s));
+  const todayDone = doneStageList.filter(isToday);
+  const currentStg = stages.find((s) => s.status === 'current') ?? null;
+  const upcoming = stages.filter((s) => s.status === 'upcoming');
+
+  // 1) Past completed days — one per real calendar day (consecutive same-date runs).
+  //    With no completion dates at all (legacy/edge), fall back to pace grouping so
+  //    history still reads as days.
+  if (pastDone.length > 0 && !pastDone.some((s) => completedDateOf(s) != null)) {
+    for (const g of groupStagesIntoDays(pastDone, donePaceTargetM ?? paceTargetM)) {
+      groups.push({ stages: g, date: null });
+    }
+  } else {
+    let runKey: string | null = null;
+    for (const st of pastDone) {
+      const date = completedDateOf(st);
+      const key = date ? dayKey(date) : '∅';
+      const last = groups[groups.length - 1];
+      if (!last || key !== runKey) {
+        groups.push({ stages: [st], date });
+        runKey = key;
+      } else {
+        last.stages.push(st);
+      }
+    }
+  }
+
+  // 2) Today + forecast — pace-group the remaining (current + upcoming). The first
+  //    group is "today": stages already finished today fold into it, so today keeps
+  //    growing as you tick stages off. Later groups are the forecast, dated forward
+  //    from today (or from the start date for a journey not yet under way).
+  const fromNow = [...(currentStg ? [currentStg] : []), ...upcoming];
+  const forecast = groupStagesIntoDays(fromNow, paceTargetM);
+  const anchorISO = underway ? todayISO : (startDateISO ?? todayISO ?? null);
+  if (forecast.length === 0 && todayDone.length > 0) {
+    // Journey finished today — show the final day's stages.
+    groups.push({ stages: todayDone, date: today });
+  }
+  forecast.forEach((g, idx) => {
+    const isTodayDay = underway && idx === 0;
+    groups.push({
+      stages: isTodayDay ? [...todayDone, ...g] : g,
+      date: anchorISO ? addDaysISO(anchorISO, idx) : null,
+    });
+  });
+
   let runningRegion: string | null = null;
   let bandCount = 0;
   const days: ItineraryDay[] = groups.map((group, i) => {
-    const status: StageStatus = group.every((x) => x.status === 'done')
+    const stagesIn = group.stages;
+    const status: StageStatus = stagesIn.every((x) => x.status === 'done')
       ? 'done'
-      : group.some((x) => x.status === 'current')
+      : stagesIn.some((x) => x.status === 'current')
         ? 'current'
         : 'upcoming';
 
-    // For a completed day, pull the real date + walking time from the journey's
-    // completed windows whose midpoint falls within this day's chainage span.
-    let doneDate: string | null = null;
+    // Walking time taken = sum of the elapsed of any completed stages in this day.
     let doneElapsed: number | null = null;
-    if (status === 'done') {
-      const lo = Math.min(...group.map((x) => Math.min(x.startChainageM, x.endChainageM)));
-      const hi = Math.max(...group.map((x) => Math.max(x.startChainageM, x.endChainageM)));
-      for (const w of completedStages) {
-        const mid = (w.startChainageM + w.endChainageM) / 2;
-        if (mid < lo || mid > hi) continue;
-        if (w.completedAt && (!doneDate || w.completedAt > doneDate)) doneDate = w.completedAt;
-        if (w.elapsedSeconds != null) doneElapsed = (doneElapsed ?? 0) + w.elapsedSeconds;
-      }
+    for (const st of stagesIn) {
+      if (st.status !== 'done') continue;
+      const w = windowFor(st, completedStages, reverse);
+      if (w?.elapsedSeconds != null) doneElapsed = (doneElapsed ?? 0) + w.elapsedSeconds;
     }
+    const completedCount = stagesIn.filter((x) => x.status === 'done').length;
 
-    const dateLabel =
-      status === 'current'
-        ? 'TODAY'
-        : doneDate
-          ? datePhrase(new Date(doneDate))
-          : startDateISO
-            ? datePhrase(addDaysISO(startDateISO, i))
-            : null;
+    const dateLabel = status === 'current' ? 'TODAY' : group.date ? datePhrase(group.date) : null;
 
-    // Right label: completed days show "[N STAGES · ]TIME"; upcoming multi-stage days
-    // show "N STAGES · KM · ASCENT".
+    // Right label: a day with finished stages shows "[N STAGES · ]TIME"; a purely
+    // upcoming multi-stage day shows "N STAGES · KM · ASCENT".
     let rightLabel: string | null = null;
-    if (status === 'done') {
+    if (completedCount > 0) {
       const parts: string[] = [];
-      if (group.length > 1) parts.push(`${group.length} STAGES`);
+      if (stagesIn.length > 1) parts.push(`${stagesIn.length} STAGES`);
       if (doneElapsed != null) parts.push(formatElapsed(doneElapsed));
       rightLabel = parts.length ? parts.join(' · ') : null;
-    } else if (group.length > 1) {
-      const km = Math.round(group.reduce((a, x) => a + x.distanceM, 0) / 1000);
-      const ascent = Math.round(group.reduce((a, x) => a + x.ascentM, 0));
-      rightLabel = `${group.length} STAGES · ${km} KM · ${ascent}M ↑`;
+    } else if (stagesIn.length > 1) {
+      const km = Math.round(stagesIn.reduce((a, x) => a + x.distanceM, 0) / 1000);
+      const ascent = Math.round(stagesIn.reduce((a, x) => a + x.ascentM, 0));
+      rightLabel = `${stagesIn.length} STAGES · ${km} KM · ${ascent}M ↑`;
     }
 
     // Open a region band on the first day whose lead stage enters a new region.
     let regionBand: RegionBand | undefined;
-    const region = group[0]?.region ?? null;
+    const region = stagesIn[0]?.region ?? null;
     if (region && region !== runningRegion) {
       runningRegion = region;
       bandCount += 1;
@@ -307,7 +352,7 @@ export function buildItineraryDays(
 
     return {
       number: i + 1,
-      stages: group,
+      stages: stagesIn,
       status,
       dateLabel,
       rightLabel,

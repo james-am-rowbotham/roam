@@ -35,68 +35,39 @@ function accommodation(
   };
 }
 
-describe('planJourney — pacing', () => {
-  it('splits the span into equal day-length windows at the target pace', () => {
-    // 8 km/day over 40 km → 5 days of 8 km (sections are split across days).
-    const plan = planJourney({
-      sections: makeSections(),
-      pace: { targetDistancePerDayM: 8_000 },
-    });
-    expect(plan.totalDays).toBe(5);
-    expect(plan.stages.every((s) => s.distanceM === 8_000)).toBe(true);
+describe('planJourney — one stage per curated etapa', () => {
+  it('emits exactly one stage per section, whatever the pace', () => {
+    // Pace no longer cuts the route into windows — stages ARE the curated etapas.
+    // The pace only seeds the day grouping later (a display concern).
+    for (const target of [5_000, 8_000, 20_000, 40_000]) {
+      const plan = planJourney({
+        sections: makeSections(),
+        pace: { targetDistancePerDayM: target },
+      });
+      expect(plan.stages).toHaveLength(4);
+      expect(plan.stages.map((s) => s.sectionIds)).toEqual([[1], [2], [3], [4]]);
+      expect(plan.stages.map((s) => s.distanceM)).toEqual([10_000, 10_000, 10_000, 10_000]);
+    }
   });
 
-  it('combines sections into longer days at a fast pace', () => {
-    // 20 km/day over 4×10 km → two 20 km days, each spanning two sections.
-    const plan = planJourney({
-      sections: makeSections(),
-      pace: { targetDistancePerDayM: 20_000 },
-    });
-    expect(plan.totalDays).toBe(2);
-    expect(plan.stages[0]?.distanceM).toBe(20_000);
-    expect(plan.stages[0]?.sectionIds).toEqual([1, 2]);
-  });
-
-  it('changes the number of days as pace changes', () => {
-    const sections = makeSections();
-    const relaxed = planJourney({ sections, pace: { targetDistancePerDayM: 6_000 } });
-    const fast = planJourney({ sections, pace: { targetDistancePerDayM: 40_000 } });
-    expect(relaxed.totalDays).toBeGreaterThan(fast.totalDays);
-    expect(fast.totalDays).toBe(1);
-  });
-
-  it('makes one day per section when no pace or dates are given', () => {
+  it('emits one stage per section with no pace or dates given', () => {
     const plan = planJourney({ sections: makeSections() });
-    expect(plan.totalDays).toBe(4);
+    expect(plan.stages).toHaveLength(4);
     expect(plan.stages.map((s) => s.distanceM)).toEqual([10_000, 10_000, 10_000, 10_000]);
   });
 
-  it('derives the day count from start/finish dates', () => {
-    // Mon→Thu inclusive = 4 days.
-    const plan = planJourney({
-      sections: makeSections(),
-      dates: { startDate: new Date('2026-06-01'), endDate: new Date('2026-06-04') },
-    });
-    expect(plan.totalDays).toBe(4);
+  it('carries each section’s own ascent/descent (not pro-rated windows)', () => {
+    const plan = planJourney({ sections: makeSections() });
+    expect(plan.stages.every((s) => s.ascentM === 500 && s.descentM === 200)).toBe(true);
   });
 });
 
 describe('planJourney — totals', () => {
-  it('preserves total distance, ascent and descent across any pace', () => {
-    const sections = makeSections();
-    for (const target of [6_000, 13_000, 40_000]) {
-      const plan = planJourney({ sections, pace: { targetDistancePerDayM: target } });
-      expect(Math.round(plan.totalDistanceM)).toBe(40_000);
-      expect(Math.round(plan.totalAscentM)).toBe(2_000);
-      expect(Math.round(plan.totalDescentM)).toBe(800);
-    }
-  });
-
-  it('pro-rates ascent when a section is split across days', () => {
-    // 5 km/day splits each 10 km (+500 m) section into two 5 km (+250 m) days.
-    const plan = planJourney({ sections: makeSections(), pace: { targetDistancePerDayM: 5_000 } });
-    expect(plan.totalDays).toBe(8);
-    expect(plan.stages[0]?.ascentM).toBeCloseTo(250, 5);
+  it('preserves total distance, ascent and descent', () => {
+    const plan = planJourney({ sections: makeSections() });
+    expect(Math.round(plan.totalDistanceM)).toBe(40_000);
+    expect(Math.round(plan.totalAscentM)).toBe(2_000);
+    expect(Math.round(plan.totalDescentM)).toBe(800);
   });
 });
 

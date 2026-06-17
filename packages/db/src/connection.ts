@@ -13,7 +13,12 @@ if (!url) {
   );
 }
 
-const client = postgres(url);
+// Supabase's connection pooler (port 6543) runs in TRANSACTION mode, which does not
+// support prepared statements — postgres-js prepares by default, which causes
+// intermittent "prepared statement already exists" errors and connection resets that
+// can drop a transaction mid-flight (a journey insert that returns 201 but never
+// commits). Disabling prepared statements is the documented fix for the pooler.
+const client = postgres(url, { prepare: false });
 
 // Opt-in SQL logging: set DB_LOG=true to see every query (and its params) Drizzle
 // runs. Off by default so migrations/seeds/the app aren't noisy; flip it on when

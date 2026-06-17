@@ -136,6 +136,93 @@ describe('buildItineraryDays', () => {
     expect(m.days[0]?.rightLabel).toBe('2 STAGES · 8H 30M');
   });
 
+  it('groups stages finished on the same calendar day into one day', () => {
+    // Three 20 km etapas all ticked off today → a single multi-stage day, not three.
+    const today = [
+      { startChainageM: 0, endChainageM: 20_000, completedAt: '2026-06-14T09:00:00' },
+      { startChainageM: 20_000, endChainageM: 40_000, completedAt: '2026-06-14T13:00:00' },
+      { startChainageM: 40_000, endChainageM: 60_000, completedAt: '2026-06-14T17:00:00' },
+    ];
+    const m = buildItineraryDays(stages, {
+      reverse: false,
+      doneDistanceM: 60_000, // stages 1–3 done
+      paceTargetM: 20_000, // one stage per day (forecast) — done days come from dates
+      completedStages: today,
+    });
+    const doneDays = m.days.filter((d) => d.status === 'done');
+    expect(doneDays).toHaveLength(1);
+    expect(doneDays[0]?.stages).toHaveLength(3);
+    expect(doneDays[0]?.dateLabel).toBe('14 JUN');
+    expect(m.currentStageNumber).toBe(4);
+  });
+
+  it('folds stages finished today into one growing TODAY day with the current stage', () => {
+    // Regression for "finishing a stage pushes you to the next day": stages 1 & 2 done
+    // today, stage 3 current — all one TODAY day, not a done day + a separate TODAY.
+    const todayCompletions = [
+      { startChainageM: 0, endChainageM: 20_000, completedAt: '2026-06-17T08:00:00' },
+      { startChainageM: 20_000, endChainageM: 40_000, completedAt: '2026-06-17T12:00:00' },
+    ];
+    const m = buildItineraryDays(stages, {
+      reverse: false,
+      doneDistanceM: 40_000, // stages 1 & 2 done
+      paceTargetM: 20_000, // one stage/day forecast
+      completedStages: todayCompletions,
+      todayISO: '2026-06-17',
+    });
+    expect(m.days[0]?.status).toBe('current');
+    expect(m.days[0]?.dateLabel).toBe('TODAY');
+    expect(m.days[0]?.stages.map((s) => s.number)).toEqual([1, 2, 3]);
+    expect(m.currentStageNumber).toBe(3);
+    // The forecast starts tomorrow, counting forward from today (not the start date).
+    expect(m.days[1]?.dateLabel).toBe('18 JUN');
+    expect(m.days[1]?.stages.map((s) => s.number)).toEqual([4]);
+  });
+
+  it('keeps earlier days separate while folding only today into TODAY', () => {
+    const completions = [
+      { startChainageM: 0, endChainageM: 20_000, completedAt: '2026-06-15T18:00:00' }, // yesterday
+      { startChainageM: 20_000, endChainageM: 40_000, completedAt: '2026-06-16T18:00:00' }, // today
+    ];
+    const m = buildItineraryDays(stages, {
+      reverse: false,
+      doneDistanceM: 40_000,
+      paceTargetM: 20_000,
+      completedStages: completions,
+      todayISO: '2026-06-16',
+    });
+    expect(m.days[0]?.dateLabel).toBe('15 JUN');
+    expect(m.days[0]?.stages.map((s) => s.number)).toEqual([1]);
+    // Stage 2 finished today folds in with current stage 3.
+    expect(m.days[1]?.status).toBe('current');
+    expect(m.days[1]?.dateLabel).toBe('TODAY');
+    expect(m.days[1]?.stages.map((s) => s.number)).toEqual([2, 3]);
+  });
+
+  it('dates a boundary-straddling stage by the day it was finished, not the day before', () => {
+    // Regression: completed stages were matched to a journey window by their MIDPOINT.
+    // A 30 km window grid over 20 km etapas puts etapa 2's midpoint (30 km) in window 1
+    // (finished 16 Jun), so it leaked into the previous day even though it was finished
+    // in window 2 (17 Jun). Matching on the stage END keeps it on the day it was walked.
+    const windows = [
+      { startChainageM: 0, endChainageM: 30_000, completedAt: '2026-06-16T18:00:00' },
+      { startChainageM: 30_000, endChainageM: 60_000, completedAt: '2026-06-17T18:00:00' },
+    ];
+    const m = buildItineraryDays(stages, {
+      reverse: false,
+      doneDistanceM: 60_000, // etapas 1–3 done
+      paceTargetM: 20_000,
+      completedStages: windows,
+    });
+    const doneDays = m.days.filter((d) => d.status === 'done');
+    // 16 Jun → etapa 1 only; 17 Jun → etapas 2 & 3 (etapa 2 did NOT fall back to 16 Jun).
+    expect(doneDays).toHaveLength(2);
+    expect(doneDays[0]?.dateLabel).toBe('16 JUN');
+    expect(doneDays[0]?.stages.map((s) => s.number)).toEqual([1]);
+    expect(doneDays[1]?.dateLabel).toBe('17 JUN');
+    expect(doneDays[1]?.stages.map((s) => s.number)).toEqual([2, 3]);
+  });
+
   it('shows no region bands for an unknown trail', () => {
     const m = buildItineraryDays(stages, {
       reverse: false,
