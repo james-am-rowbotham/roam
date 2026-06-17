@@ -1,4 +1,3 @@
-<div align="center">
 
 <img src="docs/media/roam-logo.png" alt="Roam" width="240" />
 
@@ -12,7 +11,6 @@ will I reach the refuge before dark?*
 > **Roam is in active development.** It's being built one trail end-to-end (the GR11)
 > before going wide. Expect rough edges and moving parts.
 
-</div>
 
 ---
 
