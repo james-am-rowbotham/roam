@@ -35,7 +35,8 @@
       "**/data",
       "**/generated",
       "apps/mobile/assets/content",
-      "packages/db/content"
+      "packages/db/content",
+      "**/content/workflows"
     ]
   }
 }

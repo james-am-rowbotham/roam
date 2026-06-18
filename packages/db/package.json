@@ -13,7 +13,8 @@
     "db:seed": "bun src/seed.ts",
     "db:studio": "drizzle-kit studio",
     "pack:build": "bun src/pack/build-packs.ts",
-    "pack:content": "bun src/content/run.ts"
+    "pack:content": "bun src/content/run.ts",
+    "pack:content:ingest": "bun src/content/ingest.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",

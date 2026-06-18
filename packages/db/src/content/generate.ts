@@ -8,6 +8,7 @@
 
 import type Anthropic from '@anthropic-ai/sdk';
 import type { GuideTopic } from '@roam/content';
+import { normalizeTopic } from './normalize';
 import type { SectionSpec } from './specs';
 
 export const CONTENT_MODEL = process.env.CONTENT_MODEL ?? 'claude-sonnet-4-6';
@@ -69,12 +70,7 @@ export async function generateSectionContent(
     .join('\n');
 
   const raw = extractTopics(text);
-  const topics: GuideTopic[] = raw.map((t) => ({
-    key: t.key,
-    facet: 'overview',
-    heading: t.heading,
-    body: t.body,
-  }));
+  const topics: GuideTopic[] = raw.map(normalizeTopic);
   const sources = raw.reduce((n, t) => n + (t.sourceRefs?.length ?? 0), 0);
   return { topics, sources };
 }
