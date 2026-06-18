@@ -78,6 +78,13 @@
       "when": 1781472115963,
       "tag": "0010_majestic_fenris",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1781544636080,
+      "tag": "0011_zippy_talkback",
+      "breakpoints": true
     }
   ]
 }

@@ -28,3 +28,6 @@ apps/mobile/lib/generated
 
 # VS Code   
 .vscode
+
+# Generated pack build artifacts (the app reads apps/mobile/assets/content)
+packages/db/packs/

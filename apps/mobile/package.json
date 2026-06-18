@@ -17,6 +17,7 @@
     "@expo-google-fonts/hanken-grotesk": "^0.4.3",
     "@maplibre/maplibre-react-native": "^11.3.2",
     "@op-engineering/op-sqlite": "^16.2.0",
+    "@roam/content": "workspace:*",
     "@roam/core": "workspace:*",
     "@tanstack/react-query": "^5.101.0",
     "expo": "~56.0.8",

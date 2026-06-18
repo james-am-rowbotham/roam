@@ -1,5 +1,5 @@
-import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { type Href, useRouter } from 'expo-router';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { JourneyCard } from '../../components/journey';
 import { TrailCard } from '../../components/trail';
@@ -7,6 +7,22 @@ import { Button, NavBar, SearchField, SectionHeader } from '../../components/ui'
 import { CURRENT_USER_ID } from '../../config/user';
 import { useJourneys, useTrails } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
+
+const DEV_LINKS: { label: string; href: Href }[] = [
+  {
+    label: 'Discover — Europe (Continent → … → Stage)',
+    href: { pathname: '/discover/continent/[id]', params: { id: 'europe' } },
+  },
+  { label: 'ContentBlocks — every kind', href: '/dev/content-blocks' },
+  {
+    label: 'GR11 — trail Guide shell',
+    href: { pathname: '/objective/[id]', params: { id: 'gr11' } },
+  },
+  {
+    label: 'Aneto — peak Guide shell',
+    href: { pathname: '/objective/[id]', params: { id: 'aneto' } },
+  },
+];
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -32,6 +48,23 @@ export default function HomeScreen() {
     >
       <NavBar />
       <SearchField />
+
+      {/* TODO(dev): temporary launcher for the new browsing build (Phases 3–4).
+          Remove once Discovery (Phase 7) is the real entry point. */}
+      <SectionHeader title="New build" />
+      <View style={styles.devLinks}>
+        {DEV_LINKS.map((l) => (
+          <TouchableOpacity
+            key={l.label}
+            style={styles.devLink}
+            onPress={() => router.push(l.href)}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.devLinkLabel}>{l.label}</Text>
+            <Text style={styles.devLinkChevron}>›</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
       <SectionHeader title="Popular trails" />
       <ScrollView
@@ -83,6 +116,25 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg.app },
   content: { paddingBottom: spacing[12] },
   carousel: { paddingHorizontal: spacing[8], gap: spacing[4] },
+  devLinks: {
+    marginHorizontal: spacing[8],
+    backgroundColor: colors.bg.surface,
+    borderRadius: radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border.default,
+    overflow: 'hidden',
+  },
+  devLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: spacing[5],
+    paddingHorizontal: spacing[6],
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.border.default,
+  },
+  devLinkLabel: { ...type.body, color: colors.text.primary },
+  devLinkChevron: { ...type.bodyLarge, color: colors.text.secondary },
   skeleton: {
     width: 150,
     height: 213,

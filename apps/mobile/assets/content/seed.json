@@ -1,0 +1,7097 @@
+{
+  "continents": [
+    {
+      "id": "europe",
+      "slug": "europe",
+      "name": "Europe",
+      "tagline": "Where the long trails run",
+      "heroMediaId": "media/hero/europe",
+      "summary": "Mountain ranges stacked across a continent — the Pyrenees, the Alps, the far north."
+    }
+  ],
+  "countries": [
+    {
+      "id": "spain",
+      "slug": "spain",
+      "name": "Spain",
+      "continentId": "europe",
+      "tagline": "From the Pyrenees to the Picos",
+      "heroMediaId": "media/hero/spain",
+      "summary": "Spain runs from the green, Atlantic-washed north to the dry sierras of the south, with the Pyrenees a 400 km mountain wall along the French border."
+    }
+  ],
+  "regions": [
+    {
+      "id": "basque-country-navarre",
+      "slug": "basque-country-navarre",
+      "name": "Basque Country & Navarre",
+      "countryId": "spain",
+      "tagline": "From Cabo Higuer, passing through forests and coastal hills.",
+      "heroMediaId": "media/hero/basque-country-navarre",
+      "summary": "From Cabo Higuer, passing through forests and coastal hills."
+    },
+    {
+      "id": "aragonese-pyrenees",
+      "slug": "aragonese-pyrenees",
+      "name": "Aragonese Pyrenees",
+      "countryId": "spain",
+      "tagline": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.",
+      "heroMediaId": "media/hero/aragonese-pyrenees",
+      "summary": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut."
+    },
+    {
+      "id": "ordesa-high-country",
+      "slug": "ordesa-high-country",
+      "name": "Ordesa & High Country",
+      "countryId": "spain",
+      "tagline": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.",
+      "heroMediaId": "media/hero/ordesa-high-country",
+      "summary": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós."
+    },
+    {
+      "id": "andorra-pallars-high-country",
+      "slug": "andorra-pallars-high-country",
+      "name": "Andorra & Pallars High Country",
+      "countryId": "spain",
+      "tagline": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.",
+      "heroMediaId": "media/hero/andorra-pallars-high-country",
+      "summary": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs."
+    },
+    {
+      "id": "eastern-pyrenees",
+      "slug": "eastern-pyrenees",
+      "name": "Eastern Pyrenees",
+      "countryId": "spain",
+      "tagline": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.",
+      "heroMediaId": "media/hero/eastern-pyrenees",
+      "summary": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus."
+    }
+  ],
+  "locations": [
+    {
+      "id": "gr11-loc-0",
+      "slug": "gr11-loc-0",
+      "name": "Cabo Higuer",
+      "type": "town",
+      "coords": {
+        "lat": 43.393198,
+        "lng": -1.79238
+      }
+    },
+    {
+      "id": "gr11-loc-1",
+      "slug": "gr11-loc-1",
+      "name": "Bera/Vera de Bidasoa",
+      "type": "town",
+      "coords": {
+        "lat": 43.2710014042784,
+        "lng": -1.6813228814438
+      }
+    },
+    {
+      "id": "gr11-loc-2",
+      "slug": "gr11-loc-2",
+      "name": "Elizondo",
+      "type": "town",
+      "coords": {
+        "lat": 43.1354511469744,
+        "lng": -1.50994155768188
+      }
+    },
+    {
+      "id": "gr11-loc-3",
+      "slug": "gr11-loc-3",
+      "name": "Puerto de Urkiaga",
+      "type": "town",
+      "coords": {
+        "lat": 43.0230710017777,
+        "lng": -1.43724054488307
+      }
+    },
+    {
+      "id": "gr11-loc-4",
+      "slug": "gr11-loc-4",
+      "name": "Burguete/Auritz",
+      "type": "town",
+      "coords": {
+        "lat": 42.9958307599677,
+        "lng": -1.30023013688572
+      }
+    },
+    {
+      "id": "gr11-loc-5",
+      "slug": "gr11-loc-5",
+      "name": "Villanueva de Aezkoa/Hiriberri",
+      "type": "town",
+      "coords": {
+        "lat": 42.9517373268397,
+        "lng": -1.19388881560299
+      }
+    },
+    {
+      "id": "gr11-loc-6",
+      "slug": "gr11-loc-6",
+      "name": "Ochagavía/Otsagabia",
+      "type": "town",
+      "coords": {
+        "lat": 42.9038150699085,
+        "lng": -1.05942800464531
+      }
+    },
+    {
+      "id": "gr11-loc-7",
+      "slug": "gr11-loc-7",
+      "name": "Isaba/Izaba",
+      "type": "town",
+      "coords": {
+        "lat": 42.8758370170824,
+        "lng": -0.877062406356037
+      }
+    },
+    {
+      "id": "gr11-loc-8",
+      "slug": "gr11-loc-8",
+      "name": "Zuriza",
+      "type": "town",
+      "coords": {
+        "lat": 42.8585262334684,
+        "lng": -0.761290912598919
+      }
+    },
+    {
+      "id": "gr11-loc-9",
+      "slug": "gr11-loc-9",
+      "name": "Aguas Tuertas",
+      "type": "town",
+      "coords": {
+        "lat": 42.7990285912713,
+        "lng": -0.603306404689575
+      }
+    },
+    {
+      "id": "gr11-loc-10",
+      "slug": "gr11-loc-10",
+      "name": "Lizara",
+      "type": "town",
+      "coords": {
+        "lat": 42.7754949750294,
+        "lng": -0.591128073829671
+      }
+    },
+    {
+      "id": "gr11-loc-11",
+      "slug": "gr11-loc-11",
+      "name": "Candanchú",
+      "type": "town",
+      "coords": {
+        "lat": 42.7850698555856,
+        "lng": -0.494643453507928
+      }
+    },
+    {
+      "id": "gr11-loc-12",
+      "slug": "gr11-loc-12",
+      "name": "Sallent de Gállego",
+      "type": "town",
+      "coords": {
+        "lat": 42.7907434869782,
+        "lng": -0.32842893829314
+      }
+    },
+    {
+      "id": "gr11-loc-13",
+      "slug": "gr11-loc-13",
+      "name": "Refugio de Respomuso",
+      "type": "town",
+      "coords": {
+        "lat": 42.8022354863829,
+        "lng": -0.275486800666231
+      }
+    },
+    {
+      "id": "gr11-loc-14",
+      "slug": "gr11-loc-14",
+      "name": "Balneario de Panticosa",
+      "type": "town",
+      "coords": {
+        "lat": 42.7781502546,
+        "lng": -0.231116513368802
+      }
+    },
+    {
+      "id": "gr11-loc-15",
+      "slug": "gr11-loc-15",
+      "name": "San Nicolás de Bujaruelo",
+      "type": "town",
+      "coords": {
+        "lat": 42.6977001034623,
+        "lng": -0.111507552308598
+      }
+    },
+    {
+      "id": "gr11-loc-16",
+      "slug": "gr11-loc-16",
+      "name": "Refugio de Góriz",
+      "type": "town",
+      "coords": {
+        "lat": 42.6629855906053,
+        "lng": 0.0158422346440043
+      }
+    },
+    {
+      "id": "gr11-loc-17",
+      "slug": "gr11-loc-17",
+      "name": "Circo de Pineta",
+      "type": "town",
+      "coords": {
+        "lat": 42.6717306417052,
+        "lng": 0.0912436879760942
+      }
+    },
+    {
+      "id": "gr11-loc-18",
+      "slug": "gr11-loc-18",
+      "name": "Parzán",
+      "type": "town",
+      "coords": {
+        "lat": 42.6605548101019,
+        "lng": 0.209247490741869
+      }
+    },
+    {
+      "id": "gr11-loc-19",
+      "slug": "gr11-loc-19",
+      "name": "Refugio de Biados",
+      "type": "town",
+      "coords": {
+        "lat": 42.6605494797595,
+        "lng": 0.379037372050215
+      }
+    },
+    {
+      "id": "gr11-loc-20",
+      "slug": "gr11-loc-20",
+      "name": "Puente de San Jaime",
+      "type": "town",
+      "coords": {
+        "lat": 42.6258725992522,
+        "lng": 0.54580545344714
+      }
+    },
+    {
+      "id": "gr11-loc-21",
+      "slug": "gr11-loc-21",
+      "name": "Refugio de Cap de Llauset",
+      "type": "town",
+      "coords": {
+        "lat": 42.597394015915,
+        "lng": 0.685591376580941
+      }
+    },
+    {
+      "id": "gr11-loc-22",
+      "slug": "gr11-loc-22",
+      "name": "Refugio de Conangles",
+      "type": "town",
+      "coords": {
+        "lat": 42.6153447427774,
+        "lng": 0.768813646712693
+      }
+    },
+    {
+      "id": "gr11-loc-23",
+      "slug": "gr11-loc-23",
+      "name": "Refugio de la Restanca",
+      "type": "town",
+      "coords": {
+        "lat": 42.6369581908352,
+        "lng": 0.853964418295059
+      }
+    },
+    {
+      "id": "gr11-loc-24",
+      "slug": "gr11-loc-24",
+      "name": "Refugio de Colomers",
+      "type": "town",
+      "coords": {
+        "lat": 42.6473740087399,
+        "lng": 0.895713974390603
+      }
+    },
+    {
+      "id": "gr11-loc-25",
+      "slug": "gr11-loc-25",
+      "name": "Estany de Sant Maurici",
+      "type": "town",
+      "coords": {
+        "lat": 42.5934075776426,
+        "lng": 0.978253169496362
+      }
+    },
+    {
+      "id": "gr11-loc-26",
+      "slug": "gr11-loc-26",
+      "name": "La Guingueta",
+      "type": "town",
+      "coords": {
+        "lat": 42.5867599113402,
+        "lng": 1.11968273402069
+      }
+    },
+    {
+      "id": "gr11-loc-27",
+      "slug": "gr11-loc-27",
+      "name": "Estaon",
+      "type": "town",
+      "coords": {
+        "lat": 42.598624145321,
+        "lng": 1.18828615342139
+      }
+    },
+    {
+      "id": "gr11-loc-28",
+      "slug": "gr11-loc-28",
+      "name": "Tavascan",
+      "type": "town",
+      "coords": {
+        "lat": 42.632122325173,
+        "lng": 1.24191487285611
+      }
+    },
+    {
+      "id": "gr11-loc-29",
+      "slug": "gr11-loc-29",
+      "name": "Àreu",
+      "type": "town",
+      "coords": {
+        "lat": 42.5923855382325,
+        "lng": 1.29983743823252
+      }
+    },
+    {
+      "id": "gr11-loc-30",
+      "slug": "gr11-loc-30",
+      "name": "Refugio Baiau",
+      "type": "town",
+      "coords": {
+        "lat": 42.6118443464097,
+        "lng": 1.41019270756132
+      }
+    },
+    {
+      "id": "gr11-loc-31",
+      "slug": "gr11-loc-31",
+      "name": "Arans",
+      "type": "town",
+      "coords": {
+        "lat": 42.5776480005375,
+        "lng": 1.50823993019296
+      }
+    },
+    {
+      "id": "gr11-loc-32",
+      "slug": "gr11-loc-32",
+      "name": "Encamp",
+      "type": "town",
+      "coords": {
+        "lat": 42.5406705875502,
+        "lng": 1.58665064867842
+      }
+    },
+    {
+      "id": "gr11-loc-33",
+      "slug": "gr11-loc-33",
+      "name": "Ref. l’Illa",
+      "type": "town",
+      "coords": {
+        "lat": 42.4865431790967,
+        "lng": 1.69322378355207
+      }
+    },
+    {
+      "id": "gr11-loc-34",
+      "slug": "gr11-loc-34",
+      "name": "Refugio de Malniu",
+      "type": "town",
+      "coords": {
+        "lat": 42.4642052328294,
+        "lng": 1.78266428800855
+      }
+    },
+    {
+      "id": "gr11-loc-35",
+      "slug": "gr11-loc-35",
+      "name": "Puigcerdà",
+      "type": "town",
+      "coords": {
+        "lat": 42.4324985957997,
+        "lng": 1.91978081912668
+      }
+    },
+    {
+      "id": "gr11-loc-36",
+      "slug": "gr11-loc-36",
+      "name": "Planoles",
+      "type": "town",
+      "coords": {
+        "lat": 42.3276426356336,
+        "lng": 2.09895711371412
+      }
+    },
+    {
+      "id": "gr11-loc-37",
+      "slug": "gr11-loc-37",
+      "name": "Santuario de Núria",
+      "type": "town",
+      "coords": {
+        "lat": 42.3921004422698,
+        "lng": 2.15304946296596
+      }
+    },
+    {
+      "id": "gr11-loc-38",
+      "slug": "gr11-loc-38",
+      "name": "Refugio de Ulldeter",
+      "type": "town",
+      "coords": {
+        "lat": 42.4181650907641,
+        "lng": 2.24422183108432
+      }
+    },
+    {
+      "id": "gr11-loc-39",
+      "slug": "gr11-loc-39",
+      "name": "Molló",
+      "type": "town",
+      "coords": {
+        "lat": 42.3488403176751,
+        "lng": 2.39906661871852
+      }
+    },
+    {
+      "id": "gr11-loc-40",
+      "slug": "gr11-loc-40",
+      "name": "Talaixà",
+      "type": "town",
+      "coords": {
+        "lat": 42.2983230306173,
+        "lng": 2.56445354495955
+      }
+    },
+    {
+      "id": "gr11-loc-41",
+      "slug": "gr11-loc-41",
+      "name": "Albanyà",
+      "type": "town",
+      "coords": {
+        "lat": 42.3174210754537,
+        "lng": 2.6961221781089
+      }
+    },
+    {
+      "id": "gr11-loc-42",
+      "slug": "gr11-loc-42",
+      "name": "La Vajol",
+      "type": "town",
+      "coords": {
+        "lat": 42.3918974266033,
+        "lng": 2.7857904858273
+      }
+    },
+    {
+      "id": "gr11-loc-43",
+      "slug": "gr11-loc-43",
+      "name": "Requessens",
+      "type": "town",
+      "coords": {
+        "lat": 42.4454479229665,
+        "lng": 2.92113037851169
+      }
+    },
+    {
+      "id": "gr11-loc-44",
+      "slug": "gr11-loc-44",
+      "name": "Vilamaniscle",
+      "type": "town",
+      "coords": {
+        "lat": 42.3765382482997,
+        "lng": 3.06563984558055
+      }
+    },
+    {
+      "id": "gr11-loc-45",
+      "slug": "gr11-loc-45",
+      "name": "El Port de la Selva",
+      "type": "town",
+      "coords": {
+        "lat": 42.336089168677,
+        "lng": 3.20319655517171
+      }
+    },
+    {
+      "id": "gr11-loc-46",
+      "slug": "gr11-loc-46",
+      "name": "Cap de Creus",
+      "type": "town",
+      "coords": {
+        "lat": 42.3192961,
+        "lng": 3.3218788
+      }
+    },
+    {
+      "id": "la-besurta",
+      "slug": "la-besurta",
+      "name": "La Besurta",
+      "type": "town",
+      "coords": {
+        "lat": 42.68,
+        "lng": 0.66
+      }
+    },
+    {
+      "id": "renclusa",
+      "slug": "renclusa",
+      "name": "Refugio de la Renclusa",
+      "type": "refugio",
+      "coords": {
+        "lat": 42.66,
+        "lng": 0.65
+      }
+    },
+    {
+      "id": "aneto-summit",
+      "slug": "aneto-summit",
+      "name": "Aneto summit",
+      "type": "summit",
+      "coords": {
+        "lat": 42.63,
+        "lng": 0.66
+      }
+    },
+    {
+      "id": "coronas",
+      "slug": "coronas",
+      "name": "Ibón de Coronas",
+      "type": "water",
+      "coords": {
+        "lat": 42.6,
+        "lng": 0.63
+      }
+    }
+  ],
+  "pois": [],
+  "highlights": [
+    {
+      "id": "aneto-h-mahoma",
+      "title": "The Paso de Mahoma",
+      "body": "The exposed knife-edge stride onto the summit block."
+    },
+    {
+      "id": "aneto-h-glacier",
+      "title": "The Aneto glacier",
+      "body": "The largest glacier in the Pyrenees, shrinking fast."
+    }
+  ],
+  "trails": [
+    {
+      "objective": {
+        "id": "gr11",
+        "slug": "gr11",
+        "name": "GR11",
+        "type": "trail",
+        "regionIds": [
+          "basque-country-navarre",
+          "aragonese-pyrenees",
+          "ordesa-high-country",
+          "andorra-pallars-high-country",
+          "eastern-pyrenees"
+        ],
+        "tagline": "Pyrenees High Route · Spain",
+        "heroMediaId": "media/hero/gr11",
+        "summary": "The Senda Pirenaica traces the Spanish Pyrenees coast to coast — from Hondarribia on the Atlantic to Cap de Creus on the Mediterranean, waymarked red-and-white the whole way.",
+        "atAGlance": [
+          {
+            "key": "distance",
+            "value": 847.4,
+            "unit": "km",
+            "label": "Distance"
+          },
+          {
+            "key": "stages",
+            "value": 46,
+            "label": "Stages"
+          },
+          {
+            "key": "days",
+            "value": "42–46",
+            "label": "Days"
+          },
+          {
+            "key": "highPoint",
+            "value": 2792,
+            "unit": "m",
+            "label": "High point"
+          }
+        ],
+        "guide": [
+          {
+            "key": "profile",
+            "facet": "overview",
+            "heading": "Distance, elevation & duration",
+            "body": "Roughly 847.4 km with about 38,193 m of cumulative ascent over 46 stages.",
+            "blocks": [
+              {
+                "kind": "elevation",
+                "variant": "multiDay",
+                "points": [
+                  {
+                    "distanceKm": 0,
+                    "elevM": 11
+                  },
+                  {
+                    "distanceKm": 2,
+                    "elevM": 7
+                  },
+                  {
+                    "distanceKm": 4,
+                    "elevM": 9
+                  },
+                  {
+                    "distanceKm": 6,
+                    "elevM": 2
+                  },
+                  {
+                    "distanceKm": 8,
+                    "elevM": 23
+                  },
+                  {
+                    "distanceKm": 10,
+                    "elevM": 93
+                  },
+                  {
+                    "distanceKm": 12,
+                    "elevM": 215
+                  },
+                  {
+                    "distanceKm": 14,
+                    "elevM": 368
+                  },
+                  {
+                    "distanceKm": 16,
+                    "elevM": 417
+                  },
+                  {
+                    "distanceKm": 18,
+                    "elevM": 245
+                  },
+                  {
+                    "distanceKm": 20,
+                    "elevM": 214
+                  },
+                  {
+                    "distanceKm": 22,
+                    "elevM": 273
+                  },
+                  {
+                    "distanceKm": 24,
+                    "elevM": 395
+                  },
+                  {
+                    "distanceKm": 26,
+                    "elevM": 364
+                  },
+                  {
+                    "distanceKm": 28,
+                    "elevM": 315
+                  },
+                  {
+                    "distanceKm": 30,
+                    "elevM": 69
+                  },
+                  {
+                    "distanceKm": 32,
+                    "elevM": 85
+                  },
+                  {
+                    "distanceKm": 34,
+                    "elevM": 370
+                  },
+                  {
+                    "distanceKm": 36,
+                    "elevM": 272
+                  },
+                  {
+                    "distanceKm": 38,
+                    "elevM": 384
+                  },
+                  {
+                    "distanceKm": 40,
+                    "elevM": 442
+                  },
+                  {
+                    "distanceKm": 42,
+                    "elevM": 452
+                  },
+                  {
+                    "distanceKm": 44,
+                    "elevM": 447
+                  },
+                  {
+                    "distanceKm": 46,
+                    "elevM": 547
+                  },
+                  {
+                    "distanceKm": 48,
+                    "elevM": 537
+                  },
+                  {
+                    "distanceKm": 50,
+                    "elevM": 522
+                  },
+                  {
+                    "distanceKm": 52,
+                    "elevM": 631
+                  },
+                  {
+                    "distanceKm": 54,
+                    "elevM": 781
+                  },
+                  {
+                    "distanceKm": 56,
+                    "elevM": 659
+                  },
+                  {
+                    "distanceKm": 58,
+                    "elevM": 581
+                  },
+                  {
+                    "distanceKm": 60,
+                    "elevM": 376
+                  },
+                  {
+                    "distanceKm": 62,
+                    "elevM": 200
+                  },
+                  {
+                    "distanceKm": 64,
+                    "elevM": 336
+                  },
+                  {
+                    "distanceKm": 66,
+                    "elevM": 466
+                  },
+                  {
+                    "distanceKm": 68,
+                    "elevM": 619
+                  },
+                  {
+                    "distanceKm": 70,
+                    "elevM": 898
+                  },
+                  {
+                    "distanceKm": 72,
+                    "elevM": 942
+                  },
+                  {
+                    "distanceKm": 74,
+                    "elevM": 944
+                  },
+                  {
+                    "distanceKm": 76,
+                    "elevM": 1166
+                  },
+                  {
+                    "distanceKm": 78,
+                    "elevM": 1173
+                  },
+                  {
+                    "distanceKm": 80,
+                    "elevM": 966
+                  },
+                  {
+                    "distanceKm": 82,
+                    "elevM": 1108
+                  },
+                  {
+                    "distanceKm": 84,
+                    "elevM": 1213
+                  },
+                  {
+                    "distanceKm": 86,
+                    "elevM": 891
+                  },
+                  {
+                    "distanceKm": 88,
+                    "elevM": 891
+                  },
+                  {
+                    "distanceKm": 90,
+                    "elevM": 1135
+                  },
+                  {
+                    "distanceKm": 92,
+                    "elevM": 1117
+                  },
+                  {
+                    "distanceKm": 94,
+                    "elevM": 944
+                  },
+                  {
+                    "distanceKm": 96,
+                    "elevM": 907
+                  },
+                  {
+                    "distanceKm": 98,
+                    "elevM": 887
+                  },
+                  {
+                    "distanceKm": 100,
+                    "elevM": 1012
+                  },
+                  {
+                    "distanceKm": 102,
+                    "elevM": 1016
+                  },
+                  {
+                    "distanceKm": 104,
+                    "elevM": 1055
+                  },
+                  {
+                    "distanceKm": 106,
+                    "elevM": 1067
+                  },
+                  {
+                    "distanceKm": 108,
+                    "elevM": 1138
+                  },
+                  {
+                    "distanceKm": 110,
+                    "elevM": 1027
+                  },
+                  {
+                    "distanceKm": 112,
+                    "elevM": 728
+                  },
+                  {
+                    "distanceKm": 114,
+                    "elevM": 933
+                  },
+                  {
+                    "distanceKm": 116,
+                    "elevM": 1075
+                  },
+                  {
+                    "distanceKm": 118,
+                    "elevM": 1281
+                  },
+                  {
+                    "distanceKm": 120,
+                    "elevM": 1352
+                  },
+                  {
+                    "distanceKm": 122,
+                    "elevM": 1354
+                  },
+                  {
+                    "distanceKm": 124,
+                    "elevM": 1357
+                  },
+                  {
+                    "distanceKm": 126,
+                    "elevM": 1458
+                  },
+                  {
+                    "distanceKm": 128,
+                    "elevM": 1399
+                  },
+                  {
+                    "distanceKm": 130,
+                    "elevM": 1141
+                  },
+                  {
+                    "distanceKm": 132,
+                    "elevM": 976
+                  },
+                  {
+                    "distanceKm": 134,
+                    "elevM": 991
+                  },
+                  {
+                    "distanceKm": 136,
+                    "elevM": 763
+                  },
+                  {
+                    "distanceKm": 138,
+                    "elevM": 981
+                  },
+                  {
+                    "distanceKm": 140,
+                    "elevM": 1132
+                  },
+                  {
+                    "distanceKm": 142,
+                    "elevM": 1216
+                  },
+                  {
+                    "distanceKm": 144,
+                    "elevM": 1265
+                  },
+                  {
+                    "distanceKm": 146,
+                    "elevM": 1290
+                  },
+                  {
+                    "distanceKm": 148,
+                    "elevM": 1376
+                  },
+                  {
+                    "distanceKm": 150,
+                    "elevM": 1354
+                  },
+                  {
+                    "distanceKm": 152,
+                    "elevM": 1366
+                  },
+                  {
+                    "distanceKm": 154,
+                    "elevM": 1146
+                  },
+                  {
+                    "distanceKm": 156,
+                    "elevM": 780
+                  },
+                  {
+                    "distanceKm": 158,
+                    "elevM": 874
+                  },
+                  {
+                    "distanceKm": 160,
+                    "elevM": 1012
+                  },
+                  {
+                    "distanceKm": 162,
+                    "elevM": 1054
+                  },
+                  {
+                    "distanceKm": 164,
+                    "elevM": 1098
+                  },
+                  {
+                    "distanceKm": 166,
+                    "elevM": 1285
+                  },
+                  {
+                    "distanceKm": 168,
+                    "elevM": 1247
+                  },
+                  {
+                    "distanceKm": 170,
+                    "elevM": 1349
+                  },
+                  {
+                    "distanceKm": 172,
+                    "elevM": 1623
+                  },
+                  {
+                    "distanceKm": 174,
+                    "elevM": 1953
+                  },
+                  {
+                    "distanceKm": 176,
+                    "elevM": 1623
+                  },
+                  {
+                    "distanceKm": 178,
+                    "elevM": 1392
+                  },
+                  {
+                    "distanceKm": 180,
+                    "elevM": 1247
+                  },
+                  {
+                    "distanceKm": 182,
+                    "elevM": 1313
+                  },
+                  {
+                    "distanceKm": 184,
+                    "elevM": 1418
+                  },
+                  {
+                    "distanceKm": 186,
+                    "elevM": 1615
+                  },
+                  {
+                    "distanceKm": 188,
+                    "elevM": 1620
+                  },
+                  {
+                    "distanceKm": 190,
+                    "elevM": 1786
+                  },
+                  {
+                    "distanceKm": 192,
+                    "elevM": 1827
+                  },
+                  {
+                    "distanceKm": 194,
+                    "elevM": 2064
+                  },
+                  {
+                    "distanceKm": 196,
+                    "elevM": 2011
+                  },
+                  {
+                    "distanceKm": 198,
+                    "elevM": 1712
+                  },
+                  {
+                    "distanceKm": 200,
+                    "elevM": 1512
+                  },
+                  {
+                    "distanceKm": 202,
+                    "elevM": 1804
+                  },
+                  {
+                    "distanceKm": 204,
+                    "elevM": 2092
+                  },
+                  {
+                    "distanceKm": 206,
+                    "elevM": 2197
+                  },
+                  {
+                    "distanceKm": 208,
+                    "elevM": 2113
+                  },
+                  {
+                    "distanceKm": 210,
+                    "elevM": 2006
+                  },
+                  {
+                    "distanceKm": 212,
+                    "elevM": 1952
+                  },
+                  {
+                    "distanceKm": 214,
+                    "elevM": 1723
+                  },
+                  {
+                    "distanceKm": 216,
+                    "elevM": 1571
+                  },
+                  {
+                    "distanceKm": 218,
+                    "elevM": 1496
+                  },
+                  {
+                    "distanceKm": 220,
+                    "elevM": 1424
+                  },
+                  {
+                    "distanceKm": 222,
+                    "elevM": 1528
+                  },
+                  {
+                    "distanceKm": 224,
+                    "elevM": 1707
+                  },
+                  {
+                    "distanceKm": 226,
+                    "elevM": 1866
+                  },
+                  {
+                    "distanceKm": 228,
+                    "elevM": 2221
+                  },
+                  {
+                    "distanceKm": 230,
+                    "elevM": 1952
+                  },
+                  {
+                    "distanceKm": 232,
+                    "elevM": 1724
+                  },
+                  {
+                    "distanceKm": 234,
+                    "elevM": 1635
+                  },
+                  {
+                    "distanceKm": 236,
+                    "elevM": 1551
+                  },
+                  {
+                    "distanceKm": 238,
+                    "elevM": 1522
+                  },
+                  {
+                    "distanceKm": 240,
+                    "elevM": 1364
+                  },
+                  {
+                    "distanceKm": 242,
+                    "elevM": 1318
+                  },
+                  {
+                    "distanceKm": 244,
+                    "elevM": 1430
+                  },
+                  {
+                    "distanceKm": 246,
+                    "elevM": 1467
+                  },
+                  {
+                    "distanceKm": 248,
+                    "elevM": 1551
+                  },
+                  {
+                    "distanceKm": 250,
+                    "elevM": 1712
+                  },
+                  {
+                    "distanceKm": 252,
+                    "elevM": 2004
+                  },
+                  {
+                    "distanceKm": 254,
+                    "elevM": 2203
+                  },
+                  {
+                    "distanceKm": 256,
+                    "elevM": 2162
+                  },
+                  {
+                    "distanceKm": 258,
+                    "elevM": 2498
+                  },
+                  {
+                    "distanceKm": 260,
+                    "elevM": 2473
+                  },
+                  {
+                    "distanceKm": 262,
+                    "elevM": 2223
+                  },
+                  {
+                    "distanceKm": 264,
+                    "elevM": 2173
+                  },
+                  {
+                    "distanceKm": 266,
+                    "elevM": 2133
+                  },
+                  {
+                    "distanceKm": 268,
+                    "elevM": 2179
+                  },
+                  {
+                    "distanceKm": 270,
+                    "elevM": 2174
+                  },
+                  {
+                    "distanceKm": 272,
+                    "elevM": 2019
+                  },
+                  {
+                    "distanceKm": 274,
+                    "elevM": 1694
+                  },
+                  {
+                    "distanceKm": 276,
+                    "elevM": 1827
+                  },
+                  {
+                    "distanceKm": 278,
+                    "elevM": 2195
+                  },
+                  {
+                    "distanceKm": 280,
+                    "elevM": 2512
+                  },
+                  {
+                    "distanceKm": 282,
+                    "elevM": 2288
+                  },
+                  {
+                    "distanceKm": 284,
+                    "elevM": 1981
+                  },
+                  {
+                    "distanceKm": 286,
+                    "elevM": 1802
+                  },
+                  {
+                    "distanceKm": 288,
+                    "elevM": 1704
+                  },
+                  {
+                    "distanceKm": 290,
+                    "elevM": 1618
+                  },
+                  {
+                    "distanceKm": 292,
+                    "elevM": 1493
+                  },
+                  {
+                    "distanceKm": 294,
+                    "elevM": 1350
+                  },
+                  {
+                    "distanceKm": 296,
+                    "elevM": 1324
+                  },
+                  {
+                    "distanceKm": 298,
+                    "elevM": 1234
+                  },
+                  {
+                    "distanceKm": 300,
+                    "elevM": 1222
+                  },
+                  {
+                    "distanceKm": 302,
+                    "elevM": 1110
+                  },
+                  {
+                    "distanceKm": 304,
+                    "elevM": 1204
+                  },
+                  {
+                    "distanceKm": 306,
+                    "elevM": 1309
+                  },
+                  {
+                    "distanceKm": 308,
+                    "elevM": 1343
+                  },
+                  {
+                    "distanceKm": 310,
+                    "elevM": 1479
+                  },
+                  {
+                    "distanceKm": 312,
+                    "elevM": 1673
+                  },
+                  {
+                    "distanceKm": 314,
+                    "elevM": 1731
+                  },
+                  {
+                    "distanceKm": 316,
+                    "elevM": 1758
+                  },
+                  {
+                    "distanceKm": 318,
+                    "elevM": 1977
+                  },
+                  {
+                    "distanceKm": 320,
+                    "elevM": 2208
+                  },
+                  {
+                    "distanceKm": 322,
+                    "elevM": 2242
+                  },
+                  {
+                    "distanceKm": 324,
+                    "elevM": 1847
+                  },
+                  {
+                    "distanceKm": 326,
+                    "elevM": 1971
+                  },
+                  {
+                    "distanceKm": 328,
+                    "elevM": 2406
+                  },
+                  {
+                    "distanceKm": 330,
+                    "elevM": 1771
+                  },
+                  {
+                    "distanceKm": 332,
+                    "elevM": 1241
+                  },
+                  {
+                    "distanceKm": 334,
+                    "elevM": 1275
+                  },
+                  {
+                    "distanceKm": 336,
+                    "elevM": 1656
+                  },
+                  {
+                    "distanceKm": 338,
+                    "elevM": 2005
+                  },
+                  {
+                    "distanceKm": 340,
+                    "elevM": 2146
+                  },
+                  {
+                    "distanceKm": 342,
+                    "elevM": 1900
+                  },
+                  {
+                    "distanceKm": 344,
+                    "elevM": 1642
+                  },
+                  {
+                    "distanceKm": 346,
+                    "elevM": 1548
+                  },
+                  {
+                    "distanceKm": 348,
+                    "elevM": 1430
+                  },
+                  {
+                    "distanceKm": 350,
+                    "elevM": 1302
+                  },
+                  {
+                    "distanceKm": 352,
+                    "elevM": 1157
+                  },
+                  {
+                    "distanceKm": 354,
+                    "elevM": 1300
+                  },
+                  {
+                    "distanceKm": 356,
+                    "elevM": 1523
+                  },
+                  {
+                    "distanceKm": 358,
+                    "elevM": 1741
+                  },
+                  {
+                    "distanceKm": 360,
+                    "elevM": 1998
+                  },
+                  {
+                    "distanceKm": 362,
+                    "elevM": 2221
+                  },
+                  {
+                    "distanceKm": 364,
+                    "elevM": 2224
+                  },
+                  {
+                    "distanceKm": 366,
+                    "elevM": 1940
+                  },
+                  {
+                    "distanceKm": 368,
+                    "elevM": 1847
+                  },
+                  {
+                    "distanceKm": 370,
+                    "elevM": 1664
+                  },
+                  {
+                    "distanceKm": 372,
+                    "elevM": 1574
+                  },
+                  {
+                    "distanceKm": 374,
+                    "elevM": 1738
+                  },
+                  {
+                    "distanceKm": 376,
+                    "elevM": 1958
+                  },
+                  {
+                    "distanceKm": 378,
+                    "elevM": 2128
+                  },
+                  {
+                    "distanceKm": 380,
+                    "elevM": 2556
+                  },
+                  {
+                    "distanceKm": 382,
+                    "elevM": 2095
+                  },
+                  {
+                    "distanceKm": 384,
+                    "elevM": 1966
+                  },
+                  {
+                    "distanceKm": 386,
+                    "elevM": 1794
+                  },
+                  {
+                    "distanceKm": 388,
+                    "elevM": 1666
+                  },
+                  {
+                    "distanceKm": 390,
+                    "elevM": 1560
+                  },
+                  {
+                    "distanceKm": 392,
+                    "elevM": 1393
+                  },
+                  {
+                    "distanceKm": 394,
+                    "elevM": 1261
+                  },
+                  {
+                    "distanceKm": 396,
+                    "elevM": 1389
+                  },
+                  {
+                    "distanceKm": 398,
+                    "elevM": 1579
+                  },
+                  {
+                    "distanceKm": 400,
+                    "elevM": 1775
+                  },
+                  {
+                    "distanceKm": 402,
+                    "elevM": 1868
+                  },
+                  {
+                    "distanceKm": 404,
+                    "elevM": 1966
+                  },
+                  {
+                    "distanceKm": 406,
+                    "elevM": 2220
+                  },
+                  {
+                    "distanceKm": 408,
+                    "elevM": 2475
+                  },
+                  {
+                    "distanceKm": 410,
+                    "elevM": 2415
+                  },
+                  {
+                    "distanceKm": 412,
+                    "elevM": 2345
+                  },
+                  {
+                    "distanceKm": 414,
+                    "elevM": 2195
+                  },
+                  {
+                    "distanceKm": 416,
+                    "elevM": 1664
+                  },
+                  {
+                    "distanceKm": 418,
+                    "elevM": 1468
+                  },
+                  {
+                    "distanceKm": 420,
+                    "elevM": 1524
+                  },
+                  {
+                    "distanceKm": 422,
+                    "elevM": 1638
+                  },
+                  {
+                    "distanceKm": 424,
+                    "elevM": 1935
+                  },
+                  {
+                    "distanceKm": 426,
+                    "elevM": 2361
+                  },
+                  {
+                    "distanceKm": 428,
+                    "elevM": 2299
+                  },
+                  {
+                    "distanceKm": 430,
+                    "elevM": 2025
+                  },
+                  {
+                    "distanceKm": 432,
+                    "elevM": 1942
+                  },
+                  {
+                    "distanceKm": 434,
+                    "elevM": 1684
+                  },
+                  {
+                    "distanceKm": 436,
+                    "elevM": 1458
+                  },
+                  {
+                    "distanceKm": 438,
+                    "elevM": 1580
+                  },
+                  {
+                    "distanceKm": 440,
+                    "elevM": 1758
+                  },
+                  {
+                    "distanceKm": 442,
+                    "elevM": 2074
+                  },
+                  {
+                    "distanceKm": 444,
+                    "elevM": 2274
+                  },
+                  {
+                    "distanceKm": 446,
+                    "elevM": 2197
+                  },
+                  {
+                    "distanceKm": 448,
+                    "elevM": 2169
+                  },
+                  {
+                    "distanceKm": 450,
+                    "elevM": 2333
+                  },
+                  {
+                    "distanceKm": 452,
+                    "elevM": 2545
+                  },
+                  {
+                    "distanceKm": 454,
+                    "elevM": 2259
+                  },
+                  {
+                    "distanceKm": 456,
+                    "elevM": 2136
+                  },
+                  {
+                    "distanceKm": 458,
+                    "elevM": 1869
+                  },
+                  {
+                    "distanceKm": 460,
+                    "elevM": 1709
+                  },
+                  {
+                    "distanceKm": 462,
+                    "elevM": 1612
+                  },
+                  {
+                    "distanceKm": 464,
+                    "elevM": 1380
+                  },
+                  {
+                    "distanceKm": 466,
+                    "elevM": 1305
+                  },
+                  {
+                    "distanceKm": 468,
+                    "elevM": 1350
+                  },
+                  {
+                    "distanceKm": 470,
+                    "elevM": 1367
+                  },
+                  {
+                    "distanceKm": 472,
+                    "elevM": 1338
+                  },
+                  {
+                    "distanceKm": 474,
+                    "elevM": 1122
+                  },
+                  {
+                    "distanceKm": 476,
+                    "elevM": 1087
+                  },
+                  {
+                    "distanceKm": 478,
+                    "elevM": 1522
+                  },
+                  {
+                    "distanceKm": 480,
+                    "elevM": 1876
+                  },
+                  {
+                    "distanceKm": 482,
+                    "elevM": 2184
+                  },
+                  {
+                    "distanceKm": 484,
+                    "elevM": 1638
+                  },
+                  {
+                    "distanceKm": 486,
+                    "elevM": 1327
+                  },
+                  {
+                    "distanceKm": 488,
+                    "elevM": 1342
+                  },
+                  {
+                    "distanceKm": 490,
+                    "elevM": 1497
+                  },
+                  {
+                    "distanceKm": 492,
+                    "elevM": 1800
+                  },
+                  {
+                    "distanceKm": 494,
+                    "elevM": 1525
+                  },
+                  {
+                    "distanceKm": 496,
+                    "elevM": 1469
+                  },
+                  {
+                    "distanceKm": 498,
+                    "elevM": 1238
+                  },
+                  {
+                    "distanceKm": 500,
+                    "elevM": 1285
+                  },
+                  {
+                    "distanceKm": 502,
+                    "elevM": 1516
+                  },
+                  {
+                    "distanceKm": 504,
+                    "elevM": 1456
+                  },
+                  {
+                    "distanceKm": 506,
+                    "elevM": 1590
+                  },
+                  {
+                    "distanceKm": 508,
+                    "elevM": 1760
+                  },
+                  {
+                    "distanceKm": 510,
+                    "elevM": 1928
+                  },
+                  {
+                    "distanceKm": 512,
+                    "elevM": 2179
+                  },
+                  {
+                    "distanceKm": 514,
+                    "elevM": 1732
+                  },
+                  {
+                    "distanceKm": 516,
+                    "elevM": 1298
+                  },
+                  {
+                    "distanceKm": 518,
+                    "elevM": 1437
+                  },
+                  {
+                    "distanceKm": 520,
+                    "elevM": 1567
+                  },
+                  {
+                    "distanceKm": 522,
+                    "elevM": 1728
+                  },
+                  {
+                    "distanceKm": 524,
+                    "elevM": 1789
+                  },
+                  {
+                    "distanceKm": 526,
+                    "elevM": 1955
+                  },
+                  {
+                    "distanceKm": 528,
+                    "elevM": 2186
+                  },
+                  {
+                    "distanceKm": 530,
+                    "elevM": 2403
+                  },
+                  {
+                    "distanceKm": 532,
+                    "elevM": 2769
+                  },
+                  {
+                    "distanceKm": 534,
+                    "elevM": 2367
+                  },
+                  {
+                    "distanceKm": 536,
+                    "elevM": 1989
+                  },
+                  {
+                    "distanceKm": 538,
+                    "elevM": 1696
+                  },
+                  {
+                    "distanceKm": 540,
+                    "elevM": 1481
+                  },
+                  {
+                    "distanceKm": 542,
+                    "elevM": 1794
+                  },
+                  {
+                    "distanceKm": 544,
+                    "elevM": 1501
+                  },
+                  {
+                    "distanceKm": 546,
+                    "elevM": 1330
+                  },
+                  {
+                    "distanceKm": 548,
+                    "elevM": 1613
+                  },
+                  {
+                    "distanceKm": 550,
+                    "elevM": 1590
+                  },
+                  {
+                    "distanceKm": 552,
+                    "elevM": 1556
+                  },
+                  {
+                    "distanceKm": 554,
+                    "elevM": 1761
+                  },
+                  {
+                    "distanceKm": 556,
+                    "elevM": 1950
+                  },
+                  {
+                    "distanceKm": 558,
+                    "elevM": 1498
+                  },
+                  {
+                    "distanceKm": 560,
+                    "elevM": 1250
+                  },
+                  {
+                    "distanceKm": 562,
+                    "elevM": 1590
+                  },
+                  {
+                    "distanceKm": 564,
+                    "elevM": 1640
+                  },
+                  {
+                    "distanceKm": 566,
+                    "elevM": 1755
+                  },
+                  {
+                    "distanceKm": 568,
+                    "elevM": 1857
+                  },
+                  {
+                    "distanceKm": 570,
+                    "elevM": 2015
+                  },
+                  {
+                    "distanceKm": 572,
+                    "elevM": 2188
+                  },
+                  {
+                    "distanceKm": 574,
+                    "elevM": 2394
+                  },
+                  {
+                    "distanceKm": 576,
+                    "elevM": 2542
+                  },
+                  {
+                    "distanceKm": 578,
+                    "elevM": 2273
+                  },
+                  {
+                    "distanceKm": 580,
+                    "elevM": 2087
+                  },
+                  {
+                    "distanceKm": 582,
+                    "elevM": 2461
+                  },
+                  {
+                    "distanceKm": 584,
+                    "elevM": 2545
+                  },
+                  {
+                    "distanceKm": 586,
+                    "elevM": 2309
+                  },
+                  {
+                    "distanceKm": 588,
+                    "elevM": 2275
+                  },
+                  {
+                    "distanceKm": 590,
+                    "elevM": 2148
+                  },
+                  {
+                    "distanceKm": 592,
+                    "elevM": 2204
+                  },
+                  {
+                    "distanceKm": 594,
+                    "elevM": 2089
+                  },
+                  {
+                    "distanceKm": 596,
+                    "elevM": 1859
+                  },
+                  {
+                    "distanceKm": 598,
+                    "elevM": 1435
+                  },
+                  {
+                    "distanceKm": 600,
+                    "elevM": 1267
+                  },
+                  {
+                    "distanceKm": 602,
+                    "elevM": 1171
+                  },
+                  {
+                    "distanceKm": 604,
+                    "elevM": 1149
+                  },
+                  {
+                    "distanceKm": 606,
+                    "elevM": 1160
+                  },
+                  {
+                    "distanceKm": 608,
+                    "elevM": 1186
+                  },
+                  {
+                    "distanceKm": 610,
+                    "elevM": 1453
+                  },
+                  {
+                    "distanceKm": 612,
+                    "elevM": 1697
+                  },
+                  {
+                    "distanceKm": 614,
+                    "elevM": 1850
+                  },
+                  {
+                    "distanceKm": 616,
+                    "elevM": 1938
+                  },
+                  {
+                    "distanceKm": 618,
+                    "elevM": 1957
+                  },
+                  {
+                    "distanceKm": 620,
+                    "elevM": 1896
+                  },
+                  {
+                    "distanceKm": 622,
+                    "elevM": 1808
+                  },
+                  {
+                    "distanceKm": 624,
+                    "elevM": 1629
+                  },
+                  {
+                    "distanceKm": 626,
+                    "elevM": 1441
+                  },
+                  {
+                    "distanceKm": 628,
+                    "elevM": 1401
+                  },
+                  {
+                    "distanceKm": 630,
+                    "elevM": 1324
+                  },
+                  {
+                    "distanceKm": 632,
+                    "elevM": 1523
+                  },
+                  {
+                    "distanceKm": 634,
+                    "elevM": 1890
+                  },
+                  {
+                    "distanceKm": 636,
+                    "elevM": 1824
+                  },
+                  {
+                    "distanceKm": 638,
+                    "elevM": 1613
+                  },
+                  {
+                    "distanceKm": 640,
+                    "elevM": 1365
+                  },
+                  {
+                    "distanceKm": 642,
+                    "elevM": 1322
+                  },
+                  {
+                    "distanceKm": 644,
+                    "elevM": 1480
+                  },
+                  {
+                    "distanceKm": 646,
+                    "elevM": 1750
+                  },
+                  {
+                    "distanceKm": 648,
+                    "elevM": 1969
+                  },
+                  {
+                    "distanceKm": 650,
+                    "elevM": 2145
+                  },
+                  {
+                    "distanceKm": 652,
+                    "elevM": 2478
+                  },
+                  {
+                    "distanceKm": 654,
+                    "elevM": 2792
+                  },
+                  {
+                    "distanceKm": 656,
+                    "elevM": 2728
+                  },
+                  {
+                    "distanceKm": 658,
+                    "elevM": 2436
+                  },
+                  {
+                    "distanceKm": 660,
+                    "elevM": 2396
+                  },
+                  {
+                    "distanceKm": 662,
+                    "elevM": 2022
+                  },
+                  {
+                    "distanceKm": 664,
+                    "elevM": 1727
+                  },
+                  {
+                    "distanceKm": 666,
+                    "elevM": 1487
+                  },
+                  {
+                    "distanceKm": 668,
+                    "elevM": 1321
+                  },
+                  {
+                    "distanceKm": 670,
+                    "elevM": 1422
+                  },
+                  {
+                    "distanceKm": 672,
+                    "elevM": 1675
+                  },
+                  {
+                    "distanceKm": 674,
+                    "elevM": 1873
+                  },
+                  {
+                    "distanceKm": 676,
+                    "elevM": 1714
+                  },
+                  {
+                    "distanceKm": 678,
+                    "elevM": 1529
+                  },
+                  {
+                    "distanceKm": 680,
+                    "elevM": 1292
+                  },
+                  {
+                    "distanceKm": 682,
+                    "elevM": 1072
+                  },
+                  {
+                    "distanceKm": 684,
+                    "elevM": 1174
+                  },
+                  {
+                    "distanceKm": 686,
+                    "elevM": 1044
+                  },
+                  {
+                    "distanceKm": 688,
+                    "elevM": 903
+                  },
+                  {
+                    "distanceKm": 690,
+                    "elevM": 710
+                  },
+                  {
+                    "distanceKm": 692,
+                    "elevM": 566
+                  },
+                  {
+                    "distanceKm": 694,
+                    "elevM": 491
+                  },
+                  {
+                    "distanceKm": 696,
+                    "elevM": 446
+                  },
+                  {
+                    "distanceKm": 698,
+                    "elevM": 650
+                  },
+                  {
+                    "distanceKm": 700,
+                    "elevM": 398
+                  },
+                  {
+                    "distanceKm": 702,
+                    "elevM": 427
+                  },
+                  {
+                    "distanceKm": 704,
+                    "elevM": 723
+                  },
+                  {
+                    "distanceKm": 706,
+                    "elevM": 630
+                  },
+                  {
+                    "distanceKm": 708,
+                    "elevM": 502
+                  },
+                  {
+                    "distanceKm": 710,
+                    "elevM": 592
+                  },
+                  {
+                    "distanceKm": 712,
+                    "elevM": 893
+                  },
+                  {
+                    "distanceKm": 714,
+                    "elevM": 1097
+                  },
+                  {
+                    "distanceKm": 716,
+                    "elevM": 920
+                  },
+                  {
+                    "distanceKm": 718,
+                    "elevM": 751
+                  },
+                  {
+                    "distanceKm": 720,
+                    "elevM": 660
+                  },
+                  {
+                    "distanceKm": 722,
+                    "elevM": 501
+                  },
+                  {
+                    "distanceKm": 724,
+                    "elevM": 366
+                  },
+                  {
+                    "distanceKm": 726,
+                    "elevM": 246
+                  },
+                  {
+                    "distanceKm": 728,
+                    "elevM": 290
+                  },
+                  {
+                    "distanceKm": 730,
+                    "elevM": 563
+                  },
+                  {
+                    "distanceKm": 732,
+                    "elevM": 568
+                  },
+                  {
+                    "distanceKm": 734,
+                    "elevM": 674
+                  },
+                  {
+                    "distanceKm": 736,
+                    "elevM": 706
+                  },
+                  {
+                    "distanceKm": 738,
+                    "elevM": 494
+                  },
+                  {
+                    "distanceKm": 740,
+                    "elevM": 442
+                  },
+                  {
+                    "distanceKm": 742,
+                    "elevM": 271
+                  },
+                  {
+                    "distanceKm": 744,
+                    "elevM": 319
+                  },
+                  {
+                    "distanceKm": 746,
+                    "elevM": 371
+                  },
+                  {
+                    "distanceKm": 748,
+                    "elevM": 338
+                  },
+                  {
+                    "distanceKm": 750,
+                    "elevM": 362
+                  },
+                  {
+                    "distanceKm": 752,
+                    "elevM": 503
+                  },
+                  {
+                    "distanceKm": 754,
+                    "elevM": 499
+                  },
+                  {
+                    "distanceKm": 756,
+                    "elevM": 376
+                  },
+                  {
+                    "distanceKm": 758,
+                    "elevM": 331
+                  },
+                  {
+                    "distanceKm": 760,
+                    "elevM": 340
+                  },
+                  {
+                    "distanceKm": 762,
+                    "elevM": 326
+                  },
+                  {
+                    "distanceKm": 764,
+                    "elevM": 401
+                  },
+                  {
+                    "distanceKm": 766,
+                    "elevM": 229
+                  },
+                  {
+                    "distanceKm": 768,
+                    "elevM": 118
+                  },
+                  {
+                    "distanceKm": 770,
+                    "elevM": 284
+                  },
+                  {
+                    "distanceKm": 772,
+                    "elevM": 533
+                  },
+                  {
+                    "distanceKm": 774,
+                    "elevM": 739
+                  },
+                  {
+                    "distanceKm": 776,
+                    "elevM": 630
+                  },
+                  {
+                    "distanceKm": 778,
+                    "elevM": 544
+                  },
+                  {
+                    "distanceKm": 780,
+                    "elevM": 494
+                  },
+                  {
+                    "distanceKm": 782,
+                    "elevM": 507
+                  },
+                  {
+                    "distanceKm": 784,
+                    "elevM": 502
+                  },
+                  {
+                    "distanceKm": 786,
+                    "elevM": 674
+                  },
+                  {
+                    "distanceKm": 788,
+                    "elevM": 590
+                  },
+                  {
+                    "distanceKm": 790,
+                    "elevM": 385
+                  },
+                  {
+                    "distanceKm": 792,
+                    "elevM": 356
+                  },
+                  {
+                    "distanceKm": 794,
+                    "elevM": 185
+                  },
+                  {
+                    "distanceKm": 796,
+                    "elevM": 210
+                  },
+                  {
+                    "distanceKm": 798,
+                    "elevM": 213
+                  },
+                  {
+                    "distanceKm": 800,
+                    "elevM": 230
+                  },
+                  {
+                    "distanceKm": 802,
+                    "elevM": 390
+                  },
+                  {
+                    "distanceKm": 804,
+                    "elevM": 181
+                  },
+                  {
+                    "distanceKm": 806,
+                    "elevM": 124
+                  },
+                  {
+                    "distanceKm": 808,
+                    "elevM": 137
+                  },
+                  {
+                    "distanceKm": 810,
+                    "elevM": 206
+                  },
+                  {
+                    "distanceKm": 812,
+                    "elevM": 226
+                  },
+                  {
+                    "distanceKm": 814,
+                    "elevM": 124
+                  },
+                  {
+                    "distanceKm": 816,
+                    "elevM": 205
+                  },
+                  {
+                    "distanceKm": 818,
+                    "elevM": 47
+                  },
+                  {
+                    "distanceKm": 820,
+                    "elevM": 33
+                  },
+                  {
+                    "distanceKm": 822,
+                    "elevM": 293
+                  },
+                  {
+                    "distanceKm": 824,
+                    "elevM": 477
+                  },
+                  {
+                    "distanceKm": 826,
+                    "elevM": 470
+                  },
+                  {
+                    "distanceKm": 828,
+                    "elevM": 73
+                  },
+                  {
+                    "distanceKm": 830,
+                    "elevM": 10
+                  },
+                  {
+                    "distanceKm": 832,
+                    "elevM": 0
+                  },
+                  {
+                    "distanceKm": 834,
+                    "elevM": 121
+                  },
+                  {
+                    "distanceKm": 836,
+                    "elevM": 140
+                  },
+                  {
+                    "distanceKm": 838,
+                    "elevM": 88
+                  },
+                  {
+                    "distanceKm": 840,
+                    "elevM": 106
+                  },
+                  {
+                    "distanceKm": 842,
+                    "elevM": 104
+                  },
+                  {
+                    "distanceKm": 844,
+                    "elevM": 68
+                  },
+                  {
+                    "distanceKm": 846,
+                    "elevM": 66
+                  },
+                  {
+                    "distanceKm": 846.5,
+                    "elevM": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "highlightIds": [],
+        "sectionIds": [
+          "gr11-basque-country-navarre",
+          "gr11-aragonese-pyrenees",
+          "gr11-ordesa-high-country",
+          "gr11-andorra-pallars-high-country",
+          "gr11-eastern-pyrenees"
+        ]
+      },
+      "sections": [
+        {
+          "id": "gr11-basque-country-navarre",
+          "objectiveId": "gr11",
+          "order": 1,
+          "name": "Basque Country & Navarre",
+          "tagline": "From Cabo Higuer, passing through forests and coastal hills.",
+          "heroMediaId": "media/hero/gr11-basque-country-navarre",
+          "regionIds": ["basque-country-navarre"],
+          "summary": "From Cabo Higuer, passing through forests and coastal hills.",
+          "atAGlance": [
+            {
+              "key": "stages",
+              "value": "1–8",
+              "label": "Stages"
+            },
+            {
+              "key": "distance",
+              "value": 172.5,
+              "unit": "km",
+              "label": "Distance"
+            }
+          ],
+          "resupply": [],
+          "refuges": [],
+          "highlightIds": [],
+          "stageIds": [
+            "gr11-s1",
+            "gr11-s2",
+            "gr11-s3",
+            "gr11-s4",
+            "gr11-s5",
+            "gr11-s6",
+            "gr11-s7",
+            "gr11-s8"
+          ]
+        },
+        {
+          "id": "gr11-aragonese-pyrenees",
+          "objectiveId": "gr11",
+          "order": 2,
+          "name": "Aragonese Pyrenees",
+          "tagline": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.",
+          "heroMediaId": "media/hero/gr11-aragonese-pyrenees",
+          "regionIds": ["aragonese-pyrenees"],
+          "summary": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.",
+          "atAGlance": [
+            {
+              "key": "stages",
+              "value": "9–15",
+              "label": "Stages"
+            },
+            {
+              "key": "distance",
+              "value": 121.8,
+              "unit": "km",
+              "label": "Distance"
+            }
+          ],
+          "resupply": [],
+          "refuges": [],
+          "highlightIds": [],
+          "stageIds": [
+            "gr11-s9",
+            "gr11-s10",
+            "gr11-s11",
+            "gr11-s12",
+            "gr11-s13",
+            "gr11-s14",
+            "gr11-s15"
+          ]
+        },
+        {
+          "id": "gr11-ordesa-high-country",
+          "objectiveId": "gr11",
+          "order": 3,
+          "name": "Ordesa & High Country",
+          "tagline": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.",
+          "heroMediaId": "media/hero/gr11-ordesa-high-country",
+          "regionIds": ["ordesa-high-country"],
+          "summary": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.",
+          "atAGlance": [
+            {
+              "key": "stages",
+              "value": "16–22",
+              "label": "Stages"
+            },
+            {
+              "key": "distance",
+              "value": 128.2,
+              "unit": "km",
+              "label": "Distance"
+            }
+          ],
+          "resupply": [],
+          "refuges": [],
+          "highlightIds": [],
+          "stageIds": [
+            "gr11-s16",
+            "gr11-s17",
+            "gr11-s18",
+            "gr11-s19",
+            "gr11-s20",
+            "gr11-s21",
+            "gr11-s22"
+          ]
+        },
+        {
+          "id": "gr11-andorra-pallars-high-country",
+          "objectiveId": "gr11",
+          "order": 4,
+          "name": "Andorra & Pallars High Country",
+          "tagline": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.",
+          "heroMediaId": "media/hero/gr11-andorra-pallars-high-country",
+          "regionIds": ["andorra-pallars-high-country"],
+          "summary": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.",
+          "atAGlance": [
+            {
+              "key": "stages",
+              "value": "23–34",
+              "label": "Stages"
+            },
+            {
+              "key": "distance",
+              "value": 169.6,
+              "unit": "km",
+              "label": "Distance"
+            }
+          ],
+          "resupply": [],
+          "refuges": [],
+          "highlightIds": [],
+          "stageIds": [
+            "gr11-s23",
+            "gr11-s24",
+            "gr11-s25",
+            "gr11-s26",
+            "gr11-s27",
+            "gr11-s28",
+            "gr11-s29",
+            "gr11-s30",
+            "gr11-s31",
+            "gr11-s32",
+            "gr11-s33",
+            "gr11-s34"
+          ]
+        },
+        {
+          "id": "gr11-eastern-pyrenees",
+          "objectiveId": "gr11",
+          "order": 5,
+          "name": "Eastern Pyrenees",
+          "tagline": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.",
+          "heroMediaId": "media/hero/gr11-eastern-pyrenees",
+          "regionIds": ["eastern-pyrenees"],
+          "summary": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.",
+          "atAGlance": [
+            {
+              "key": "stages",
+              "value": "35–46",
+              "label": "Stages"
+            },
+            {
+              "key": "distance",
+              "value": 255.3,
+              "unit": "km",
+              "label": "Distance"
+            }
+          ],
+          "resupply": [],
+          "refuges": [],
+          "highlightIds": [],
+          "stageIds": [
+            "gr11-s35",
+            "gr11-s36",
+            "gr11-s37",
+            "gr11-s38",
+            "gr11-s39",
+            "gr11-s40",
+            "gr11-s41",
+            "gr11-s42",
+            "gr11-s43",
+            "gr11-s44",
+            "gr11-s45",
+            "gr11-s46"
+          ]
+        }
+      ],
+      "stages": [
+        {
+          "id": "gr11-s1",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 1,
+          "name": "Cabo Higuer → Bera/Vera de Bidasoa",
+          "fromLocationId": "gr11-loc-0",
+          "toLocationId": "gr11-loc-1",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 32.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 830,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 790,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "8h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0,
+                  "elevM": 11
+                },
+                {
+                  "distanceKm": 2,
+                  "elevM": 7
+                },
+                {
+                  "distanceKm": 4,
+                  "elevM": 9
+                },
+                {
+                  "distanceKm": 6,
+                  "elevM": 2
+                },
+                {
+                  "distanceKm": 8,
+                  "elevM": 23
+                },
+                {
+                  "distanceKm": 10,
+                  "elevM": 93
+                },
+                {
+                  "distanceKm": 12,
+                  "elevM": 215
+                },
+                {
+                  "distanceKm": 14,
+                  "elevM": 368
+                },
+                {
+                  "distanceKm": 16,
+                  "elevM": 417
+                },
+                {
+                  "distanceKm": 18,
+                  "elevM": 245
+                },
+                {
+                  "distanceKm": 20,
+                  "elevM": 214
+                },
+                {
+                  "distanceKm": 22,
+                  "elevM": 273
+                },
+                {
+                  "distanceKm": 24,
+                  "elevM": 395
+                },
+                {
+                  "distanceKm": 26,
+                  "elevM": 364
+                },
+                {
+                  "distanceKm": 28,
+                  "elevM": 315
+                },
+                {
+                  "distanceKm": 30,
+                  "elevM": 69
+                },
+                {
+                  "distanceKm": 32,
+                  "elevM": 85
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s2",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 2,
+          "name": "Bera/Vera de Bidasoa → Elizondo",
+          "fromLocationId": "gr11-loc-1",
+          "toLocationId": "gr11-loc-2",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 30.4,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1260,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1140,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "8h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.5,
+                  "elevM": 370
+                },
+                {
+                  "distanceKm": 3.5,
+                  "elevM": 272
+                },
+                {
+                  "distanceKm": 5.5,
+                  "elevM": 384
+                },
+                {
+                  "distanceKm": 7.5,
+                  "elevM": 442
+                },
+                {
+                  "distanceKm": 9.5,
+                  "elevM": 452
+                },
+                {
+                  "distanceKm": 11.5,
+                  "elevM": 447
+                },
+                {
+                  "distanceKm": 13.5,
+                  "elevM": 547
+                },
+                {
+                  "distanceKm": 15.5,
+                  "elevM": 537
+                },
+                {
+                  "distanceKm": 17.5,
+                  "elevM": 522
+                },
+                {
+                  "distanceKm": 19.5,
+                  "elevM": 631
+                },
+                {
+                  "distanceKm": 21.5,
+                  "elevM": 781
+                },
+                {
+                  "distanceKm": 23.5,
+                  "elevM": 659
+                },
+                {
+                  "distanceKm": 25.5,
+                  "elevM": 581
+                },
+                {
+                  "distanceKm": 27.5,
+                  "elevM": 376
+                },
+                {
+                  "distanceKm": 29.5,
+                  "elevM": 200
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s3",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 3,
+          "name": "Elizondo → Puerto de Urkiaga",
+          "fromLocationId": "gr11-loc-2",
+          "toLocationId": "gr11-loc-3",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 19.4,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1080,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 350,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.1,
+                  "elevM": 336
+                },
+                {
+                  "distanceKm": 3.1,
+                  "elevM": 466
+                },
+                {
+                  "distanceKm": 5.1,
+                  "elevM": 619
+                },
+                {
+                  "distanceKm": 7.1,
+                  "elevM": 898
+                },
+                {
+                  "distanceKm": 9.1,
+                  "elevM": 942
+                },
+                {
+                  "distanceKm": 11.1,
+                  "elevM": 944
+                },
+                {
+                  "distanceKm": 13.1,
+                  "elevM": 1166
+                },
+                {
+                  "distanceKm": 15.1,
+                  "elevM": 1173
+                },
+                {
+                  "distanceKm": 17.1,
+                  "elevM": 966
+                },
+                {
+                  "distanceKm": 19.1,
+                  "elevM": 1108
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s4",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 4,
+          "name": "Puerto de Urkiaga → Burguete/Auritz",
+          "fromLocationId": "gr11-loc-3",
+          "toLocationId": "gr11-loc-4",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 18,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 720,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 735,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.7,
+                  "elevM": 1213
+                },
+                {
+                  "distanceKm": 3.7,
+                  "elevM": 891
+                },
+                {
+                  "distanceKm": 5.7,
+                  "elevM": 891
+                },
+                {
+                  "distanceKm": 7.7,
+                  "elevM": 1135
+                },
+                {
+                  "distanceKm": 9.7,
+                  "elevM": 1117
+                },
+                {
+                  "distanceKm": 11.7,
+                  "elevM": 944
+                },
+                {
+                  "distanceKm": 13.7,
+                  "elevM": 907
+                },
+                {
+                  "distanceKm": 15.7,
+                  "elevM": 887
+                },
+                {
+                  "distanceKm": 17.7,
+                  "elevM": 1012
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s5",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 5,
+          "name": "Burguete/Auritz → Villanueva de Aezkoa/Hiriberri",
+          "fromLocationId": "gr11-loc-4",
+          "toLocationId": "gr11-loc-5",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 17.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 595,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 585,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 60m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.7,
+                  "elevM": 1016
+                },
+                {
+                  "distanceKm": 3.7,
+                  "elevM": 1055
+                },
+                {
+                  "distanceKm": 5.7,
+                  "elevM": 1067
+                },
+                {
+                  "distanceKm": 7.7,
+                  "elevM": 1138
+                },
+                {
+                  "distanceKm": 9.7,
+                  "elevM": 1027
+                },
+                {
+                  "distanceKm": 11.7,
+                  "elevM": 728
+                },
+                {
+                  "distanceKm": 13.7,
+                  "elevM": 933
+                },
+                {
+                  "distanceKm": 15.7,
+                  "elevM": 1075
+                },
+                {
+                  "distanceKm": 17.7,
+                  "elevM": 1281
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s6",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 6,
+          "name": "Villanueva de Aezkoa/Hiriberri → Ochagavía/Otsagabia",
+          "fromLocationId": "gr11-loc-5",
+          "toLocationId": "gr11-loc-6",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 21.2,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 780,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 950,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.9,
+                  "elevM": 1352
+                },
+                {
+                  "distanceKm": 3.9,
+                  "elevM": 1354
+                },
+                {
+                  "distanceKm": 5.9,
+                  "elevM": 1357
+                },
+                {
+                  "distanceKm": 7.9,
+                  "elevM": 1458
+                },
+                {
+                  "distanceKm": 9.9,
+                  "elevM": 1399
+                },
+                {
+                  "distanceKm": 11.9,
+                  "elevM": 1141
+                },
+                {
+                  "distanceKm": 13.9,
+                  "elevM": 976
+                },
+                {
+                  "distanceKm": 15.9,
+                  "elevM": 991
+                },
+                {
+                  "distanceKm": 17.9,
+                  "elevM": 763
+                },
+                {
+                  "distanceKm": 19.9,
+                  "elevM": 981
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s7",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 7,
+          "name": "Ochagavía/Otsagabia → Isaba/Izaba",
+          "fromLocationId": "gr11-loc-6",
+          "toLocationId": "gr11-loc-7",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 21.7,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 675,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 625,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 60m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.7,
+                  "elevM": 1132
+                },
+                {
+                  "distanceKm": 2.7,
+                  "elevM": 1216
+                },
+                {
+                  "distanceKm": 4.7,
+                  "elevM": 1265
+                },
+                {
+                  "distanceKm": 6.7,
+                  "elevM": 1290
+                },
+                {
+                  "distanceKm": 8.7,
+                  "elevM": 1376
+                },
+                {
+                  "distanceKm": 10.7,
+                  "elevM": 1354
+                },
+                {
+                  "distanceKm": 12.7,
+                  "elevM": 1366
+                },
+                {
+                  "distanceKm": 14.7,
+                  "elevM": 1146
+                },
+                {
+                  "distanceKm": 16.7,
+                  "elevM": 780
+                },
+                {
+                  "distanceKm": 18.7,
+                  "elevM": 874
+                },
+                {
+                  "distanceKm": 20.7,
+                  "elevM": 1012
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s8",
+          "sectionId": "gr11-basque-country-navarre",
+          "number": 8,
+          "name": "Isaba/Izaba → Zuriza (por Belabartze)",
+          "fromLocationId": "gr11-loc-7",
+          "toLocationId": "gr11-loc-8",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 11.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 560,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 80,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "3h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1,
+                  "elevM": 1054
+                },
+                {
+                  "distanceKm": 3,
+                  "elevM": 1098
+                },
+                {
+                  "distanceKm": 5,
+                  "elevM": 1285
+                },
+                {
+                  "distanceKm": 7,
+                  "elevM": 1247
+                },
+                {
+                  "distanceKm": 9,
+                  "elevM": 1349
+                },
+                {
+                  "distanceKm": 11,
+                  "elevM": 1623
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s9",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 9,
+          "name": "Zuriza → Aguas Tuertas",
+          "fromLocationId": "gr11-loc-8",
+          "toLocationId": "gr11-loc-9",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 19.1,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1170,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 780,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.5,
+                  "elevM": 1953
+                },
+                {
+                  "distanceKm": 3.5,
+                  "elevM": 1623
+                },
+                {
+                  "distanceKm": 5.5,
+                  "elevM": 1392
+                },
+                {
+                  "distanceKm": 7.5,
+                  "elevM": 1247
+                },
+                {
+                  "distanceKm": 9.5,
+                  "elevM": 1313
+                },
+                {
+                  "distanceKm": 11.5,
+                  "elevM": 1418
+                },
+                {
+                  "distanceKm": 13.5,
+                  "elevM": 1615
+                },
+                {
+                  "distanceKm": 15.5,
+                  "elevM": 1620
+                },
+                {
+                  "distanceKm": 17.5,
+                  "elevM": 1786
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s10",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 10,
+          "name": "Aguas Tuertas → Lizara",
+          "fromLocationId": "gr11-loc-9",
+          "toLocationId": "gr11-loc-10",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 14.1,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 635,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 715,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.4,
+                  "elevM": 1827
+                },
+                {
+                  "distanceKm": 2.4,
+                  "elevM": 2064
+                },
+                {
+                  "distanceKm": 4.4,
+                  "elevM": 2011
+                },
+                {
+                  "distanceKm": 6.4,
+                  "elevM": 1712
+                },
+                {
+                  "distanceKm": 8.4,
+                  "elevM": 1512
+                },
+                {
+                  "distanceKm": 10.4,
+                  "elevM": 1804
+                },
+                {
+                  "distanceKm": 12.4,
+                  "elevM": 2092
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s11",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 11,
+          "name": "Lizara → Candanchú",
+          "fromLocationId": "gr11-loc-10",
+          "toLocationId": "gr11-loc-11",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 16.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 0,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 0,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "3h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.3,
+                  "elevM": 2197
+                },
+                {
+                  "distanceKm": 2.3,
+                  "elevM": 2113
+                },
+                {
+                  "distanceKm": 4.3,
+                  "elevM": 2006
+                },
+                {
+                  "distanceKm": 6.3,
+                  "elevM": 1952
+                },
+                {
+                  "distanceKm": 8.3,
+                  "elevM": 1723
+                },
+                {
+                  "distanceKm": 10.3,
+                  "elevM": 1571
+                },
+                {
+                  "distanceKm": 12.3,
+                  "elevM": 1496
+                },
+                {
+                  "distanceKm": 14.3,
+                  "elevM": 1424
+                },
+                {
+                  "distanceKm": 16.3,
+                  "elevM": 1528
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s12",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 12,
+          "name": "Candanchú → Sallent de Gállego",
+          "fromLocationId": "gr11-loc-11",
+          "toLocationId": "gr11-loc-12",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 24.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 905,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1135,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 60m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 1707
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 1866
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 2221
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 1952
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 1724
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 1635
+                },
+                {
+                  "distanceKm": 13.6,
+                  "elevM": 1551
+                },
+                {
+                  "distanceKm": 15.6,
+                  "elevM": 1522
+                },
+                {
+                  "distanceKm": 17.6,
+                  "elevM": 1364
+                },
+                {
+                  "distanceKm": 19.6,
+                  "elevM": 1318
+                },
+                {
+                  "distanceKm": 21.6,
+                  "elevM": 1430
+                },
+                {
+                  "distanceKm": 23.6,
+                  "elevM": 1467
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s13",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 13,
+          "name": "Sallent de Gállego → Refugio de Respomuso",
+          "fromLocationId": "gr11-loc-12",
+          "toLocationId": "gr11-loc-13",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 11.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 902,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 36,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.1,
+                  "elevM": 1551
+                },
+                {
+                  "distanceKm": 3.1,
+                  "elevM": 1712
+                },
+                {
+                  "distanceKm": 5.1,
+                  "elevM": 2004
+                },
+                {
+                  "distanceKm": 7.1,
+                  "elevM": 2203
+                },
+                {
+                  "distanceKm": 9.1,
+                  "elevM": 2162
+                },
+                {
+                  "distanceKm": 11.1,
+                  "elevM": 2498
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s14",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 14,
+          "name": "Refugio de Respomuso → Balneario de Panticosa",
+          "fromLocationId": "gr11-loc-13",
+          "toLocationId": "gr11-loc-14",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 14.3,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 745,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 2473
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 2223
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 2173
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 2133
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 2179
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 2174
+                },
+                {
+                  "distanceKm": 13.6,
+                  "elevM": 2019
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s15",
+          "sectionId": "gr11-aragonese-pyrenees",
+          "number": 15,
+          "name": "Balneario de Panticosa → San Nicolás de Bujaruelo",
+          "fromLocationId": "gr11-loc-14",
+          "toLocationId": "gr11-loc-15",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 21.6,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 0,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 0,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.3,
+                  "elevM": 1694
+                },
+                {
+                  "distanceKm": 3.3,
+                  "elevM": 1827
+                },
+                {
+                  "distanceKm": 5.3,
+                  "elevM": 2195
+                },
+                {
+                  "distanceKm": 7.3,
+                  "elevM": 2512
+                },
+                {
+                  "distanceKm": 9.3,
+                  "elevM": 2288
+                },
+                {
+                  "distanceKm": 11.3,
+                  "elevM": 1981
+                },
+                {
+                  "distanceKm": 13.3,
+                  "elevM": 1802
+                },
+                {
+                  "distanceKm": 15.3,
+                  "elevM": 1704
+                },
+                {
+                  "distanceKm": 17.3,
+                  "elevM": 1618
+                },
+                {
+                  "distanceKm": 19.3,
+                  "elevM": 1493
+                },
+                {
+                  "distanceKm": 21.3,
+                  "elevM": 1350
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s16",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 16,
+          "name": "San Nicolás de Bujaruelo → Góriz",
+          "fromLocationId": "gr11-loc-15",
+          "toLocationId": "gr11-loc-16",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 25.3,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1238,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 381,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "7h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.7,
+                  "elevM": 1324
+                },
+                {
+                  "distanceKm": 3.7,
+                  "elevM": 1234
+                },
+                {
+                  "distanceKm": 5.7,
+                  "elevM": 1222
+                },
+                {
+                  "distanceKm": 7.7,
+                  "elevM": 1110
+                },
+                {
+                  "distanceKm": 9.7,
+                  "elevM": 1204
+                },
+                {
+                  "distanceKm": 11.7,
+                  "elevM": 1309
+                },
+                {
+                  "distanceKm": 13.7,
+                  "elevM": 1343
+                },
+                {
+                  "distanceKm": 15.7,
+                  "elevM": 1479
+                },
+                {
+                  "distanceKm": 17.7,
+                  "elevM": 1673
+                },
+                {
+                  "distanceKm": 19.7,
+                  "elevM": 1731
+                },
+                {
+                  "distanceKm": 21.7,
+                  "elevM": 1758
+                },
+                {
+                  "distanceKm": 23.7,
+                  "elevM": 1977
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s17",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 17,
+          "name": "Refugio de Góriz → Refugio de Pineta",
+          "fromLocationId": "gr11-loc-16",
+          "toLocationId": "gr11-loc-17",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 13.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 943,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.4,
+                  "elevM": 2208
+                },
+                {
+                  "distanceKm": 2.4,
+                  "elevM": 2242
+                },
+                {
+                  "distanceKm": 4.4,
+                  "elevM": 1847
+                },
+                {
+                  "distanceKm": 6.4,
+                  "elevM": 1971
+                },
+                {
+                  "distanceKm": 8.4,
+                  "elevM": 2406
+                },
+                {
+                  "distanceKm": 10.4,
+                  "elevM": 1771
+                },
+                {
+                  "distanceKm": 12.4,
+                  "elevM": 1241
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s18",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 18,
+          "name": "Circo de Pineta → Parzán",
+          "fromLocationId": "gr11-loc-17",
+          "toLocationId": "gr11-loc-18",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 18.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 880,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1025,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.7,
+                  "elevM": 1275
+                },
+                {
+                  "distanceKm": 2.7,
+                  "elevM": 1656
+                },
+                {
+                  "distanceKm": 4.7,
+                  "elevM": 2005
+                },
+                {
+                  "distanceKm": 6.7,
+                  "elevM": 2146
+                },
+                {
+                  "distanceKm": 8.7,
+                  "elevM": 1900
+                },
+                {
+                  "distanceKm": 10.7,
+                  "elevM": 1642
+                },
+                {
+                  "distanceKm": 12.7,
+                  "elevM": 1548
+                },
+                {
+                  "distanceKm": 14.7,
+                  "elevM": 1430
+                },
+                {
+                  "distanceKm": 16.7,
+                  "elevM": 1302
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s19",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 19,
+          "name": "Parzán → Refugio de Biados",
+          "fromLocationId": "gr11-loc-18",
+          "toLocationId": "gr11-loc-19",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 22.3,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1580,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1000,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "7h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.2,
+                  "elevM": 1157
+                },
+                {
+                  "distanceKm": 2.2,
+                  "elevM": 1300
+                },
+                {
+                  "distanceKm": 4.2,
+                  "elevM": 1523
+                },
+                {
+                  "distanceKm": 6.2,
+                  "elevM": 1741
+                },
+                {
+                  "distanceKm": 8.2,
+                  "elevM": 1998
+                },
+                {
+                  "distanceKm": 10.2,
+                  "elevM": 2221
+                },
+                {
+                  "distanceKm": 12.2,
+                  "elevM": 2224
+                },
+                {
+                  "distanceKm": 14.2,
+                  "elevM": 1940
+                },
+                {
+                  "distanceKm": 16.2,
+                  "elevM": 1847
+                },
+                {
+                  "distanceKm": 18.2,
+                  "elevM": 1664
+                },
+                {
+                  "distanceKm": 20.2,
+                  "elevM": 1574
+                },
+                {
+                  "distanceKm": 22.2,
+                  "elevM": 1738
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s20",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 20,
+          "name": "Refugio de Biados → Puente de San Jaime",
+          "fromLocationId": "gr11-loc-19",
+          "toLocationId": "gr11-loc-20",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 20.9,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 905,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.9,
+                  "elevM": 1958
+                },
+                {
+                  "distanceKm": 3.9,
+                  "elevM": 2128
+                },
+                {
+                  "distanceKm": 5.9,
+                  "elevM": 2556
+                },
+                {
+                  "distanceKm": 7.9,
+                  "elevM": 2095
+                },
+                {
+                  "distanceKm": 9.9,
+                  "elevM": 1966
+                },
+                {
+                  "distanceKm": 11.9,
+                  "elevM": 1794
+                },
+                {
+                  "distanceKm": 13.9,
+                  "elevM": 1666
+                },
+                {
+                  "distanceKm": 15.9,
+                  "elevM": 1560
+                },
+                {
+                  "distanceKm": 17.9,
+                  "elevM": 1393
+                },
+                {
+                  "distanceKm": 19.9,
+                  "elevM": 1261
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s21",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 21,
+          "name": "Puente de San Jaime → Refugio de Cap de Llauset",
+          "fromLocationId": "gr11-loc-20",
+          "toLocationId": "gr11-loc-21",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 17,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1500,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 350,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1,
+                  "elevM": 1389
+                },
+                {
+                  "distanceKm": 3,
+                  "elevM": 1579
+                },
+                {
+                  "distanceKm": 5,
+                  "elevM": 1775
+                },
+                {
+                  "distanceKm": 7,
+                  "elevM": 1868
+                },
+                {
+                  "distanceKm": 9,
+                  "elevM": 1966
+                },
+                {
+                  "distanceKm": 11,
+                  "elevM": 2220
+                },
+                {
+                  "distanceKm": 13,
+                  "elevM": 2475
+                },
+                {
+                  "distanceKm": 15,
+                  "elevM": 2415
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s22",
+          "sectionId": "gr11-ordesa-high-country",
+          "number": 22,
+          "name": "Refugio de Cap de Llauset → Refugio de Conangles",
+          "fromLocationId": "gr11-loc-21",
+          "toLocationId": "gr11-loc-22",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 10.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 205,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "2h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0,
+                  "elevM": 2345
+                },
+                {
+                  "distanceKm": 2,
+                  "elevM": 2195
+                },
+                {
+                  "distanceKm": 4,
+                  "elevM": 1664
+                },
+                {
+                  "distanceKm": 6,
+                  "elevM": 1468
+                },
+                {
+                  "distanceKm": 8,
+                  "elevM": 1524
+                },
+                {
+                  "distanceKm": 10,
+                  "elevM": 1638
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s23",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 23,
+          "name": "Refugio de Conangles → Refugio de la Restanca",
+          "fromLocationId": "gr11-loc-22",
+          "toLocationId": "gr11-loc-23",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 12.3,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 900,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 460,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 1935
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 2361
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 2299
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 2025
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 1942
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 1684
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s24",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 24,
+          "name": "Refugio de la Restanca → Refugio de Colomers",
+          "fromLocationId": "gr11-loc-23",
+          "toLocationId": "gr11-loc-24",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 7.7,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 640,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 510,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "2h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.2,
+                  "elevM": 1458
+                },
+                {
+                  "distanceKm": 3.2,
+                  "elevM": 1580
+                },
+                {
+                  "distanceKm": 5.2,
+                  "elevM": 1758
+                },
+                {
+                  "distanceKm": 7.2,
+                  "elevM": 2074
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s25",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 25,
+          "name": "Refugio de Colomers → Refugio Ernest Mallafré",
+          "fromLocationId": "gr11-loc-24",
+          "toLocationId": "gr11-loc-25",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 12.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 580,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 830,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "3h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.5,
+                  "elevM": 2274
+                },
+                {
+                  "distanceKm": 3.5,
+                  "elevM": 2197
+                },
+                {
+                  "distanceKm": 5.5,
+                  "elevM": 2169
+                },
+                {
+                  "distanceKm": 7.5,
+                  "elevM": 2333
+                },
+                {
+                  "distanceKm": 9.5,
+                  "elevM": 2545
+                },
+                {
+                  "distanceKm": 11.5,
+                  "elevM": 2259
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s26",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 26,
+          "name": "Estany de Sant Maurici → Espot → La Guingueta",
+          "fromLocationId": "gr11-loc-25",
+          "toLocationId": "gr11-loc-26",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 17.9,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 240,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1200,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.7,
+                  "elevM": 2136
+                },
+                {
+                  "distanceKm": 2.7,
+                  "elevM": 1869
+                },
+                {
+                  "distanceKm": 4.7,
+                  "elevM": 1709
+                },
+                {
+                  "distanceKm": 6.7,
+                  "elevM": 1612
+                },
+                {
+                  "distanceKm": 8.7,
+                  "elevM": 1380
+                },
+                {
+                  "distanceKm": 10.7,
+                  "elevM": 1305
+                },
+                {
+                  "distanceKm": 12.7,
+                  "elevM": 1350
+                },
+                {
+                  "distanceKm": 14.7,
+                  "elevM": 1367
+                },
+                {
+                  "distanceKm": 16.7,
+                  "elevM": 1338
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s27",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 27,
+          "name": "La Guingueta → Estaon",
+          "fromLocationId": "gr11-loc-26",
+          "toLocationId": "gr11-loc-27",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 11.9,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1290,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 980,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.8,
+                  "elevM": 1122
+                },
+                {
+                  "distanceKm": 2.8,
+                  "elevM": 1087
+                },
+                {
+                  "distanceKm": 4.8,
+                  "elevM": 1522
+                },
+                {
+                  "distanceKm": 6.8,
+                  "elevM": 1876
+                },
+                {
+                  "distanceKm": 8.8,
+                  "elevM": 2184
+                },
+                {
+                  "distanceKm": 10.8,
+                  "elevM": 1638
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s28",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 28,
+          "name": "Estaon → Tavascan",
+          "fromLocationId": "gr11-loc-27",
+          "toLocationId": "gr11-loc-28",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 13.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 690,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 865,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.9,
+                  "elevM": 1327
+                },
+                {
+                  "distanceKm": 2.9,
+                  "elevM": 1342
+                },
+                {
+                  "distanceKm": 4.9,
+                  "elevM": 1497
+                },
+                {
+                  "distanceKm": 6.9,
+                  "elevM": 1800
+                },
+                {
+                  "distanceKm": 8.9,
+                  "elevM": 1525
+                },
+                {
+                  "distanceKm": 10.9,
+                  "elevM": 1469
+                },
+                {
+                  "distanceKm": 12.9,
+                  "elevM": 1238
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s29",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 29,
+          "name": "Tavascan → Àreu",
+          "fromLocationId": "gr11-loc-28",
+          "toLocationId": "gr11-loc-29",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 15.1,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1225,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1100,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.4,
+                  "elevM": 1285
+                },
+                {
+                  "distanceKm": 3.4,
+                  "elevM": 1516
+                },
+                {
+                  "distanceKm": 5.4,
+                  "elevM": 1456
+                },
+                {
+                  "distanceKm": 7.4,
+                  "elevM": 1590
+                },
+                {
+                  "distanceKm": 9.4,
+                  "elevM": 1760
+                },
+                {
+                  "distanceKm": 11.4,
+                  "elevM": 1928
+                },
+                {
+                  "distanceKm": 13.4,
+                  "elevM": 2179
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s30",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 30,
+          "name": "Àreu → Refugio Baiau",
+          "fromLocationId": "gr11-loc-29",
+          "toLocationId": "gr11-loc-30",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 15.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1345,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 80,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.3,
+                  "elevM": 1732
+                },
+                {
+                  "distanceKm": 2.3,
+                  "elevM": 1298
+                },
+                {
+                  "distanceKm": 4.3,
+                  "elevM": 1437
+                },
+                {
+                  "distanceKm": 6.3,
+                  "elevM": 1567
+                },
+                {
+                  "distanceKm": 8.3,
+                  "elevM": 1728
+                },
+                {
+                  "distanceKm": 10.3,
+                  "elevM": 1789
+                },
+                {
+                  "distanceKm": 12.3,
+                  "elevM": 1955
+                },
+                {
+                  "distanceKm": 14.3,
+                  "elevM": 2186
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s31",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 31,
+          "name": "Refugio Baiau → Arans",
+          "fromLocationId": "gr11-loc-30",
+          "toLocationId": "gr11-loc-31",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 15.3,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 810,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1920,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.5,
+                  "elevM": 2403
+                },
+                {
+                  "distanceKm": 2.5,
+                  "elevM": 2769
+                },
+                {
+                  "distanceKm": 4.5,
+                  "elevM": 2367
+                },
+                {
+                  "distanceKm": 6.5,
+                  "elevM": 1989
+                },
+                {
+                  "distanceKm": 8.5,
+                  "elevM": 1696
+                },
+                {
+                  "distanceKm": 10.5,
+                  "elevM": 1481
+                },
+                {
+                  "distanceKm": 12.5,
+                  "elevM": 1794
+                },
+                {
+                  "distanceKm": 14.5,
+                  "elevM": 1501
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s32",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 32,
+          "name": "Arans → Encamp",
+          "fromLocationId": "gr11-loc-31",
+          "toLocationId": "gr11-loc-32",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 15.5,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1050,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1150,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.1,
+                  "elevM": 1330
+                },
+                {
+                  "distanceKm": 3.1,
+                  "elevM": 1613
+                },
+                {
+                  "distanceKm": 5.1,
+                  "elevM": 1590
+                },
+                {
+                  "distanceKm": 7.1,
+                  "elevM": 1556
+                },
+                {
+                  "distanceKm": 9.1,
+                  "elevM": 1761
+                },
+                {
+                  "distanceKm": 11.1,
+                  "elevM": 1950
+                },
+                {
+                  "distanceKm": 13.1,
+                  "elevM": 1498
+                },
+                {
+                  "distanceKm": 15.1,
+                  "elevM": 1250
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s33",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 33,
+          "name": "Encamp → Ref. l’Illa",
+          "fromLocationId": "gr11-loc-32",
+          "toLocationId": "gr11-loc-33",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 21.1,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1350,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 560,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 60m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 1590
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 1640
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 1755
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 1857
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 2015
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 2188
+                },
+                {
+                  "distanceKm": 13.6,
+                  "elevM": 2394
+                },
+                {
+                  "distanceKm": 15.6,
+                  "elevM": 2542
+                },
+                {
+                  "distanceKm": 17.6,
+                  "elevM": 2273
+                },
+                {
+                  "distanceKm": 19.6,
+                  "elevM": 2087
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s34",
+          "sectionId": "gr11-andorra-pallars-high-country",
+          "number": 34,
+          "name": "Ref. l’Illa → Refugio de Malniu",
+          "fromLocationId": "gr11-loc-33",
+          "toLocationId": "gr11-loc-34",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 10.6,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 810,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 740,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "3h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.6,
+                  "elevM": 2461
+                },
+                {
+                  "distanceKm": 2.6,
+                  "elevM": 2545
+                },
+                {
+                  "distanceKm": 4.6,
+                  "elevM": 2309
+                },
+                {
+                  "distanceKm": 6.6,
+                  "elevM": 2275
+                },
+                {
+                  "distanceKm": 8.6,
+                  "elevM": 2148
+                },
+                {
+                  "distanceKm": 10.6,
+                  "elevM": 2204
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s35",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 35,
+          "name": "Refugio de Malniu → Guils → Puigcerdà",
+          "fromLocationId": "gr11-loc-34",
+          "toLocationId": "gr11-loc-35",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 14.4,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 100,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1030,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "3h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 2,
+                  "elevM": 2089
+                },
+                {
+                  "distanceKm": 4,
+                  "elevM": 1859
+                },
+                {
+                  "distanceKm": 6,
+                  "elevM": 1435
+                },
+                {
+                  "distanceKm": 8,
+                  "elevM": 1267
+                },
+                {
+                  "distanceKm": 10,
+                  "elevM": 1171
+                },
+                {
+                  "distanceKm": 12,
+                  "elevM": 1149
+                },
+                {
+                  "distanceKm": 14,
+                  "elevM": 1160
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s36",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 36,
+          "name": "Puigcerdà → Planoles",
+          "fromLocationId": "gr11-loc-35",
+          "toLocationId": "gr11-loc-36",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 26,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1020,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1085,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "7h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 1186
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 1453
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 1697
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 1850
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 1938
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 1957
+                },
+                {
+                  "distanceKm": 13.6,
+                  "elevM": 1896
+                },
+                {
+                  "distanceKm": 15.6,
+                  "elevM": 1808
+                },
+                {
+                  "distanceKm": 17.6,
+                  "elevM": 1629
+                },
+                {
+                  "distanceKm": 19.6,
+                  "elevM": 1441
+                },
+                {
+                  "distanceKm": 21.6,
+                  "elevM": 1401
+                },
+                {
+                  "distanceKm": 23.6,
+                  "elevM": 1324
+                },
+                {
+                  "distanceKm": 25.6,
+                  "elevM": 1523
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s37",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 37,
+          "name": "Planoles → Santuario de Núria",
+          "fromLocationId": "gr11-loc-36",
+          "toLocationId": "gr11-loc-37",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 17.4,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1440,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 750,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.6,
+                  "elevM": 1890
+                },
+                {
+                  "distanceKm": 3.6,
+                  "elevM": 1824
+                },
+                {
+                  "distanceKm": 5.6,
+                  "elevM": 1613
+                },
+                {
+                  "distanceKm": 7.6,
+                  "elevM": 1365
+                },
+                {
+                  "distanceKm": 9.6,
+                  "elevM": 1322
+                },
+                {
+                  "distanceKm": 11.6,
+                  "elevM": 1480
+                },
+                {
+                  "distanceKm": 13.6,
+                  "elevM": 1750
+                },
+                {
+                  "distanceKm": 15.6,
+                  "elevM": 1969
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s38",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 38,
+          "name": "Santuario de Núria → Refugio de Ulldeter",
+          "fromLocationId": "gr11-loc-37",
+          "toLocationId": "gr11-loc-38",
+          "grade": {
+            "system": "hiking-band",
+            "value": "hard"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 11.9,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1000,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 720,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "hard",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.2,
+                  "elevM": 2145
+                },
+                {
+                  "distanceKm": 2.2,
+                  "elevM": 2478
+                },
+                {
+                  "distanceKm": 4.2,
+                  "elevM": 2792
+                },
+                {
+                  "distanceKm": 6.2,
+                  "elevM": 2728
+                },
+                {
+                  "distanceKm": 8.2,
+                  "elevM": 2436
+                },
+                {
+                  "distanceKm": 10.2,
+                  "elevM": 2396
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s39",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 39,
+          "name": "Refugio de Ulldeter → Molló",
+          "fromLocationId": "gr11-loc-38",
+          "toLocationId": "gr11-loc-39",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 20.6,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 620,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1670,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.3,
+                  "elevM": 2022
+                },
+                {
+                  "distanceKm": 2.3,
+                  "elevM": 1727
+                },
+                {
+                  "distanceKm": 4.3,
+                  "elevM": 1487
+                },
+                {
+                  "distanceKm": 6.3,
+                  "elevM": 1321
+                },
+                {
+                  "distanceKm": 8.3,
+                  "elevM": 1422
+                },
+                {
+                  "distanceKm": 10.3,
+                  "elevM": 1675
+                },
+                {
+                  "distanceKm": 12.3,
+                  "elevM": 1873
+                },
+                {
+                  "distanceKm": 14.3,
+                  "elevM": 1714
+                },
+                {
+                  "distanceKm": 16.3,
+                  "elevM": 1529
+                },
+                {
+                  "distanceKm": 18.3,
+                  "elevM": 1292
+                },
+                {
+                  "distanceKm": 20.3,
+                  "elevM": 1072
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s40",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 40,
+          "name": "Molló → Talaixà",
+          "fromLocationId": "gr11-loc-39",
+          "toLocationId": "gr11-loc-40",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 23.6,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 735,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1200,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h 30m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.7,
+                  "elevM": 1174
+                },
+                {
+                  "distanceKm": 3.7,
+                  "elevM": 1044
+                },
+                {
+                  "distanceKm": 5.7,
+                  "elevM": 903
+                },
+                {
+                  "distanceKm": 7.7,
+                  "elevM": 710
+                },
+                {
+                  "distanceKm": 9.7,
+                  "elevM": 566
+                },
+                {
+                  "distanceKm": 11.7,
+                  "elevM": 491
+                },
+                {
+                  "distanceKm": 13.7,
+                  "elevM": 446
+                },
+                {
+                  "distanceKm": 15.7,
+                  "elevM": 650
+                },
+                {
+                  "distanceKm": 17.7,
+                  "elevM": 398
+                },
+                {
+                  "distanceKm": 19.7,
+                  "elevM": 427
+                },
+                {
+                  "distanceKm": 21.7,
+                  "elevM": 723
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s41",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 41,
+          "name": "Talaixà → Albanyà",
+          "fromLocationId": "gr11-loc-40",
+          "toLocationId": "gr11-loc-41",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 19.8,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 760,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 1275,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "5h 45m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.1,
+                  "elevM": 630
+                },
+                {
+                  "distanceKm": 2.1,
+                  "elevM": 502
+                },
+                {
+                  "distanceKm": 4.1,
+                  "elevM": 592
+                },
+                {
+                  "distanceKm": 6.1,
+                  "elevM": 893
+                },
+                {
+                  "distanceKm": 8.1,
+                  "elevM": 1097
+                },
+                {
+                  "distanceKm": 10.1,
+                  "elevM": 920
+                },
+                {
+                  "distanceKm": 12.1,
+                  "elevM": 751
+                },
+                {
+                  "distanceKm": 14.1,
+                  "elevM": 660
+                },
+                {
+                  "distanceKm": 16.1,
+                  "elevM": 501
+                },
+                {
+                  "distanceKm": 18.1,
+                  "elevM": 366
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s42",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 42,
+          "name": "Albanyà → Maçanet de Cabrenys → La Vajol",
+          "fromLocationId": "gr11-loc-41",
+          "toLocationId": "gr11-loc-42",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 26.7,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 860,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 550,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "7h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.2,
+                  "elevM": 246
+                },
+                {
+                  "distanceKm": 2.2,
+                  "elevM": 290
+                },
+                {
+                  "distanceKm": 4.2,
+                  "elevM": 563
+                },
+                {
+                  "distanceKm": 6.2,
+                  "elevM": 568
+                },
+                {
+                  "distanceKm": 8.2,
+                  "elevM": 674
+                },
+                {
+                  "distanceKm": 10.2,
+                  "elevM": 706
+                },
+                {
+                  "distanceKm": 12.2,
+                  "elevM": 494
+                },
+                {
+                  "distanceKm": 14.2,
+                  "elevM": 442
+                },
+                {
+                  "distanceKm": 16.2,
+                  "elevM": 271
+                },
+                {
+                  "distanceKm": 18.2,
+                  "elevM": 319
+                },
+                {
+                  "distanceKm": 20.2,
+                  "elevM": 371
+                },
+                {
+                  "distanceKm": 22.2,
+                  "elevM": 338
+                },
+                {
+                  "distanceKm": 24.2,
+                  "elevM": 362
+                },
+                {
+                  "distanceKm": 26.2,
+                  "elevM": 503
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s43",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 43,
+          "name": "La Vajol → La Jonquera → Requessens",
+          "fromLocationId": "gr11-loc-42",
+          "toLocationId": "gr11-loc-43",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 25.7,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 830,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 880,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "7h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.5,
+                  "elevM": 499
+                },
+                {
+                  "distanceKm": 3.5,
+                  "elevM": 376
+                },
+                {
+                  "distanceKm": 5.5,
+                  "elevM": 331
+                },
+                {
+                  "distanceKm": 7.5,
+                  "elevM": 340
+                },
+                {
+                  "distanceKm": 9.5,
+                  "elevM": 326
+                },
+                {
+                  "distanceKm": 11.5,
+                  "elevM": 401
+                },
+                {
+                  "distanceKm": 13.5,
+                  "elevM": 229
+                },
+                {
+                  "distanceKm": 15.5,
+                  "elevM": 118
+                },
+                {
+                  "distanceKm": 17.5,
+                  "elevM": 284
+                },
+                {
+                  "distanceKm": 19.5,
+                  "elevM": 533
+                },
+                {
+                  "distanceKm": 21.5,
+                  "elevM": 739
+                },
+                {
+                  "distanceKm": 23.5,
+                  "elevM": 630
+                },
+                {
+                  "distanceKm": 25.5,
+                  "elevM": 544
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s44",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 44,
+          "name": "Requessens → Vilamaniscle",
+          "fromLocationId": "gr11-loc-43",
+          "toLocationId": "gr11-loc-44",
+          "grade": {
+            "system": "hiking-band",
+            "value": "severe"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 31.9,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 560,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 890,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "8h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "severe",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 1.8,
+                  "elevM": 494
+                },
+                {
+                  "distanceKm": 3.8,
+                  "elevM": 507
+                },
+                {
+                  "distanceKm": 5.8,
+                  "elevM": 502
+                },
+                {
+                  "distanceKm": 7.8,
+                  "elevM": 674
+                },
+                {
+                  "distanceKm": 9.8,
+                  "elevM": 590
+                },
+                {
+                  "distanceKm": 11.8,
+                  "elevM": 385
+                },
+                {
+                  "distanceKm": 13.8,
+                  "elevM": 356
+                },
+                {
+                  "distanceKm": 15.8,
+                  "elevM": 185
+                },
+                {
+                  "distanceKm": 17.8,
+                  "elevM": 210
+                },
+                {
+                  "distanceKm": 19.8,
+                  "elevM": 213
+                },
+                {
+                  "distanceKm": 21.8,
+                  "elevM": 230
+                },
+                {
+                  "distanceKm": 23.8,
+                  "elevM": 390
+                },
+                {
+                  "distanceKm": 25.8,
+                  "elevM": 181
+                },
+                {
+                  "distanceKm": 27.8,
+                  "elevM": 124
+                },
+                {
+                  "distanceKm": 29.8,
+                  "elevM": 137
+                },
+                {
+                  "distanceKm": 31.8,
+                  "elevM": 206
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s45",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 45,
+          "name": "Vilamaniscle → Llançà → El Port de la Selva",
+          "fromLocationId": "gr11-loc-44",
+          "toLocationId": "gr11-loc-45",
+          "grade": {
+            "system": "hiking-band",
+            "value": "moderate"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 21.6,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 760,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 910,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "6h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "moderate",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 2,
+                  "elevM": 226
+                },
+                {
+                  "distanceKm": 4,
+                  "elevM": 124
+                },
+                {
+                  "distanceKm": 6,
+                  "elevM": 205
+                },
+                {
+                  "distanceKm": 8,
+                  "elevM": 47
+                },
+                {
+                  "distanceKm": 10,
+                  "elevM": 33
+                },
+                {
+                  "distanceKm": 12,
+                  "elevM": 293
+                },
+                {
+                  "distanceKm": 14,
+                  "elevM": 477
+                },
+                {
+                  "distanceKm": 16,
+                  "elevM": 470
+                },
+                {
+                  "distanceKm": 18,
+                  "elevM": 73
+                },
+                {
+                  "distanceKm": 20,
+                  "elevM": 10
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        },
+        {
+          "id": "gr11-s46",
+          "sectionId": "gr11-eastern-pyrenees",
+          "number": 46,
+          "name": "El Port de la Selva → Cap de Creus",
+          "fromLocationId": "gr11-loc-45",
+          "toLocationId": "gr11-loc-46",
+          "grade": {
+            "system": "hiking-band",
+            "value": "easy"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 15.7,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 470,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "descent",
+              "value": 450,
+              "unit": "m",
+              "label": "Descent"
+            },
+            {
+              "key": "time",
+              "value": "4h 15m",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "easy",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0.4,
+                  "elevM": 0
+                },
+                {
+                  "distanceKm": 2.4,
+                  "elevM": 121
+                },
+                {
+                  "distanceKm": 4.4,
+                  "elevM": 140
+                },
+                {
+                  "distanceKm": 6.4,
+                  "elevM": 88
+                },
+                {
+                  "distanceKm": 8.4,
+                  "elevM": 106
+                },
+                {
+                  "distanceKm": 10.4,
+                  "elevM": 104
+                },
+                {
+                  "distanceKm": 12.4,
+                  "elevM": 68
+                },
+                {
+                  "distanceKm": 14.4,
+                  "elevM": 66
+                },
+                {
+                  "distanceKm": 14.8,
+                  "elevM": 0
+                }
+              ]
+            }
+          ],
+          "highlightIds": []
+        }
+      ]
+    }
+  ],
+  "peaks": [
+    {
+      "objective": {
+        "id": "aneto",
+        "slug": "aneto",
+        "name": "Aneto",
+        "type": "peak",
+        "regionIds": ["aragonese-pyrenees"],
+        "tagline": "3,404 m · Maladeta massif · Spain",
+        "heroMediaId": "media/hero/aneto",
+        "summary": "At 3,404 m the highest summit in the Pyrenees — three ways up, from a glacier walk to a technical ridge.",
+        "atAGlance": [
+          {
+            "key": "summit",
+            "value": 3404,
+            "unit": "m",
+            "label": "Summit"
+          },
+          {
+            "key": "routes",
+            "value": 3,
+            "label": "Routes"
+          },
+          {
+            "key": "season",
+            "value": "Jul–Sep",
+            "label": "Season"
+          },
+          {
+            "key": "grade",
+            "value": "F–PD",
+            "label": "Grade"
+          }
+        ],
+        "guide": [
+          {
+            "key": "character",
+            "facet": "overview",
+            "heading": "The mountain",
+            "body": "A big glaciated massif; the easiest line is long and high rather than hard, but the summit stride is exposed."
+          },
+          {
+            "key": "when",
+            "facet": "planning",
+            "heading": "When to go",
+            "body": "July to September, once the glacier is walkable and before autumn snow."
+          },
+          {
+            "key": "conditions",
+            "facet": "conditions",
+            "heading": "Conditions",
+            "body": "Glacier crevassing worsens through summer; the Paso de Mahoma is unforgiving in wind."
+          }
+        ],
+        "highlightIds": ["aneto-h-mahoma", "aneto-h-glacier"],
+        "routeIds": ["aneto-via-normal", "aneto-cara-norte", "aneto-cresta-salenques"]
+      },
+      "routes": [
+        {
+          "id": "aneto-via-normal",
+          "objectiveId": "aneto",
+          "name": "Vía Normal · La Renclusa",
+          "tagline": "The glacier route over the Paso de Mahoma — physically demanding rather than technical.",
+          "grade": {
+            "system": "french-alpine",
+            "value": "PD"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 22,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1530,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "time",
+              "value": "9–11 h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "PD",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From the Renclusa hut you cross the Aneto glacier to the Portillón, then tackle the airy Paso de Mahoma onto the summit. An alpine start, crampons, and a rope for the glacier."
+            },
+            {
+              "kind": "map",
+              "geojson": {
+                "type": "FeatureCollection",
+                "features": []
+              },
+              "styleId": "outdoor",
+              "markers": [
+                {
+                  "id": "aneto-summit",
+                  "kind": "location",
+                  "placeType": "summit",
+                  "label": "Aneto"
+                }
+              ]
+            },
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0,
+                  "elevM": 1900
+                },
+                {
+                  "distanceKm": 4,
+                  "elevM": 2400
+                },
+                {
+                  "distanceKm": 8,
+                  "elevM": 2950
+                },
+                {
+                  "distanceKm": 11,
+                  "elevM": 3404
+                },
+                {
+                  "distanceKm": 15,
+                  "elevM": 2700
+                },
+                {
+                  "distanceKm": 19,
+                  "elevM": 2150
+                },
+                {
+                  "distanceKm": 22,
+                  "elevM": 1900
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "stops": [
+                {
+                  "locationId": "renclusa",
+                  "distanceKm": 3,
+                  "note": "hut tap"
+                },
+                {
+                  "locationId": "aneto-summit",
+                  "distanceKm": 11,
+                  "note": "none above the hut"
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "places": [
+                {
+                  "locationId": "renclusa",
+                  "note": "staffed; book ahead"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "Crevassed glacier — rope, ice axe and crampons; a guide if unsure."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Paso de Mahoma is exposed — turn back in wind."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Storms build on summer afternoons — summit early."
+                }
+              ]
+            },
+            {
+              "kind": "chips",
+              "group": "gear",
+              "items": [
+                "Crampons",
+                "Ice axe",
+                "Helmet",
+                "Rope",
+                "Harness",
+                "Glacier kit",
+                "Warm layers"
+              ]
+            },
+            {
+              "kind": "itinerary",
+              "legIds": ["aneto-vn-l1", "aneto-vn-l2"]
+            },
+            {
+              "kind": "gallery",
+              "mediaIds": ["media/aneto/1", "media/aneto/2", "media/aneto/3"]
+            }
+          ],
+          "legIds": ["aneto-vn-l1", "aneto-vn-l2"],
+          "highlightIds": ["aneto-h-mahoma", "aneto-h-glacier"]
+        },
+        {
+          "id": "aneto-cara-norte",
+          "objectiveId": "aneto",
+          "name": "Cara Norte",
+          "tagline": "A steeper line on the north face — real ice, a serious day.",
+          "grade": {
+            "system": "french-alpine",
+            "value": "D"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 18,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1400,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "time",
+              "value": "10–12 h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "D",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A steeper, more committing line up the north face — real ice and a serious day out."
+            },
+            {
+              "kind": "map",
+              "geojson": {
+                "type": "FeatureCollection",
+                "features": []
+              },
+              "styleId": "outdoor",
+              "markers": [
+                {
+                  "id": "aneto-summit",
+                  "kind": "location",
+                  "placeType": "summit",
+                  "label": "Aneto"
+                }
+              ]
+            },
+            {
+              "kind": "elevation",
+              "points": [
+                {
+                  "distanceKm": 0,
+                  "elevM": 1950
+                },
+                {
+                  "distanceKm": 6,
+                  "elevM": 2700
+                },
+                {
+                  "distanceKm": 10,
+                  "elevM": 3404
+                },
+                {
+                  "distanceKm": 14,
+                  "elevM": 2500
+                },
+                {
+                  "distanceKm": 18,
+                  "elevM": 1950
+                }
+              ]
+            },
+            {
+              "kind": "itinerary",
+              "legIds": ["aneto-nf-l1", "aneto-nf-l2"]
+            }
+          ],
+          "legIds": ["aneto-nf-l1", "aneto-nf-l2"],
+          "highlightIds": ["aneto-h-glacier"]
+        },
+        {
+          "id": "aneto-cresta-salenques",
+          "objectiveId": "aneto",
+          "name": "Cresta de Salenques",
+          "tagline": "A long technical ridge traverse onto the summit — for the experienced.",
+          "grade": {
+            "system": "french-alpine",
+            "value": "TD"
+          },
+          "atAGlance": [
+            {
+              "key": "distance",
+              "value": 24,
+              "unit": "km",
+              "label": "Distance"
+            },
+            {
+              "key": "ascent",
+              "value": 1750,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "time",
+              "value": "11–13 h",
+              "label": "Time"
+            },
+            {
+              "key": "grade",
+              "value": "TD",
+              "label": "Grade"
+            }
+          ],
+          "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A long, technical ridge traverse from the Coronas valley onto the summit — for the experienced only."
+            },
+            {
+              "kind": "map",
+              "geojson": {
+                "type": "FeatureCollection",
+                "features": []
+              },
+              "styleId": "outdoor",
+              "markers": [
+                {
+                  "id": "aneto-summit",
+                  "kind": "location",
+                  "placeType": "summit",
+                  "label": "Aneto"
+                }
+              ]
+            },
+            {
+              "kind": "itinerary",
+              "legIds": ["aneto-cs-l1"]
+            }
+          ],
+          "legIds": ["aneto-cs-l1"],
+          "highlightIds": []
+        }
+      ],
+      "legs": [
+        {
+          "id": "aneto-vn-l1",
+          "routeId": "aneto-via-normal",
+          "number": 1,
+          "name": "La Besurta → Renclusa (approach)",
+          "fromLocationId": "la-besurta",
+          "toLocationId": "renclusa",
+          "grade": {
+            "system": "french-alpine",
+            "value": "F"
+          },
+          "atAGlance": [
+            {
+              "key": "summit",
+              "value": 2140,
+              "unit": "m",
+              "label": "Summit"
+            },
+            {
+              "key": "grade",
+              "value": "F",
+              "label": "Grade"
+            },
+            {
+              "key": "ascent",
+              "value": 230,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "season",
+              "value": "Jul–Sep",
+              "label": "Season"
+            }
+          ]
+        },
+        {
+          "id": "aneto-vn-l2",
+          "routeId": "aneto-via-normal",
+          "number": 2,
+          "name": "Renclusa → summit (glacier + Paso de Mahoma)",
+          "fromLocationId": "renclusa",
+          "toLocationId": "aneto-summit",
+          "grade": {
+            "system": "french-alpine",
+            "value": "PD"
+          },
+          "atAGlance": [
+            {
+              "key": "summit",
+              "value": 3404,
+              "unit": "m",
+              "label": "Summit"
+            },
+            {
+              "key": "grade",
+              "value": "PD",
+              "label": "Grade"
+            },
+            {
+              "key": "ascent",
+              "value": 1300,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "season",
+              "value": "Jul–Sep",
+              "label": "Season"
+            }
+          ]
+        },
+        {
+          "id": "aneto-nf-l1",
+          "routeId": "aneto-cara-norte",
+          "number": 1,
+          "name": "La Besurta → north face base",
+          "fromLocationId": "la-besurta",
+          "toLocationId": "renclusa",
+          "atAGlance": [
+            {
+              "key": "summit",
+              "value": 2400,
+              "unit": "m",
+              "label": "Summit"
+            },
+            {
+              "key": "grade",
+              "value": "F",
+              "label": "Grade"
+            },
+            {
+              "key": "ascent",
+              "value": 400,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "season",
+              "value": "Jul–Aug",
+              "label": "Season"
+            }
+          ]
+        },
+        {
+          "id": "aneto-nf-l2",
+          "routeId": "aneto-cara-norte",
+          "number": 2,
+          "name": "North face to summit",
+          "fromLocationId": "renclusa",
+          "toLocationId": "aneto-summit",
+          "grade": {
+            "system": "french-alpine",
+            "value": "D"
+          },
+          "atAGlance": [
+            {
+              "key": "summit",
+              "value": 3404,
+              "unit": "m",
+              "label": "Summit"
+            },
+            {
+              "key": "grade",
+              "value": "D",
+              "label": "Grade"
+            },
+            {
+              "key": "ascent",
+              "value": 1000,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "season",
+              "value": "Jul–Aug",
+              "label": "Season"
+            }
+          ]
+        },
+        {
+          "id": "aneto-cs-l1",
+          "routeId": "aneto-cresta-salenques",
+          "number": 1,
+          "name": "Coronas approach to the ridge",
+          "fromLocationId": "coronas",
+          "toLocationId": "aneto-summit",
+          "grade": {
+            "system": "french-alpine",
+            "value": "TD"
+          },
+          "atAGlance": [
+            {
+              "key": "summit",
+              "value": 3404,
+              "unit": "m",
+              "label": "Summit"
+            },
+            {
+              "key": "grade",
+              "value": "TD",
+              "label": "Grade"
+            },
+            {
+              "key": "ascent",
+              "value": 1600,
+              "unit": "m",
+              "label": "Ascent"
+            },
+            {
+              "key": "season",
+              "value": "Jul–Aug",
+              "label": "Season"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

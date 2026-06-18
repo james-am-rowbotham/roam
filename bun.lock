@@ -45,6 +45,7 @@
         "@expo-google-fonts/hanken-grotesk": "^0.4.3",
         "@maplibre/maplibre-react-native": "^11.3.2",
         "@op-engineering/op-sqlite": "^16.2.0",
+        "@roam/content": "workspace:*",
         "@roam/core": "workspace:*",
         "@tanstack/react-query": "^5.101.0",
         "expo": "~56.0.8",
@@ -75,6 +76,16 @@
       "name": "@roam/config",
       "version": "0.0.1",
     },
+    "packages/content": {
+      "name": "@roam/content",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@roam/config": "workspace:*",
+        "@types/geojson": "^7946.0.14",
+        "bun-types": "latest",
+        "typescript": "~6.0.3",
+      },
+    },
     "packages/core": {
       "name": "@roam/core",
       "version": "0.0.1",
@@ -88,6 +99,7 @@
       "name": "@roam/db",
       "version": "0.0.1",
       "dependencies": {
+        "@roam/content": "workspace:*",
         "@roam/core": "workspace:*",
         "@roam/pipeline": "workspace:*",
         "drizzle-orm": "^0.40.0",
@@ -95,6 +107,7 @@
       },
       "devDependencies": {
         "@roam/config": "workspace:*",
+        "@types/geojson": "^7946.0.14",
         "@types/node": "^25.9.2",
         "bun-types": "^1.3.14",
         "drizzle-kit": "^0.30.0",
@@ -104,8 +117,12 @@
     "packages/pipeline": {
       "name": "@roam/pipeline",
       "version": "0.0.1",
+      "dependencies": {
+        "@roam/content": "workspace:*",
+      },
       "devDependencies": {
         "@roam/config": "workspace:*",
+        "@types/geojson": "^7946.0.14",
         "bun-types": "^1.3.14",
         "typescript": "~6.0.3",
       },
@@ -595,6 +612,8 @@
     "@roam/api": ["@roam/api@workspace:apps/api"],
 
     "@roam/config": ["@roam/config@workspace:packages/config"],
+
+    "@roam/content": ["@roam/content@workspace:packages/content"],
 
     "@roam/core": ["@roam/core@workspace:packages/core"],
 

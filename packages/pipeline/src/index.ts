@@ -9,3 +9,9 @@ export * from './overpass';
 export * from './geometry';
 export * from './normalise';
 export * from './etapas';
+// Pack builder (§12) — TrailKnowledge → @roam/content packs, config-driven, multi-trail.
+export * from './pack/config';
+export * from './pack/geography';
+export * from './pack/knowledge';
+export * from './pack/build';
+export * from './pack/peak';
