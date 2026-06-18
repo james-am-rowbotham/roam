@@ -1,47 +1,38 @@
+import type { ObjectiveSummary } from '@roam/content';
 import { type Href, useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DiscoveryCard } from '../../components/browse/DiscoveryCard';
 import { JourneyCard } from '../../components/journey';
-import { TrailCard } from '../../components/trail';
 import { Button, NavBar, SearchField, SectionHeader } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
+import { useObjectives } from '../../lib/contentRepo';
 import { useJourneys, useTrails } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
 
+// Card subtitle: "Trail · 820 km" / "Peak · 3,404 m" — type + the lead stat.
+const objectiveSubtitle = (o: ObjectiveSummary): string => {
+  const kind = o.type.charAt(0).toUpperCase() + o.type.slice(1);
+  const lead = o.atAGlance[0];
+  if (!lead) return kind;
+  const value = typeof lead.value === 'number' ? lead.value.toLocaleString('en-US') : lead.value;
+  return `${kind} · ${value}${lead.unit ? ` ${lead.unit}` : ''}`;
+};
+
+// Dev-only launchers that have no real Home entry yet (discovery is Phase 7).
 const DEV_LINKS: { label: string; href: Href }[] = [
   {
     label: 'Discover — Europe (Continent → … → Stage)',
     href: { pathname: '/discover/continent/[id]', params: { id: 'europe' } },
   },
   { label: 'ContentBlocks — every kind', href: '/dev/content-blocks' },
-  {
-    label: 'GR11 — trail Guide shell',
-    href: { pathname: '/objective/[id]', params: { id: 'gr11' } },
-  },
-  {
-    label: 'GR11 · Ordesa section — generated overview',
-    href: {
-      pathname: '/objective/[id]/section/[sectionId]',
-      params: { id: 'gr11', sectionId: 'gr11-ordesa-high-country' },
-    },
-  },
-  {
-    label: 'GR11 · Stage 16 — generated overview prose',
-    href: {
-      pathname: '/objective/[id]/stage/[stageId]',
-      params: { id: 'gr11', stageId: 'gr11-s16' },
-    },
-  },
-  {
-    label: 'Aneto — peak Guide shell',
-    href: { pathname: '/objective/[id]', params: { id: 'aneto' } },
-  },
 ];
 
 export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { data, isLoading } = useTrails();
+  const { data: objectives, isLoading } = useObjectives();
+  const { data } = useTrails();
   const trails = data?.data ?? [];
 
   // Active journey (the navigated one) surface on Home.
@@ -81,21 +72,18 @@ export default function HomeScreen() {
       </View>
 
       <SectionHeader title="Popular trails" />
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.carousel}
-      >
+      <View style={styles.trailList}>
         {isLoading
           ? (['a', 'b', 'c'] as const).map((k) => <View key={k} style={styles.skeleton} />)
-          : trails.map((trail) => (
-              <TrailCard
-                key={trail.id}
-                trail={trail}
-                onPress={() => router.push(`/trail/${trail.id}`)}
+          : (objectives ?? []).map((o) => (
+              <DiscoveryCard
+                key={o.id}
+                title={o.name}
+                subtitle={objectiveSubtitle(o)}
+                onPress={() => router.push({ pathname: '/objective/[id]', params: { id: o.id } })}
               />
             ))}
-      </ScrollView>
+      </View>
 
       <SectionHeader title="Active journey" />
       {firstRun ? (
@@ -129,7 +117,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg.app },
   content: { paddingBottom: spacing[12] },
-  carousel: { paddingHorizontal: spacing[8], gap: spacing[4] },
+  trailList: { marginHorizontal: spacing[8], gap: spacing[6] },
   devLinks: {
     marginHorizontal: spacing[8],
     backgroundColor: colors.bg.surface,
@@ -150,9 +138,8 @@ const styles = StyleSheet.create({
   devLinkLabel: { ...type.body, color: colors.text.primary },
   devLinkChevron: { ...type.bodyLarge, color: colors.text.secondary },
   skeleton: {
-    width: 150,
-    height: 213,
-    borderRadius: radius.sm,
+    height: 100,
+    borderRadius: radius.xl,
     backgroundColor: colors.bg.subtle,
   },
   emptyJourneys: {

@@ -33,6 +33,9 @@ export const useRegionObjectives = (regionId: string) =>
     queryFn: () => contentRepo.listObjectivesByRegion(regionId),
   });
 
+export const useObjectives = () =>
+  useQuery({ queryKey: key('objectives'), queryFn: () => contentRepo.listObjectives() });
+
 export const useObjective = (id: string) =>
   useQuery({ queryKey: key('objective', id), queryFn: () => contentRepo.getObjective(id) });
 

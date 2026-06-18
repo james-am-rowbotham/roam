@@ -85,6 +85,8 @@ export interface RoamRepo {
   listObjectivesByRegion(regionId: string): Promise<ObjectiveSummary[]>;
 
   // objective
+  /** Every objective in the pack, summaries only — the Home / browse entry. */
+  listObjectives(): Promise<ObjectiveSummary[]>;
   getObjective(id: string): Promise<Objective>;
   listSections(objectiveId: string): Promise<SectionSummary[]>;
   listRoutes(objectiveId: string): Promise<RouteSummary[]>;

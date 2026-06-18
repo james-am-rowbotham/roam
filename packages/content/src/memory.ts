@@ -35,6 +35,8 @@ export function createMemoryRepo(store: ImportedStore): RoamRepo {
         ),
       ),
 
+    listObjectives: () => Promise.resolve([...store.objectiveSummaries.values()]),
+
     getObjective: (id) => get(store.objectives, id, 'objective'),
 
     listSections: (objectiveId) =>
