@@ -97,7 +97,8 @@ export function buildTrailPack(
         hours: estimateHours(distanceKm, s.ascentM),
         grade,
       }),
-      blocks: [...(elev ? [elev] : []), ...(content.stageBlocks?.[stageId] ?? [])],
+      // §12.4 order: the Overview narrative leads, the elevation profile follows.
+      blocks: [...(content.stageBlocks?.[stageId] ?? []), ...(elev ? [elev] : [])],
       highlightIds: [],
     };
   });

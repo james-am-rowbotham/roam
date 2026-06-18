@@ -4,99 +4,447 @@
       {
         "key": "terrain",
         "facet": "overview",
-        "heading": "Terrain",
-        "body": "These first eight stages are the gentlest on the GR11: you climb from the Atlantic at Cabo Higuer near Hondarribia through rolling green hills, hedged pastures and farm tracks rather than rock. The cols here are low and broad — Urkiaga, the Quinto Real watershed, Paso Tapla above Ochagavía — closer to grassy passes than the alpine ones waiting further east. Expect more mud than scrambling: forest tracks and pastoral paths that hold water after rain, with steady gains into the beech woods rather than sustained steep ground."
+        "heading": "Green hills before the high cols",
+        "body": "This is the Atlantic end of the GR11, where the walking is rolling rather than alpine: ridges and meadows between caseríos, with the day's work coming from accumulated up-and-down over long stages rather than altitude. From Cabo Higuer at sea level the route climbs gradually inland, crossing low passes — Lizarrieta, Urkiaga, Argibiela — before the ground steepens and rises into the Roncal valley. By the col into Aragón at Zuriza you are above 1,200 m, and the real climbs are about to begin."
       },
       {
         "key": "flora",
         "facet": "overview",
-        "heading": "Flora & fauna",
-        "body": "After the Quinto Real hills above Sorogain, the trail enters the beech country that defines this stretch, reaching the Selva de Irati at the head of the Salazar valley above Ochagavía — one of Europe's largest beech-and-fir forests. The canopy is dense and the ground mossy, so the walking is shaded and quiet; the same woods shelter roe deer, wild boar and stags, and the Irati is a protected area for woodpeckers, golden eagles and bearded vultures. If you walk this section in autumn the beech turns rather than stays green, which is when these valleys draw the most visitors."
+        "heading": "Beech forest most of the way",
+        "body": "European beech shades stage after stage here, from the Quinto Real woods above Elizondo to the long descent into Isaba. East of Hiriberri the route skirts the Irati Forest — the second-largest and best-preserved beech-fir forest in Europe, a UNESCO Biosphere Reserve since 2024, where silver fir joins the beech and oak, birch and willow fill the gaps. In autumn the holly and ferns come into their own; the higher passes give way to open pasture."
+      },
+      {
+        "key": "culture",
+        "facet": "overview",
+        "heading": "Baztan, shepherds & witches",
+        "body": "You cross into Navarre on the first day and spend the stretch in deep Basque country — euskera place names, stone caseríos, and the bordas (shepherds' huts) of the Quinto Real and Aezkoa valleys. Elizondo is the capital of the Baztan, the valley whose neighbour Zugarramurdi gave the Inquisition its most famous witch trials between 1609 and 1614. Ochagavía and Isaba keep the older rhythm of the Salazar and Roncal valleys, where transhumant shepherding shaped the high pastures the trail crosses."
       },
       {
         "key": "weather",
         "facet": "overview",
-        "heading": "Weather",
-        "body": "This is the wet end of the GR11: the prevailing north-west wind hits the Atlantic side first, so the Basque hills around Hondarribia and Bera see more mist and rain than anywhere further east, which is exactly why they stay so green. Expect low cloud and damp days even in summer, and beech paths that turn muddy after rain rather than drying fast under the canopy. Carry rain gear from the start and treat clear views as a bonus here — the dry, high-alpine weather comes later in the traverse, not in these opening valleys."
+        "heading": "The wet, green end of the range",
+        "body": "This is the Atlantic flank of the Pyrenees, closest to the Bay of Biscay, and it is green because it is wet — cloud and rain arrive off the sea more often than further east. Fog is the practical hazard, not heat: several stages warn that mist in the upper pasture zones, between Urkiaga and the Abodi passes, can make orientation hard. The walking season runs roughly March to November, with summer the most settled."
       }
     ],
     "gr11-aragonese-pyrenees": [
       {
         "key": "terrain",
         "facet": "overview",
-        "heading": "Terrain",
-        "body": "This is where the GR11 leaves the green foothills behind: from Candanchú the trail climbs the Canal Roya to the Anayet lakes, where the red sandstone and conglomerate of the Anayet cirque mark old volcanic rock rather than the limestone you have walked so far. Above Sallent de Gállego and Respomuso you are in genuine high country, crossing the Tebarray pass at 2,771m on rough ground with fixed cables, then dropping past the Bachimaña lakes toward Panticosa. The Respomuso to Panticosa stage is longer and rougher than the days before it, with a 1,200m+ descent and exposed rock near the col."
+        "heading": "Flysch gives way to granite",
+        "body": "The early stages cut across the folded flysch and limestone of the Inner Sierras — alternating sandstone and marl that bends into shapes like the Paso de la Oreja's anticline above Lizara. By the Tena valley the rock turns harder and the ground steps up into true high country: glacier-carved cirques, ibones (mountain lakes) like Anayet and Bachimaña, and passes above 2,700 m at Tebarray and Brazato. This is the first stretch where the trail stays high for days rather than dropping to a village each night."
       },
       {
         "key": "flora",
         "facet": "overview",
-        "heading": "Flora & fauna",
-        "body": "The meadows around the Anayet and Respomuso ibones are good ground for marmots, whose whistled alarm calls carry across the basins, and griffon vultures ride the thermals over the higher ground. Respomuso itself sits at the foot of Balaitous, the westernmost 3,000m peak in the Pyrenees, so the country here is rock, scree, and glacial lake more than forest. Watch the wet flushes and stream crossings for alpine flowers that hold on late where the snow lingers."
+        "heading": "Through the pine line into open meadow",
+        "body": "Below about 1,600 m you walk through beech and silver fir; higher up the subalpine belt is pino negro (Pinus uncinata), the mountain pine that holds the slopes up to roughly 2,400 m, often over a carpet of rhododendron and bilberry. Cross the treeline — around 2,200–2,450 m here — and the forest gives out to alpine meadow and juniper, the grazed grassland that fills Aguas Tuertas and the high pastures. The meadows are at their fullest and most flowered in the weeks just after snowmelt."
+      },
+      {
+        "key": "culture",
+        "facet": "overview",
+        "heading": "A valley run on grass",
+        "body": "The Tena valley, with Sallent de Gállego as its main town, was for centuries organised around its pastures — managed by the Junta General de la Val de Tena and split into the quiñones of Sallent, Panticosa and Partacua. Pyrenean life has mingled with pastoralism for six or seven thousand years, flocks climbing to the high meadows in late spring and coming down in autumn. The grazed grass underfoot at Aguas Tuertas and Respomuso is the working surface of that history, not a backdrop to it."
       },
       {
         "key": "weather",
         "facet": "overview",
-        "heading": "Weather",
-        "body": "From here the trail spends long stretches above 2,000m, and the Tebarray pass at 2,771m can hold snow into mid-August, with the final approach steepening to around 40 degrees where an ice axe earns its place in early season. The cabled sections past Bachimaña are there because the ground ices and stays wet, and the high cols draw afternoon cloud and storms faster than the valleys below. Check conditions at Respomuso before committing to the pass, and start early so you are over the top before the weather builds."
+        "heading": "Be over the pass before the build-up",
+        "body": "Summer days are hot with hard sun, but in July and August thunderstorms build through the afternoon, especially when a southerly wind pushes moist air up from the plains — the standard rule is to be off exposed ridges and high passes before 2 pm. Snow lingers on the highest cols well into summer: Tebarray (2,771 m) can hold it until mid-August, and Brazato into July, both steep enough to want an ice axe when iced. Start early, and treat the high passes as the part of the day that decides the rest."
       }
     ],
     "gr11-ordesa-high-country": [
       {
         "key": "terrain",
         "facet": "overview",
-        "heading": "Terrain",
-        "body": "From San Nicolás de Bujaruelo the route drops into the Garganta de los Navarros and enters the Ordesa valley, a glacial trench walled by limestone cliffs like the Tozal de Mallo, climbing the Gradas de Soaso step-waterfalls past the Cola de Caballo to Refugio de Góriz at 2,200 m under Monte Perdido. This is the highest limestone massif in Western Europe, so expect karst rather than the granite that comes later: scree, fractured rock, and exposed sections such as the cabled Paso de la Escala. East of Pineta and Parzán the bedrock changes to the granite and glacial ibones of the Posets-Maladeta around Viadós and Benasque, a harder, higher-feeling country than Ordesa."
+        "heading": "Limestone cut by water",
+        "body": "This is karst country: the Ordesa canyon was carved by the río Arazas into Cretaceous and Eocene limestone, and the same rock holds Europe's deepest gorges on the Spanish side. Above them sits Monte Perdido, whose north-face glacier is one of the southernmost in Europe and retreating fast. The walking ranges from forested valley floors to high passes above 2,500m, including the drop off Collado de Añisclo into Pineta — roughly 1,200m of descent in about 2.5km, the steepest sustained loss on the GR11."
       },
       {
-        "key": "culture",
+        "key": "flora",
         "facet": "overview",
-        "heading": "Culture",
-        "body": "San Nicolás de Bujaruelo grew around a 12th-century pilgrims' hospital and its single-arched medieval bridge over the Río Ara, long a crossing point between the Broto valley and French Gavarnie. For centuries this pass carried not just pilgrims but muleteers, traders and smugglers moving goods over the frontier, and later refugees crossing in the other direction. The stage ends among the high Aragonese valleys of Chistau and Benasque, herding and mountaineering country whose villages — Gistaín, Sahún, Benasque — still anchor life under Aneto and Posets."
+        "heading": "Beech below, endemics on the walls",
+        "body": "Climbing the Ordesa valley you pass through the Bosque de las Hayas, a beech forest, before the trees give way to black pine and then open alpine grassland higher up. The park holds over 1,500 plant species, and the limestone cliffs and scree shelter Pyrenean endemics found almost nowhere else — among them Ramonda myconi and Borderea pyrenaica. The richest displays cling to the rock walls and ledges rather than the path itself."
       },
       {
         "key": "weather",
         "facet": "overview",
-        "heading": "Weather",
-        "body": "This is the highest, most exposed stretch of the GR11, with Góriz at 2,200 m and passes that hold snow into early summer, so cold, wind and poor visibility are realistic even in good seasons. In July and August clear mornings often build into afternoon thunderstorms, especially on south winds, and storms can be local to a single valley. Plan to clear the high passes and exposed sections like the Paso de la Escala early, and treat any afternoon forecast cautiously rather than as a promise."
+        "heading": "Clear mornings, building afternoons",
+        "body": "In July and August the pattern is reliable enough to plan around: clear mornings, then thunderstorms building in the afternoon when warm, moist air pushes up from the south. The high passes here — Chistau at 2,592m, Vallibierna at 2,710m — are exposed and dangerous in a storm. Start early, aim to be off the cols by midday, and treat dark clouds or thunder as a signal to drop down rather than push on."
       }
     ],
     "gr11-andorra-pallars-high-country": [
       {
-        "key": "terrain",
-        "facet": "overview",
-        "heading": "Terrain",
-        "body": "This is the high granite heart of the GR11: from Conangles you climb into the Aigüestortes i Estany de Sant Maurici national park, crossing passes like the Port de Caldes (2,568m) between Restanca, Colomèrs and Sant Maurici, where glacial cirques hold close to 200 lakes among bare rock. East of Tavascan and Àreu the route works up the Vall Ferrera under Pica d'Estats (3,143m), then enters Andorra over the Port de Baiau (about 2,750m) beneath Comapedrosa, the principality's highest peak at 2,942m. Expect rocky, lake-dotted ground above 2,400m and lingering snow on the higher cols into early summer, especially around the Oelhacrestada and Caldes passes."
-      },
-      {
         "key": "flora",
         "facet": "overview",
-        "heading": "Flora & fauna",
-        "body": "Below the passes the slopes carry mountain pine (Pinus uncinata) up to roughly 2,400m, with silver fir on the shadier north faces and alpine meadows of gentian higher still. Watch for marmots on the boulder fields around Colomèrs and Sant Maurici, isard (Pyrenean chamois) on the ridgelines, and bearded vultures and golden eagles working the cirques. The lakes and high pastures sit inside protected ground throughout, from the national park to Andorra's Comapedrosa nature park, so keep to the line and camp where it is allowed."
-      }
-    ],
-    "gr11-eastern-pyrenees": [
-      {
-        "key": "flora",
-        "facet": "overview",
-        "heading": "Flora & fauna",
-        "body": "The high meadows above Núria and around Ulldeter and Costabona are where you have the best chance of wildlife on the whole GR11 — isards (chamois) and marmots are common in summer once the snow has gone, and bearded and griffon vultures work the ridgelines. Lower down toward Molló the trail passes through oak and chestnut woods fed by springs and streams. By Cap de Creus the vegetation is low, salt- and wind-pruned Mediterranean scrub rather than forest, shaped by the Tramuntana."
+        "heading": "Lakeside grass to scree and pine",
+        "body": "Around Restanca, Colomèrs and Sant Maurici the high basins hold alpine meadow and lakeside grass below bare granite, with the Els Encantats outcrop standing over Sant Maurici. The descent into Pallars Sobirà passes through pine woodland and old terraced pastures around villages like Estaon and Boldís, where abandoned barns mark land once grazed hard. Toward Malniu and the Cerdanya the ground turns drier and scrubbier as Mediterranean influence creeps in from the south."
       },
       {
         "key": "culture",
         "facet": "overview",
-        "heading": "Culture",
-        "body": "You're walking through the heart of Catalan high country here. The sanctuary at Vall de Núria, reached on foot or by the rack railway from Queralbs, holds a Romanesque carving of the Virgin and is where the first Statute of Autonomy of Catalonia was drafted in 1931 — its symbols are the cross, the bell and the pot. Queralbs itself keeps its stone houses and slate roofs, and the trail ends at Cap de Creus, the easternmost point of the Iberian Peninsula, in the Cadaqués country that drew Salvador Dalí."
+        "heading": "Pastoral Pallars, then Andorra's two faces",
+        "body": "The valley stages thread Pallars Sobirà villages — Espot, Estaon, Tavascan, Àreu — past summer barns and half-empty hamlets that record a pastoral economy now largely gone. Andorra shows two faces in quick succession: the ski-resort development of Arinsal and Encamp, then the Madriu-Perafita-Claror valley, a UNESCO World Heritage cultural landscape (2004) where summer settlements, stone tracks and a communal land system reaching back to the 13th century survive. Refugi de l'Illa sits inside that protected valley."
       },
       {
         "key": "weather",
         "facet": "overview",
-        "heading": "Weather",
-        "body": "The high traverse from Núria to Ulldeter can hold snow into early summer and is exposed to fast-changing mountain weather above 2,800 m, so check conditions before committing to it. As you drop toward the Empordà and the coast, the defining factor becomes the Tramuntana — a cold, persistent north wind that funnels over Cap de Creus and can gust past 100 km/h, leaving very clear skies behind it. Plan the final cliff-top stages into El Port de la Selva and Cap de Creus around it; on a strong Tramuntana day the exposed sections are genuinely hard going."
+        "heading": "A July–September window, snow lingers high",
+        "body": "This stretch walks best from July to September, when the huts are staffed and the high ports are clear. In early summer snow holds on the highest cols — Port de Ratera (2,534m) and especially Port de Baiau (2,757m), where an ice axe and crampons can be needed and the boulder slope above is loose. Later in the season the lower valleys around Tavascan and the approach to Malniu turn hot and dry, so the risk shifts from snow to heat and water."
+      }
+    ],
+    "gr11-eastern-pyrenees": [
+      {
+        "key": "terrain",
+        "facet": "overview",
+        "heading": "From the border ridge to the sea",
+        "body": "This stretch loses the high Pyrenees in stages. Above Núria the GR11 still walks the frontier crest from the Collado de Noucreus past peaks near 2,800m, but past Ulldeter it drops into the green Ripollès valleys and then the lower Alta Garrotxa, before the Albera range carries it down to the Mediterranean at Cap de Creus. The last day finishes barely above sea level on wind-scoured rock, a long way in feel from the alpine cols where the section began."
+      },
+      {
+        "key": "flora",
+        "facet": "overview",
+        "heading": "Pine, cork oak, then scrub",
+        "body": "The vegetation tracks the descent. Steep pine forest above Planoles and Queralbs gives way to mixed mountain woodland around Molló and the dense Mediterranean woods of the Alta Garrotxa, then to the cork oak and pine of the Albera range above Requessens. By Cap de Creus the trees are gone, replaced by low wind-pruned scrub on the rock — the tramuntana shapes what grows as much as it shapes the stone."
+      },
+      {
+        "key": "culture",
+        "facet": "overview",
+        "heading": "Sanctuaries, monasteries and the Cerdanya",
+        "body": "The walking threads a chain of religious sites: the mountain sanctuary of Núria, reached on foot or by the Cremallera rack railway running up from Ribes de Freser since 1931; the Romanesque chapel of Sant Aniol d'Aguja, with a monastery founded in 859; and Sant Pere de Rodes, a Catalan Romanesque monastery on the Serra de Rodes whose church was consecrated in 1022. Puigcerdà sits in the broad Cerdanya, a wide upland valley split between Spain and France."
+      },
+      {
+        "key": "weather",
+        "facet": "overview",
+        "heading": "Snow up high, tramuntana down low",
+        "body": "The legs from Molló east to Cap de Creus can be walked year-round, but the high stages around Núria and Ulldeter hold snow from roughly mid-December into late June, where an ice axe and crampons can be needed on the ridge. Lower down the danger flips from cold to heat and water: stages like Talaixà to Albanyà list heat as the main difficulty. On the coast the tramuntana, a northwest wind that can reach gale force, dominates the final approach."
       }
     ]
   },
   "provenance": {
     "model": "workflow:research-compose-verify",
     "generatedAt": "2026-06-18"
+  },
+  "stageBlocks": {
+    "gr11-s1": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The trail starts at Cabo Higuer with the Cantabrian Sea below, then climbs gradually inland through Hondarribia and Irún and over the Ursain col to the Endara reservoir before dropping to Bera in Navarre. It is a long day — around 30 km — and the one thing that matters is route-finding through the streets of Hondarribia and Irún; once you are out of town the waymarking is excellent."
+      }
+    ],
+    "gr11-s2": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long stage of nearly 30 km that strings together a series of low cols — Lizarrieta among them — across meadows and past stone caseríos before descending to Elizondo in the Baztan valley. There is no single hard climb; the day's difficulty is the sheer accumulated up-and-down, so pace it and use the bar-shop at the Lizarrieta pass."
+      }
+    ],
+    "gr11-s3": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "From Elizondo the route leaves the Atlantic hills and climbs steadily into the beech forests of the Quinto Real, a gradual ascent rather than a steep one, to the Puerto de Urkiaga. Plan your night before you set off — Urkiaga itself has no accommodation, with the nearest beds at Eugi, well off the trail."
+      }
+    ],
+    "gr11-s4": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A walk through the heart of the Quinto Real, climbing past bordas and hunting posts through old beech woods that open into broad pasture at the high point before the drop to Burguete. Watch the open upper sections in fog, where the grassland gives few handrails."
+      }
+    ],
+    "gr11-s5": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "An easy 17 km on tracks and forest paths, through beech then pine over the Usateguieta col and down into the Aezkoa valley, finishing across the Irati river on a medieval bridge into Hiriberri. A gentle day and a good one to recover legs after the cols."
+      }
+    ],
+    "gr11-s6": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The route skirts the edge of the Irati Forest and climbs over the open Sierra de Abodi — Ollokiate and Tapla passes, the Abodi vertex at nearly 1,500 m — before a steep descent past the Muskilda sanctuary into Ochagavía. The high traverse is exposed, so the thing to watch is fog between the passes; otherwise the views run the length of the Pyrenees."
+      }
+    ],
+    "gr11-s7": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A mostly track-walking day from the Salazar valley to the Roncal, leisurely through pine and box until the land opens below Kakueta and the peaks come into view, then a steep beech-forest descent that tests the knees into Isaba. Carry water — there are no fountains until almost the end of the stage."
+      }
+    ],
+    "gr11-s8": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A short 11 km half-day that leaves Isaba up the Belabarze ravine through thick forest, eases into cattle pasture, then crosses the Collado de Argibiela (Puerto de los Navarros) to leave Navarre for Aragón and descend gently to Zuriza. Note that the Zuriza campsite is closed, though a free two-floor shelter remains below it."
+      }
+    ],
+    "gr11-s9": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A sustained climb out of Zuriza up the Petraficha ravine to its col at 1,963 m, then down through the Aragón Subordán valley and up into the meadow at Aguas Tuertas. The night here is a tiny free cabin sleeping four or five with no services, so carry food, mat and a bag — and plan for the next day too, as resupply is thin until Sallent de Gállego."
+      }
+    ],
+    "gr11-s10": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A shorter day climbing the glacial Sarrios valley over a string of passes — Escalé, Toronez d'as Cabretas, Bernera at 2,102 m — past the Ibón de Estanés to the staffed Lizara refuge. The one to watch is Toronez d'as Cabretas in fog: follow the signs carefully so you don't drop toward the lake, which is walled off on that side."
+      }
+    ],
+    "gr11-s11": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "High alpine walking over the Collado del Bozo and Collado de Esper (2,262 m), past Tuca Blanca, before descending the ski slopes into Candanchú. The crux is the Paso de la Oreja, a grassy strip suspended above a drop with a fixed rope — straightforward in the dry, but treat it with real care if there's any snow."
+      }
+    ],
+    "gr11-s12": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long day, nearly 24 km, past the Canal Roya refuge and up to the Ibones de Anayet at 2,225 m beneath the Lecherines, then a long drop into Sallent de Gállego. The thing to time is the Culivillas ravine on the descent — the stream can be hard to cross during snowmelt — and the lake section can lose its markings under late snow."
+      }
+    ],
+    "gr11-s13": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The shortest stage of the stretch but relentlessly uphill: a steady 900 m climb up the Aguas Limpias valley, through the Paso del Onso cliffs and past waterfalls into the Ordesa-Viñamala reserve, finishing at the Respomuso dam and refuge near 2,200 m. No real technical difficulty — just pace the continuous ascent, and book the refuge ahead in summer."
+      }
+    ],
+    "gr11-s14": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The high point of the whole section: a climb past the Llena Cantal and Bachimaña lakes over the Collado de Tebarray (2,771 m), then a steep gorge descent through pine to Balneario de Panticosa. Tebarray is the crux — unstable rock and a final 40° pitch that can hold snow until mid-August, so carry an ice axe and check conditions before committing."
+      }
+    ],
+    "gr11-s15": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long, big-feeling day over the Cuello Alto de Brazato (2,566 m), with the Vignemale massif in view, past the Brazato and Batanes lakes and down into the broad Ara valley to San Nicolás de Bujaruelo. Brazato can hold snow into July and may want an ice axe early in the season — otherwise it's the climb and the 7-plus hours that ask the most of you."
+      }
+    ],
+    "gr11-s16": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "Down the Bujaruelo valley and through the Garganta de los Navarros gorge — including the Paso de la Escala, an airy ledge fitted with a safety line — then up the whole Ordesa valley past the Cola de Caballo waterfall to Góriz. The long, steady climb through the national park is the heart of the day; the Paso de la Escala is the one spot that demands care."
+      }
+    ],
+    "gr11-s17": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "From Góriz over Collado de Añisclo, then the long way down to Pineta — about 1,200m of descent in roughly 2.5km, the steepest sustained drop on the GR11, with ledges to clamber over near the bottom. The descent is the whole challenge: it is hard on the knees and slow, so leave Góriz with time in hand."
+      }
+    ],
+    "gr11-s18": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A steep climb out of the Pineta cirque to the Llanos de la Larri balcony, with the north face of Monte Perdido in view, then over the Collado de las Coronetas (2,159m) and down to Parzán. No real technical difficulty — the early climb is simply long, so pace it."
+      }
+    ],
+    "gr11-s19": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long day on tracks for the climb to the Collado de Urdiceto (2,314m), past its dam and power station, then a comfortable descent through changing valleys to Viadós (Refugio de Biadós). It is the distance and 1,500m-plus of ascent that make it demanding, not the terrain — the route is well waymarked throughout."
+      }
+    ],
+    "gr11-s20": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "Up to the Puerto de Chistau (2,592m), with a row of 3,000m peaks across the valley, then a long descent through the Estós valley past Refugio de Estós to Puente de San Jaime. Water is easy with streams all the way; the main concern is snow lingering on the pass in early summer."
+      }
+    ],
+    "gr11-s21": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "Ten easy kilometres along the río Ésera to Coronas, then high-mountain ground where the path fades among boulders on the climb to the Cuello de Vallibierna (2,710m), with Aneto and the Maladeta in view. The boulder-field upper section is the crux — snow can hold there into early summer, and Coronas is a sensible bailout if conditions turn."
+      }
+    ],
+    "gr11-s22": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A climb to the Collada dels Estanyets to start, then mostly downhill past the Anglios lakes and through the Salenques beech forest to Conangles, crossing from Aragon into Catalonia at the Noguera Ribagorzana. The opening climb is the only real effort; the rest is a long, scenic descent."
+      }
+    ],
+    "gr11-s23": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A short stage on good paths over Port de Rius (2,355m), passing Estany de Rius before the final climb to the Restanca dam, where the refuge sits at 2,010m. Streams and lakes run the whole way, so water is never a worry — the only fuzzy part is the less-marked pull up to the refuge at the end."
+      }
+    ],
+    "gr11-s24": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "Seven kilometres but two high cols — Port d'Oelhacrestada (2,475m), with Montardo rising beside it, then Port de Caldes (2,568m) — dropping into the lake-strewn Circ de Colomèrs. It is short and spectacular but books out: reserve Colomèrs well ahead in July and August, and expect snow on the cols in early summer."
+      }
+    ],
+    "gr11-s25": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "An easy lake-to-lake stage over Port de Ratera (2,534m) on ground shared with the Carros de Foc circuit, descending past Estany de Ratera to Sant Maurici under the cliffs of Els Encantats. The one thing to watch is lingering snow on Port de Ratera early in the season; otherwise this is one of the most scenic and forgiving days on the trail."
+      }
+    ],
+    "gr11-s26": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long descent away from the national park — leaving Sant Maurici under Els Encantats and dropping over 1,200m through Espot to La Guingueta on the Noguera Pallaresa. The walking is straightforward; the day is about losing height and the knees, and trading high lakes for valley villages."
+      }
+    ],
+    "gr11-s27": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A quiet, climbing stage through Dorve and over Coll de Montcaubo into remote Pallars Sobirà, past abandoned villages and barns well off the tourist line. It is solitary and steep in places — carry water, as the route stays away from reliable sources for long stretches."
+      }
+    ],
+    "gr11-s28": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A gentler valley day through pine and old pastoral country, passing the Nibrós barns and other abandoned settlements on the way to Tavascan. The terrain is less rugged than the days either side; the main thing is the long, steady rhythm of a transitional stage between villages."
+      }
+    ],
+    "gr11-s29": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A big six-hour day climbing out of Tavascan — the first pull above the village is brutal and eroded, with chains in places — over Boldís and Coll de Tudela toward Vall Ferrera and Àreu, under the emblematic Pica d'Estats. Pace the early climb and filter water carefully, as fountains low down can run cloudy."
+      }
+    ],
+    "gr11-s30": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A demanding climb up the Vall Ferrera through streams, lakes and high meadows that give way to rock as you near Refugi de Baiau, the small hut in its amphitheatre of 2,900m peaks. It gains over 1,300m with almost no descent, so it is all uphill — arrive with enough left for the next morning's port."
+      }
+    ],
+    "gr11-s31": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The crossing into Andorra over Port de Baiau (2,757m) — steep, loose boulders and scree where an ice axe and crampons may be obligatory in early summer — then a long 1,900m descent past Estany Negre and under Comapedrosa to Arans. The port is the defining challenge of the whole section: check conditions and start early."
+      }
+    ],
+    "gr11-s32": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A quieter Andorran day over Coll d'Ordino, through pine forest and small villages with a steep descent into Encamp, passing the Romanesque chapel of Sant Romà de les Bons. After the high passes this is a recovery stage, though the contrast of ski-resort development in the valley is jarring."
+      }
+    ],
+    "gr11-s33": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long 20km climb up the Madriu-Perafita-Claror valley — a UNESCO World Heritage pastoral landscape of torrents, stone tracks and summer settlements — to Refugi de l'Illa beside its reservoir. The gradient is steady rather than steep; the day is about distance and the slow gain into one of Andorra's protected high valleys."
+      }
+    ],
+    "gr11-s34": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A high traverse that never drops below 2,000m, crossing the Vallcivera and Engorgs cols out of Andorra into the Cerdanya toward Refugi de Malniu. Short by the standards of this section, it stays exposed and alpine — watch for afternoon heat and thinning water as the ground turns drier on the southern side."
+      }
+    ],
+    "gr11-s35": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A gentle valley-floor day off the high mountain, dropping from the Malniu refuge through Guils de Cerdanya into Puigcerdà on the wide floor of the Cerdanya. The walking is easy; what matters is that this is a resupply and transport hub, a good place to restock before the climb back toward Núria."
+      }
+    ],
+    "gr11-s36": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A transition stage across the Cerdanya from Puigcerdà to Planoles on tracks and quiet paths, much of it the old pilgrim route once used to reach Núria. Undemanding underfoot — the point is repositioning for the big climb that follows."
+      }
+    ],
+    "gr11-s37": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A hard climbing day: about 1,440m of ascent through steep pine forest, down to Queralbs, then up through dramatic gorges past the Cua de Cavall waterfall to the sanctuary of Núria. The accumulated elevation is the challenge, so pace the long final ascent."
+      }
+    ],
+    "gr11-s38": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A classic high-mountain crossing: roughly 1,000m of ascent from Núria to the Collado de Noucreus at 2,790m, then a ridge walk along the frontier crest below peaks near 2,800m to the Ulldeter refuge. Snow lingers here into late June, when an ice axe and crampons can be needed on the col."
+      }
+    ],
+    "gr11-s39": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The long descent off the high Pyrenees, leaving the alpine headwaters of the Ter for the greener Ripollès valleys and dropping through Setcases down to Molló. Mostly downhill and straightforward — the day marks the real change from high mountain to mid-mountain country."
+      }
+    ],
+    "gr11-s40": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A varied stage out of Molló into warmer, Mediterranean-influenced hills, with a clear shift in landscape as you enter the Alta Garrotxa toward the hamlet of Talaixà. The mid-mountain woodland and changing vegetation are the day's character; water becomes something to plan around from here on."
+      }
+    ],
+    "gr11-s41": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A long descending day of about 19km through the Alta Garrotxa, passing the Romanesque chapel of Sant Aniol d'Aguja, climbing to Coll Roig and Coll de Bassegoda below the Garrotxa's highest peak, then dropping to Albanyà. Heat is the main difficulty and water is unreliable after Sant Aniol — carry enough."
+      }
+    ],
+    "gr11-s42": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A day through the wooded hills of the Alt Empordà from Albanyà via Maçanet de Cabrenys to La Vajol. Forest tracks and quiet country roads make for steady walking; the interest is the villages and the increasingly Mediterranean feel rather than any single climb."
+      }
+    ],
+    "gr11-s43": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The trail enters the Albera range, crossing from La Vajol via La Jonquera to the sanctuary of Mare de Déu de Requessens, set in forested hills below the ruined medieval castle. Cork oak and pine woods define the walking, and the remote sanctuary makes a quiet end to the day."
+      }
+    ],
+    "gr11-s44": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A short stage on dirt tracks through the oak-lined Albera, leaving Requessens for Vilamaniscle with the first real sweeping views of the Mediterranean opening ahead. Easy underfoot — the sea coming into sight is the moment that matters."
+      }
+    ],
+    "gr11-s45": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "A descent out of the hills to the coast at Llançà, then along to El Port de la Selva, with the Romanesque monastery of Sant Pere de Rodes high on the Serra de Rodes above the route. The sea is the reward; the optional climb to the monastery is the day's highlight if you have the legs."
+      }
+    ],
+    "gr11-s46": [
+      {
+        "kind": "prose",
+        "heading": "Overview",
+        "body": "The finish: about 15km along the coast and over the wind-scoured rock of the Cap de Creus headland, past coves and the strange tramuntana-eroded stone to the lighthouse and the trail's end where the Pyrenees meet the Mediterranean. Easy grades but exposed and waterless — the only water is at the lighthouse bar, so carry your own."
+      }
+    ]
   }
 }
