@@ -33,7 +33,8 @@
       "poc-api",
       "poc-mobile",
       "**/data",
-      "**/generated"
+      "**/generated",
+      "apps/mobile/assets/content"
     ]
   }
 }
