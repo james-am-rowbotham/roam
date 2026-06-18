@@ -12,6 +12,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, layout, spacing, type } from '../../theme';
 import { ContentBlockRenderer, storeResolve } from '../content';
+import { HeroMedia } from '../content/HeroMedia';
 import { IconButton } from '../ui/IconButton';
 import { SegmentedControl } from '../ui/SegmentedControl';
 import { StatPills } from '../ui/StatPills';
@@ -35,6 +36,7 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
       {/* hero — placeholder media (§11), dark plate so overlay text reads. Title +
           tagline only; the design carries no TRAIL/PEAK kicker (Figma 1050:2369). */}
       <View style={styles.hero}>
+        <HeroMedia mediaId={objective.heroMediaId} />
         <Text style={styles.heroTitle}>{objective.name}</Text>
         <Text style={styles.heroTagline}>{objective.tagline}</Text>
       </View>

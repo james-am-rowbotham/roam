@@ -17,6 +17,7 @@ import type {
   Highlight,
   Leg,
   Location,
+  MediaAsset,
   Objective,
   POI,
   Region,
@@ -44,6 +45,7 @@ export interface SeedInput {
   locations: Location[];
   pois: POI[];
   highlights: Highlight[];
+  media?: MediaAsset[];
   trails: TrailPack[];
   peaks: PeakPack[];
 }
@@ -56,6 +58,7 @@ export interface ImportedStore {
   locations: Map<string, Location>;
   pois: Map<string, POI>;
   highlights: Map<string, Highlight>;
+  media: Map<string, MediaAsset>;
   // details (full content)
   objectives: Map<string, Objective>;
   sections: Map<string, Section>;
@@ -112,6 +115,7 @@ export function importPacks(input: SeedInput): ImportedStore {
   const locations = byId(input.locations);
   const pois = byId(input.pois);
   const highlights = byId(input.highlights);
+  const media = byId(input.media ?? []);
 
   const objectives = new Map<string, Objective>();
   const sections = new Map<string, Section>();
@@ -276,6 +280,7 @@ export function importPacks(input: SeedInput): ImportedStore {
     locations,
     pois,
     highlights,
+    media,
     objectives,
     sections,
     stages,

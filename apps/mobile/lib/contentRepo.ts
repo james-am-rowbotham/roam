@@ -9,6 +9,9 @@ import seedJson from '../assets/content/seed.json';
 export const contentStore = importPacks(seedJson as unknown as SeedInput);
 export const contentRepo = createMemoryRepo(contentStore);
 
+/** Resolve an editorial image by id (heroMediaId / mediaId) from the bundled pack. */
+export const mediaFor = (id?: string) => (id ? contentStore.media.get(id) : undefined);
+
 const key = (...parts: string[]) => ['content', ...parts];
 
 export const useContinent = (id: string) =>

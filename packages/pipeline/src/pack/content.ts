@@ -4,7 +4,7 @@
 // the content stage rewrites it. buildTrailPack stays pure — content is injected, not
 // fetched — so the merge is unit-testable from fixtures.
 
-import type { ContentBlock, GuideTopic } from '@roam/content';
+import type { ContentBlock, GuideTopic, MediaAsset } from '@roam/content';
 
 export interface TrailContent {
   /** Section-Overview guide topics (terrain/flora/culture/weather) by section id. */
@@ -13,6 +13,8 @@ export interface TrailContent {
   objectiveGuide?: GuideTopic[];
   /** Extra blocks appended to a stage body (Overview prose, what-you-see) by stage id. */
   stageBlocks?: Record<string, ContentBlock[]>;
+  /** Editorial images (§21.4) by media id (e.g. `media/hero/<scope>`). */
+  media?: Record<string, MediaAsset>;
   /** Provenance for the whole pass (sources, model, generated-at) — kept for the trust
    *  model, not rendered. */
   provenance?: { generatedAt?: string; model?: string; sources?: number };

@@ -2,6 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ContentBlockRenderer, storeResolve } from '../../../../components/content';
+import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { Button } from '../../../../components/ui/Button';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
@@ -37,6 +38,7 @@ export default function StageScreen() {
     <View style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.hero}>
+          <HeroMedia mediaId={section?.heroMediaId} />
           <Text style={styles.heroKicker}>{kicker}</Text>
           <Text style={styles.heroTitle}>{stage.name}</Text>
         </View>

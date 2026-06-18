@@ -592,6 +592,78 @@
       "body": "The largest glacier in the Pyrenees, shrinking fast."
     }
   ],
+  "media": [
+    {
+      "id": "media/hero/gr11",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg/1920px-2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg",
+      "width": 1600,
+      "height": 700,
+      "license": "CC BY-SA 4.0",
+      "author": "Moahim",
+      "attribution": "Moahim · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg"
+    },
+    {
+      "id": "media/hero/aneto",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Pic_d%C2%B4Aneto.JPG/1920px-Pic_d%C2%B4Aneto.JPG",
+      "width": 1600,
+      "height": 1064,
+      "license": "CC BY-SA 3.0",
+      "author": "Aimaras",
+      "attribution": "Aimaras · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pic_d%C2%B4Aneto.JPG"
+    },
+    {
+      "id": "media/hero/gr11-basque-country-navarre",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Irati%2C_oto%C3%B1o_1990_15.jpg",
+      "width": 1065,
+      "height": 714,
+      "license": "CC BY-SA 4.0",
+      "author": "LBM1948",
+      "attribution": "LBM1948 · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Irati,_oto%C3%B1o_1990_15.jpg"
+    },
+    {
+      "id": "media/hero/gr11-ordesa-high-country",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Ordesa_y_Monte_Perdido_-_Spanish_Pyrenees.tif/lossy-page1-1920px-Ordesa_y_Monte_Perdido_-_Spanish_Pyrenees.tif.jpg",
+      "width": 1600,
+      "height": 2400,
+      "license": "CC BY 4.0",
+      "author": "Bouke ten Cate",
+      "attribution": "Bouke ten Cate · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ordesa_y_Monte_Perdido_-_Spanish_Pyrenees.tif"
+    },
+    {
+      "id": "media/hero/gr11-andorra-pallars-high-country",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Sant_Maurici_lake%2C_Aig%C3%BCestortes_i_Estany_de_Sant_Maurici_National_Park%2C_Spain_-_Diliff.jpg/1920px-Sant_Maurici_lake%2C_Aig%C3%BCestortes_i_Estany_de_Sant_Maurici_National_Park%2C_Spain_-_Diliff.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 3.0",
+      "author": "Diliff",
+      "attribution": "Diliff · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sant_Maurici_lake,_Aig%C3%BCestortes_i_Estany_de_Sant_Maurici_National_Park,_Spain_-_Diliff.jpg"
+    },
+    {
+      "id": "media/hero/gr11-eastern-pyrenees",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Cap_de_Creus%28Cape_of_the_Cross%29_shipping_beacon%2C_Costa_Brava%2C_Spain._%2816196465424%29.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY 2.0",
+      "author": "Ron Frazier from Bloomington IL, United States",
+      "attribution": "Ron Frazier from Bloomington IL, United States · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cap_de_Creus(Cape_of_the_Cross)_shipping_beacon,_Costa_Brava,_Spain._(16196465424).jpg"
+    },
+    {
+      "id": "media/hero/gr11-aragonese-pyrenees",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Telecabina_Panticosa.jpg",
+      "width": 667,
+      "height": 1000,
+      "license": "CC BY-SA 3.0",
+      "author": "FDV",
+      "attribution": "FDV · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Telecabina_Panticosa.jpg"
+    }
+  ],
   "trails": [
     {
       "objective": {

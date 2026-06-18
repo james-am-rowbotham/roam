@@ -6,7 +6,7 @@ import { DiscoveryCard } from '../../components/browse/DiscoveryCard';
 import { JourneyCard } from '../../components/journey';
 import { Button, NavBar, SearchField, SectionHeader } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
-import { useObjectives } from '../../lib/contentRepo';
+import { mediaFor, useObjectives } from '../../lib/contentRepo';
 import { useJourneys, useTrails } from '../../lib/hooks';
 import { colors, radius, spacing, type } from '../../theme';
 
@@ -80,6 +80,7 @@ export default function HomeScreen() {
                 key={o.id}
                 title={o.name}
                 subtitle={objectiveSubtitle(o)}
+                mediaUri={mediaFor(o.heroMediaId)?.uri}
                 onPress={() => router.push({ pathname: '/objective/[id]', params: { id: o.id } })}
               />
             ))}

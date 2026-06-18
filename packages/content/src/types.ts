@@ -213,6 +213,19 @@ export interface Highlight {
   poiId?: string;
 }
 
+/** An editorial image (§21.4). Resolved by id from `heroMediaId` / `mediaId` references.
+ *  License fields are a hard gate — sourcing never emits one without them. */
+export interface MediaAsset {
+  id: string;
+  uri: string;
+  width: number;
+  height: number;
+  license: string;
+  author: string;
+  attribution: string;
+  sourceUrl: string;
+}
+
 /** A reference to a shared Location with an optional context note (e.g. "resupply"). */
 export type PlaceRef = { locationId: string; note?: string };
 

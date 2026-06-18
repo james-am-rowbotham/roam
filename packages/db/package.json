@@ -14,7 +14,8 @@
     "db:studio": "drizzle-kit studio",
     "pack:build": "bun src/pack/build-packs.ts",
     "pack:content": "bun src/content/run.ts",
-    "pack:content:ingest": "bun src/content/ingest.ts"
+    "pack:content:ingest": "bun src/content/ingest.ts",
+    "pack:images": "bun src/content/run-images.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",

@@ -10,6 +10,7 @@ import type {
   Grade,
   GuideTopic,
   Location,
+  MediaAsset,
   Objective,
   Region,
   Section,
@@ -58,6 +59,7 @@ export interface BuiltTrail {
   /** Discovery regions this trail contributes (deduped across trails in assembleSeed). */
   regions: Region[];
   locations: Location[];
+  media: MediaAsset[];
 }
 
 /** Map a trail's config + knowledge (+ optional AI-draft content) to a validated-shape
@@ -222,7 +224,12 @@ export function buildTrailPack(
     coords: { lat: l.lat, lng: l.lng },
   }));
 
-  return { pack: { objective, sections, stages }, regions, locations };
+  return {
+    pack: { objective, sections, stages },
+    regions,
+    locations,
+    media: Object.values(content.media ?? {}),
+  };
 }
 
 /** Merge built trails + shared geography into one SeedInput, deduping regions/locations
@@ -234,9 +241,11 @@ export function assembleSeed(
 ): SeedInput {
   const regions = new Map<string, Region>();
   const locations = new Map<string, Location>();
+  const media = new Map<string, MediaAsset>();
   for (const b of built) {
     for (const r of b.regions) regions.set(r.id, r);
     for (const l of b.locations) locations.set(l.id, l);
+    for (const m of b.media) media.set(m.id, m);
   }
   return {
     continents,
@@ -245,6 +254,7 @@ export function assembleSeed(
     locations: [...locations.values()],
     pois: [],
     highlights: [],
+    media: [...media.values()],
     trails: built.map((b) => b.pack),
     peaks: [],
   };

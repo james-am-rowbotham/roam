@@ -5,6 +5,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-nat
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PlaceRow } from '../../../../components/browse/PlaceRow';
 import { ContentBlockRenderer, storeResolve } from '../../../../components/content';
+import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
 import { Tabs } from '../../../../components/ui/Tabs';
@@ -48,6 +49,7 @@ export default function SectionScreen() {
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
       <View style={styles.hero}>
+        <HeroMedia mediaId={section.heroMediaId} />
         <Text style={styles.heroKicker}>{`STAGES ${stat(section.atAGlance, 'stages') ?? ''}`}</Text>
         <Text style={styles.heroTitle}>{section.name}</Text>
         <Text style={styles.heroTagline}>{section.tagline}</Text>
