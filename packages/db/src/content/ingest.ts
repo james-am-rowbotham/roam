@@ -13,11 +13,27 @@ import type { TrailContent } from '@roam/pipeline';
 import { loadContent, saveContent } from './cache';
 import { normalizeTopic, unescapeHtml } from './normalize';
 
+interface RawGuideTopic {
+  key: string;
+  facet?: string;
+  heading: string;
+  body: string;
+}
+
 interface WorkflowResult {
-  sectionGuide?: Record<string, { key: string; heading: string; body: string }[]>;
+  sectionGuide?: Record<string, RawGuideTopic[]>;
+  objectiveGuide?: RawGuideTopic[];
   stageBlocks?: Record<string, ContentBlock[]>;
   provenance?: { model?: string; generatedAt?: string };
 }
+
+const normalizeFaceted = (topics: RawGuideTopic[]): GuideTopic[] =>
+  topics.map((t) => ({
+    key: t.key,
+    facet: (t.facet ?? 'overview') as GuideTopic['facet'],
+    heading: unescapeHtml(t.heading),
+    body: unescapeHtml(t.body),
+  }));
 
 function unwrap(parsed: unknown): WorkflowResult {
   const obj = parsed as { result?: unknown } & WorkflowResult;
@@ -45,9 +61,15 @@ export function ingestResult(id: string, parsed: unknown): TrailContent {
     if (blocks.length) stageBlocks[stageId] = cleanBlocks(blocks);
   }
 
+  // Objective Guide (Planning/Environment facets) replaces wholesale when present.
+  const objectiveGuide = result.objectiveGuide?.length
+    ? normalizeFaceted(result.objectiveGuide)
+    : existing.objectiveGuide;
+
   return {
     ...existing,
     sectionGuide,
+    objectiveGuide,
     stageBlocks,
     provenance: { ...existing.provenance, ...result.provenance, generatedAt: '2026-06-18' },
   };
@@ -65,7 +87,8 @@ if (import.meta.main) {
   const topics = Object.values(merged.sectionGuide ?? {}).reduce((n, t) => n + t.length, 0);
   console.log(
     `✓ ingested → packages/db/content/${id}.json — ` +
-      `${Object.keys(merged.sectionGuide ?? {}).length} sections · ${topics} topics · ` +
+      `${Object.keys(merged.sectionGuide ?? {}).length} sections · ${topics} section-topics · ` +
+      `${merged.objectiveGuide?.length ?? 0} objective-topics · ` +
       `${Object.keys(merged.stageBlocks ?? {}).length} stage-prose`,
   );
 }

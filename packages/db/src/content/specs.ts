@@ -9,6 +9,15 @@ export interface SectionSpec {
   places: string;
 }
 
+/** The objective-level spec for Planning/Environment Guide generation. */
+export const GR11_OBJECTIVE = {
+  name: 'the GR11 (Senda Pirenaica)',
+  summary:
+    'a coast-to-coast long-distance trail across the Spanish Pyrenees, from Hondarribia on the Atlantic to Cap de Creus on the Mediterranean — roughly 820 km over ~46 stages.',
+  context:
+    'Crosses the Basque Country, Navarre, Aragon (Ordesa y Monte Perdido), the Pallars/Aigüestortes high country, Andorra, and Catalonia. Best walked July–September. Waymarked with red-and-white GR blazes.',
+};
+
 export const GR11_SECTIONS: SectionSpec[] = [
   {
     id: 'gr11-basque-country-navarre',

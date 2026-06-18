@@ -7,8 +7,8 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import { loadContent, saveContent } from './cache';
-import { CONTENT_MODEL, generateSectionContent } from './generate';
-import { GR11_SECTIONS } from './specs';
+import { CONTENT_MODEL, generateObjectiveGuide, generateSectionContent } from './generate';
+import { GR11_OBJECTIVE, GR11_SECTIONS } from './specs';
 
 const key = process.env.ANTHROPIC_API_KEY;
 if (!key) {
@@ -41,9 +41,25 @@ for (const s of GR11_SECTIONS) {
   }
 }
 
+// Objective Guide — Planning + Environment facets (idempotent at the whole-guide level).
+let objectiveGuide = existing.objectiveGuide;
+if (!objectiveGuide?.length || force) {
+  process.stdout.write('  gen   objective Guide (planning + environment) … ');
+  try {
+    const { topics, sources } = await generateObjectiveGuide(client, GR11_OBJECTIVE);
+    if (topics.length) objectiveGuide = topics;
+    console.log(`${topics.length} topics · ${sources} sources`);
+  } catch (err) {
+    console.log(`FAILED — ${(err as Error).message}`);
+  }
+} else {
+  console.log('  skip  objective Guide (already generated)');
+}
+
 saveContent('gr11', {
   ...existing,
   sectionGuide,
+  objectiveGuide,
   provenance: { model: CONTENT_MODEL, generatedAt: new Date().toISOString() },
 });
 console.log('\n✓ wrote packages/db/content/gr11.json');
