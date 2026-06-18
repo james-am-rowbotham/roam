@@ -8,6 +8,7 @@ import type {
   Continent,
   Country,
   Grade,
+  GuideTopic,
   Location,
   Objective,
   Region,
@@ -119,18 +120,60 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
     };
   });
 
-  // Composed Guide Overview (Figma 1050:2369) — a Derived "Distance, elevation &
-  // duration" topic carrying the whole-trail elevation as columns. AI-draft Planning/
-  // Environment facets append later.
+  // Composed Guide Overview (Figma 1050:2369) — Derived blocks per topic: the
+  // whole-trail elevation (columns), a difficulty gauge from the stage grades, and the
+  // best-season strip. AI-draft Planning/Environment facets append later.
   const totalAscent = k.stages.reduce((sum, s) => sum + (s.ascentM ?? 0), 0);
-  const overviewElevation: ContentBlock | null =
-    k.elevationProfile.length >= 2
-      ? {
+  const maxAscent = Math.max(0, ...k.stages.map((s) => s.ascentM ?? 0));
+  const BANDS = ['easy', 'moderate', 'hard', 'severe'];
+  const cap = (v: string) => v.charAt(0).toUpperCase() + v.slice(1);
+  const gradeIdx = stages.map((s) => BANDS.indexOf(s.grade.value)).filter((i) => i >= 0);
+  const avgGrade = gradeIdx.length ? gradeIdx.reduce((a, b) => a + b, 0) / gradeIdx.length : 0;
+  const lo = Math.floor(avgGrade);
+  const hi = Math.ceil(avgGrade);
+  const difficultyLabel =
+    lo === hi ? cap(BANDS[lo] ?? '') : `${cap(BANDS[lo] ?? '')}–${cap(BANDS[hi] ?? '')}`;
+
+  const guideTopics: GuideTopic[] = [];
+  if (k.elevationProfile.length >= 2) {
+    guideTopics.push({
+      key: 'profile',
+      facet: 'overview',
+      heading: 'Distance, elevation & duration',
+      body: `Roughly ${km(k.lengthM)} km with about ${totalAscent.toLocaleString('en-US')} m of cumulative ascent over ${k.stages.length} stages.`,
+      blocks: [
+        {
           kind: 'elevation',
           variant: 'multiDay',
           points: k.elevationProfile.map((p) => ({ distanceKm: km(p.d), elevM: Math.round(p.e) })),
-        }
-      : null;
+        },
+      ],
+    });
+  }
+  if (gradeIdx.length) {
+    guideTopics.push({
+      key: 'difficulty',
+      facet: 'overview',
+      heading: 'Difficulty',
+      blocks: [
+        {
+          kind: 'difficulty',
+          label: difficultyLabel,
+          level: Math.max(1, Math.min(4, Math.round(avgGrade) + 1)),
+          total: 4,
+          note: `Long days · up to ${maxAscent.toLocaleString('en-US')} m ascent`,
+        },
+      ],
+    });
+  }
+  if (config.season) {
+    guideTopics.push({
+      key: 'season',
+      facet: 'overview',
+      heading: 'Best season',
+      blocks: [{ kind: 'season', best: config.season.best, note: config.season.note }],
+    });
+  }
 
   const objective: Objective = {
     id: config.id,
@@ -156,17 +199,7 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
         label: 'High point',
       },
     ],
-    guide: overviewElevation
-      ? [
-          {
-            key: 'profile',
-            facet: 'overview',
-            heading: 'Distance, elevation & duration',
-            body: `Roughly ${km(k.lengthM)} km with about ${totalAscent.toLocaleString('en-US')} m of cumulative ascent over ${k.stages.length} stages.`,
-            blocks: [overviewElevation],
-          },
-        ]
-      : [],
+    guide: guideTopics,
     highlightIds: [],
     sectionIds: sections.map((s) => s.id),
   };

@@ -237,6 +237,59 @@ function ItineraryBlock({
   );
 }
 
+function DifficultyBlock({ block }: { block: Extract<ContentBlock, { kind: 'difficulty' }> }) {
+  return (
+    <View style={styles.block}>
+      <View style={styles.diffBar}>
+        {Array.from({ length: block.total }, (_, i) => (
+          <View
+            // biome-ignore lint/suspicious/noArrayIndexKey: fixed positional segments
+            key={`seg-${i}`}
+            style={[styles.diffSeg, i < block.level && styles.diffSegOn]}
+          />
+        ))}
+      </View>
+      <View style={styles.diffLabels}>
+        <Text style={styles.listTitle}>{block.label}</Text>
+        {block.note ? <Text style={styles.meta}>{block.note}</Text> : null}
+      </View>
+    </View>
+  );
+}
+
+const MONTHS = [
+  { n: 1, l: 'J' },
+  { n: 2, l: 'F' },
+  { n: 3, l: 'M' },
+  { n: 4, l: 'A' },
+  { n: 5, l: 'M' },
+  { n: 6, l: 'J' },
+  { n: 7, l: 'J' },
+  { n: 8, l: 'A' },
+  { n: 9, l: 'S' },
+  { n: 10, l: 'O' },
+  { n: 11, l: 'N' },
+  { n: 12, l: 'D' },
+];
+function SeasonBlock({ block }: { block: Extract<ContentBlock, { kind: 'season' }> }) {
+  const best = new Set(block.best);
+  return (
+    <View style={styles.block}>
+      <View style={styles.seasonRow}>
+        {MONTHS.map((m) => {
+          const on = best.has(m.n);
+          return (
+            <View key={`month-${m.n}`} style={[styles.monthPill, on && styles.monthPillOn]}>
+              <Text style={on ? styles.monthOn : styles.monthOff}>{m.l}</Text>
+            </View>
+          );
+        })}
+      </View>
+      {block.note ? <Text style={styles.meta}>{block.note}</Text> : null}
+    </View>
+  );
+}
+
 function MapBlock({ block }: { block: Extract<ContentBlock, { kind: 'map' }> }) {
   const bounds = block.geojson.features.length ? geometryBbox(block.geojson as never) : undefined;
   return (
@@ -274,6 +327,10 @@ function Block({ block, resolve }: { block: ContentBlock; resolve: BlockResolve 
       return <ChipsBlock block={block} />;
     case 'itinerary':
       return <ItineraryBlock block={block} resolve={resolve} />;
+    case 'difficulty':
+      return <DifficultyBlock block={block} />;
+    case 'season':
+      return <SeasonBlock block={block} />;
     case 'map':
       return <MapBlock block={block} />;
     default: {
@@ -347,4 +404,20 @@ const styles = StyleSheet.create({
   bullet: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: colors.accent },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[4] },
   mapContainer: { height: 200, borderRadius: radius.xl, overflow: 'hidden' },
+  diffBar: { flexDirection: 'row', gap: spacing[3], height: 8 },
+  diffSeg: { flex: 1, borderRadius: 360, backgroundColor: colors.bg.subtle },
+  diffSegOn: { backgroundColor: colors.accent },
+  diffLabels: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  seasonRow: { flexDirection: 'row', gap: spacing[2] },
+  monthPill: {
+    flex: 1,
+    aspectRatio: 1,
+    borderRadius: radius.full,
+    backgroundColor: colors.bg.subtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  monthPillOn: { backgroundColor: colors.accent },
+  monthOn: { ...type.dataMeta, color: colors.text.onAccent },
+  monthOff: { ...type.dataMeta, color: colors.text.secondary },
 });

@@ -44,7 +44,11 @@ export type ContentBlock =
       mediaId?: string;
     }
   | { kind: 'chips'; group: 'gear' | 'conditions'; items: string[] }
-  | { kind: 'itinerary'; legIds: string[] };
+  | { kind: 'itinerary'; legIds: string[] }
+  // A difficulty gauge — `level` of `total` segments filled (Figma 1053:2441).
+  | { kind: 'difficulty'; label: string; level: number; total: number; note?: string }
+  // A best-season strip — `best` month numbers (1–12) highlighted (Figma SeasonStrip 993:152).
+  | { kind: 'season'; best: number[]; note?: string };
 
 /** Every renderable `kind`, for exhaustiveness checks in the renderer + fixtures. */
 export type ContentBlockKind = ContentBlock['kind'];

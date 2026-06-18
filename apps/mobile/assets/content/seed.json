@@ -2347,6 +2347,36 @@
                 ]
               }
             ]
+          },
+          {
+            "key": "difficulty",
+            "facet": "overview",
+            "heading": "Difficulty",
+            "blocks": [
+              {
+                "kind": "difficulty",
+                "label": "Moderate–Hard",
+                "level": 2,
+                "total": 4,
+                "note": "Long days · up to 1,580 m ascent"
+              }
+            ]
+          },
+          {
+            "key": "season",
+            "facet": "overview",
+            "heading": "Best season",
+            "blocks": [
+              {
+                "kind": "season",
+                "best": [
+                  7,
+                  8,
+                  9
+                ],
+                "note": "Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer."
+              }
+            ]
           }
         ],
         "highlightIds": [],
@@ -2366,7 +2396,9 @@
           "name": "Basque Country & Navarre",
           "tagline": "From Cabo Higuer, passing through forests and coastal hills.",
           "heroMediaId": "media/hero/gr11-basque-country-navarre",
-          "regionIds": ["basque-country-navarre"],
+          "regionIds": [
+            "basque-country-navarre"
+          ],
           "summary": "From Cabo Higuer, passing through forests and coastal hills.",
           "atAGlance": [
             {
@@ -2402,7 +2434,9 @@
           "name": "Aragonese Pyrenees",
           "tagline": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.",
           "heroMediaId": "media/hero/gr11-aragonese-pyrenees",
-          "regionIds": ["aragonese-pyrenees"],
+          "regionIds": [
+            "aragonese-pyrenees"
+          ],
           "summary": "Higher, rugged alpine terrain, passing through locations like Candanchú and the Respomuso Hut.",
           "atAGlance": [
             {
@@ -2437,7 +2471,9 @@
           "name": "Ordesa & High Country",
           "tagline": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.",
           "heroMediaId": "media/hero/gr11-ordesa-high-country",
-          "regionIds": ["ordesa-high-country"],
+          "regionIds": [
+            "ordesa-high-country"
+          ],
           "summary": "Includes the scenic Ordesa National Park and the high limestone, passing through Góriz and Viadós.",
           "atAGlance": [
             {
@@ -2472,7 +2508,9 @@
           "name": "Andorra & Pallars High Country",
           "tagline": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.",
           "heroMediaId": "media/hero/gr11-andorra-pallars-high-country",
-          "regionIds": ["andorra-pallars-high-country"],
+          "regionIds": [
+            "andorra-pallars-high-country"
+          ],
           "summary": "Traverses granite landscapes in Andorra and the Catalan Pyrenees, including areas like Colomèrs.",
           "atAGlance": [
             {
@@ -2512,7 +2550,9 @@
           "name": "Eastern Pyrenees",
           "tagline": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.",
           "heroMediaId": "media/hero/gr11-eastern-pyrenees",
-          "regionIds": ["eastern-pyrenees"],
+          "regionIds": [
+            "eastern-pyrenees"
+          ],
           "summary": "Descending through forests and valleys towards the Mediterranean coast at Cap de Creus.",
           "atAGlance": [
             {
@@ -6557,7 +6597,9 @@
         "slug": "aneto",
         "name": "Aneto",
         "type": "peak",
-        "regionIds": ["aragonese-pyrenees"],
+        "regionIds": [
+          "aragonese-pyrenees"
+        ],
         "tagline": "3,404 m · Maladeta massif · Spain",
         "heroMediaId": "media/hero/aneto",
         "summary": "At 3,404 m the highest summit in the Pyrenees — three ways up, from a glacier walk to a technical ridge.",
@@ -6604,8 +6646,15 @@
             "body": "Glacier crevassing worsens through summer; the Paso de Mahoma is unforgiving in wind."
           }
         ],
-        "highlightIds": ["aneto-h-mahoma", "aneto-h-glacier"],
-        "routeIds": ["aneto-via-normal", "aneto-cara-norte", "aneto-cresta-salenques"]
+        "highlightIds": [
+          "aneto-h-mahoma",
+          "aneto-h-glacier"
+        ],
+        "routeIds": [
+          "aneto-via-normal",
+          "aneto-cara-norte",
+          "aneto-cresta-salenques"
+        ]
       },
       "routes": [
         {
@@ -6752,15 +6801,28 @@
             },
             {
               "kind": "itinerary",
-              "legIds": ["aneto-vn-l1", "aneto-vn-l2"]
+              "legIds": [
+                "aneto-vn-l1",
+                "aneto-vn-l2"
+              ]
             },
             {
               "kind": "gallery",
-              "mediaIds": ["media/aneto/1", "media/aneto/2", "media/aneto/3"]
+              "mediaIds": [
+                "media/aneto/1",
+                "media/aneto/2",
+                "media/aneto/3"
+              ]
             }
           ],
-          "legIds": ["aneto-vn-l1", "aneto-vn-l2"],
-          "highlightIds": ["aneto-h-mahoma", "aneto-h-glacier"]
+          "legIds": [
+            "aneto-vn-l1",
+            "aneto-vn-l2"
+          ],
+          "highlightIds": [
+            "aneto-h-mahoma",
+            "aneto-h-glacier"
+          ]
         },
         {
           "id": "aneto-cara-norte",
@@ -6844,11 +6906,19 @@
             },
             {
               "kind": "itinerary",
-              "legIds": ["aneto-nf-l1", "aneto-nf-l2"]
+              "legIds": [
+                "aneto-nf-l1",
+                "aneto-nf-l2"
+              ]
             }
           ],
-          "legIds": ["aneto-nf-l1", "aneto-nf-l2"],
-          "highlightIds": ["aneto-h-glacier"]
+          "legIds": [
+            "aneto-nf-l1",
+            "aneto-nf-l2"
+          ],
+          "highlightIds": [
+            "aneto-h-glacier"
+          ]
         },
         {
           "id": "aneto-cresta-salenques",
@@ -6907,10 +6977,14 @@
             },
             {
               "kind": "itinerary",
-              "legIds": ["aneto-cs-l1"]
+              "legIds": [
+                "aneto-cs-l1"
+              ]
             }
           ],
-          "legIds": ["aneto-cs-l1"],
+          "legIds": [
+            "aneto-cs-l1"
+          ],
           "highlightIds": []
         }
       ],

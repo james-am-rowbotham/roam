@@ -32,9 +32,9 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
 
   return (
     <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      {/* hero — placeholder media (§11), dark plate so overlay text reads */}
+      {/* hero — placeholder media (§11), dark plate so overlay text reads. Title +
+          tagline only; the design carries no TRAIL/PEAK kicker (Figma 1050:2369). */}
       <View style={styles.hero}>
-        <Text style={styles.heroKicker}>{objective.type.toUpperCase()}</Text>
         <Text style={styles.heroTitle}>{objective.name}</Text>
         <Text style={styles.heroTagline}>{objective.tagline}</Text>
       </View>
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: spacing[3],
   },
-  heroKicker: { ...type.label, color: colors.overlay.onImageMuted },
   heroTitle: {
     fontFamily: type.title.fontFamily,
     fontSize: 30,
