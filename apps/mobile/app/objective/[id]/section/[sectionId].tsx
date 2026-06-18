@@ -106,11 +106,14 @@ function Overview({ section }: { section: Section }) {
         <Text style={styles.placeholderText}>Region map</Text>
       </View>
 
-      {/* Terrain → Flora & fauna → Culture → Weather */}
+      {/* Terrain → Flora & fauna → Culture → Weather. Topics may carry blocks (a section
+          elevation profile, weather callouts, imagery) — render them like the Guide does,
+          not text-only (§12.2). */}
       {topics.map((t) => (
         <View key={t.key} style={styles.topic}>
           <Text style={styles.heading}>{t.heading}</Text>
-          <Text style={styles.bodyText}>{t.body}</Text>
+          {t.body ? <Text style={styles.bodyText}>{t.body}</Text> : null}
+          {t.blocks ? <ContentBlockRenderer blocks={t.blocks} resolve={storeResolve} /> : null}
         </View>
       ))}
 
