@@ -19,6 +19,20 @@ const DEV_LINKS: { label: string; href: Href }[] = [
     href: { pathname: '/objective/[id]', params: { id: 'gr11' } },
   },
   {
+    label: 'GR11 · Ordesa section — generated overview',
+    href: {
+      pathname: '/objective/[id]/section/[sectionId]',
+      params: { id: 'gr11', sectionId: 'gr11-ordesa-high-country' },
+    },
+  },
+  {
+    label: 'GR11 · Stage 16 — generated overview prose',
+    href: {
+      pathname: '/objective/[id]/stage/[stageId]',
+      params: { id: 'gr11', stageId: 'gr11-s16' },
+    },
+  },
+  {
     label: 'Aneto — peak Guide shell',
     href: { pathname: '/objective/[id]', params: { id: 'aneto' } },
   },
