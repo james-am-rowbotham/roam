@@ -14,16 +14,20 @@ import {
   importPacks,
 } from '@roam/content';
 import { CONTINENTS, COUNTRIES, PACK_CONFIGS, assembleSeed, buildTrailPack } from '@roam/pipeline';
+import { loadContent } from '../content/cache';
 import { readKnowledge } from './readKnowledge';
 
 const built = [];
 for (const config of PACK_CONFIGS.filter((c) => c.type === 'trail')) {
   console.log(`Reading ${config.id} from Postgres…`);
   const knowledge = await readKnowledge(config);
+  const content = loadContent(config.id);
+  const sections = Object.keys(content.sectionGuide ?? {}).length;
+  const contentNote = sections ? ` · content for ${sections} sections` : '';
   console.log(
-    `  ${knowledge.stages.length} etapas · ${knowledge.regions.length} regions · ${Math.round(knowledge.lengthM / 1000)} km`,
+    `  ${knowledge.stages.length} etapas · ${knowledge.regions.length} regions · ${Math.round(knowledge.lengthM / 1000)} km${contentNote}`,
   );
-  built.push(buildTrailPack(config, knowledge));
+  built.push(buildTrailPack(config, knowledge, content));
 }
 
 const trailSeed = assembleSeed(CONTINENTS, COUNTRIES, built);

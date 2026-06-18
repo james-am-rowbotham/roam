@@ -12,9 +12,11 @@
     "db:migrate": "bun src/migrate.ts",
     "db:seed": "bun src/seed.ts",
     "db:studio": "drizzle-kit studio",
-    "pack:build": "bun src/pack/build-packs.ts"
+    "pack:build": "bun src/pack/build-packs.ts",
+    "pack:content": "bun src/content/run.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.0",
     "@roam/content": "workspace:*",
     "@roam/core": "workspace:*",
     "@roam/pipeline": "workspace:*",

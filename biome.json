@@ -34,7 +34,8 @@
       "poc-mobile",
       "**/data",
       "**/generated",
-      "apps/mobile/assets/content"
+      "apps/mobile/assets/content",
+      "packages/db/content"
     ]
   }
 }

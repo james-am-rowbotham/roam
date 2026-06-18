@@ -13,5 +13,6 @@ export * from './etapas';
 export * from './pack/config';
 export * from './pack/geography';
 export * from './pack/knowledge';
+export * from './pack/content';
 export * from './pack/build';
 export * from './pack/peak';

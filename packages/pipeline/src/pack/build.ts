@@ -19,6 +19,7 @@ import type {
 } from '@roam/content';
 import { trailStageStats } from '@roam/content';
 import type { PackConfig } from './config';
+import { EMPTY_CONTENT, type TrailContent } from './content';
 import type { TrailKnowledge } from './knowledge';
 
 const km = (m: number) => Math.round((m / 1000) * 10) / 10;
@@ -59,8 +60,13 @@ export interface BuiltTrail {
   locations: Location[];
 }
 
-/** Map a trail's config + knowledge to a validated-shape @roam/content TrailPack. Pure. */
-export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrail {
+/** Map a trail's config + knowledge (+ optional AI-draft content) to a validated-shape
+ *  @roam/content TrailPack. Pure — content is injected, never fetched here. */
+export function buildTrailPack(
+  config: PackConfig,
+  k: TrailKnowledge,
+  content: TrailContent = EMPTY_CONTENT,
+): BuiltTrail {
   const regions: Region[] = k.regions.map((r) => ({
     id: r.id,
     slug: r.id,
@@ -72,11 +78,12 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
   }));
 
   const stages: Stage[] = k.stages.map((s) => {
+    const stageId = `${config.id}-s${s.number}`;
     const distanceKm = km(s.endChainageM - s.startChainageM);
     const grade = gradeForStage(distanceKm, s.ascentM);
     const elev = elevationBlock(k.elevationProfile, s.startChainageM, s.endChainageM);
     return {
-      id: `${config.id}-s${s.number}`,
+      id: stageId,
       sectionId: `${config.id}-${s.regionId}`,
       number: s.number,
       name: s.name,
@@ -90,18 +97,19 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
         hours: estimateHours(distanceKm, s.ascentM),
         grade,
       }),
-      blocks: elev ? [elev] : [], // AI-draft prose/what-you-see appended in a later stage
+      blocks: [...(elev ? [elev] : []), ...(content.stageBlocks?.[stageId] ?? [])],
       highlightIds: [],
     };
   });
 
   const sections: Section[] = k.regions.map((r) => {
+    const sectionId = `${config.id}-${r.id}`;
     const own = k.stages.filter((s) => s.regionId === r.id);
     const distM = own.reduce((sum, s) => sum + (s.endChainageM - s.startChainageM), 0);
     const lo = Math.min(...own.map((s) => s.number));
     const hi = Math.max(...own.map((s) => s.number));
     return {
-      id: `${config.id}-${r.id}`,
+      id: sectionId,
       objectiveId: config.id,
       order: r.orderIndex,
       name: r.name,
@@ -113,6 +121,7 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
         { key: 'stages', value: own.length ? `${lo}–${hi}` : '—', label: 'Stages' },
         { key: 'distance', value: km(distM), unit: 'km', label: 'Distance' },
       ],
+      guide: content.sectionGuide?.[sectionId],
       resupply: [],
       refuges: [],
       highlightIds: [],
@@ -199,7 +208,7 @@ export function buildTrailPack(config: PackConfig, k: TrailKnowledge): BuiltTrai
         label: 'High point',
       },
     ],
-    guide: guideTopics,
+    guide: [...guideTopics, ...(content.objectiveGuide ?? [])],
     highlightIds: [],
     sectionIds: sections.map((s) => s.id),
   };
