@@ -713,6 +713,23 @@
             "body": "Roughly 847.4 km with about 38,193 m of cumulative ascent over 46 stages.",
             "blocks": [
               {
+                "kind": "statStrip",
+                "stats": [
+                  {
+                    "value": "847.4",
+                    "label": "KM"
+                  },
+                  {
+                    "value": "38,193",
+                    "label": "M ASCENT"
+                  },
+                  {
+                    "value": "42–46",
+                    "label": "DAYS"
+                  }
+                ]
+              },
+              {
                 "kind": "elevation",
                 "variant": "multiDay",
                 "points": [

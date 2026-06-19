@@ -155,6 +155,14 @@ export function buildTrailPack(
       body: `Roughly ${km(k.lengthM)} km with about ${totalAscent.toLocaleString('en-US')} m of cumulative ascent over ${k.stages.length} stages.`,
       blocks: [
         {
+          kind: 'statStrip',
+          stats: [
+            { value: `${km(k.lengthM)}`, label: 'KM' },
+            { value: totalAscent.toLocaleString('en-US'), label: 'M ASCENT' },
+            { value: `${Math.ceil(k.stages.length * 0.9)}–${k.stages.length}`, label: 'DAYS' },
+          ],
+        },
+        {
           kind: 'elevation',
           variant: 'multiDay',
           points: k.elevationProfile.map((p) => ({ distanceKm: km(p.d), elevM: Math.round(p.e) })),

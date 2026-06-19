@@ -237,6 +237,19 @@ function ItineraryBlock({
   );
 }
 
+function StatStripBlock({ block }: { block: Extract<ContentBlock, { kind: 'statStrip' }> }) {
+  return (
+    <View style={styles.statStrip}>
+      {block.stats.map((s) => (
+        <View key={s.label} style={styles.statCell}>
+          <Text style={styles.statValue}>{s.value}</Text>
+          <Text style={styles.statLabel}>{s.label}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 function DifficultyBlock({ block }: { block: Extract<ContentBlock, { kind: 'difficulty' }> }) {
   return (
     <View style={styles.block}>
@@ -331,6 +344,8 @@ function Block({ block, resolve }: { block: ContentBlock; resolve: BlockResolve 
       return <DifficultyBlock block={block} />;
     case 'season':
       return <SeasonBlock block={block} />;
+    case 'statStrip':
+      return <StatStripBlock block={block} />;
     case 'map':
       return <MapBlock block={block} />;
     default: {
@@ -404,6 +419,17 @@ const styles = StyleSheet.create({
   bullet: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: colors.accent },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[4] },
   mapContainer: { height: 200, borderRadius: radius.xl, overflow: 'hidden' },
+  statStrip: {
+    flexDirection: 'row',
+    borderRadius: radius.lg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border.default,
+    backgroundColor: colors.bg.surface,
+    paddingVertical: spacing[5],
+  },
+  statCell: { flex: 1, alignItems: 'center', gap: spacing[1] },
+  statValue: { ...type.statValue, color: colors.text.primary },
+  statLabel: { ...type.label, color: colors.text.secondary },
   diffBar: { flexDirection: 'row', gap: spacing[3], height: 8 },
   diffSeg: { flex: 1, borderRadius: 360, backgroundColor: colors.bg.subtle },
   diffSegOn: { backgroundColor: colors.accent },
