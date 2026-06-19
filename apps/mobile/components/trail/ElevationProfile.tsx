@@ -19,6 +19,9 @@ interface Props {
   scale?: boolean;
   /** Total distance in metres — for the scale's distance label. */
   distanceM?: number;
+  /** Render resolution (downsample target). Default 32 — raise for whole-trail profiles
+   *  so every day's climb shows. */
+  resolution?: number;
 }
 
 const PAD_TOP = 4; // headroom so the peak isn't clipped
@@ -39,12 +42,13 @@ export function ElevationProfile({
   height = 38,
   scale = false,
   distanceM,
+  resolution = POINTS,
 }: Props) {
   const [width, setWidth] = useState(0);
   const clipId = `ep-${useId().replace(/[^a-zA-Z0-9]/g, '')}`;
   const onLayout = (e: LayoutChangeEvent) => setWidth(e.nativeEvent.layout.width);
 
-  const series = downsampleElevation(data ?? [], POINTS);
+  const series = downsampleElevation(data ?? [], resolution);
   const ready = width > 0 && series.length >= 2;
   const frac = Math.max(0, Math.min(1, progress));
   const isProgress = mode === 'progress';

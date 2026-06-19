@@ -95,6 +95,7 @@ const trailKnowledge: TrailKnowledge = {
   water: [],
   accommodation: [],
   sectionGeojson: {},
+  stageGeojson: {},
 };
 
 describe('peak engine (buildPeakPack)', () => {

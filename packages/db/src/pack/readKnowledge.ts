@@ -176,23 +176,28 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       bookingUrl: a.booking_url,
     }));
 
-    // Section geometry: a simplified slice of the route line per region's chainage span,
-    // for the section map block (§7). One spatial query, unnesting the region ranges.
+    // Route geometry for the map previews (§7): whole route (objective), per-region slice
+    // (section), per-etapa slice (stage). Simplified for small previews.
+    const frac = (m: number) => Math.min(1, Math.max(0, m / (lengthM || 1)));
+
+    const [routeRow] = await c<{ gj: string }[]>`
+      SELECT ST_AsGeoJSON(ST_Simplify(ST_LineMerge(geom), 0.003)) AS gj
+      FROM routes WHERE id = ${route.id}`;
+    const routeGeojson = routeRow?.gj ? (JSON.parse(routeRow.gj) as GeoJSON.Geometry) : undefined;
+
     const ranges = regionRows.map((rg) => {
       const own = secRows.filter((s) => s.region_id === rg.id);
-      const startM = Math.min(...own.map((s) => Number(s.start_chainage_m)));
-      const endM = Math.max(...own.map((s) => Number(s.end_chainage_m)));
       return {
         slug: slugify(rg.name),
-        s: Math.min(1, Math.max(0, startM / (lengthM || 1))),
-        e: Math.min(1, Math.max(0, endM / (lengthM || 1))),
+        s: frac(Math.min(...own.map((s) => Number(s.start_chainage_m)))),
+        e: frac(Math.max(...own.map((s) => Number(s.end_chainage_m)))),
       };
     });
     const geoRows = ranges.length
       ? await c<{ slug: string; gj: string }[]>`
           WITH line AS (SELECT ST_LineMerge(geom) AS g FROM routes WHERE id = ${route.id})
           SELECT u.slug AS slug,
-                 ST_AsGeoJSON(ST_Simplify(ST_LineSubstring(line.g, u.s, u.e), 0.0008)) AS gj
+                 ST_AsGeoJSON(ST_Simplify(ST_LineSubstring(line.g, u.s, u.e), 0.003)) AS gj
           FROM line, unnest(
             ${ranges.map((r) => r.slug)}::text[],
             ${ranges.map((r) => r.s)}::float8[],
@@ -201,6 +206,25 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       : [];
     const sectionGeojson: Record<string, GeoJSON.Geometry> = {};
     for (const g of geoRows) if (g.gj) sectionGeojson[g.slug] = JSON.parse(g.gj);
+
+    const stageFracs = secRows.map((s) => ({
+      num: s.order_index,
+      s: frac(Number(s.start_chainage_m)),
+      e: frac(Number(s.end_chainage_m)),
+    }));
+    const stageRows = stageFracs.length
+      ? await c<{ num: number; gj: string }[]>`
+          WITH line AS (SELECT ST_LineMerge(geom) AS g FROM routes WHERE id = ${route.id})
+          SELECT u.num AS num,
+                 ST_AsGeoJSON(ST_Simplify(ST_LineSubstring(line.g, u.s, u.e), 0.0015)) AS gj
+          FROM line, unnest(
+            ${stageFracs.map((f) => f.num)}::int[],
+            ${stageFracs.map((f) => f.s)}::float8[],
+            ${stageFracs.map((f) => f.e)}::float8[]
+          ) AS u(num, s, e)`
+      : [];
+    const stageGeojson: Record<string, GeoJSON.Geometry> = {};
+    for (const r of stageRows) if (r.gj) stageGeojson[`${config.id}-s${r.num}`] = JSON.parse(r.gj);
 
     return {
       routeName: route.name,
@@ -211,7 +235,9 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       locations,
       water,
       accommodation,
+      routeGeojson,
       sectionGeojson,
+      stageGeojson,
     };
   } finally {
     await c.end();

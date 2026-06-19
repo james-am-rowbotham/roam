@@ -9,7 +9,6 @@ import { ElevationProfile } from '../trail/ElevationProfile';
 // by `points: { distanceKm, elevM }[]`; ascent/descent/high are derived from them.
 
 type Variant = 'single' | 'multiDay';
-const BARS = 24;
 
 const fmt = (m: number) => Math.round(m).toLocaleString('en-US');
 
@@ -25,14 +24,6 @@ function derive(points: { elevM: number }[]) {
   return { high: Math.max(...elevs), low: Math.min(...elevs), ascent, descent };
 }
 
-// Evenly sample to ~BARS points so the bar count is stable regardless of input length.
-function sample(elevs: number[], n: number): number[] {
-  if (elevs.length <= n) return elevs;
-  const out: number[] = [];
-  for (let i = 0; i < n; i++) out.push(elevs[Math.floor((i * (elevs.length - 1)) / (n - 1))] ?? 0);
-  return out;
-}
-
 export function ElevationChart({
   points,
   variant = 'single',
@@ -41,8 +32,7 @@ export function ElevationChart({
   variant?: Variant;
 }) {
   if (points.length < 2) return null;
-  const { high, low, ascent, descent } = derive(points);
-  const span = high - low || 1;
+  const { high, ascent, descent } = derive(points);
 
   return (
     <View style={styles.wrap}>
@@ -51,24 +41,14 @@ export function ElevationChart({
         <Text style={styles.headerText}>{`HIGH ${fmt(high)} m`}</Text>
       </View>
 
-      {variant === 'single' ? (
-        // A single stage / peak route reads better as a continuous silhouette.
-        <ElevationProfile data={points.map((p) => p.elevM)} mode="preview" height={80} />
-      ) : (
-        // Sections / whole trails (many stages) read better as columns.
-        <View style={styles.bars}>
-          {sample(
-            points.map((p) => p.elevM),
-            BARS,
-          ).map((e, i) => (
-            <View
-              // biome-ignore lint/suspicious/noArrayIndexKey: positional bars, no stable id
-              key={i}
-              style={[styles.bar, { height: `${(0.15 + 0.85 * ((e - low) / span)) * 100}%` }]}
-            />
-          ))}
-        </View>
-      )}
+      {/* A single stage uses the default resolution; a whole-trail / section profile
+          renders at high resolution so EVERY day's climb shows, not a 24-bar reduction. */}
+      <ElevationProfile
+        data={points.map((p) => p.elevM)}
+        mode="preview"
+        height={variant === 'multiDay' ? 96 : 80}
+        resolution={variant === 'multiDay' ? Math.min(points.length, 200) : undefined}
+      />
     </View>
   );
 }
@@ -77,6 +57,4 @@ const styles = StyleSheet.create({
   wrap: { gap: 8 },
   header: { flexDirection: 'row', justifyContent: 'space-between' },
   headerText: { ...type.label, color: colors.text.secondary },
-  bars: { flexDirection: 'row', alignItems: 'flex-end', gap: 2, height: 80 },
-  bar: { flex: 1, backgroundColor: colors.accent, borderRadius: 2 },
 });

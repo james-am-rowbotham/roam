@@ -26,6 +26,17 @@ import type { PackConfig } from './config';
 import { EMPTY_CONTENT, type TrailContent } from './content';
 import type { KnowledgePOI, TrailKnowledge } from './knowledge';
 
+// A map ContentBlock wrapping one route-line geometry (§7) — for trail/section/stage previews.
+const mapBlock = (geom: GeoJSON.Geometry): ContentBlock => ({
+  kind: 'map',
+  geojson: {
+    type: 'FeatureCollection',
+    features: [{ type: 'Feature', geometry: geom, properties: {} }],
+  } as GeoJSON.FeatureCollection,
+  styleId: 'outdoor',
+  markers: [],
+});
+
 // Accommodation detail line — "Refuge · 96 beds · seasonal".
 const accomNote = (a: KnowledgePOI): string =>
   [
@@ -136,9 +147,10 @@ export function buildTrailPack(
         hours: estimateHours(distanceKm, s.ascentM),
         grade,
       }),
-      // §12.4 order: Overview narrative → elevation → water → accommodation.
+      // §12.4 order: Overview narrative → map → elevation → water → accommodation.
       blocks: [
         ...(content.stageBlocks?.[stageId] ?? []),
+        ...(k.stageGeojson[stageId] ? [mapBlock(k.stageGeojson[stageId])] : []),
         ...(elev ? [elev] : []),
         ...(waterBlock ? [waterBlock] : []),
         ...(accomBlock ? [accomBlock] : []),
@@ -193,21 +205,8 @@ export function buildTrailPack(
       : [];
     // Section region map — a simplified slice of the route line (§7).
     const geom = k.sectionGeojson[r.id];
-    const mapBlocks: ContentBlock[] = geom
-      ? [
-          {
-            kind: 'map',
-            geojson: {
-              type: 'FeatureCollection',
-              features: [{ type: 'Feature', geometry: geom, properties: {} }],
-            } as GeoJSON.FeatureCollection,
-            styleId: 'outdoor',
-            markers: [],
-          },
-        ]
-      : [];
-    const mapTopic: GuideTopic[] = mapBlocks.length
-      ? [{ key: 'map', facet: 'overview', blocks: mapBlocks }]
+    const mapTopic: GuideTopic[] = geom
+      ? [{ key: 'map', facet: 'overview', blocks: [mapBlock(geom)] }]
       : [];
     const guide = [...mapTopic, ...baseGuide, ...cautions];
     return {
@@ -246,6 +245,9 @@ export function buildTrailPack(
     lo === hi ? cap(BANDS[lo] ?? '') : `${cap(BANDS[lo] ?? '')}–${cap(BANDS[hi] ?? '')}`;
 
   const guideTopics: GuideTopic[] = [];
+  if (k.routeGeojson) {
+    guideTopics.push({ key: 'map', facet: 'overview', blocks: [mapBlock(k.routeGeojson)] });
+  }
   if (k.elevationProfile.length >= 2) {
     guideTopics.push({
       key: 'profile',

@@ -72,7 +72,7 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
         )}
         {topicsForFacet(objective.guide, facet).map((topic) => (
           <View key={topic.key} style={styles.topic}>
-            <Text style={styles.topicHeading}>{topic.heading}</Text>
+            {topic.heading ? <Text style={styles.topicHeading}>{topic.heading}</Text> : null}
             {topic.body ? <Text style={styles.topicBody}>{topic.body}</Text> : null}
             {topic.blocks ? (
               <ContentBlockRenderer blocks={topic.blocks} resolve={storeResolve} />
