@@ -29,6 +29,17 @@
       "summary": "France meets the Pyrenees along their wetter, greener northern flank — the Pays Basque, the high Béarn and Bigorre, and the long descent through the Ariège to the Mediterranean."
     }
   ],
+  "ranges": [
+    {
+      "id": "pyrenees",
+      "slug": "pyrenees",
+      "name": "Pyrenees",
+      "continentId": "europe",
+      "tagline": "Atlantic to Mediterranean, Spain to France",
+      "heroMediaId": "media/hero/pyrenees",
+      "summary": "A 430 km wall between France and Spain, from the green Atlantic west to the dry Mediterranean east — walked end to end by the GR11 on the Spanish side, the GR10 on the French, and the high HRP between them."
+    }
+  ],
   "regions": [
     {
       "id": "basque-country-navarre",
@@ -1390,6 +1401,7 @@
           "andorra-pallars-high-country",
           "eastern-pyrenees"
         ],
+        "rangeId": "pyrenees",
         "tagline": "Pyrenees High Route · Spain",
         "heroMediaId": "media/hero/gr11",
         "summary": "The Senda Pirenaica traces the Spanish Pyrenees coast to coast — from Hondarribia on the Atlantic to Cap de Creus on the Mediterranean, waymarked red-and-white the whole way.",
@@ -7789,6 +7801,7 @@
           "haute-ariege",
           "catalan-pyrenees"
         ],
+        "rangeId": "pyrenees",
         "tagline": "The French Pyrenean traverse · France",
         "heroMediaId": "media/hero/gr10",
         "summary": "La Grande Traversée des Pyrénées follows the green French flank of the range coast to coast — Hendaye on the Atlantic to Banyuls-sur-Mer on the Mediterranean, village to village, waymarked red-and-white.",
@@ -11585,6 +11598,66 @@
                 "note": "June to September; lower and wetter than the Spanish side, with reliable village stages. Snow lingers on the high cols into early summer."
               }
             ]
+          },
+          {
+            "key": "kit",
+            "facet": "planning",
+            "heading": "What to carry",
+            "body": "Most walkers run a 40-50 litre pack, since the gîte-and-refuge network means you carry food for the day rather than days of supplies. Bring sturdy lightweight boots with a good tread for boulderfields and wet ground, plus two poles, which the guidebooks strongly recommend on the long descents into the valleys. Even in August, high overnight stops can drop near freezing, so pack a fleece, a thermal layer & full rain gear; afternoon storms are routine, so waterproofs go in even on a clear morning. Three litres of carrying capacity covers the longest dry climbs, and in an early-season heavy-snow year mini-spikes can be useful on lingering névé near the high passes."
+          },
+          {
+            "key": "navigation",
+            "facet": "planning",
+            "heading": "Following the blazes",
+            "body": "The GR10 is waymarked end to end with the red-and-white GR blaze — a white stripe above a red stripe — painted on rocks, posts & walls, with a cross marking a wrong turn and an angled flash signalling a change of direction. Marks cluster at forks and junctions, so in good visibility navigation is straightforward. The exception is fog on the high passes, where the painted marks thin out and a GPS track or map and compass earn their place. Phone coverage is reliable in the valley towns but goes intermittent above roughly 1,800 m, so don't rely on a live map alone."
+          },
+          {
+            "key": "accommodation",
+            "facet": "planning",
+            "heading": "Where to sleep",
+            "body": "The backbone of the GR10 is the gîte d'étape — a French walkers' hostel with dormitory beds, an evening meal & breakfast, and usually a packed lunch on request. Staffed mountain refuges fill the higher, remoter stretches on similar half-board terms (budget roughly 50-80 € a night), and the frequent village stages add hotels, pensions & chambres d'hôtes for a real bed. The infrastructure is dense enough to walk the whole route without a tent. Book ahead in July and August, and carry cash, as cards aren't always accepted at the mountain huts."
+          },
+          {
+            "key": "water",
+            "facet": "planning",
+            "heading": "Filling up",
+            "body": "Water is one of the GR10's real advantages over the drier Spanish GR11: the wet, green French flank carries springs, streams & fountains for much of its length, and the route keeps dropping into valleys past villages where you can refill. Streams are generally bridged or easily forded in summer. The carries that matter are the long climbs to the high passes, where you leave the last water at the valley floor and don't meet more until the descent — fill to three litres before those. Treat water taken from streams below pastures, where grazing stock is upstream."
+          },
+          {
+            "key": "safety",
+            "facet": "planning",
+            "heading": "Staying safe",
+            "body": "The real hazard on the GR10 is rarely the terrain — it's a careless slip on an easy but exposed path, which is why two poles are strongly advised. Pyrenean weather turns fast: clear mornings build into afternoon thunderstorms, so cross the high passes early, ideally before 2 pm. The walking season runs mid-June to late September, when the snow has cleared the passes and the refuges are open; outside that window you need winter experience. In an emergency dial 112 for the PGHM mountain rescue, give your position, and remember that coverage is patchy above the valleys — staffed refuges are your reliable point of contact and shelter."
+          },
+          {
+            "key": "flora",
+            "facet": "environment",
+            "heading": "Belts of green, and who lives in them",
+            "body": "The GR10 climbs through stacked vegetation bands you can read by altitude: oak and mixed deciduous woodland low down, beech and silver fir through the montane belt, mountain pine (Pinus uncinata) on the damp north-facing slopes of the subalpine zone, then open alpine meadow above the treeline, which sits around 2,200–2,450 m. The flower meadows of Béarn and Bigorre carry asphodel, Pyrenean iris, columbine and wild orchids through early summer. For wildlife, the animal you'll likely see most days is the izard, the Pyrenean chamois, smaller and more agile than its Alpine cousin and grazing up to about 3,000 m; marmots whistle from sub-alpine pastures (reintroduced after dying out here post-glaciation). Overhead, griffon vultures are near-daily company, and you may pick out the 3 m wingspan of the bearded vulture (gypaète) in the central French Pyrenees."
+          },
+          {
+            "key": "culture",
+            "facet": "environment",
+            "heading": "Four cultures, west to east",
+            "body": "The GR10 reads as a slow handover between mountain peoples: Basque in the Pays Basque, Béarnais and Gascon through Aspe, Ossau and Bigorre, then Catalan as you drop toward Canigou and the sea. Euskara, the Basque language, has no relation to any other tongue in Europe, and you'll meet it on the first days as place names, the pelota fronton in every village square, and red-shuttered whitewashed farmhouses (etxe). The Couserans and Haute-Ariège are the trail at its emptiest — villages far apart, long climbs, fewer people — while the Catalan east mixes French and Spanish (and Catalan) in the same conversation. The cultural shift is as marked as the landscape's, and the GR10's village stages and gîtes d'étape put you inside it rather than camping above it."
+          },
+          {
+            "key": "food",
+            "facet": "environment",
+            "heading": "Eat the valley you're in",
+            "body": "Because the GR10 strings together so many village stops, you eat regionally rather than from a stove. In the Basque and Béarn west, that means garbure — the thick cabbage, bean and ham-hock soup of the Pyrenean farmhouse — piperade (peppers, tomato, egg), poulet basquaise and axoa seasoned with Espelette pepper, and ttoro, a Basque fish stew nearer the coast. The mountain cheese to look for is Ossau-Iraty, a pressed ewe's-milk cheese named for the Ossau valley and the Iraty forest, PDO since 1996. For the trail or a café stop, gâteau basque is the standard: a dense pastry cake filled with either black-cherry jam or almond cream. Half-board (demi-pension) at a gîte d'étape is usually the easiest way to eat a regional dinner after a long stage."
+          },
+          {
+            "key": "history",
+            "facet": "environment",
+            "heading": "A frontier walked by smugglers & escapers",
+            "body": "This border has always been porous, and the GR10's paths inherit that traffic. Local passeurs — Basque smugglers and mountain guides who knew every stream valley — ran contraband across the watershed for generations, and in WWII the same knowledge moved people. In the Basque west, Andrée de Jongh's Comet Line guided some 300 downed Allied airmen over low crossings near the Bidassoa toward San Sebastián, often by night. Further east in the Ariège, the Chemin de la Liberté out of Saint-Girons climbed high into Catalonia; thousands escaped over the Pyrenees between 1940 and 1944 — refugees, airmen, those fleeing forced labour and persecution — guided by safe-house keepers and couriers, many of whom paid with their lives. You're walking the gentler, waymarked version of routes that were once a matter of survival."
+          },
+          {
+            "key": "weather",
+            "facet": "environment",
+            "heading": "Wet in the west, dry in the east — & up before noon",
+            "body": "The GR10 walks the Atlantic-to-Mediterranean gradient end to end. The Basque start is one of the wettest corners of France — mist, drizzle and lush green — and the trail dries and brightens steadily as you move east, finishing in the warm, rockier, Mediterranean-influenced Catalan Pyrenees above Banyuls. The season is roughly late June to September, after the high passes shed their snow. The daily rhythm that matters most in July and August is the afternoon storm: hot, slightly unstable days build cloud over the ridges, and clear morning skies can turn to thunder at altitude within an hour. Start early, aim to be over the day's high col by early afternoon, and treat a building anvil cloud as the signal to get down."
           }
         ],
         "highlightIds": [],
@@ -11621,6 +11694,26 @@
               "value": 176.6,
               "unit": "km",
               "label": "Distance"
+            }
+          ],
+          "guide": [
+            {
+              "key": "terrain",
+              "facet": "overview",
+              "heading": "Grass-and-sandstone foothills, not yet the high range",
+              "body": "This stretch climbs over the steep, grassy, wooded hills of the Basque Country before the limestone arrives — rolling cols rather than alpine passes for the first days. La Rhune (905m) is the first real summit out of Hendaye, and the red sandstone Crête d'Iparla above Bidarray (Pic d'Iparla, 1044m) is the first true ridge: a few kilometres of exposed crest where the wind blows hard. Past Saint-Jean-Pied-de-Port the ground rises into the beech country around Iraty and the gorges of Holzarté and Kakuetta cut deep below the path."
+            },
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "Pasture, then the largest beech forest in Europe",
+              "body": "The early stages cross open grazing — \"a place for grazing\" is what Larrun/La Rhune means in Euskara — where semi-feral pottok ponies, a centuries-old Basque breed, range the slopes. East of Saint-Jean-Pied-de-Port the trail enters Iraty, the largest beech forest in Europe, straddling France and Spanish Navarre between the Okabe plateau and Pic d'Orhi over some 17,000 hectares. Around Saint-Étienne-de-Baïgorry the lower ground carries the terraced vines of Irouléguy, the only vineyard in the French Basque Country."
+            },
+            {
+              "key": "culture",
+              "facet": "overview",
+              "heading": "Pilgrim roads and single-street bastides",
+              "body": "Ainhoa is a bastide-rue, its whitewashed Labourdin houses lined along one avenue that pilgrims once walked toward Compostela by the Baztan route, and Sare beside it is listed among Les Plus Beaux Villages de France. The section ends — by the usual reckoning — at Saint-Jean-Pied-de-Port, the second busiest start of the Camino Francés, where tens of thousands of pilgrims set out each year beneath the old citadel. Saint-Étienne-de-Baïgorry gives its valley wine its name, and Sainte-Engrâce keeps an eleventh-century Romanesque church at the eastern edge."
             }
           ],
           "resupply": [],
@@ -11662,6 +11755,26 @@
               "label": "Distance"
             }
           ],
+          "guide": [
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "Pines on the limestone, pasture in the cols",
+              "body": "On the karst above Lescun the trees that hold on are pins à crochet, the hook pines, growing curved and stunted out of the rock. Lower and in the cols the ground turns to summer pasture grazed by free-ranging flocks, with the Braca d'Azuns beechwood shading the approach to the Camplong organs. Much of the eastern half lies inside the Pyrenees National Park, where the protected grasslands carry alpine flowers through the short high season."
+            },
+            {
+              "key": "culture",
+              "facet": "overview",
+              "heading": "Shepherds, cheese, and a navy's masts",
+              "body": "This is living pastoral country — cayolars (shepherds' cabins), free-roaming herds, and the ewe's-milk Ossau-Iraty made on both the Aspe and Ossau sides. Two pieces of built history bracket the stretch: the 11th-century Romanesque church at Sainte-Engrâce, founded by the abbey of Leire in 1085 as a pilgrim hospital on the Santiago road, and the Chemin de la Mâture above Etsaut, a ledge cut into the cliff in 1772 to drag fir trunks down for the masts of Louis XIV's navy."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "Snow holds late on the high pass",
+              "body": "The Atlantic end of the range catches a lot of weather, and the high cols hold snow well into summer — the Hourquette d'Arre is commonly blocked until mid-June, sometimes to the month's end. The limestone plateaux are exposed with little shelter and few reliable streams once you leave the valleys, so the karst sections are best crossed in clear, settled conditions. Check the pass before committing to the Gabas–Gourette day early in the season."
+            }
+          ],
           "resupply": [],
           "refuges": [],
           "highlightIds": [],
@@ -11696,6 +11809,20 @@
               "value": 138.8,
               "unit": "km",
               "label": "Distance"
+            }
+          ],
+          "guide": [
+            {
+              "key": "terrain",
+              "facet": "overview",
+              "heading": "Three big cols & the roof of the GR10",
+              "body": "This is where the GR10 climbs highest: the Hourquette d'Ossoue at 2,734m, between the Oulettes de Gaube and Gavarnie, is the trail's top point, reached over loose rock with the Vignemale glacier alongside. Either side of it the days swing hard up and down — Col d'Ilhéou, Col de Madamète at 2,509m — separated by valley floors at Cauterets, Luz-Saint-Sauveur and Barèges around 700–1,250m. Expect granite, scree near the passes, and long descents on stony paths rather than gentle gradients."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "High passes, afternoon sun & a short season",
+              "body": "These are the highest days on the GR10, so the season is short — paths around the Hourquette d'Ossoue and Col de Madamète hold snow into early summer, and Petit Vignemale needs ice axe and crampons before the July melt. Afternoon sun on the long exposed descents is fierce; trip reports stress sun protection and an early start to clear the passes before cloud builds. Phone signal is patchy between refuges, so check the forecast in the valley towns."
             }
           ],
           "resupply": [],
@@ -11736,6 +11863,20 @@
               "label": "Distance"
             }
           ],
+          "guide": [
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "From beech valleys to summer pasture",
+              "body": "The walking shifts through bands as you climb: beech and fir woodland on the lower valley slopes around Astau and above Fos, then open grassland and summer pasture on the ridges toward Bacanère. The high ground here is grazed estive — grassy enough that the climb to Pic de Bacanère is mostly meadow rather than scree. Higher still, around the Araing lake, the cover thins to rock and short alpine turf."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "A June-to-October window",
+              "body": "This is high, exposed terrain — the practical season runs June to October, with snow lingering on the cols into early summer. The border ridge to Pic de Bacanère is open and offers no shelter, so it is the place a passing storm matters most; the Araing approach is an avalanche path and not a winter route. Carry layers for the high cols even on a settled day, when valley warmth gives no sense of conditions 1,000m above."
+            }
+          ],
           "resupply": [],
           "refuges": [],
           "highlightIds": [],
@@ -11770,6 +11911,26 @@
               "value": 116.9,
               "unit": "km",
               "label": "Distance"
+            }
+          ],
+          "guide": [
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "Beech below, rhododendron above",
+              "body": "The walking moves through beech forest on the lower climbs and descents, opening into summer pasture and shepherds' huts higher up. Above the treeline the slopes carry rhododendron and bilberry, as on the approach to the col d'Escots, before the final beech woods drop you into Aulus-les-Bains. The pattern repeats stage after stage: forest, then estives, then rock."
+            },
+            {
+              "key": "culture",
+              "facet": "overview",
+              "heading": "A century of mining, then quiet",
+              "body": "The Biros valley was mining country for a century: lead and zinc ore came down from the high workings of Bentaillou and Chichoué to the bocard ore-mill at Eylie, which ran until the 1950s. The GR10 drops past this legacy into Eylie-d'en-Haut. Over the whole stretch stands Mont Valier (2,838 m), the emblematic summit of the Couserans, named for the mythical first bishop of Couserans said to have climbed it."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "High cols, short days of cover",
+              "body": "The high crossings — port d'Aula, col d'Escots, col de Fitté — are exposed and hold snow late into spring, so the cabane d'Aula stages suit summer and early autumn. Water can be scarce on the long climbs: on the Saint-Lizier-d'Ustou to Aulus day the cirque de Casiérens is noted as the first reliable source since setting out. Aulus-les-Bains itself sits low at about 750 m, a warm valley floor after the tops."
             }
           ],
           "resupply": [],
@@ -11810,6 +11971,32 @@
               "label": "Distance"
             }
           ],
+          "guide": [
+            {
+              "key": "terrain",
+              "facet": "overview",
+              "heading": "From granite cirques to the high Carlit lakes",
+              "body": "This stretch climbs out of the Vicdessos valley and stays high, crossing passes over 2,300 m — the Porteille des Bésines at 2,333 m, the Col de la Coume d'Aniel at 2,487 m. The early stages drop into and out of the granite cirque of the Étangs de Bassiès, where staggered lakes sit on grey granite slabs; the later ones reach the Carlit massif and the dammed Lac des Bouillouses at roughly 2,020 m. The walking shifts from steep valley sides above Marc and Siguer to broad, lake-studded high ground around the Bésines and the Bouillouses."
+            },
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "Alpenrose at the treeline, peat bogs above",
+              "body": "Around the treeline you walk through dense Rhododendron ferrugineum — the alpenrose — which forms low shrubland up to about 2,500 m and flowers deep pink in early summer. Above it, hooked (mountain) pine gives way to open alpine meadow and to the peatlands that ring the Bésines and Bouillouses lakes; the Catalan Pyrenees alone hold some 1,600 peat bogs. The Plateau de Beille and the Carlit lake country are both protected for this biodiversity."
+            },
+            {
+              "key": "culture",
+              "facet": "overview",
+              "heading": "Iron miners and the black Mérens horse",
+              "body": "The villages below the trail — Goulier, Siguer, Sem — sent miners to the Rancié iron mine in the Vicdessos until it closed in 1931, and most have since lost the bulk of their population. Lower down, Mérens-les-Vals gives its name to the black Mérens horse, bred here for mine haulage and mountain work; it fell to around 40 registered animals by the early 1970s before being revived. Each June hundreds of Mérens still go up to summer pasture near 1,500 m."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "Start early, the passes are exposed",
+              "body": "The high cols here are exposed and afternoon thunderstorms are common through summer — storms often build around 16:00, when temperature can drop sharply, so start the climbs to the Porteille des Bésines and Col de la Coume d'Aniel early. September brings more stable, quieter days but colder nights and a real chance of fresh snow at altitude. Some passes hold persistent snow that can call for care even into summer."
+            }
+          ],
           "resupply": [],
           "refuges": [],
           "highlightIds": [],
@@ -11847,6 +12034,26 @@
               "value": 153.7,
               "unit": "km",
               "label": "Distance"
+            }
+          ],
+          "guide": [
+            {
+              "key": "terrain",
+              "facet": "overview",
+              "heading": "From granite plateau to the sea",
+              "body": "This is the Pyrenees winding down: you start on the open Cerdagne–Capcir plateau above Planès, cross the Carança and Mantet reserves on cornice paths cut into steep cliff, then climb the Canigou massif — at 2,784 m the last great summit of the eastern chain. After Cortalets the trail loses height for good, dropping through the Vallespir to Arles-sur-Tech before a final ridge walk over the Albères to the Mediterranean at Banyuls."
+            },
+            {
+              "key": "flora",
+              "facet": "overview",
+              "heading": "Four bands in a week",
+              "body": "The Mantet reserve alone stacks four vegetation levels — collinéal, montane, subalpine and alpine — from valley meadow at 950 m to bare rock near 2,500 m. Walk east and the gradient repeats trailwide: spruce and beech around Mariailles and Cortalets give way below Batère to chestnut and oak, and the last stages run through cork oak, broom and Mediterranean scrub shaped by the wind."
+            },
+            {
+              "key": "weather",
+              "facet": "overview",
+              "heading": "Sun, heat, and the tramontane",
+              "body": "The high opening stages run mostly without shade, so the Carança and Canigou days carry full sun and need an early start. As the trail drops toward the coast the heat builds rather than eases — walkers regularly find the last days near the Mediterranean the hottest of the trek. The shaping force at the eastern end is the tramontane, the dry wind off the land that has bent the Albères vegetation and can hit the final ridge hard."
             }
           ],
           "resupply": [],
@@ -11908,6 +12115,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The trail starts on Hendaye beach at the Atlantic and works inland over a string of low, rolling cols — Osin (374m), des Joncs, Ibardin — to the hamlet of Olhette. A long but gentle opening at around 26 km; the climbs are easy, so the distance is the thing to pace."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -12047,6 +12259,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The steepest pull comes right at the start, up toward La Rhune (905m), the first real Pyrenean summit and a Basque sacred mountain, before dropping through Sare to the bastide of Ainhoa. Get the climb done early — after La Rhune it eases into village walking."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -12176,6 +12393,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "Rolling hills and open pasture lead from Ainhoa to Bidarray, sat on the Nive, with a couple of real ascents along the way. A transitional day before the ridge — the village is the launch point for Iparla the next morning."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -12311,6 +12533,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The first true mountain day: a long climb onto the red sandstone Crête d'Iparla (Pic d'Iparla, 1044m), a few exposed kilometres of crest where griffon vultures wheel, then down to Saint-Étienne-de-Baïgorry. Walk it only in dry weather — wind on the ridge and a cave passage make it no place for rain or cloud."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -12432,6 +12659,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A shorter, easier link out of the Irouléguy wine valley to Saint-Jean-Pied-de-Port, the old pilgrim town and gateway to the Camino Francés. A recovery-paced day after Iparla; the citadel town is the main resupply and rest stop of the section."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -12559,6 +12791,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "Leave Saint-Jean-Pied-de-Port and climb steadily up the Nive valley, past Estérençuby near the river's source, to the Gîte d'étape Kaskoleta. The ground starts rising in earnest here — this is the approach to the high beech country, so save legs for what follows."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -12672,6 +12909,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A sustained, demanding climb up to the Chalets d'Iraty, entering Iraty — the largest beech forest in Europe — straddling the Spanish border high on the range. The big elevation gain is the day's work; the reward is the forest and the open ridges above it."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -12803,6 +13045,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From the Iraty chalets the route runs over the high ground near Pic des Escaliers (1472m) and along ridges before the long descent to Logibar in its valley. A high, exposed day with a steep drop at the end — mind the knees on the way down."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -12916,6 +13163,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Logibar the path climbs past the Holzarté suspension footbridge, slung 180m above the Olhadübi gorge, then traverses high shepherd country above the canyons to Sainte-Engrâce. The bridge and the gorge edges are the day's defining ground — spectacular, and exposed enough to watch your footing."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -13067,6 +13319,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A climbing day out of the Basque valley of Sainte-Engrâce — pause at its 11th-century Romanesque church — up onto the limestone toward the ski station at La Pierre Saint-Martin, on the edge of the great Larra karst. The walk is steady ascent on grazing slopes; the thing to watch is the shift onto bare, exposed limestone with little water near the top."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -13160,6 +13417,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The crossing of the Arres de Camplong, a wide limestone plateau of lapiaz and hook pines, with the pyramid of Pic d'Anie (2504m) ahead before a long drop into the Lescun cirque. Footing on the karst is slow and the descent to Lescun loses around 1200m, so it walks longer than the distance suggests."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -13271,6 +13533,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A quieter transition stage leaving the Ansabère cirque behind and dropping through pasture and woodland into the depths of the Aspe valley at Etsaut. Mostly descent and forest — a recovery day between the limestone above and the big climb that follows."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -13380,6 +13647,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The signature day of the section: the Chemin de la Mâture, a path hewn into the cliff of the Gorge de l'Enfer, then a long climb to the Ayous lakes where Lac Gentau mirrors the Pic du Midi d'Ossau (2884m), before descending to Gabas. It is a big sporting stage with around 1490m of ascent — the exposed Mâture ledge is the part to take slowly, especially when wet."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -13527,6 +13799,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The high point of the whole GR10: a sustained climb from Gabas to the Hourquette d'Arre at 2465m, then down past Lac d'Anglas to the ski resort of Gourette. The one thing that matters is the pass itself — it holds snow into late June, so confirm it's clear before setting out early in the season."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -13665,6 +13942,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A high-pasture day over the Col de Tortes (1799m), Col de Saucède and Col du Soulor, leaving Béarn for the Val d'Azun and Bigorre at Arrens-Marsous. Gentler than the days before, with shepherds' cabins and griffon vultures riding the escarpments — the long final descent is the main effort."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -13774,6 +14056,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A long, steady climb out of Arrens-Marsous over the Col de Bordères and past the Lac d'Estaing, then up the Ilhéou valley to the Col d'Ilhéou before dropping to the lake and refuge — around 1,600m of ascent. It is one of the harder days on this stretch, so pace the early kilometres rather than burning out before the final col."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -13901,6 +14188,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A short, mostly downhill morning following the Gave d'Ilhéou past the Lac Noir and through the Cambasque valley into Cauterets. Easy walking and an early finish — use the spare time to resupply and rest in town before the big Vignemale days ahead."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -13982,6 +14274,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Cauterets the trail climbs through forest beside the gave to Pont d'Espagne, then up past the Lac de Gaube to the Refuge des Oulettes de Gaube under the north face of the Vignemale. It is a sustained ascent on a very popular path; the reward is camping beneath the highest peak in the French Pyrenees, so leave time to watch the glacier light up."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -14088,6 +14385,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The high point of the whole GR10: a rocky, loose climb to the Hourquette d'Ossoue at 2,734m, then a long, undulating descent with stream crossings and waterfalls toward Gavarnie and the Chalet-refuge la Grange de Holle. It is a big day of ups and downs — what matters most is clearing the pass early, as the descent runs hot and exposed in the afternoon."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -14222,6 +14524,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A descending day off the high country, dropping from the Gavarnie valley down to Luz-Saint-Sauveur at around 700m. Knees take the strain on the long downhill, but the reward is a full-service valley town to resupply and clean up before the Néouvielle leg."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -14373,6 +14680,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A shorter valley-to-valley hop, climbing out of Luz-Saint-Sauveur on a balcony path above the Bastan to reach Barèges, the highest thermal station in France. Straightforward walking that sets you up for the climb into the Néouvielle reserve — a good half-day if you want an afternoon at the baths."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -14470,6 +14782,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The walk into the Néouvielle Nature Reserve: up the Aygues-Cluses valley past the Madamète lakes to the Col de Madamète at 2,509m, then down past the Aumar and Aubert lakes on a balcony path to Lac de l'Oule. The granite-and-lakes scenery is the highlight of the section, so allow time — and respect the reserve's protections (no fires, stay on path)."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -14609,6 +14926,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Lac de l'Oule the trail climbs to the Col de Portet at around 2,215m, then crosses the Saint-Lary ski-area pastures with a wide panorama over the Aure valley before descending to Vielle-Aure. A long downhill finish off the high lakes — pace the descent and enjoy the last open views before the valley closes in."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -14727,6 +15049,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A valley-to-village stage out of Vielle-Aure in the Aure valley, climbing away from the National Park gateway over pasture and through hamlets toward Germ at around 1,340m. Steady ascent rather than high drama — a transition day that sets up the lake country ahead."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -14828,6 +15155,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A big mountain day from Germ over high cols into the Astau valley and up to the Oô cirque, ending at one of the Pyrenees' best-known lakes. Lac d'Oô is fed by a cascade of roughly 275m, so save energy and water for the long climbs on either side of it."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -14942,6 +15274,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Lac d'Oô up past the Espingo cirque, then a high traverse beneath Pic du Céciré and along the ridges by Superbagnères before dropping into Bagnères-de-Luchon. The defining feature is the descent: a very long, knee-heavy drop to the valley, so pace the final hours into town."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -15073,6 +15410,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A shorter climbing stage leaving the spa town through Juzet-de-Luchon and Sode up to the hamlet of Artigue at around 1,230m near the frontier. Treat it as the build-up to the border ridge — Luchon is the place to resupply before the high crossing tomorrow."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -15154,6 +15496,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The high point of this section: nearly 1,000m of grassy ridge-climbing to Pic de Bacanère at 2,193m, walking the France–Spain border past frontier stones with the Maladeta and Aneto on the skyline. A long descent through woodland follows to the small village of Fos, with little shelter on the exposed ridge if weather moves in."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -15285,6 +15632,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A long sustained climb of around 15km from Fos up through cols to the refuge at the Étang d'Araing (1,965m), beneath the Pic de Crabère. This is the gateway into Ariège and the wilder Couserans — the refuge is open roughly June to September, so confirm before relying on it at the season's edges."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -15407,6 +15759,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A short stage that gives back almost everything you climbed earlier: from the étang d'Araing refuge it drops over a thousand metres past the old Biros mining workings into Eylie-d'en-Haut. The descent is the day — long and knee-heavy — so save energy for it, or add the Pic de l'Har variant if you want the height to count."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -15484,6 +15841,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The first proper Couserans climbing day out of Eylie, across beech forest, summer pastures and shepherds' huts toward Ayer. Wild and quiet country — pace the long ascent, because shade and water thin out above the treeline."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -15603,6 +15965,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A valley-and-pasture stage into the small farming hamlet of Esbintz, where the gîte sits right on the trail. The main thing here is logistics: Esbintz is one of the gîtes that lends sleeping bags and gear for the unstaffed cabane d'Aula, so sort your kit before pushing on."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -15720,6 +16087,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A climb into high granite country to the cabane d'Aula, set in a cirque under the Cuns d'Aula. The cabane is unstaffed, so carry what you need — bedding and food — and don't count on finding either up here."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -15847,6 +16219,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The high crossing of the stretch: past the étang d'Areau and over the port d'Aula, then a long drop toward Couflens and up to the hamlet of Rouze. The port is the crux — exposed and snow-prone into early summer, so check conditions before committing."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -15957,6 +16334,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A short, easy descent off Rouze into the green Ustou valley to Saint-Lizier-d'Ustou. After the cabane d'Aula days it's a recovery leg — a chance to resupply and sleep under a roof."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -16038,6 +16420,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A long, full day over the col de Fitté and the col d'Escots, marking the passage from the Couserans into the Haute-Ariège, finishing in the old thermal town of Aulus-les-Bains. Water is the catch: the cirque de Casiérens is the first reliable source on the route, so fill up before the climb."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -16181,6 +16568,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A climb out of Aulus back into high lake country, ending at the refuge above the étangs de Bassiès. Straightforward mountain walking, but it's a real ascent off the valley floor — settle into the rhythm of the climb early."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -16270,6 +16662,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From the Bassiès refuge the GR10 leaves the granite cirque and its staggered lakes, heading southeast on a stony trail before a long drop toward Marc — a stage with real descent on tired legs, so save something for the knees."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -16388,6 +16785,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A valley-and-climb stage up out of the Vicdessos toward the old mining village of Goulier, which sits above 1,000 m. The day is steady walking through former miners' country rather than high passes."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -16535,6 +16937,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A shorter linking stage across the upper Vicdessos to Siguer, another village that supplied the Rancié iron mine. It is transitional walking — useful for resupply and rest before the climb onto the Plateau de Beille."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -16632,6 +17039,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The long pull up onto the Plateau de Beille, a broad pastoral plateau between 1,650 and 2,000 m that doubles as a cross-country ski domain. Expect sustained climbing with little shade — water and pace matter on the ascent."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -16775,6 +17187,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "About 19 km of high ridge walking from the plateau over a string of cols — Finestres, Didorte, Belh — to the Refuge du Rulhe, with roughly 1,100 m of climbing and clear views throughout. It is a big, exposed day: start early to stay ahead of afternoon storms."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -16877,6 +17294,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From the Rulhe the trail crosses the Col de la Calmette, skirts the Étang Bleu and follows a ridge before a long descent down the Mourguillou to Mérens-les-Vals. The drop into the valley is sustained — manage the descent rather than rushing it."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -16975,6 +17397,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Mérens the high mountains open up: a long climb along the Nabre torrent to the Porteille des Bésines at 2,333 m, then down to the guarded Refuge des Bésines by its lake. This is exposed high ground, so time the pass for the morning."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -17064,6 +17491,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A high crossing through the Carlit lake country, over the Col de la Coume d'Aniel at 2,487 m past the Lac de Lanoux — the largest lake in the French Pyrenees — to the dammed Lac des Bouillouses near 2,020 m. The most important thing is the altitude: the cols are over 2,400 m and weather turns fast up here."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -17178,6 +17610,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The final stage of this stretch leaves the Cerdagne plateau of Bouillouses and descends through pine forest toward the meadows around Planès — a smoother, mid-altitude walk after the high lakes. It is the gentlest day of the section, a wind-down off the Carlit."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -17301,6 +17738,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A long, sun-exposed day off the Cerdagne plateau, dropping from Planès into forest and valley before the steady climb to the Ras de la Carança refuge — around 1,170 m of ascent with almost no shade, so fill up and start early."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -17411,6 +17853,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A shorter, friendlier stage into the Mantet reserve, reaching the hamlet of Mantet and its welcoming gîte. The reserve crossing is the point of the day: a quiet alpine valley on the Spanish border, climbing toward the cols above the village."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -17500,6 +17947,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The trail rounds the Canigou massif's western flank to the Refuge de Mariailles, with scree underfoot on the higher sections. It's a transitional day — you leave the Carança–Mantet country and set up for the big climb tomorrow."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -17606,6 +18058,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The climb onto Canigou: from Mariailles the GR10 works up to the Cortalets refuge at 2,150 m, the launch point for the 2,784 m summit. The summit is an out-and-back variant, not the GR10 line — decide before you go whether you're taking it."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -17721,6 +18178,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "From Cortalets the trail traces the Canigou balcony with long views to Roussillon and the sea, then descends to the Batère refuge, set in former iron-mine buildings. This is where the high mountains end and the trail begins losing height for good."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -17834,6 +18296,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A descent day into the Vallespir, dropping through chestnut and oak woods to Arles-sur-Tech. The valley heat and the long downhill are what to manage — easy navigation, hard on the knees."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -17960,6 +18427,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "Leaving Arles-sur-Tech, the GR10 climbs back out of the Tech valley and works through the wooded foothills toward Las Illas, close to the Spanish border. Lower, hotter, and more enclosed than the high country — carry water for the climbs."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -18095,6 +18567,11 @@
           ],
           "blocks": [
             {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "A forested approach to the Albères, ending at the Col de l'Ouillat below Pic Néoulous — the last night before the sea. Steady walking through cork oak and beech; the col is the staging point for the final coastal descent."
+            },
+            {
               "kind": "elevation",
               "points": [
                 {
@@ -18228,6 +18705,11 @@
             }
           ],
           "blocks": [
+            {
+              "kind": "prose",
+              "heading": "Overview",
+              "body": "The finish: over Pic Néoulous and the Albères ridge, past Pic Sailfort's view over Banyuls and the Bay of Roses, then down through vineyards and dry-stone huts to the Mediterranean. Long, exposed and often the hottest day of the trek — pace the descent to the beach at Banyuls-sur-Mer."
+            },
             {
               "kind": "elevation",
               "points": [
@@ -18391,7 +18873,8 @@
           "aneto-via-normal",
           "aneto-cara-norte",
           "aneto-cresta-salenques"
-        ]
+        ],
+        "rangeId": "pyrenees"
       },
       "routes": [
         {

@@ -22,9 +22,12 @@ export function createMemoryRepo(store: ImportedStore): RoamRepo {
     getContinent: (id) => get(store.continents, id, 'continent'),
     getCountry: (id) => get(store.countries, id, 'country'),
     getRegion: (id) => get(store.regions, id, 'region'),
+    getRange: (id) => get(store.ranges, id, 'range'),
 
     listCountries: (continentId) =>
       Promise.resolve([...store.countries.values()].filter((c) => c.continentId === continentId)),
+    listRanges: (continentId) =>
+      Promise.resolve([...store.ranges.values()].filter((r) => r.continentId === continentId)),
     listRegions: (countryId) =>
       Promise.resolve([...store.regions.values()].filter((r) => r.countryId === countryId)),
 
@@ -32,6 +35,12 @@ export function createMemoryRepo(store: ImportedStore): RoamRepo {
       Promise.resolve(
         [...store.objectiveSummaries.values()].filter((o): o is ObjectiveSummary =>
           o.regionIds.includes(regionId),
+        ),
+      ),
+    listObjectivesByRange: (rangeId) =>
+      Promise.resolve(
+        [...store.objectiveSummaries.values()].filter(
+          (o): o is ObjectiveSummary => o.rangeId === rangeId,
         ),
       ),
 

@@ -20,6 +20,7 @@ import type {
   MediaAsset,
   Objective,
   POI,
+  Range,
   Region,
   Route,
   Section,
@@ -41,6 +42,7 @@ export interface PeakPack {
 export interface SeedInput {
   continents: Continent[];
   countries: Country[];
+  ranges?: Range[];
   regions: Region[];
   locations: Location[];
   pois: POI[];
@@ -54,6 +56,7 @@ export interface ImportedStore {
   // discovery + shared
   continents: Map<string, Continent>;
   countries: Map<string, Country>;
+  ranges: Map<string, Range>;
   regions: Map<string, Region>;
   locations: Map<string, Location>;
   pois: Map<string, POI>;
@@ -111,6 +114,7 @@ function blockRefs(blocks: ContentBlock[]): {
 export function importPacks(input: SeedInput): ImportedStore {
   const continents = byId(input.continents);
   const countries = byId(input.countries);
+  const ranges = byId(input.ranges ?? []);
   const regions = byId(input.regions);
   const locations = byId(input.locations);
   const pois = byId(input.pois);
@@ -148,12 +152,15 @@ export function importPacks(input: SeedInput): ImportedStore {
 
   for (const c of countries.values())
     check(`country ${c.id}`, 'continentId', [c.continentId], continents, 'continent');
+  for (const r of ranges.values())
+    check(`range ${r.id}`, 'continentId', [r.continentId], continents, 'continent');
   for (const r of regions.values())
     check(`region ${r.id}`, 'countryId', [r.countryId], countries, 'country');
 
   for (const o of objectives.values()) {
     assertObjectiveShape(o); // invariant 2 — throws on its own
     check(`objective ${o.id}`, 'regionIds', o.regionIds, regions, 'region');
+    if (o.rangeId) check(`objective ${o.id}`, 'rangeId', [o.rangeId], ranges, 'range');
     check(`objective ${o.id}`, 'highlightIds', o.highlightIds, highlights, 'highlight');
     if (o.sectionIds) check(`objective ${o.id}`, 'sectionIds', o.sectionIds, sections, 'section');
     if (o.routeIds) check(`objective ${o.id}`, 'routeIds', o.routeIds, routes, 'route');
@@ -225,6 +232,7 @@ export function importPacks(input: SeedInput): ImportedStore {
       name: o.name,
       type: o.type,
       regionIds: o.regionIds,
+      rangeId: o.rangeId,
       tagline: o.tagline,
       heroMediaId: o.heroMediaId,
       summary: o.summary,
@@ -276,6 +284,7 @@ export function importPacks(input: SeedInput): ImportedStore {
   return {
     continents,
     countries,
+    ranges,
     regions,
     locations,
     pois,

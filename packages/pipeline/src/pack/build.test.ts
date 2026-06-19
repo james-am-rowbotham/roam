@@ -74,7 +74,7 @@ const knowledge: TrailKnowledge = {
 
 describe('pack builder (multi-trail engine)', () => {
   const built = buildTrailPack(config, knowledge);
-  const seed = assembleSeed(CONTINENTS, COUNTRIES, [built]);
+  const seed = assembleSeed(CONTINENTS, COUNTRIES, [], [built]);
 
   test('the assembled seed passes the importer (no dangling references)', () => {
     expect(() => importPacks(seed)).not.toThrow();

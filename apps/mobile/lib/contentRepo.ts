@@ -20,6 +20,18 @@ export const useCountry = (id: string) =>
   useQuery({ queryKey: key('country', id), queryFn: () => contentRepo.getCountry(id) });
 export const useRegion = (id: string) =>
   useQuery({ queryKey: key('region', id), queryFn: () => contentRepo.getRegion(id) });
+export const useRange = (id: string) =>
+  useQuery({ queryKey: key('range', id), queryFn: () => contentRepo.getRange(id) });
+export const useRanges = (continentId: string) =>
+  useQuery({
+    queryKey: key('ranges', continentId),
+    queryFn: () => contentRepo.listRanges(continentId),
+  });
+export const useRangeObjectives = (rangeId: string) =>
+  useQuery({
+    queryKey: key('range-objectives', rangeId),
+    queryFn: () => contentRepo.listObjectivesByRange(rangeId),
+  });
 export const useCountries = (continentId: string) =>
   useQuery({
     queryKey: key('countries', continentId),

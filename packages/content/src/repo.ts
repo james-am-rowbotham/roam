@@ -13,6 +13,7 @@ import type {
   Objective,
   ObjectiveType,
   POI,
+  Range,
   Region,
   Route,
   Section,
@@ -30,6 +31,7 @@ export interface ObjectiveSummary {
   name: string;
   type: ObjectiveType;
   regionIds: string[];
+  rangeId?: string;
   tagline: string;
   heroMediaId: string;
   summary: string;
@@ -77,12 +79,16 @@ export interface RoamRepo {
   getContinent(id: string): Promise<Continent>;
   getCountry(id: string): Promise<Country>;
   getRegion(id: string): Promise<Region>;
-  /** Countries under a continent / regions under a country (the discovery card lists).
-   *  Continent/Country/Region are flat (no heavy content) so these return them whole. */
+  getRange(id: string): Promise<Range>;
+  /** Countries / ranges under a continent, regions under a country (the discovery lists).
+   *  These are flat (no heavy content) so they return whole. */
   listCountries(continentId: string): Promise<Country[]>;
+  listRanges(continentId: string): Promise<Range[]>;
   listRegions(countryId: string): Promise<Region[]>;
   /** Every objective that *touches* this region (invariant 3), summaries only. */
   listObjectivesByRegion(regionId: string): Promise<ObjectiveSummary[]>;
+  /** Every objective in this mountain range (cross-country), summaries only. */
+  listObjectivesByRange(rangeId: string): Promise<ObjectiveSummary[]>;
 
   // objective
   /** Every objective in the pack, summaries only — the Home / browse entry. */

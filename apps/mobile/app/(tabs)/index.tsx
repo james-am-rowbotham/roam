@@ -25,6 +25,10 @@ const DEV_LINKS: { label: string; href: Href }[] = [
     label: 'Discover — Europe (Continent → … → Stage)',
     href: { pathname: '/discover/continent/[id]', params: { id: 'europe' } },
   },
+  {
+    label: 'Pyrenees — explore by range (GR11 + GR10 + Aneto)',
+    href: { pathname: '/discover/range/[id]', params: { id: 'pyrenees' } },
+  },
   { label: 'ContentBlocks — every kind', href: '/dev/content-blocks' },
 ];
 

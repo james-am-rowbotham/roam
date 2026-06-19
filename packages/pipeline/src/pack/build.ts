@@ -12,6 +12,7 @@ import type {
   Location,
   MediaAsset,
   Objective,
+  Range,
   Region,
   Section,
   SeedInput,
@@ -201,6 +202,7 @@ export function buildTrailPack(
     name: config.source.name,
     type: 'trail',
     regionIds: regions.map((r) => r.id),
+    rangeId: config.rangeId,
     tagline: config.tagline,
     heroMediaId: `media/hero/${config.id}`,
     summary: config.summary,
@@ -245,6 +247,7 @@ export function buildTrailPack(
 export function assembleSeed(
   continents: Continent[],
   countries: Country[],
+  ranges: Range[],
   built: BuiltTrail[],
 ): SeedInput {
   const regions = new Map<string, Region>();
@@ -258,6 +261,7 @@ export function assembleSeed(
   return {
     continents,
     countries,
+    ranges,
     regions: [...regions.values()],
     locations: [...locations.values()],
     pois: [],

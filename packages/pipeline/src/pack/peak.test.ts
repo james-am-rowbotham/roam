@@ -98,7 +98,7 @@ describe('peak engine (buildPeakPack)', () => {
   const trail = buildTrailPack(trailConfig, trailKnowledge);
   const peak = buildPeakPack(peakConfig, peakKnowledge);
   const seed = {
-    ...assembleSeed(CONTINENTS, COUNTRIES, [trail]),
+    ...assembleSeed(CONTINENTS, COUNTRIES, [], [trail]),
     locations: [...trail.locations, ...peak.locations],
     highlights: peak.highlights,
     peaks: [peak.pack],

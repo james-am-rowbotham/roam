@@ -3,7 +3,7 @@
 // derived from each trail's coarse regions (buildDiscovery), so they self-populate as
 // trails are added. Editorial copy is placeholder — TODO(copy).
 
-import type { Continent, Country } from '@roam/content';
+import type { Continent, Country, Range } from '@roam/content';
 
 export const CONTINENTS: Continent[] = [
   {
@@ -36,5 +36,21 @@ export const COUNTRIES: Country[] = [
     heroMediaId: 'media/hero/france',
     summary:
       'France meets the Pyrenees along their wetter, greener northern flank — the Pays Basque, the high Béarn and Bigorre, and the long descent through the Ariège to the Mediterranean.',
+  },
+];
+
+// Mountain ranges — the geographic discovery axis that cross-cuts countries (§ "explore by
+// range"). Objectives carry a `rangeId`; the Pyrenees gather Spain's GR11, France's GR10
+// and the peaks. New ranges (Alps, Picos…) are a row here + a `rangeId` on each trail def.
+export const RANGES: Range[] = [
+  {
+    id: 'pyrenees',
+    slug: 'pyrenees',
+    name: 'Pyrenees',
+    continentId: 'europe',
+    tagline: 'Atlantic to Mediterranean, Spain to France',
+    heroMediaId: 'media/hero/pyrenees',
+    summary:
+      'A 430 km wall between France and Spain, from the green Atlantic west to the dry Mediterranean east — walked end to end by the GR11 on the Spanish side, the GR10 on the French, and the high HRP between them.',
   },
 ];

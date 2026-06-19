@@ -76,6 +76,18 @@ export interface Country {
   summary: string;
 }
 
+/** A mountain range — a geographic discovery axis that cross-cuts countries (the Pyrenees
+ *  span Spain + France + Andorra). Parallel to Country: objectives carry a `rangeId`. */
+export interface Range {
+  id: string;
+  slug: string;
+  name: string;
+  continentId: string;
+  tagline: string;
+  heroMediaId: string;
+  summary: string;
+}
+
 export interface Region {
   id: string;
   slug: string;
@@ -97,6 +109,8 @@ export interface Objective {
   type: ObjectiveType;
   /** Touches one or more regions (invariant 1 + 3) — reference, never containment. */
   regionIds: string[];
+  /** The mountain range it belongs to (discovery axis, cross-country). */
+  rangeId?: string;
   tagline: string;
   heroMediaId: string;
   /** The persistent line under the tab rows (load-bearing layout, §6.3). */

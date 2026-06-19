@@ -11,6 +11,8 @@ export interface PackConfig {
   type: 'trail' | 'peak';
   /** Discovery country this objective sits under (geography.ts). */
   countryId: string;
+  /** Discovery mountain range this objective sits in (cross-country axis). */
+  rangeId?: string;
   /** The OSM/ingest config — geometry, etapas, POIs, waymark. */
   source: TrailConfig;
   /** Objective hero/summary copy. */
@@ -24,6 +26,7 @@ export const PACK_CONFIGS: PackConfig[] = Object.values(TRAIL_DEFS).map((d) => (
   id: d.trail.id,
   type: 'trail',
   countryId: d.countryId,
+  rangeId: d.rangeId,
   source: d.trail,
   tagline: d.tagline,
   summary: d.summary,

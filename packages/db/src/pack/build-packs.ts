@@ -13,7 +13,14 @@ import {
   anetoPack,
   importPacks,
 } from '@roam/content';
-import { CONTINENTS, COUNTRIES, PACK_CONFIGS, assembleSeed, buildTrailPack } from '@roam/pipeline';
+import {
+  CONTINENTS,
+  COUNTRIES,
+  PACK_CONFIGS,
+  RANGES,
+  assembleSeed,
+  buildTrailPack,
+} from '@roam/pipeline';
 import { loadContent } from '../content/cache';
 import { readKnowledge } from './readKnowledge';
 
@@ -30,13 +37,13 @@ for (const config of PACK_CONFIGS.filter((c) => c.type === 'trail')) {
   built.push(buildTrailPack(config, knowledge, content));
 }
 
-const trailSeed = assembleSeed(CONTINENTS, COUNTRIES, built);
+const trailSeed = assembleSeed(CONTINENTS, COUNTRIES, RANGES, built);
 
 // Fold in the hand-authored Aneto peak until the peak pipeline lands, remapped onto a
-// generated GR11 region slug so discovery aggregates the peak alongside the trail.
+// generated GR11 region slug + the Pyrenees range so discovery aggregates it with the trails.
 const aneto: PeakPack = {
   ...anetoPack,
-  objective: { ...anetoPack.objective, regionIds: ['aragonese-pyrenees'] },
+  objective: { ...anetoPack.objective, regionIds: ['aragonese-pyrenees'], rangeId: 'pyrenees' },
 };
 const seed: SeedInput = {
   ...trailSeed,

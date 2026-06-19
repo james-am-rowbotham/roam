@@ -26,6 +26,8 @@ export interface TrailDef {
   trail: TrailConfig;
   /** Discovery country id (geography.ts). */
   countryId: string;
+  /** Discovery mountain-range id — the cross-country browse axis (geography.ts). */
+  rangeId: string;
   /** Objective hero/summary copy. */
   tagline: string;
   summary: string;
@@ -47,6 +49,7 @@ export const TRAIL_DEFS: Record<string, TrailDef> = {
   gr11: {
     trail: GR11,
     countryId: 'spain',
+    rangeId: 'pyrenees',
     tagline: 'Pyrenees High Route · Spain',
     summary:
       'The Senda Pirenaica traces the Spanish Pyrenees coast to coast — from Hondarribia on the Atlantic to Cap de Creus on the Mediterranean, waymarked red-and-white the whole way.',
@@ -105,6 +108,7 @@ export const TRAIL_DEFS: Record<string, TrailDef> = {
   gr10: {
     trail: GR10,
     countryId: 'france',
+    rangeId: 'pyrenees',
     tagline: 'The French Pyrenean traverse · France',
     summary:
       'La Grande Traversée des Pyrénées follows the green French flank of the range coast to coast — Hendaye on the Atlantic to Banyuls-sur-Mer on the Mediterranean, village to village, waymarked red-and-white.',
