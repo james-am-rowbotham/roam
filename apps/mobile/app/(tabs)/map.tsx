@@ -2,7 +2,7 @@ import { Marker } from '@maplibre/maplibre-react-native';
 import { symbolKey } from '@roam/core';
 import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   MapImages,
@@ -14,26 +14,12 @@ import {
   TrailLayer,
   UserMarker,
 } from '../../components/map';
-import { Chip, Icon, IconButton } from '../../components/ui';
+import { Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
 import { useMapStore } from '../../store/mapStore';
 import { colors, fonts, radius, spacing, type } from '../../theme';
-
-// ---------------------------------------------------------------------------
-// Filter chips — pure filters, × to remove
-// ---------------------------------------------------------------------------
-
-// Active filter — a selected Chip with a dismiss suffix ("GR11 ✕").
-function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }) {
-  return <Chip label={label} selected suffix="✕" onPress={onRemove} />;
-}
-
-// A removed filter, shown as a default chip with a + to re-add it.
-function ReAddChip({ label, onAdd }: { label: string; onAdd: () => void }) {
-  return <Chip label={`+ ${label}`} onPress={onAdd} />;
-}
 
 // ---------------------------------------------------------------------------
 // Geometry label — rendered on the map at trail/section midpoint
@@ -60,6 +46,74 @@ function GeometryLabel({
 }
 
 // ---------------------------------------------------------------------------
+// One trail's route on the map — its own geometry + POIs + blaze. Rendered once
+// per trail so the map shows every route (GR11, GR10, …), each in its osmc way
+// colour with its painted blaze (§17.2/§17.8). Hooks-per-component keeps the
+// per-trail fetches valid while the trail list grows.
+// ---------------------------------------------------------------------------
+
+type MapTrail = {
+  id: number;
+  ref?: string | null;
+  name?: string | null;
+  waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
+};
+
+function TrailRoute({ trail, dim }: { trail: MapTrail; dim: boolean }) {
+  const router = useRouter();
+  const id = String(trail.id);
+  const enabled = { query: { enabled: !!trail.id } };
+  const { data: trailResponse } = useTrail(id, enabled);
+  const { data: waterResponse } = useTrailWater(id, enabled);
+  const { data: accommResponse } = useTrailAccommodations(id, enabled);
+
+  const rawTrail = trailResponse?.data;
+  const geojson = rawTrail && 'type' in rawTrail ? rawTrail : null;
+  const water = Array.isArray(waterResponse?.data) ? waterResponse.data : [];
+  const accommodations = Array.isArray(accommResponse?.data) ? accommResponse.data : [];
+
+  const symbol = trail.waymark?.symbol ?? null;
+  const color = symbol?.wayColor ?? colors.map.route;
+  const blazeImage = symbol ? `blaze-${symbolKey(symbol)}` : undefined;
+  // 'GR11' → 'gr11', 'GR 10' → 'gr10' — route the line tap to the new objective Guide.
+  const slug = (trail.ref ?? trail.name ?? '').toLowerCase().replace(/\s+/g, '');
+
+  if (!geojson) return null;
+  return (
+    <>
+      <TrailLayer
+        id={`trail-${trail.id}`}
+        geojson={geojson as never}
+        color={color}
+        width={dim ? 2 : 4}
+        opacity={dim ? 0.25 : 1}
+        onPress={
+          slug
+            ? () => router.push({ pathname: '/objective/[id]', params: { id: slug } })
+            : undefined
+        }
+      />
+      {blazeImage && (
+        <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
+      )}
+      <SectionEndpoints geom={geojson as unknown as Record<string, unknown>} />
+      <NativePOILayer
+        id={`water-${trail.id}`}
+        kind="water"
+        pois={water}
+        onPress={(pid) => router.push(`/poi/water/${pid}`)}
+      />
+      <NativePOILayer
+        id={`accommodations-${trail.id}`}
+        kind="accommodation"
+        pois={accommodations}
+        onPress={(pid) => router.push(`/poi/accommodation/${pid}`)}
+      />
+    </>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Screen
 // ---------------------------------------------------------------------------
 
@@ -69,16 +123,10 @@ export default function MapScreen() {
 
   const {
     pendingViewport,
-    setViewport,
-    trailVisible,
     activeSectionId,
     activeSectionLabel,
     activeSectionGeomCenter,
     activeSectionGeom,
-    activeSectionChainageRange,
-    showTrail,
-    removeTrailFilter,
-    removeSectionFilter,
   } = useMapStore();
 
   const [viewport, setLocalViewport] = useState({
@@ -100,49 +148,10 @@ export default function MapScreen() {
     }
   }, [JSON.stringify(pendingViewport)]);
 
-  // Fetch the first trail for map display (GR11)
+  // Every trail on the map — each draws its own route line, blaze and POIs (TrailRoute).
+  // All trails show all the time; filters come later.
   const { data: trailsResponse } = useTrails();
-  const firstTrail = trailsResponse?.data?.[0];
-  const firstTrailId = firstTrail?.id;
-  const trailLabel = firstTrail?.ref ?? firstTrail?.name ?? 'Trail';
-  // The route's painted waymark (§17.8) — the real GR11 sign, parsed from OSM.
-  const waymarkSymbol = firstTrail?.waymark?.symbol ?? null;
-  // The route line is drawn in the osmc:symbol way colour (GR11 → red), falling
-  // back to ink when a route has no symbol.
-  const trailColor = waymarkSymbol?.wayColor ?? colors.map.route;
-  // The repeating blaze sprite riding the line (§17.2) — named by the symbol.
-  const blazeImage = waymarkSymbol ? `blaze-${symbolKey(waymarkSymbol)}` : undefined;
-  const enabled = { query: { enabled: !!firstTrailId } };
-
-  const trailIdStr = String(firstTrailId ?? 0);
-  const { data: trailResponse } = useTrail(trailIdStr, enabled);
-  const { data: waterResponse } = useTrailWater(trailIdStr, enabled);
-  const { data: accommResponse } = useTrailAccommodations(trailIdStr, enabled);
-
-  const rawTrail = trailResponse?.data;
-  const geojson = rawTrail && 'type' in rawTrail ? rawTrail : null;
-
-  const rawWater = waterResponse?.data;
-  const allWater = Array.isArray(rawWater) ? rawWater : [];
-  const rawAccomm = accommResponse?.data;
-  const allAccomm = Array.isArray(rawAccomm) ? rawAccomm : [];
-
-  // Filter POIs to section chainage range when a section is active
-  const water = activeSectionChainageRange
-    ? allWater.filter(
-        (p) =>
-          p.chainageM >= activeSectionChainageRange[0] &&
-          p.chainageM <= activeSectionChainageRange[1],
-      )
-    : allWater;
-  const accommodations = activeSectionChainageRange
-    ? allAccomm.filter(
-        (p) =>
-          p.chainageM >= activeSectionChainageRange[0] &&
-          p.chainageM <= activeSectionChainageRange[1],
-      )
-    : allAccomm;
-
+  const trails = (trailsResponse?.data ?? []) as MapTrail[];
   const isSectionActive = !!activeSectionId;
 
   return (
@@ -151,70 +160,27 @@ export default function MapScreen() {
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
-        {/* Trail (GR11) and everything attached to it — hidden when the trail
-            filter is removed. Section highlight is dimmed against the full line. */}
-        {trailVisible && (
-          <>
-            {geojson && (
-              <TrailLayer
-                id="gr11"
-                geojson={geojson as never}
-                color={trailColor}
-                // Full strength when it's the focus; dimmed back only when a
-                // section is highlighted over it.
-                width={isSectionActive ? 2 : 4}
-                opacity={isSectionActive ? 0.2 : 1}
-                onPress={firstTrailId ? () => router.push(`/trail/${firstTrailId}`) : undefined}
-              />
-            )}
-            {/* Section highlight — the focused section drawn full-strength over
-                the dimmed full trail, with start/finish pins at either end. */}
-            {activeSectionGeom && (
-              <TrailLayer
-                id="section-highlight"
-                geojson={{ type: 'Feature', geometry: activeSectionGeom as never, properties: {} }}
-                color={trailColor}
-                width={4}
-                opacity={1}
-              />
-            )}
-            {/* The blaze rides ABOVE both the full line and the section
-                highlight — drawn last so a highlight never covers it (§17.2). */}
-            {geojson && blazeImage && (
-              <TrailBlaze id="gr11-blaze" geojson={geojson as never} image={blazeImage} />
-            )}
-            {/* Start/finish pins — at the focused section's ends when one is
-                active, otherwise at the full trail's two termini. */}
-            {activeSectionGeom ? (
-              <SectionEndpoints geom={activeSectionGeom} />
-            ) : (
-              geojson && <SectionEndpoints geom={geojson as unknown as Record<string, unknown>} />
-            )}
-            {/* POIs — native layers self-disclose: discs appear at the Tactical
-                tier (z12), labels at the Detail tier (z15). Confidence drives the
-                muted look (§9). */}
-            <NativePOILayer
-              id="water"
-              kind="water"
-              pois={water}
-              onPress={(id) => router.push(`/poi/water/${id}`)}
-            />
-            <NativePOILayer
-              id="accommodations"
-              kind="accommodation"
-              pois={accommodations}
-              onPress={(id) => router.push(`/poi/accommodation/${id}`)}
-            />
-            {/* The trail waymark repeats along the line via the blaze sprite on
-                TrailLayer above (§17.2) — no single midpoint marker. */}
-            {activeSectionGeomCenter && activeSectionLabel && (
-              <GeometryLabel
-                center={activeSectionGeomCenter}
-                label={activeSectionLabel}
-                onPress={() => router.push(`/section/${activeSectionId}`)}
-              />
-            )}
-          </>
+        {/* Every trail's route + blaze + POIs, always on. Routes dim when a section
+            is highlighted over them (navigation focus, §17.5). */}
+        {trails.map((t) => (
+          <TrailRoute key={t.id} trail={t} dim={isSectionActive} />
+        ))}
+        {activeSectionGeom && (
+          <TrailLayer
+            id="section-highlight"
+            geojson={{ type: 'Feature', geometry: activeSectionGeom as never, properties: {} }}
+            color={colors.map.route}
+            width={4}
+            opacity={1}
+          />
+        )}
+        {activeSectionGeom && <SectionEndpoints geom={activeSectionGeom} />}
+        {activeSectionGeomCenter && activeSectionLabel && (
+          <GeometryLabel
+            center={activeSectionGeomCenter}
+            label={activeSectionLabel}
+            onPress={() => router.push(`/section/${activeSectionId}`)}
+          />
         )}
         {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
@@ -225,31 +191,6 @@ export default function MapScreen() {
         <Text style={styles.searchPlaceholder}>Search trails, peaks, refuges…</Text>
         <Icon name="microphone" size={18} color={colors.text.secondary} />
       </TouchableOpacity>
-
-      {/* Filter bar — the trail (GR11) is itself a removable filter: an active
-          chip when shown, a muted re-add chip when removed. Section context and
-          the discovery placeholders sit alongside it. */}
-      <View style={[styles.filterContainer, { top: insets.top + 60 }]}>
-        <View style={styles.filterWrap}>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.filterRow}
-          >
-            {trailVisible ? (
-              <FilterChip label={trailLabel} onRemove={removeTrailFilter} />
-            ) : (
-              <ReAddChip label={trailLabel} onAdd={showTrail} />
-            )}
-            {trailVisible && isSectionActive && activeSectionLabel && (
-              <FilterChip label={activeSectionLabel} onRemove={removeSectionFilter} />
-            )}
-            <IconButton icon="search" style="surface" size="md" />
-            <Chip label="Moderate" />
-            <Chip label="2–3 days" />
-          </ScrollView>
-        </View>
-      </View>
 
       {/* Center-on-me — always visible; disabled until we have a fix. */}
       <View style={[styles.locate, { bottom: insets.bottom + spacing[12] }]}>
