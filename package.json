@@ -5,6 +5,8 @@
   "scripts": {
     "dev:api": "bun run --filter @roam/api dev",
     "dev:mobile": "bun run --filter @roam/mobile dev",
+    "dev:web": "bun run --filter @roam/web dev",
+    "build:web": "bun run --filter @roam/web build",
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
     "lint": "biome check .",
@@ -14,6 +16,7 @@
     "@biomejs/biome": "^1.9.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "@resvg/resvg-js": "^2.6.2",
     "simple-git-hooks": "^2.11.0",
     "typescript": "~6.0.3"
   },
