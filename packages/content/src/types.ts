@@ -156,6 +156,8 @@ export interface Stage {
   name: string;
   fromLocationId: string;
   toLocationId: string;
+  /** Own hero image; the screen falls back to the section's when this has no asset. */
+  heroMediaId?: string;
   /** e.g. `{ system: 'hiking-band', value: 'hard' }`. */
   grade: Grade;
   atAGlance: Stat[];

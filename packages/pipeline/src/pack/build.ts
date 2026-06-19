@@ -139,6 +139,7 @@ export function buildTrailPack(
       name: s.name,
       fromLocationId: s.fromLocationId,
       toLocationId: s.toLocationId,
+      heroMediaId: `media/hero/${stageId}`,
       grade,
       atAGlance: trailStageStats({
         distanceKm,

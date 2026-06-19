@@ -6,7 +6,7 @@ import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { Button } from '../../../../components/ui/Button';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
-import { contentStore, useStage } from '../../../../lib/contentRepo';
+import { contentStore, mediaFor, useStage } from '../../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../../theme';
 
 // The stat row on a stage is distance · ascent · time · grade (§12.4) — drop descent.
@@ -33,12 +33,14 @@ export default function StageScreen() {
   const region = section ? contentStore.regions.get(section.regionIds[0] ?? '') : undefined;
   const kicker = `STAGE ${stage.number}${region ? ` · ${region.name.toUpperCase()}` : ''}`;
   const heroStats = stage.atAGlance.filter((s) => HERO_STATS.includes(s.key));
+  // The stage's own hero if one was sourced, else fall back to the section's.
+  const heroMediaId = mediaFor(stage.heroMediaId) ? stage.heroMediaId : section?.heroMediaId;
 
   return (
     <View style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.hero}>
-          <HeroMedia mediaId={section?.heroMediaId} />
+          <HeroMedia mediaId={heroMediaId} />
           <Text style={styles.heroKicker}>{kicker}</Text>
           <Text style={styles.heroTitle}>{stage.name}</Text>
         </View>

@@ -79,6 +79,446 @@
       "author": "H. Zell",
       "attribution": "H. Zell · CC BY-SA 3.0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Corbi%C3%A8res_Massif_-_Pyrenees_-_Panorama_02.jpg"
+    },
+    "media/hero/gr10-s1": {
+      "id": "media/hero/gr10-s1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Urrugne_-_Chapelle_Saint-Michel-Garico%C3%AFtz_d%27Olhette_-_6.jpg/1920px-Urrugne_-_Chapelle_Saint-Michel-Garico%C3%AFtz_d%27Olhette_-_6.jpg",
+      "width": 1600,
+      "height": 2133,
+      "license": "CC BY-SA 4.0",
+      "author": "This illustration was made by Peter Potrowl. Please credit this with : © Peter Potrowl in the immediate vicinity of the image. A link to my website sitemai.eu would be much appreciated but isn't mandatory. An email to Peter Potrowl would be appreciated too. Do not copy this image illegally by ignoring the terms of the license below, as it is not in the public domain. If you would like special permission to use, license, or purchase the image please contact me Peter Potrowl to negotiate terms. More free pictures in my website. Donations are accepted here and here.",
+      "attribution": "This illustration was made by Peter Potrowl. Please credit this with : © Peter Potrowl in the immediate vicinity of the image. A link to my website sitemai.eu would be much appreciated but isn't mandatory. An email to Peter Potrowl would be appreciated too. Do not copy this image illegally by ignoring the terms of the license below, as it is not in the public domain. If you would like special permission to use, license, or purchase the image please contact me Peter Potrowl to negotiate terms. More free pictures in my website. Donations are accepted here and here. · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Urrugne_-_Chapelle_Saint-Michel-Garico%C3%AFtz_d%27Olhette_-_6.jpg"
+    },
+    "media/hero/gr10-s2": {
+      "id": "media/hero/gr10-s2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ainhoa_fronton_et_%C3%A9glise.jpg/1920px-Ainhoa_fronton_et_%C3%A9glise.jpg",
+      "width": 1600,
+      "height": 1064,
+      "license": "CC BY 2.5",
+      "author": "No machine-readable author provided. Harrieta171 assumed (based on copyright claims).",
+      "attribution": "No machine-readable author provided. Harrieta171 assumed (based on copyright claims). · CC BY 2.5 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ainhoa_fronton_et_%C3%A9glise.jpg"
+    },
+    "media/hero/gr10-s3": {
+      "id": "media/hero/gr10-s3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Vue_g%C3%A9n%C3%A9rale_Bidarray.jpg/1920px-Vue_g%C3%A9n%C3%A9rale_Bidarray.jpg",
+      "width": 1600,
+      "height": 733,
+      "license": "CC BY-SA 3.0",
+      "author": "Kvardek du",
+      "attribution": "Kvardek du · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vue_g%C3%A9n%C3%A9rale_Bidarray.jpg"
+    },
+    "media/hero/gr10-s4": {
+      "id": "media/hero/gr10-s4",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/64477-Saint-%C3%89tienne-de-Ba%C3%AFgorry-Routes-Hydro.png/1920px-64477-Saint-%C3%89tienne-de-Ba%C3%AFgorry-Routes-Hydro.png",
+      "width": 1600,
+      "height": 1131,
+      "license": "CC BY-SA 4.0",
+      "author": "Roland45",
+      "attribution": "Roland45 · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:64477-Saint-%C3%89tienne-de-Ba%C3%AFgorry-Routes-Hydro.png"
+    },
+    "media/hero/gr10-s5": {
+      "id": "media/hero/gr10-s5",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/St_Jean_Pied_de_Port_-_%C3%89glise_de_l%27Assomption_9.jpg/1920px-St_Jean_Pied_de_Port_-_%C3%89glise_de_l%27Assomption_9.jpg",
+      "width": 1600,
+      "height": 2400,
+      "license": "CC BY-SA 4.0",
+      "author": "Marianne Casamance",
+      "attribution": "Marianne Casamance · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:St_Jean_Pied_de_Port_-_%C3%89glise_de_l%27Assomption_9.jpg"
+    },
+    "media/hero/gr10-s9": {
+      "id": "media/hero/gr10-s9",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Sainte-Engr%C3%A2ce-%C3%89glise-1968_09.jpg/1920px-Sainte-Engr%C3%A2ce-%C3%89glise-1968_09.jpg",
+      "width": 1600,
+      "height": 1078,
+      "license": "CC BY-SA 4.0",
+      "author": "Daniel VILLAFRUELA.",
+      "attribution": "Daniel VILLAFRUELA. · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sainte-Engr%C3%A2ce-%C3%89glise-1968_09.jpg"
+    },
+    "media/hero/gr10-s10": {
+      "id": "media/hero/gr10-s10",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Saint-Pierre_%28Haute-Garonne%29_-_L%27%C3%A9glise_Saint-Martin.jpg/1920px-Saint-Pierre_%28Haute-Garonne%29_-_L%27%C3%A9glise_Saint-Martin.jpg",
+      "width": 1600,
+      "height": 1239,
+      "license": "CC BY-SA 4.0",
+      "author": "Didier Descouens",
+      "attribution": "Didier Descouens · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Saint-Pierre_(Haute-Garonne)_-_L%27%C3%A9glise_Saint-Martin.jpg"
+    },
+    "media/hero/gr10-s11": {
+      "id": "media/hero/gr10-s11",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/LescunVueVersPasDAzuns.jpg/1920px-LescunVueVersPasDAzuns.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "Public domain",
+      "author": "Touriste",
+      "attribution": "Touriste · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:LescunVueVersPasDAzuns.jpg"
+    },
+    "media/hero/gr10-s12": {
+      "id": "media/hero/gr10-s12",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Mairie_de_Etsaut.jpg/1920px-Mairie_de_Etsaut.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 3.0",
+      "author": "France64160",
+      "attribution": "France64160 · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mairie_de_Etsaut.jpg"
+    },
+    "media/hero/gr10-s13": {
+      "id": "media/hero/gr10-s13",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Gabas_%2803%29.jpg/1920px-Gabas_%2803%29.jpg",
+      "width": 1600,
+      "height": 1028,
+      "license": "CC BY 3.0",
+      "author": "Prof. emeritus Hans Schneider (Geyersberg)",
+      "attribution": "Prof. emeritus Hans Schneider (Geyersberg) · CC BY 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Gabas_(03).jpg"
+    },
+    "media/hero/gr10-s14": {
+      "id": "media/hero/gr10-s14",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Cirque_de_Gourette_Pic_de_Ger.jpg/1920px-Cirque_de_Gourette_Pic_de_Ger.jpg",
+      "width": 1600,
+      "height": 1083,
+      "license": "CC BY-SA 3.0",
+      "author": "Myrabella",
+      "attribution": "Myrabella · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cirque_de_Gourette_Pic_de_Ger.jpg"
+    },
+    "media/hero/gr10-s15": {
+      "id": "media/hero/gr10-s15",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Arrens-Marsous_OSM_01.png",
+      "width": 419,
+      "height": 598,
+      "license": "CC BY-SA 4.0",
+      "author": "DescriptionArrens-Marsous OSM 01.png This map was created from OpenStreetMap project data, collected by the community. This map may be incomplete, and may contain errors. Don't rely solely on it for navigation. Date (see file history) Source openstreetmap.org Creator OpenStreetMap contributors Permission(Reusing this file) OpenStreetMap data is available under the Open Database License (details). Map tiles are licensed under the Creative Commons Attribution-ShareAlike 2.0 license (CC-BY-SA 2.0). This work contains information from OpenStreetMap, which is made available under the Open Database License (ODbL). The ODbL does not require any particular license for maps produced from ODbL data. Prior to 1 August 2020, map tiles produced by the OpenStreetMap Foundation were licensed under the CC-BY-SA-2.0 license. Maps produced by other people may be subject to other licences.Open Database LicenseODbLhttp://opendatacommons.org/licenses/odbl/1.0/true This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Generic license. You are free: to share – to copy, distribute and transmit the work to remix – to adapt the work Under the following conditions: attribution – You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. share alike – If you remix, transform, or build upon the material, you must distribute your contributions under the same or compatible license as the original.https://creativecommons.org/licenses/by-sa/2.0CC BY-SA 2.0 Creative Commons Attribution-Share Alike 2.0 truetrue Georeferencing Georeference the map in Wikimaps Warper If inappropriate please set warp_status = skip to hide.",
+      "attribution": "DescriptionArrens-Marsous OSM 01.png This map was created from OpenStreetMap project data, collected by the community. This map may be incomplete, and may contain errors. Don't rely solely on it for navigation. Date (see file history) Source openstreetmap.org Creator OpenStreetMap contributors Permission(Reusing this file) OpenStreetMap data is available under the Open Database License (details). Map tiles are licensed under the Creative Commons Attribution-ShareAlike 2.0 license (CC-BY-SA 2.0). This work contains information from OpenStreetMap, which is made available under the Open Database License (ODbL). The ODbL does not require any particular license for maps produced from ODbL data. Prior to 1 August 2020, map tiles produced by the OpenStreetMap Foundation were licensed under the CC-BY-SA-2.0 license. Maps produced by other people may be subject to other licences.Open Database LicenseODbLhttp://opendatacommons.org/licenses/odbl/1.0/true This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Generic license. You are free: to share – to copy, distribute and transmit the work to remix – to adapt the work Under the following conditions: attribution – You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use. share alike – If you remix, transform, or build upon the material, you must distribute your contributions under the same or compatible license as the original.https://creativecommons.org/licenses/by-sa/2.0CC BY-SA 2.0 Creative Commons Attribution-Share Alike 2.0 truetrue Georeferencing Georeference the map in Wikimaps Warper If inappropriate please set warp_status = skip to hide. · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arrens-Marsous_OSM_01.png"
+    },
+    "media/hero/gr10-s16": {
+      "id": "media/hero/gr10-s16",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Blue_Lake_Ilh%C3%A9ou_%2833812376038%29.jpg/1920px-Blue_Lake_Ilh%C3%A9ou_%2833812376038%29.jpg",
+      "width": 1600,
+      "height": 2397,
+      "license": "CC BY-SA 2.0",
+      "author": "Amanda Hinault from Lannion, France",
+      "attribution": "Amanda Hinault from Lannion, France · CC BY-SA 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Blue_Lake_Ilh%C3%A9ou_(33812376038).jpg"
+    },
+    "media/hero/gr10-s17": {
+      "id": "media/hero/gr10-s17",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Cauterets_65_H%C3%B4tel_de_ville_Vue_SE_2014.jpg/1920px-Cauterets_65_H%C3%B4tel_de_ville_Vue_SE_2014.jpg",
+      "width": 1600,
+      "height": 1141,
+      "license": "CC BY-SA 3.0",
+      "author": "JLPC",
+      "attribution": "JLPC · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cauterets_65_H%C3%B4tel_de_ville_Vue_SE_2014.jpg"
+    },
+    "media/hero/gr10-s19": {
+      "id": "media/hero/gr10-s19",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Refuge_de_la_Grange_de_Holle_%28Hautes-Pyr%C3%A9n%C3%A9es%29_2.jpg/1920px-Refuge_de_la_Grange_de_Holle_%28Hautes-Pyr%C3%A9n%C3%A9es%29_2.jpg",
+      "width": 1600,
+      "height": 856,
+      "license": "CC BY-SA 4.0",
+      "author": "Sotos",
+      "attribution": "Sotos · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_de_la_Grange_de_Holle_(Hautes-Pyr%C3%A9n%C3%A9es)_2.jpg"
+    },
+    "media/hero/gr10-s20": {
+      "id": "media/hero/gr10-s20",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Luz-Saint-Sauveur.JPG/1920px-Luz-Saint-Sauveur.JPG",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY 3.0",
+      "author": "Jean-Christophe BENOIST",
+      "attribution": "Jean-Christophe BENOIST · CC BY 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Luz-Saint-Sauveur.JPG"
+    },
+    "media/hero/gr10-s21": {
+      "id": "media/hero/gr10-s21",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Bar%C3%A8ges_64_Vue_GR10_Tourmalet_2011.jpg/1920px-Bar%C3%A8ges_64_Vue_GR10_Tourmalet_2011.jpg",
+      "width": 1600,
+      "height": 500,
+      "license": "CC BY-SA 3.0",
+      "author": "JLPC",
+      "attribution": "JLPC · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bar%C3%A8ges_64_Vue_GR10_Tourmalet_2011.jpg"
+    },
+    "media/hero/gr10-s22": {
+      "id": "media/hero/gr10-s22",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/L%27Oule_parking_montagne.JPG/1920px-L%27Oule_parking_montagne.JPG",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 3.0",
+      "author": "Père Igor",
+      "attribution": "Père Igor · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:L%27Oule_parking_montagne.JPG"
+    },
+    "media/hero/gr10-s23": {
+      "id": "media/hero/gr10-s23",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Town_hall_of_Vielle-Aure_%281%29.jpg/1920px-Town_hall_of_Vielle-Aure_%281%29.jpg",
+      "width": 1600,
+      "height": 1055,
+      "license": "CC BY 4.0",
+      "author": "Tournasol7",
+      "attribution": "Tournasol7 · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Town_hall_of_Vielle-Aure_(1).jpg"
+    },
+    "media/hero/gr10-s24": {
+      "id": "media/hero/gr10-s24",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/%C3%89glise_de_l%27Invention-de-Saint-%C3%89tienne_de_Germ_%28Hautes-Pyr%C3%A9n%C3%A9es%29_1.jpg/1920px-%C3%89glise_de_l%27Invention-de-Saint-%C3%89tienne_de_Germ_%28Hautes-Pyr%C3%A9n%C3%A9es%29_1.jpg",
+      "width": 1600,
+      "height": 1018,
+      "license": "CC BY-SA 4.0",
+      "author": "Sotos",
+      "attribution": "Sotos · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%C3%89glise_de_l%27Invention-de-Saint-%C3%89tienne_de_Germ_(Hautes-Pyr%C3%A9n%C3%A9es)_1.jpg"
+    },
+    "media/hero/gr10-s25": {
+      "id": "media/hero/gr10-s25",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Lac_d%27Oo_1900.jpg/1920px-Lac_d%27Oo_1900.jpg",
+      "width": 1600,
+      "height": 1207,
+      "license": "Public domain",
+      "author": "Unknown authorUnknown author",
+      "attribution": "Unknown authorUnknown author · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lac_d%27Oo_1900.jpg"
+    },
+    "media/hero/gr10-s26": {
+      "id": "media/hero/gr10-s26",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Augustins_-_La_Chasse_%C3%A0_l%27ours_vers_la_cascade_du_lac_d%27Oo%2C_pr%C3%A8s_de_Bagn%C3%A8res-de-Luchon_-_Louis-Fran%C3%A7ois_Lejeune_-_2000_1_1.jpg/1920px-Augustins_-_La_Chasse_%C3%A0_l%27ours_vers_la_cascade_du_lac_d%27Oo%2C_pr%C3%A8s_de_Bagn%C3%A8res-de-Luchon_-_Louis-Fran%C3%A7ois_Lejeune_-_2000_1_1.jpg",
+      "width": 1600,
+      "height": 1929,
+      "license": "Public domain",
+      "author": "Didier Descouens",
+      "attribution": "Didier Descouens · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Augustins_-_La_Chasse_%C3%A0_l%27ours_vers_la_cascade_du_lac_d%27Oo,_pr%C3%A8s_de_Bagn%C3%A8res-de-Luchon_-_Louis-Fran%C3%A7ois_Lejeune_-_2000_1_1.jpg"
+    },
+    "media/hero/gr10-s27": {
+      "id": "media/hero/gr10-s27",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Artigues_%28Hautes-Pyr%C3%A9n%C3%A9es%29_1.jpg/1920px-Artigues_%28Hautes-Pyr%C3%A9n%C3%A9es%29_1.jpg",
+      "width": 1600,
+      "height": 1054,
+      "license": "CC BY-SA 4.0",
+      "author": "Sotos",
+      "attribution": "Sotos · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Artigues_(Hautes-Pyr%C3%A9n%C3%A9es)_1.jpg"
+    },
+    "media/hero/gr10-s31": {
+      "id": "media/hero/gr10-s31",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Archives_des_missions_scientifiques_et_litt%C3%A9raires_%281888%29_%2819564920938%29.jpg/1920px-Archives_des_missions_scientifiques_et_litt%C3%A9raires_%281888%29_%2819564920938%29.jpg",
+      "width": 1600,
+      "height": 949,
+      "license": "No restrictions",
+      "author": "Internet Archive Book Images",
+      "attribution": "Internet Archive Book Images · No restrictions · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Archives_des_missions_scientifiques_et_litt%C3%A9raires_(1888)_(19564920938).jpg"
+    },
+    "media/hero/gr10-s34": {
+      "id": "media/hero/gr10-s34",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Rouze_09.JPG/1920px-Rouze_09.JPG",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 3.0",
+      "author": "Anthospace",
+      "attribution": "Anthospace · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rouze_09.JPG"
+    },
+    "media/hero/gr10-s36": {
+      "id": "media/hero/gr10-s36",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/FRAC31555_67Fi142_-_Pyr%C3%A9n%C3%A9es._Aulus-les-Bains._Etang_de_Guzet.tif/lossy-page1-1920px-FRAC31555_67Fi142_-_Pyr%C3%A9n%C3%A9es._Aulus-les-Bains._Etang_de_Guzet.tif.jpg",
+      "width": 1600,
+      "height": 790,
+      "license": "Public domain",
+      "author": "Ludovic Gaurier",
+      "attribution": "Ludovic Gaurier · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:FRAC31555_67Fi142_-_Pyr%C3%A9n%C3%A9es._Aulus-les-Bains._Etang_de_Guzet.tif"
+    },
+    "media/hero/gr10-s37": {
+      "id": "media/hero/gr10-s37",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/%C3%89tangs_de_Bassi%C3%A8s.jpg/1920px-%C3%89tangs_de_Bassi%C3%A8s.jpg",
+      "width": 1600,
+      "height": 1053,
+      "license": "CC BY-SA 4.0",
+      "author": "Quentin Lemaréchal",
+      "attribution": "Quentin Lemaréchal · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:%C3%89tangs_de_Bassi%C3%A8s.jpg"
+    },
+    "media/hero/gr10-s38": {
+      "id": "media/hero/gr10-s38",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Saint-Marsal_-_Vue_g%C3%A9n%C3%A9rale.jpg",
+      "width": 1575,
+      "height": 1008,
+      "license": "Public domain",
+      "author": "Anonyme début XXème siècle (Brun frères éd., Perpignan)",
+      "attribution": "Anonyme début XXème siècle (Brun frères éd., Perpignan) · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Saint-Marsal_-_Vue_g%C3%A9n%C3%A9rale.jpg"
+    },
+    "media/hero/gr10-s40": {
+      "id": "media/hero/gr10-s40",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Pic_du_Midi_de_Siguer.jpg/1920px-Pic_du_Midi_de_Siguer.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 3.0",
+      "author": "Fpasian",
+      "attribution": "Fpasian · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pic_du_Midi_de_Siguer.jpg"
+    },
+    "media/hero/gr10-s41": {
+      "id": "media/hero/gr10-s41",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/9/99/Carduelis_citrinella_-Plateau_de_Beille%2C_Ariege%2C_Midi-Pyrenee%2C_France-8_%283%29.jpg",
+      "width": 1441,
+      "height": 957,
+      "license": "CC BY 2.0",
+      "author": "Sandra from France",
+      "attribution": "Sandra from France · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Carduelis_citrinella_-Plateau_de_Beille,_Ariege,_Midi-Pyrenee,_France-8_(3).jpg"
+    },
+    "media/hero/gr10-s42": {
+      "id": "media/hero/gr10-s42",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Sortie_sud_du_tunnel_ferroviaire_du_Puymorens.JPG/1920px-Sortie_sud_du_tunnel_ferroviaire_du_Puymorens.JPG",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 4.0",
+      "author": "Rulhe",
+      "attribution": "Rulhe · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Sortie_sud_du_tunnel_ferroviaire_du_Puymorens.JPG"
+    },
+    "media/hero/gr10-s43": {
+      "id": "media/hero/gr10-s43",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Vue_g%C3%A9n%C3%A9rale_de_M%C3%A9rens-les-Vals%2C_Ari%C3%A8ge_%286233930996%29.jpg",
+      "width": 465,
+      "height": 477,
+      "license": "No restrictions",
+      "author": "Bibliothèque de Toulouse from Toulouse, France",
+      "attribution": "Bibliothèque de Toulouse from Toulouse, France · No restrictions · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Vue_g%C3%A9n%C3%A9rale_de_M%C3%A9rens-les-Vals,_Ari%C3%A8ge_(6233930996).jpg"
+    },
+    "media/hero/gr10-s44": {
+      "id": "media/hero/gr10-s44",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/France_Pyr%C3%A9n%C3%A9es_Etang_des_B%C3%A9sines.jpg/1920px-France_Pyr%C3%A9n%C3%A9es_Etang_des_B%C3%A9sines.jpg",
+      "width": 1600,
+      "height": 1253,
+      "license": "CC BY-SA 3.0",
+      "author": "Pethrus",
+      "attribution": "Pethrus · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:France_Pyr%C3%A9n%C3%A9es_Etang_des_B%C3%A9sines.jpg"
+    },
+    "media/hero/gr10-s45": {
+      "id": "media/hero/gr10-s45",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/8/83/Bollosa_%28capcir%29.jpg",
+      "width": 1000,
+      "height": 367,
+      "license": "Public domain",
+      "author": "Espencat",
+      "attribution": "Espencat · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bollosa_(capcir).jpg"
+    },
+    "media/hero/gr10-s46": {
+      "id": "media/hero/gr10-s46",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Plan%C3%A8s_de_Dalt_-_P1030571.jpg/1920px-Plan%C3%A8s_de_Dalt_-_P1030571.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 4.0",
+      "author": "Pere López Brosa",
+      "attribution": "Pere López Brosa · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Plan%C3%A8s_de_Dalt_-_P1030571.jpg"
+    },
+    "media/hero/gr10-s47": {
+      "id": "media/hero/gr10-s47",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Caranca_refuge.JPG",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 3.0",
+      "author": "Jack ma",
+      "attribution": "Jack ma · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Caranca_refuge.JPG"
+    },
+    "media/hero/gr10-s48": {
+      "id": "media/hero/gr10-s48",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Mantet.jpg/1920px-Mantet.jpg",
+      "width": 1600,
+      "height": 1109,
+      "license": "CC BY-SA 4.0",
+      "author": "ArnoLagrange",
+      "attribution": "ArnoLagrange · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mantet.jpg"
+    },
+    "media/hero/gr10-s49": {
+      "id": "media/hero/gr10-s49",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Refuge_de_Mariailles_de_loin.JPG/1920px-Refuge_de_Mariailles_de_loin.JPG",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 3.0",
+      "author": "El Caro",
+      "attribution": "El Caro · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_de_Mariailles_de_loin.JPG"
+    },
+    "media/hero/gr10-s50": {
+      "id": "media/hero/gr10-s50",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/7/76/Xalet_dels_Cortalets_-_1912.jpg",
+      "width": 887,
+      "height": 656,
+      "license": "Public domain",
+      "author": "Desconegut",
+      "attribution": "Desconegut · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Xalet_dels_Cortalets_-_1912.jpg"
+    },
+    "media/hero/gr10-s51": {
+      "id": "media/hero/gr10-s51",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Calcite-Batere-UV.jpg/1920px-Calcite-Batere-UV.jpg",
+      "width": 1600,
+      "height": 812,
+      "license": "CC BY-SA 4.0",
+      "author": "Didier Descouens",
+      "attribution": "Didier Descouens · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Calcite-Batere-UV.jpg"
+    },
+    "media/hero/gr10-s52": {
+      "id": "media/hero/gr10-s52",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Arles_sur_tech-2009_%283%29.JPG/1920px-Arles_sur_tech-2009_%283%29.JPG",
+      "width": 1600,
+      "height": 1063,
+      "license": "CC BY-SA 3.0",
+      "author": "Alberto-g-rovi",
+      "attribution": "Alberto-g-rovi · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arles_sur_tech-2009_(3).JPG"
+    },
+    "media/hero/gr10-s53": {
+      "id": "media/hero/gr10-s53",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Las_Illas_-_vue_d%27ensemble.jpg/1920px-Las_Illas_-_vue_d%27ensemble.jpg",
+      "width": 1600,
+      "height": 960,
+      "license": "CC BY-SA 3.0",
+      "author": "Fabricio Cardenas",
+      "attribution": "Fabricio Cardenas · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Las_Illas_-_vue_d%27ensemble.jpg"
+    },
+    "media/hero/gr10-s54": {
+      "id": "media/hero/gr10-s54",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Coll_Ullat_2011_03.jpg/1920px-Coll_Ullat_2011_03.jpg",
+      "width": 1600,
+      "height": 1202,
+      "license": "CC BY-SA 3.0",
+      "author": "Bertrand GRONDIN → (Talk)",
+      "attribution": "Bertrand GRONDIN → (Talk) · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Coll_Ullat_2011_03.jpg"
+    },
+    "media/hero/gr10-s55": {
+      "id": "media/hero/gr10-s55",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Banyuls_mairie.jpg/1920px-Banyuls_mairie.jpg",
+      "width": 1600,
+      "height": 1043,
+      "license": "CC BY-SA 4.0",
+      "author": "Palauenc05",
+      "attribution": "Palauenc05 · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Banyuls_mairie.jpg"
     }
   },
   "sectionGuide": {
