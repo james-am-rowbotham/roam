@@ -27,4 +27,14 @@ export const COUNTRIES: Country[] = [
     summary:
       'Spain runs from the green, Atlantic-washed north to the dry sierras of the south, with the Pyrenees a 400 km mountain wall along the French border.',
   },
+  {
+    id: 'france',
+    slug: 'france',
+    name: 'France',
+    continentId: 'europe',
+    tagline: 'The north flank of the Pyrenees',
+    heroMediaId: 'media/hero/france',
+    summary:
+      'France meets the Pyrenees along their wetter, greener northern flank — the Pays Basque, the high Béarn and Bigorre, and the long descent through the Ariège to the Mediterranean.',
+  },
 ];

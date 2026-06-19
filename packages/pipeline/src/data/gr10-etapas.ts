@@ -1,0 +1,67 @@
+// GR10 official etapas — the canonical day-stages (the §5 Stage layer).
+//
+// Source: research→extract→verify (etapa-extraction recipe) over Wikivoyage (canonical
+// stage table), cross-checked against Cicerone's GR10 guide + gr-infos.com. Hendaye →
+// Banyuls-sur-Mer, 55 etapas, ~955 km. Distances/ascents are the sources' published
+// per-stage figures; descent was not published per-stage (backfill later). This is
+// -grade reference data pending curator verification (§8).
+
+import type { Gr11Etapa } from '../etapas';
+
+export const GR10_ETAPAS: readonly Gr11Etapa[] = [
+  { stage: 1, name: "Hendaye-Plage → Olhette", distanceKm: 21.9, ascentM: 1010, descentM: null },
+  { stage: 2, name: "Olhette → Ainhoa", distanceKm: 21.1, ascentM: 730, descentM: null },
+  { stage: 3, name: "Ainhoa → Bidarray", distanceKm: 21.7, ascentM: 880, descentM: null },
+  { stage: 4, name: "Bidarray → Saint-Étienne-de-Baïgorry", distanceKm: 18.5, ascentM: 1250, descentM: null },
+  { stage: 5, name: "Saint-Étienne-de-Baïgorry → Saint-Jean-Pied-de-Port", distanceKm: 19.2, ascentM: 990, descentM: null },
+  { stage: 6, name: "Saint-Jean-Pied-de-Port → Gîte d'étape Kaskoleta", distanceKm: 16.2, ascentM: 870, descentM: null },
+  { stage: 7, name: "Gîte d'étape Kaskoleta → Gîte d'étape Chalets d'Iraty", distanceKm: 20.7, ascentM: 1410, descentM: null },
+  { stage: 8, name: "Gîte d'étape Chalets d'Iraty → Logibar", distanceKm: 16.4, ascentM: 440, descentM: null },
+  { stage: 9, name: "Logibar → Sainte-Engrâce", distanceKm: 26.3, ascentM: 1420, descentM: null },
+  { stage: 10, name: "Sainte-Engrâce → La Pierre Saint-Martin", distanceKm: 11.6, ascentM: 1200, descentM: null },
+  { stage: 11, name: "La Pierre Saint-Martin → Lescun", distanceKm: 15, ascentM: 400, descentM: null },
+  { stage: 12, name: "Lescun → Etsaut", distanceKm: 16, ascentM: 850, descentM: null },
+  { stage: 13, name: "Etsaut → Gabas", distanceKm: 24, ascentM: 1640, descentM: null },
+  { stage: 14, name: "Gabas → Gourette", distanceKm: 23, ascentM: 1600, descentM: null },
+  { stage: 15, name: "Gourette → Arrens-Marsous", distanceKm: 15, ascentM: 900, descentM: null },
+  { stage: 16, name: "Arrens-Marsous → Refuge d'Ilhéou", distanceKm: 20, ascentM: 1600, descentM: null },
+  { stage: 17, name: "Refuge d'Ilhéou → Cauterets", distanceKm: 8, ascentM: 750, descentM: null },
+  { stage: 18, name: "Cauterets → Refuge des Oulètes de Gaube", distanceKm: 15, ascentM: 1400, descentM: null },
+  { stage: 19, name: "Refuge des Oulètes de Gaube → Chalet-refuge la Grange de Holle", distanceKm: 21, ascentM: 800, descentM: null },
+  { stage: 20, name: "Chalet-refuge la Grange de Holle → Luz-Saint-Sauveur", distanceKm: 26, ascentM: 900, descentM: null },
+  { stage: 21, name: "Luz-Saint-Sauveur → Barèges", distanceKm: 12, ascentM: 800, descentM: null },
+  { stage: 22, name: "Barèges → Cabane de l'Oule", distanceKm: 23, ascentM: 1300, descentM: null },
+  { stage: 23, name: "Cabane de l'Oule → Vielle-Aure", distanceKm: 18, ascentM: 460, descentM: null },
+  { stage: 24, name: "Vielle-Aure → Germ", distanceKm: 13, ascentM: 1170, descentM: null },
+  { stage: 25, name: "Germ → Lac d'Oô", distanceKm: 16, ascentM: 1200, descentM: null },
+  { stage: 26, name: "Lac d'Oô → Bagnères-de-Luchon", distanceKm: 21, ascentM: 1130, descentM: null },
+  { stage: 27, name: "Bagnères-de-Luchon → Artigue", distanceKm: 8, ascentM: 600, descentM: null },
+  { stage: 28, name: "Artigue → Fos", distanceKm: 21, ascentM: 1100, descentM: null },
+  { stage: 29, name: "Fos → Refuge de l'Étang d'Araing", distanceKm: 18, ascentM: 1700, descentM: null },
+  { stage: 30, name: "Refuge de l'Étang d'Araing → Eylie-d'en-Haut", distanceKm: 8, ascentM: 300, descentM: null },
+  { stage: 31, name: "Eylie-d'en-Haut → Ayer", distanceKm: 17, ascentM: 1600, descentM: null },
+  { stage: 32, name: "Ayer → Esbintz", distanceKm: 18, ascentM: 1350, descentM: null },
+  { stage: 33, name: "Esbintz → Refuge d'Aula", distanceKm: 19, ascentM: 1200, descentM: null },
+  { stage: 34, name: "Refuge d'Aula → Rouze", distanceKm: 16, ascentM: 700, descentM: null },
+  { stage: 35, name: "Rouze → Saint-Lizier-d'Ustou", distanceKm: 8.4, ascentM: 800, descentM: null },
+  { stage: 36, name: "Saint-Lizier-d'Ustou → Aulus-les-Bains", distanceKm: 23, ascentM: 1400, descentM: null },
+  { stage: 37, name: "Aulus-les-Bains → Refuge des Étangs de Bassiès", distanceKm: 11, ascentM: 1200, descentM: null },
+  { stage: 38, name: "Refuge des Étangs de Bassiès → Marc", distanceKm: 17.3, ascentM: 1385, descentM: null },
+  { stage: 39, name: "Marc → Goulier", distanceKm: 24.3, ascentM: 900, descentM: null },
+  { stage: 40, name: "Goulier → Siguer", distanceKm: 13, ascentM: 400, descentM: null },
+  { stage: 41, name: "Siguer → Plateau de Beille", distanceKm: 23, ascentM: 2400, descentM: null },
+  { stage: 42, name: "Plateau de Beille → Refuge du Rulhe", distanceKm: 14, ascentM: 1000, descentM: null },
+  { stage: 43, name: "Refuge du Rulhe → Mérens-les-Vals", distanceKm: 12, ascentM: 360, descentM: null },
+  { stage: 44, name: "Mérens-les-Vals → Refuge des Bésines", distanceKm: 10, ascentM: 1300, descentM: null },
+  { stage: 45, name: "Refuge des Bésines → Refuge des Bouillouses", distanceKm: 16.7, ascentM: 660, descentM: null },
+  { stage: 46, name: "Refuge des Bouillouses → Planès", distanceKm: 19, ascentM: 230, descentM: null },
+  { stage: 47, name: "Planès → Refuge du Ras de la Carança", distanceKm: 15.3, ascentM: 1170, descentM: null },
+  { stage: 48, name: "Refuge du Ras de la Carança → Mantet", distanceKm: 10, ascentM: 640, descentM: null },
+  { stage: 49, name: "Mantet → Refuge de Mariailles", distanceKm: 14.8, ascentM: 936, descentM: null },
+  { stage: 50, name: "Refuge de Mariailles → Refuge des Cortalets", distanceKm: 16.3, ascentM: 1030, descentM: null },
+  { stage: 51, name: "Refuge des Cortalets → Refuge de Batère", distanceKm: 16.8, ascentM: 270, descentM: null },
+  { stage: 52, name: "Refuge de Batère → Arles-sur-Tech", distanceKm: 19.2, ascentM: 745, descentM: null },
+  { stage: 53, name: "Arles-sur-Tech → Las Illas", distanceKm: 22, ascentM: 1000, descentM: null },
+  { stage: 54, name: "Las Illas → Col de l'Ouillat", distanceKm: 21, ascentM: 930, descentM: null },
+  { stage: 55, name: "Col de l'Ouillat → Banyuls-sur-Mer", distanceKm: 23, ascentM: 680, descentM: null },
+];

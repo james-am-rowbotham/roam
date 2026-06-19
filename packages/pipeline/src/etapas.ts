@@ -6,9 +6,10 @@
 // source-grounded and the spine stays continuous (no gaps/overlaps). Pure and
 // deterministic; the seed feeds it the route length from PostGIS.
 
+import { GR10_ETAPAS } from './data/gr10-etapas';
 import { GR11_ETAPAS, type Gr11Etapa } from './data/gr11-etapas';
 
-export { GR11_ETAPAS, type Gr11Etapa };
+export { GR11_ETAPAS, GR10_ETAPAS, type Gr11Etapa };
 
 export interface ChainagedEtapa {
   /** Official etapa number, 1-based, in walking order. */

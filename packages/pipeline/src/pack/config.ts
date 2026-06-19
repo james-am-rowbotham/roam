@@ -3,7 +3,7 @@
 // country it sits under, plus editorial hero copy for the objective. The same
 // buildPack engine runs for every entry.
 
-import { GR11, type TrailConfig } from '../config';
+import { GR10, GR11, type TrailConfig } from '../config';
 
 export interface PackConfig {
   /** Objective slug, e.g. 'gr11'. */
@@ -33,6 +33,19 @@ export const PACK_CONFIGS: PackConfig[] = [
     season: {
       best: [7, 8, 9],
       note: 'Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer.', // TODO(copy)
+    },
+  },
+  {
+    id: 'gr10',
+    type: 'trail',
+    countryId: 'france',
+    source: GR10,
+    tagline: 'The French Pyrenean traverse · France', // TODO(copy)
+    summary:
+      'La Grande Traversée des Pyrénées follows the green French flank of the range coast to coast — Hendaye on the Atlantic to Banyuls-sur-Mer on the Mediterranean, village to village, waymarked red-and-white.', // TODO(copy)
+    season: {
+      best: [7, 8, 9],
+      note: 'June to September; lower and wetter than the Spanish side, with reliable village stages. Snow lingers on the high cols into early summer.', // TODO(copy)
     },
   },
 ];

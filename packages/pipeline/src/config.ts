@@ -55,6 +55,22 @@ export const GR11: TrailConfig = {
   waymark: { osmcSymbol: 'red:white:red_lower:11:black', network: 'nwn' },
 };
 
+// GR10 — the French Pyrenean traverse (Hendaye → Banyuls). OSM has it as nwn section
+// relations sharing osmc:symbol "red::white_upper:red_lower:10:" (white plate, red bars,
+// "10"). Fetched by ref + bbox like GR11.
+export const GR10: TrailConfig = {
+  id: 'gr10',
+  name: 'GR10',
+  ref: 'GR 10',
+  description: 'La traversée des Pyrénées — Hendaye to Banyuls-sur-Mer',
+  country: 'France',
+  region: 'Pyrenees',
+  osmRelationId: null,
+  bbox: { south: 42.3, west: -1.9, north: 43.6, east: 3.2 },
+  waymark: { osmcSymbol: 'red::white_upper:red_lower:10:', network: 'nwn' },
+};
+
 export const TRAILS: Record<string, TrailConfig> = {
   [GR11.id]: GR11,
+  [GR10.id]: GR10,
 };
