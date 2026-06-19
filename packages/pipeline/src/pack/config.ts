@@ -1,9 +1,9 @@
-// Per-trail pack config (§8) — adding a trail is a config entry, not new code. Each
-// references the OSM/ingest TrailConfig (geometry, etapas, POIs) and the discovery
-// country it sits under, plus editorial hero copy for the objective. The same
-// buildPack engine runs for every entry.
+// Per-trail pack config (§8) — DERIVED from the single trail registry (../trails). Adding
+// a trail is one TRAIL_DEFS entry; this projects the pack-build view (objective copy,
+// country, season) out of it. The same buildPack engine runs for every entry.
 
-import { GR10, GR11, type TrailConfig } from '../config';
+import type { TrailConfig } from '../config';
+import { TRAIL_DEFS } from '../trails';
 
 export interface PackConfig {
   /** Objective slug, e.g. 'gr11'. */
@@ -13,39 +13,19 @@ export interface PackConfig {
   countryId: string;
   /** The OSM/ingest config — geometry, etapas, POIs, waymark. */
   source: TrailConfig;
-  /** Objective hero/summary copy (curation-owned; placeholder for now). */
+  /** Objective hero/summary copy. */
   tagline: string;
   summary: string;
-  /** Best-season window for the Guide Overview (curation/climatology). `best` = month
-   *  numbers 1–12. Curated for now; a climatology Derived pass replaces it later. */
+  /** Best-season window for the Guide Overview. `best` = month numbers 1–12. */
   season?: { best: number[]; note: string };
 }
 
-export const PACK_CONFIGS: PackConfig[] = [
-  {
-    id: 'gr11',
-    type: 'trail',
-    countryId: 'spain',
-    source: GR11,
-    tagline: 'Pyrenees High Route · Spain', // TODO(copy)
-    summary:
-      'The Senda Pirenaica traces the Spanish Pyrenees coast to coast — from Hondarribia on the Atlantic to Cap de Creus on the Mediterranean, waymarked red-and-white the whole way.', // TODO(copy)
-    season: {
-      best: [7, 8, 9],
-      note: 'Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer.', // TODO(copy)
-    },
-  },
-  {
-    id: 'gr10',
-    type: 'trail',
-    countryId: 'france',
-    source: GR10,
-    tagline: 'The French Pyrenean traverse · France', // TODO(copy)
-    summary:
-      'La Grande Traversée des Pyrénées follows the green French flank of the range coast to coast — Hendaye on the Atlantic to Banyuls-sur-Mer on the Mediterranean, village to village, waymarked red-and-white.', // TODO(copy)
-    season: {
-      best: [7, 8, 9],
-      note: 'June to September; lower and wetter than the Spanish side, with reliable village stages. Snow lingers on the high cols into early summer.', // TODO(copy)
-    },
-  },
-];
+export const PACK_CONFIGS: PackConfig[] = Object.values(TRAIL_DEFS).map((d) => ({
+  id: d.trail.id,
+  type: 'trail',
+  countryId: d.countryId,
+  source: d.trail,
+  tagline: d.tagline,
+  summary: d.summary,
+  season: d.season,
+}));

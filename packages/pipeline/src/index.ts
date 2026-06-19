@@ -5,6 +5,7 @@
 // a sibling of these, run during/after Enrich, reusing the same config, the same
 // idempotent + override-safe rule, and the same curated chain as scope. See README.
 export * from './config';
+export * from './trails';
 export * from './overpass';
 export * from './geometry';
 export * from './normalise';

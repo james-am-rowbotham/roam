@@ -9,6 +9,76 @@
       "author": "Moahim",
       "attribution": "Moahim · CC BY-SA 4.0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg"
+    },
+    "media/hero/gr10-pays-basque": {
+      "id": "media/hero/gr10-pays-basque",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/La_Rhune_64_lato_francese_-_eremo_a_551_m_di_altitudine_sotto_il_Miramar_-_SINAR.jpg/1920px-La_Rhune_64_lato_francese_-_eremo_a_551_m_di_altitudine_sotto_il_Miramar_-_SINAR.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 4.0",
+      "author": "Anthospace",
+      "attribution": "Anthospace · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:La_Rhune_64_lato_francese_-_eremo_a_551_m_di_altitudine_sotto_il_Miramar_-_SINAR.jpg"
+    },
+    "media/hero/gr10-haut-bearn": {
+      "id": "media/hero/gr10-haut-bearn",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Cirque_de_Lescun.jpg/1920px-Cirque_de_Lescun.jpg",
+      "width": 1600,
+      "height": 627,
+      "license": "CC BY-SA 4.0",
+      "author": "Benh LIEU SONG (Flickr)",
+      "attribution": "Benh LIEU SONG (Flickr) · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cirque_de_Lescun.jpg"
+    },
+    "media/hero/gr10-bigorre": {
+      "id": "media/hero/gr10-bigorre",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Cascade_du_pont_d%27_Espagne_%28Cauterets%29_-_btv1b10485209r.jpg/1920px-Cascade_du_pont_d%27_Espagne_%28Cauterets%29_-_btv1b10485209r.jpg",
+      "width": 1600,
+      "height": 2528,
+      "license": "Public domain",
+      "author": "Engelmann, Godefroy (1788-1839). Auteur du texte",
+      "attribution": "Engelmann, Godefroy (1788-1839). Auteur du texte · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cascade_du_pont_d%27_Espagne_(Cauterets)_-_btv1b10485209r.jpg"
+    },
+    "media/hero/gr10-luchonnais": {
+      "id": "media/hero/gr10-luchonnais",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Fotografi_av_Pyr%C3%A9n%C3%A9es._Lac_d%C2%B4Oo_-_Hallwylska_museet_-_104661.tif/lossy-page1-1920px-Fotografi_av_Pyr%C3%A9n%C3%A9es._Lac_d%C2%B4Oo_-_Hallwylska_museet_-_104661.tif.jpg",
+      "width": 1600,
+      "height": 1258,
+      "license": "Public domain",
+      "author": "Unknown authorUnknown author",
+      "attribution": "Unknown authorUnknown author · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fotografi_av_Pyr%C3%A9n%C3%A9es._Lac_d%C2%B4Oo_-_Hallwylska_museet_-_104661.tif"
+    },
+    "media/hero/gr10-couserans": {
+      "id": "media/hero/gr10-couserans",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Valier_etang_long.JPG",
+      "width": 700,
+      "height": 525,
+      "license": "CC BY-SA 3.0",
+      "author": "Original uploader was Valier at fr.wikipedia",
+      "attribution": "Original uploader was Valier at fr.wikipedia · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Valier_etang_long.JPG"
+    },
+    "media/hero/gr10-haute-ariege": {
+      "id": "media/hero/gr10-haute-ariege",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Etang_Majeur_de_Bassies_06.jpg/1920px-Etang_Majeur_de_Bassies_06.jpg",
+      "width": 1600,
+      "height": 929,
+      "license": "CC BY-SA 4.0",
+      "author": "Krzysztof Golik",
+      "attribution": "Krzysztof Golik · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Etang_Majeur_de_Bassies_06.jpg"
+    },
+    "media/hero/gr10-catalan-pyrenees": {
+      "id": "media/hero/gr10-catalan-pyrenees",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Corbi%C3%A8res_Massif_-_Pyrenees_-_Panorama_02.jpg/1920px-Corbi%C3%A8res_Massif_-_Pyrenees_-_Panorama_02.jpg",
+      "width": 1600,
+      "height": 319,
+      "license": "CC BY-SA 3.0",
+      "author": "H. Zell",
+      "attribution": "H. Zell · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Corbi%C3%A8res_Massif_-_Pyrenees_-_Panorama_02.jpg"
     }
   }
 }
