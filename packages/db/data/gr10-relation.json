@@ -1,0 +1,8 @@
+{
+  "type": "route",
+  "route": "hiking",
+  "ref": "GR 10",
+  "network": "nwn",
+  "name": "La traversée des Pyrénées",
+  "osmc:symbol": "red::white_upper:red_lower:10:"
+}
