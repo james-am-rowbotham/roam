@@ -155,6 +155,7 @@ function NavigationBlock({ block }: { block: Extract<ContentBlock, { kind: 'navi
 function HazardsBlock({ block }: { block: Extract<ContentBlock, { kind: 'hazards' }> }) {
   return (
     <View style={styles.block}>
+      {block.header ? <Text style={styles.heading}>{block.header}</Text> : null}
       {block.callouts.map((c) => {
         const pair = STATUS[c.tone];
         return (

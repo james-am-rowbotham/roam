@@ -36,7 +36,7 @@ export type ContentBlock =
     }
   | { kind: 'accommodation'; header?: string; places: import('./types').PlaceRef[] }
   | { kind: 'navigation'; body: string; marking?: string }
-  | { kind: 'hazards'; callouts: { tone: StatusTone; body: string }[] }
+  | { kind: 'hazards'; header?: string; callouts: { tone: StatusTone; body: string }[] }
   | { kind: 'gallery'; mediaIds: string[] }
   | { kind: 'highlights'; highlightIds: string[]; header?: string }
   | {

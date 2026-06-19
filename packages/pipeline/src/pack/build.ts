@@ -132,6 +132,15 @@ export function buildTrailPack(
           places: stageAccom.map((a) => ({ locationId: a.id, note: accomNote(a) })),
         }
       : null;
+    // Hazards: the section's conditions/cautions apply to its stages (§12.4).
+    const stageHz = content.sectionHazards?.[`${config.id}-${s.regionId}`] ?? [];
+    const hazBlock: ContentBlock | null = stageHz.length
+      ? {
+          kind: 'hazards',
+          header: 'Hazards',
+          callouts: stageHz.map((z) => ({ tone: z.tone as StatusTone, body: z.body })),
+        }
+      : null;
     return {
       id: stageId,
       sectionId: `${config.id}-${s.regionId}`,
@@ -148,13 +157,14 @@ export function buildTrailPack(
         hours: estimateHours(distanceKm, s.ascentM),
         grade,
       }),
-      // §12.4 order: Overview narrative → map → elevation → water → accommodation.
+      // §12.4 order: Overview → map → elevation → water → accommodation → hazards.
       blocks: [
         ...(content.stageBlocks?.[stageId] ?? []),
         ...(k.stageGeojson[stageId] ? [mapBlock(k.stageGeojson[stageId])] : []),
         ...(elev ? [elev] : []),
         ...(waterBlock ? [waterBlock] : []),
         ...(accomBlock ? [accomBlock] : []),
+        ...(hazBlock ? [hazBlock] : []),
       ],
       highlightIds: [],
     };

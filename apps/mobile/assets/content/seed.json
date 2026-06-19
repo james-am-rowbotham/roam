@@ -11844,6 +11844,24 @@
                   "distanceKm": 24.2
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -12145,6 +12163,24 @@
                   "distanceKm": 22.9
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -12358,6 +12394,24 @@
                   "distanceKm": 15.2
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -12547,6 +12601,24 @@
                 {
                   "distanceKm": 17.7,
                   "elevM": 1012
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
                 }
               ]
             }
@@ -12750,6 +12822,24 @@
                 {
                   "distanceKm": 17.7,
                   "elevM": 1281
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
                 }
               ]
             }
@@ -12973,6 +13063,24 @@
                   "distanceKm": 16.3
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13178,6 +13286,24 @@
                   "distanceKm": 16.5
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13309,6 +13435,24 @@
                 {
                   "locationId": "gr11-water-452",
                   "distanceKm": 7.5
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+                },
+                {
+                  "tone": "danger",
+                  "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
                 }
               ]
             }
@@ -13482,6 +13626,24 @@
                 {
                   "locationId": "gr11-water-380",
                   "distanceKm": 16.6
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
                 }
               ]
             }
@@ -13663,6 +13825,24 @@
                 {
                   "locationId": "gr11-water-355",
                   "distanceKm": 8.4
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
                 }
               ]
             }
@@ -13876,6 +14056,24 @@
                 {
                   "locationId": "gr11-water-428",
                   "distanceKm": 15.9
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
                 }
               ]
             }
@@ -14139,6 +14337,24 @@
                   "distanceKm": 20.2
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -14306,6 +14522,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -14467,6 +14701,24 @@
                 {
                   "distanceKm": 13.6,
                   "elevM": 2019
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
                 }
               ]
             }
@@ -14674,6 +14926,24 @@
                 {
                   "locationId": "gr11-accom-43",
                   "note": "Hut"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+                },
+                {
+                  "tone": "warn",
+                  "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
                 }
               ]
             }
@@ -14921,6 +15191,24 @@
                   "distanceKm": 20.9
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15096,6 +15384,24 @@
                 {
                   "locationId": "gr11-water-390",
                   "distanceKm": 5.7
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
                 }
               ]
             }
@@ -15301,6 +15607,24 @@
                 {
                   "locationId": "gr11-water-430",
                   "distanceKm": 8.4
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
                 }
               ]
             }
@@ -15542,6 +15866,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15755,6 +16097,24 @@
                   "distanceKm": 17.1
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15950,6 +16310,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16091,6 +16469,24 @@
                 {
                   "distanceKm": 10,
                   "elevM": 1638
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
                 }
               ]
             }
@@ -16240,6 +16636,20 @@
                   "elevM": 1684
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16373,6 +16783,20 @@
                 {
                   "distanceKm": 7.2,
                   "elevM": 2074
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
                 }
               ]
             }
@@ -16538,6 +16962,20 @@
                 {
                   "locationId": "gr11-water-436",
                   "distanceKm": 4.2
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
                 }
               ]
             }
@@ -16739,6 +17177,20 @@
                   "note": "Refuge · 23 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16900,6 +17352,20 @@
                 {
                   "distanceKm": 10.8,
                   "elevM": 1638
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
                 }
               ]
             }
@@ -17125,6 +17591,20 @@
                   "note": "Refuge"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17326,6 +17806,20 @@
                   "distanceKm": 7.2
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17515,6 +18009,20 @@
                   "distanceKm": 13.2
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17702,6 +18210,20 @@
                 {
                   "locationId": "gr11-water-398",
                   "distanceKm": 11.7
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
                 }
               ]
             }
@@ -17927,6 +18449,20 @@
                   "note": "Refuge"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18140,6 +18676,20 @@
                   "distanceKm": 5.1
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18289,6 +18839,20 @@
                 {
                   "distanceKm": 10.6,
                   "elevM": 2204
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
                 }
               ]
             }
@@ -18476,6 +19040,20 @@
                 {
                   "locationId": "gr11-accom-44",
                   "note": "Hut"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -18749,6 +19327,20 @@
                   "elevM": 1523
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18990,6 +19582,20 @@
                   "distanceKm": 13.3
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -19165,6 +19771,20 @@
                 {
                   "locationId": "gr11-water-376",
                   "distanceKm": 9.9
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -19402,6 +20022,20 @@
                 {
                   "locationId": "gr11-water-460",
                   "distanceKm": 9.3
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -19657,6 +20291,20 @@
                   "distanceKm": 0.8
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -19872,6 +20520,20 @@
                 {
                   "locationId": "gr11-water-443",
                   "distanceKm": 13.5
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -20191,6 +20853,20 @@
                   "distanceKm": 25.1
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -20470,6 +21146,20 @@
                 {
                   "locationId": "gr11-water-455",
                   "distanceKm": 18
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -20840,6 +21530,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -21069,6 +21773,20 @@
                   "distanceKm": 19.1
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -21242,6 +21960,20 @@
                 {
                   "distanceKm": 14.8,
                   "elevM": 0
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+                },
+                {
+                  "tone": "warn",
+                  "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
                 }
               ]
             }
@@ -30634,6 +31366,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -30915,6 +31665,24 @@
                 {
                   "locationId": "gr10-accom-86",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
                 }
               ]
             }
@@ -31220,6 +31988,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -31463,6 +32249,24 @@
                 {
                   "locationId": "gr10-water-487",
                   "distanceKm": 17.4
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
                 }
               ]
             }
@@ -31746,6 +32550,24 @@
                   "distanceKm": 12.3
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -31955,6 +32777,24 @@
                 {
                   "distanceKm": 15.6,
                   "elevM": 488
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
                 }
               ]
             }
@@ -32232,6 +33072,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -32457,6 +33315,24 @@
                 {
                   "locationId": "gr10-accom-77",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
                 }
               ]
             }
@@ -32814,6 +33690,24 @@
                   "note": "Hut"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+                },
+                {
+                  "tone": "warn",
+                  "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -33035,6 +33929,20 @@
                 {
                   "locationId": "gr10-accom-62",
                   "note": "Refuge"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
                 }
               ]
             }
@@ -33260,6 +34168,20 @@
                 {
                   "locationId": "gr10-water-549",
                   "distanceKm": 12
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
                 }
               ]
             }
@@ -33519,6 +34441,20 @@
                 {
                   "locationId": "gr10-accom-60",
                   "note": "Refuge"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
                 }
               ]
             }
@@ -33832,6 +34768,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -34097,6 +35047,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -34298,6 +35262,20 @@
                 {
                   "distanceKm": 14.4,
                   "elevM": 1172
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
                 }
               ]
             }
@@ -34519,6 +35497,20 @@
                   "elevM": 2059
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -34674,6 +35666,20 @@
                 {
                   "locationId": "gr10-accom-88",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
                 }
               ]
             }
@@ -34901,6 +35907,20 @@
                 {
                   "locationId": "gr10-accom-127",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
                 }
               ]
             }
@@ -35180,6 +36200,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -35439,6 +36473,20 @@
                   "elevM": 802
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -35644,6 +36692,20 @@
                 {
                   "locationId": "gr10-accom-122",
                   "note": "Hut"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
                 }
               ]
             }
@@ -35941,6 +37003,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -36200,6 +37276,20 @@
                   "note": "Hut"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -36383,6 +37473,24 @@
                 {
                   "locationId": "gr10-water-548",
                   "distanceKm": 0.8
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
                 }
               ]
             }
@@ -36592,6 +37700,24 @@
                 {
                   "locationId": "gr10-accom-103",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
                 }
               ]
             }
@@ -36847,6 +37973,24 @@
                   "distanceKm": 17
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -37018,6 +38162,24 @@
                 {
                   "locationId": "gr10-accom-87",
                   "note": "Refuge"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
                 }
               ]
             }
@@ -37303,6 +38465,24 @@
                   "note": "Hut"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -37530,6 +38710,24 @@
                   "note": "Refuge"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+                },
+                {
+                  "tone": "warn",
+                  "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -37667,6 +38865,20 @@
                 {
                   "distanceKm": 6.9,
                   "elevM": 1554
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
                 }
               ]
             }
@@ -37910,6 +39122,20 @@
                   "note": "Hut · 4 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -38147,6 +39373,20 @@
                 {
                   "locationId": "gr10-accom-68",
                   "note": "Hut · 10 beds"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
                 }
               ]
             }
@@ -38412,6 +39652,20 @@
                   "note": "Refuge"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -38609,6 +39863,20 @@
                   "distanceKm": 12
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -38768,6 +40036,20 @@
                 {
                   "locationId": "gr10-accom-84",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
                 }
               ]
             }
@@ -39085,6 +40367,20 @@
                   "note": "Hut · 4 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -39274,6 +40570,20 @@
                 {
                   "locationId": "gr10-accom-96",
                   "note": "Refuge · 20 beds"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "warn",
+                  "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+                },
+                {
+                  "tone": "danger",
+                  "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
                 }
               ]
             }
@@ -39501,6 +40811,24 @@
                 {
                   "distanceKm": 16,
                   "elevM": 1383
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
                 }
               ]
             }
@@ -39784,6 +41112,24 @@
                   "note": "Hut · 2 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -39995,6 +41341,24 @@
                 {
                   "locationId": "gr10-water-562",
                   "distanceKm": 11.3
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
                 }
               ]
             }
@@ -40278,6 +41642,24 @@
                   "note": "Hut · 10 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -40471,6 +41853,24 @@
                   "distanceKm": 6.7
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -40634,6 +42034,24 @@
                 {
                   "locationId": "gr10-water-501",
                   "distanceKm": 7.5
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
                 }
               ]
             }
@@ -40807,6 +42225,24 @@
                 {
                   "locationId": "gr10-accom-109",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
                 }
               ]
             }
@@ -41032,6 +42468,24 @@
                 {
                   "locationId": "gr10-accom-123",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
                 }
               ]
             }
@@ -41277,6 +42731,24 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+                },
+                {
+                  "tone": "warn",
+                  "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+                },
+                {
+                  "tone": "success",
+                  "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -41508,6 +42980,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -41641,6 +43127,20 @@
                 {
                   "distanceKm": 9.3,
                   "elevM": 1110
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
                 }
               ]
             }
@@ -41881,6 +43381,20 @@
                 {
                   "locationId": "gr10-accom-106",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
                 }
               ]
             }
@@ -42158,6 +43672,20 @@
                   "note": "Hut · 4 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -42429,6 +43957,20 @@
                   "note": "Hut · 4 beds"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -42652,6 +44194,20 @@
                 {
                   "locationId": "gr10-accom-111",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
                 }
               ]
             }
@@ -42967,6 +44523,20 @@
                 {
                   "locationId": "gr10-accom-107",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
                 }
               ]
             }
@@ -43292,6 +44862,20 @@
                   "note": "Campsite"
                 }
               ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -43599,6 +45183,20 @@
                 {
                   "locationId": "gr10-accom-126",
                   "note": "Campsite"
+                }
+              ]
+            },
+            {
+              "kind": "hazards",
+              "header": "Hazards",
+              "callouts": [
+                {
+                  "tone": "danger",
+                  "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+                },
+                {
+                  "tone": "danger",
+                  "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
                 }
               ]
             }
