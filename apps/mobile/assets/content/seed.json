@@ -2449,6 +2449,42 @@
                 "note": "Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer."
               }
             ]
+          },
+          {
+            "key": "accommodation",
+            "facet": "planning",
+            "heading": "Where to sleep",
+            "body": "The trail averages roughly one refugio a day. Staffed huts are the backbone — dormitory beds, a hot meal, a packed lunch, blankets & local information; reckon on around €26 for the bed, €22 for dinner and €11 for breakfast, and bring a sleeping-bag liner since bags aren't supplied. In valleys you'll also find albergues, pensions, hostals & casas rurales, and unstaffed free huts cover the more isolated stretches. Book ahead from mid-July to late August when refuges fill fast; solo walkers can often find a space without it. Wild camping is illegal, but bivouacking — a small tent pitched at dusk and struck at dawn, away from habitation — is tolerated, usually above 1,800–2,100 m; note that camping is banned in Aigüestortes and is restricted in Ordesa to the area by the Góriz refuge."
+          },
+          {
+            "key": "water",
+            "facet": "planning",
+            "heading": "Water on the trail",
+            "body": "Water is dependable across most of the GR11 — village fountains, taps near refuges & mountain springs let you refill often, and unstaffed huts usually have drinking water. The exception is the far eastern end in Catalonia, approaching the Mediterranean, where sources thin out and temperatures can top 30°C; carry extra through there. Treat what you collect: much of the easily reached water sits below grazing land and free-range cattle, so a filter or other treatment is strongly advised. Two to three litres of capacity suits most stages, with more on the dry Catalan stretches."
+          },
+          {
+            "key": "safety",
+            "facet": "planning",
+            "heading": "Staying safe",
+            "body": "The main risk is afternoon weather: storms build over the high country in summer, often in the evening and night, so cross exposed passes early and be down before they hit. The GR11 climbs many passes with scree, boulderfields & easy scrambling — about as hard as an inexperienced walker would want under a heavy pack — and snow can linger on passes above 2,500 m into early summer, hiding markers and demanding an ice axe and crampons. Fog can drop visibility to a few metres even on a marked route. The emergency number Spain-wide is 112, reaching mountain rescue, but reception is patchy in remote valleys, so leave your route and expected arrival with someone, and use the staffed refuges as shelter and a source of current conditions."
+          },
+          {
+            "key": "flora",
+            "facet": "environment",
+            "heading": "From beech to bare granite",
+            "body": "The GR11 climbs through the same vegetation belts again and again as it crosses each massif: oak and beech woods low down, the great Irati forest in Navarre, then conifers thinning out around 2,300 m, alpine meadow above that, and exposed rock above roughly 2,500 m. Watch the high ground for izards (the Pyrenean chamois, sarrio in Spanish) on the slopes and marmots whistling from boulder fields — both common above the treeline. Overhead you'll see griffon and Egyptian vultures, golden eagles, and, with luck over Ordesa y Monte Perdido, the bearded vulture or quebrantahuesos — the \"bone-breaker,\" with a near three-metre wingspan, that lives almost entirely on bone and has its European stronghold here."
+          },
+          {
+            "key": "food",
+            "facet": "environment",
+            "heading": "Eat the valley you're in",
+            "body": "Mountain food on the GR11 is shepherd's food, and it changes region by region. In the Basque Country and Navarre look for sheep's-milk cheeses — Idiazabal, and the Navarrese curados — and river trout (trucha) off the menu in valley villages. In Aragon, migas reward the hungry: stale bread crumbled and fried with garlic, chorizo, and bacon, sometimes with grapes — a meal built for a working day in the hills. Refuge dinners are usually a fixed three-course menú; stock up on cheese and cured meat in the larger valley towns like Jaca, since long stretches between resupply are normal."
+          },
+          {
+            "key": "weather",
+            "facet": "environment",
+            "heading": "Drier as you go east, storms in the afternoon",
+            "body": "Walk the GR11 west to east and you feel the climate change with you: the Atlantic-facing Basque hills are mist-prone and green, while by the Mediterranean end rain is rare and afternoons can climb past 30°C. July to September is the season — the high passes are usually clear of snow and the days long. The summer pattern to plan around is the thunderstorm: hot, settled mornings that build cloud through the day, with storms most often breaking in the late afternoon, evening, or overnight. Start early, aim to be off the high cols by early afternoon, and treat a clear dawn as the time to make your distance."
           }
         ],
         "highlightIds": [],
