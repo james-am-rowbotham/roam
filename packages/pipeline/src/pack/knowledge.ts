@@ -57,4 +57,6 @@ export interface TrailKnowledge {
   /** Linearly-referenced POIs (§7), positioned by chainage; projected onto stages. */
   water: KnowledgePOI[];
   accommodation: KnowledgePOI[];
+  /** Simplified route-line slice per region id, for the section map block. */
+  sectionGeojson: Record<string, GeoJSON.Geometry>;
 }

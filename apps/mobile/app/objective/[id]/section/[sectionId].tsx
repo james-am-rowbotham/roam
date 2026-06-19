@@ -12,8 +12,8 @@ import { Tabs } from '../../../../components/ui/Tabs';
 import { contentStore, useSection, useSectionStages } from '../../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../../theme';
 
-// Section-overview topic order (§12.2): Terrain → Flora & fauna → Culture → Weather.
-const TOPIC_ORDER = ['terrain', 'flora', 'culture', 'weather'];
+// Section-overview topic order (§12.2): Terrain → Flora & fauna → Culture → Weather → Cautions.
+const TOPIC_ORDER = ['terrain', 'flora', 'culture', 'weather', 'cautions'];
 const stat = (stats: Stat[], key: string) => stats.find((s) => s.key === key)?.value;
 const stageMeta = (stats: Stat[]) =>
   [
@@ -94,25 +94,30 @@ export default function SectionScreen() {
 }
 
 function Overview({ section }: { section: Section }) {
-  const topics = (section.guide ?? [])
+  const all = (section.guide ?? [])
     .slice()
     .sort((a, b) => TOPIC_ORDER.indexOf(a.key) - TOPIC_ORDER.indexOf(b.key));
+  const mapTopic = all.find((t) => t.key === 'map');
+  const topics = all.filter((t) => t.key !== 'map');
   return (
     <View style={styles.body}>
       {/* lead paragraph */}
       <Text style={styles.lead}>{section.summary}</Text>
 
-      {/* region map — placeholder until region geometry is in the pack (§7) */}
-      <View style={styles.mapPlaceholder}>
-        <Text style={styles.placeholderText}>Region map</Text>
-      </View>
+      {/* region map — the section's route-line slice (§7), or a placeholder if absent */}
+      {mapTopic?.blocks ? (
+        <ContentBlockRenderer blocks={mapTopic.blocks} resolve={storeResolve} />
+      ) : (
+        <View style={styles.mapPlaceholder}>
+          <Text style={styles.placeholderText}>Region map</Text>
+        </View>
+      )}
 
-      {/* Terrain → Flora & fauna → Culture → Weather. Topics may carry blocks (a section
-          elevation profile, weather callouts, imagery) — render them like the Guide does,
-          not text-only (§12.2). */}
+      {/* Terrain → Flora & fauna → Culture → Weather → Cautions. Topics may carry blocks
+          (callouts, imagery) — render them like the Guide does, not text-only (§12.2). */}
       {topics.map((t) => (
         <View key={t.key} style={styles.topic}>
-          <Text style={styles.heading}>{t.heading}</Text>
+          {t.heading ? <Text style={styles.heading}>{t.heading}</Text> : null}
           {t.body ? <Text style={styles.bodyText}>{t.body}</Text> : null}
           {t.blocks ? <ContentBlockRenderer blocks={t.blocks} resolve={storeResolve} /> : null}
         </View>

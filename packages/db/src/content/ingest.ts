@@ -24,6 +24,8 @@ interface WorkflowResult {
   sectionGuide?: Record<string, RawGuideTopic[]>;
   objectiveGuide?: RawGuideTopic[];
   stageBlocks?: Record<string, ContentBlock[]>;
+  sectionHighlights?: Record<string, { title: string; body: string }[]>;
+  sectionHazards?: Record<string, { tone: string; body: string }[]>;
   provenance?: { model?: string; generatedAt?: string };
 }
 
@@ -66,11 +68,24 @@ export function ingestResult(id: string, parsed: unknown): TrailContent {
     ? normalizeFaceted(result.objectiveGuide)
     : existing.objectiveGuide;
 
+  const clean = (s: string) => unescapeHtml(s);
+  const sectionHighlights = { ...(existing.sectionHighlights ?? {}) };
+  for (const [id, hl] of Object.entries(result.sectionHighlights ?? {})) {
+    if (hl.length)
+      sectionHighlights[id] = hl.map((h) => ({ title: clean(h.title), body: clean(h.body) }));
+  }
+  const sectionHazards = { ...(existing.sectionHazards ?? {}) };
+  for (const [id, hz] of Object.entries(result.sectionHazards ?? {})) {
+    if (hz.length) sectionHazards[id] = hz.map((z) => ({ tone: z.tone, body: clean(z.body) }));
+  }
+
   return {
     ...existing,
     sectionGuide,
     objectiveGuide,
     stageBlocks,
+    sectionHighlights,
+    sectionHazards,
     provenance: { ...existing.provenance, ...result.provenance, generatedAt: '2026-06-18' },
   };
 }

@@ -72,6 +72,7 @@ const knowledge: TrailKnowledge = {
   ],
   water: [],
   accommodation: [],
+  sectionGeojson: {},
 };
 
 describe('pack builder (multi-trail engine)', () => {

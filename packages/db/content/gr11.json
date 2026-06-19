@@ -556,5 +556,157 @@
       "heading": "Drier as you go east, storms in the afternoon",
       "body": "Walk the GR11 west to east and you feel the climate change with you: the Atlantic-facing Basque hills are mist-prone and green, while by the Mediterranean end rain is rare and afternoons can climb past 30°C. July to September is the season — the high passes are usually clear of snow and the days long. The summer pattern to plan around is the thunderstorm: hot, settled mornings that build cloud through the day, with storms most often breaking in the late afternoon, evening, or overnight. Start early, aim to be off the high cols by early afternoon, and treat a clear dawn as the time to make your distance."
     }
-  ]
+  ],
+  "sectionHighlights": {
+    "gr11-basque-country-navarre": [
+      {
+        "title": "Cabo Higuer: the Atlantic start",
+        "body": "The GR11 begins at Cabo Higuer on the Gipuzkoan coast with the Cantabrian Sea at your feet, climbing inland past Hondarribia and San Marcial's chapel before crossing into Navarre at Bera."
+      },
+      {
+        "title": "The Irati Forest and Irabia reservoir",
+        "body": "East of Burguete the trail threads the western edge of the Selva de Irati, one of Europe's largest beech-fir forests, crossing the river Irati on a medieval bridge near Orbara and passing close to the Irabia reservoir."
+      },
+      {
+        "title": "Sanctuary of Muskilda above Ochagavía",
+        "body": "The descent into Ochagavía/Otsagabia, one of Navarre's prettiest mountain villages, passes the hilltop Sanctuary of Muskilda (1,020m) through the Arburua beech wood off the Abodi ridge."
+      },
+      {
+        "title": "Elizondo and the Baztan valley",
+        "body": "The red-stone capital of the Baztan valley, Elizondo opens onto one of the wildest, best-preserved corners of the Navarran mountains, with dense beech forests climbing toward the Urkiaga pass."
+      }
+    ],
+    "gr11-aragonese-pyrenees": [
+      {
+        "title": "Aguas Tuertas valley",
+        "body": "One of the most beautiful valleys in the Pyrenees, a wide glacial meadow at about 1,620 m where the Aragón Subordán river meanders in lazy zigzags past terrain rich in megalithic remains, including a dolmen."
+      },
+      {
+        "title": "Cuello del Infierno and the Ibones Azules",
+        "body": "Above Respomuso the route climbs to the Collado de Tebarray (about 2,771 m), the section's highest point, beneath the 3,082 m Picos del Infierno, then drops through the Piedrafita gorge past the blue tarns of the Ibones Azules."
+      },
+      {
+        "title": "Refugio de Respomuso",
+        "body": "A staffed high-mountain refuge at about 2,200 m beside the Respomuso reservoir, the standard overnight above Sallent de Gállego and the launch point for the Infierno passes."
+      }
+    ],
+    "gr11-ordesa-high-country": [
+      {
+        "title": "Collado de Añisclo and the Pineta cirque",
+        "body": "From Refugio de Góriz the GR11 climbs over the grassy Collado de Añisclo at 2,453 m before plunging into the Circo de Pineta, a vast glacial amphitheatre walled by the north face of Monte Perdido."
+      },
+      {
+        "title": "Refugio de Góriz (2,200 m)",
+        "body": "The only mountain hut inside Ordesa y Monte Perdido National Park, Góriz sits at 2,200 m and is reachable solely on foot, making it the classic base beneath Monte Perdido and the staging point for this whole section."
+      },
+      {
+        "title": "Llanos de La Larri balcony",
+        "body": "On the climb out of Pineta the trail reaches the Llanos de La Larri, a hanging natural balcony from which the full magnitude of the north face of Monte Perdido is revealed."
+      },
+      {
+        "title": "Vallibierna lakes beneath Aneto",
+        "body": "The high stage to Refugio de Cap de Llauset passes the twin Vallibierna ibones (2,428 m and 2,475 m) under the granite giants of Aneto (3,404 m), Tempestades and Margalida."
+      }
+    ],
+    "gr11-andorra-pallars-high-country": [
+      {
+        "title": "Estany de Sant Maurici & Els Encantats",
+        "body": "The descent from Port de Ràtera (2,534m) ends at Estany de Sant Maurici (1,915m), set at the foot of the twin rocky spires of Els Encantats, the iconic image of the national park."
+      },
+      {
+        "title": "Circ de Colomèrs lake country",
+        "body": "Above La Restanca the trail crosses into the Circ de Colomèrs, one of the largest concentrations of glacial lakes in the Pyrenees, threading past Cap de Port, Port de Caldes and Lac Major de Colomèrs."
+      },
+      {
+        "title": "Montardó from Oelhacrestada",
+        "body": "From the Oelhacrestada col (2,475m) a short side-trip of about 40 minutes summits Montardó (2,833m), the iconic peak presiding over the Aigüestortes lakes."
+      },
+      {
+        "title": "Coll de Tudela & Pica d'Estats panorama",
+        "body": "On the long climb out of Tavascán toward Àreu, the wide Coll de Tudela (2,239m) opens views across the Vallferrera to Pica d'Estats (3,143m), Catalonia's highest peak."
+      }
+    ],
+    "gr11-eastern-pyrenees": [
+      {
+        "title": "Vall de Núria sanctuary",
+        "body": "The GR11 climbs to the Santuari de Núria, a Marian pilgrimage shrine at 1,967m set in a glacial cirque and reached only on foot or by a historic rack railway up from Queralbs."
+      },
+      {
+        "title": "Coll de Noucreus frontier ridge",
+        "body": "Between Núria and Ulldeter the trail rides the France-Spain frontier ridge to the Collado de Noucreus at 2,790m, threading a string of 2,800m peaks like Pic de la Fossa del Gegant (2,808m) and the Vaca summits."
+      },
+      {
+        "title": "Refugi d'Ulldeter and the source of the Ter",
+        "body": "The Refugi d'Ulldeter sits at 2,220m beneath Bastiments (2,881m), Gra de Fajol and Pic de la Dona, right beside the headwaters of the river Ter."
+      },
+      {
+        "title": "Sant Aniol d'Aguja in the Alta Garrotxa",
+        "body": "Near the end the route drops into the Alta Garrotxa's dense Mediterranean woodland of evergreen and cork oaks to the remote Romanesque chapel of Sant Aniol d'Aguja (446m), with a drinking fountain and an ideal camping spot beside the old ruined refuge."
+      }
+    ]
+  },
+  "sectionHazards": {
+    "gr11-basque-country-navarre": [
+      {
+        "tone": "warn",
+        "body": "On the Hiriberri-to-Ochagavía leg over the Abodi ridge, take care in fog not to lose the waymarks between Paso Tapla and the Paso de las Alforjas, where the open high ground offers few landmarks."
+      },
+      {
+        "tone": "warn",
+        "body": "Plan your water: the Ochagavía-to-Isaba stage has no drinking fountains until almost the very end, so fill up before leaving the village."
+      },
+      {
+        "tone": "danger",
+        "body": "Livestock-guardian dogs (mastines) on the open pastures can be aggressive near their flocks and vipers bask in sunny rocky spots, so give dogs a wide, calm berth and watch where you step."
+      }
+    ],
+    "gr11-aragonese-pyrenees": [
+      {
+        "tone": "danger",
+        "body": "The Collado de Tebarray (about 2,771 m) above Respomuso can hold snow into mid-August, with a final pitch near 40 degrees where an ice axe is advised in early-season conditions; cables are installed on the steepest sections."
+      },
+      {
+        "tone": "warn",
+        "body": "Aguas Tuertas ends at a free, unstaffed refuge sleeping only 4-5 people with closed facilities onward, so carry a sleeping bag, mat and food for the next day rather than relying on services."
+      },
+      {
+        "tone": "warn",
+        "body": "On the high open passes around Toronez and Bernera, navigate carefully in fog to avoid an unintended descent toward Estanés, and expect some not-always-easy stream crossings such as the Barranco de la Rueda."
+      }
+    ],
+    "gr11-ordesa-high-country": [
+      {
+        "tone": "danger",
+        "body": "The Góriz–Pineta stage ends in what guides call probably the toughest descent on the whole GR11 — roughly 1,200 m of drop in about 2.5 km over ledges where you must use your hands, so wet rock or fatigue here is genuinely dangerous."
+      },
+      {
+        "tone": "danger",
+        "body": "The Cuello de Vallibierna pass tops out at 2,710 m and can still hold snow in early summer, with the boulder field below the pass swallowing the path — a serious problem in fog or with a snowpack masking the route."
+      },
+      {
+        "tone": "warn",
+        "body": "This is high, remote, and committing terrain: several stages cross passes above 2,300–2,710 m with long climbs (Parzán–Biados gains nearly 1,600 m over 21.7 km) and few services between huts, so build in afternoon-storm margins and don't rely on resupply between refuges."
+      }
+    ],
+    "gr11-andorra-pallars-high-country": [
+      {
+        "tone": "danger",
+        "body": "In early summer you may hit lingering snow on the high cols of the Colomèrs section, between Port de Oelhacrestada (2,475m) and the stage high point at Port de Caldes (2,568m), and at Port de Ràtera (2,534m) above Sant Maurici."
+      },
+      {
+        "tone": "warn",
+        "body": "The Tavascán-to-Àreu leg is a long, demanding stage climbing about 1,225m over 14.7km to Coll de Tudela, where slippery ground can be treacherous and the wooded final descent has confusing track crossings."
+      }
+    ],
+    "gr11-eastern-pyrenees": [
+      {
+        "tone": "danger",
+        "body": "The high frontier traverse from Núria over Coll de Noucreus (2,790m) to Ulldeter stays above 2,700m for hours and can hold snow into early summer, where the guide warns an ice axe and crampons could be necessary."
+      },
+      {
+        "tone": "warn",
+        "body": "In the closing Alta Garrotxa stage to Albanyà, water becomes complicated to find after the Sant Aniol fountain, and the next fountain at Can Nou may be dry, so fill up before the long descent through the woods."
+      }
+    ]
+  }
 }

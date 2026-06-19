@@ -49,7 +49,8 @@ export type GuideFacet = 'overview' | 'planning' | 'environment' | 'conditions';
 export interface GuideTopic {
   key: string;
   facet: GuideFacet;
-  heading: string;
+  /** Optional — a block-only topic (e.g. a map slice) carries no heading. */
+  heading?: string;
   body?: string;
   mediaId?: string;
   blocks?: ContentBlock[];

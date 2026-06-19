@@ -669,5 +669,205 @@
   "provenance": {
     "model": "workflow:research-compose-verify",
     "generatedAt": "2026-06-18"
+  },
+  "sectionHighlights": {
+    "gr10-pays-basque": [
+      {
+        "title": "La Rhune (Larrun)",
+        "body": "At 905 m, the highest peak on the Basque coast gives a 360° panorama from San Sebastián along the Atlantic to Biarritz and inland to the Pyrenees, reached on foot near the GR10 or by the historic 1924 rack railway from Col de Saint-Ignace."
+      },
+      {
+        "title": "Crête d'Iparla",
+        "body": "Above Bidarray the GR10 runs along a line of dramatic sandstone cliffs to the 1044 m Pic d'Iparla, where griffon vultures nest and soar overhead and the summit opens a view from the Basque beaches to the Hautes-Pyrénées."
+      },
+      {
+        "title": "Ainhoa village",
+        "body": "Classified among the Plus Beaux Villages de France, this 13th-century bastide on the pilgrim road to Santiago lines a single street of white timber-framed Basque houses with red and green shutters."
+      },
+      {
+        "title": "Forêt d'Iraty beech forest",
+        "body": "Near the Chalets d'Iraty the GR10 enters Europe's largest beech forest, a 17,300-hectare hêtraie straddling the Spanish border at 1,300–1,500 m, with a stopover gîte at the edge of the woods."
+      }
+    ],
+    "gr10-haut-bearn": [
+      {
+        "title": "Cirque de Lescun",
+        "body": "From Lescun — the highest commune in the Pyrénées-Atlantiques — the trail opens onto the limestone amphitheatre nicknamed the \"Dolomites of the Pyrenees,\" ringed by the Aiguille d'Ansabère, the Table des Trois Rois and the great Billare."
+      },
+      {
+        "title": "Chemin de la Mâture",
+        "body": "Above Etsaut you walk a 1,200 m ledge hewn into the rock face in 1772 to drag timber down for French naval masts, threading almost under the cliff with the Fort du Portalet perched opposite."
+      },
+      {
+        "title": "Lac Gentau & Pic du Midi d'Ossau",
+        "body": "The high variant past the Refuge d'Ayous looks straight onto Lac Gentau, where the unmistakable horn of the Pic du Midi d'Ossau is mirrored in the water before the descent to Gabas."
+      },
+      {
+        "title": "La Pierre Saint-Martin karst",
+        "body": "Climbing from the canyons of Sainte-Engrâce, the GR10 crosses the vast karst plateau of La Pierre Saint-Martin — 140 km² of limestone holding some of the deepest caves in the world — beneath the pyramid of the Pic d'Anie."
+      }
+    ],
+    "gr10-bigorre": [
+      {
+        "title": "Lac de Gaube and the Vignemale",
+        "body": "Above Cauterets the GR10 reaches the emblematic Lac de Gaube at 1,725 m, set directly beneath the 3,298 m north face of the Vignemale, the highest peak of the French Pyrenees."
+      },
+      {
+        "title": "Cirque de Gavarnie and its waterfall",
+        "body": "This stretch passes the UNESCO-listed Cirque de Gavarnie (part of the Pyrénées-Mont Perdu World Heritage Site), whose Gavarnie Falls drop about 422 m as the highest waterfall in mainland France."
+      },
+      {
+        "title": "Lac d'Estaing and the Col d'Ilhéou",
+        "body": "Out of Arrens-Marsous the route climbs past the much-loved Lac d'Estaing before crossing the Col d'Ilhéou at 2,242 m down to the Lac and Refuge d'Ilhéou."
+      },
+      {
+        "title": "Néouvielle lakes above Barèges",
+        "body": "Beyond Barèges the trail climbs to the Col de Madamète (2,508 m) and enters the Néouvielle nature reserve, threading the Aubert and Aumar lakes amid some of the highest mountain-pine (pins à crochets) forests in Europe down to the Lac de l'Oule."
+      }
+    ],
+    "gr10-luchonnais": [
+      {
+        "title": "Lac d'Oô and its 275m waterfall",
+        "body": "The trail reaches Lac d'Oô, the second most-visited natural site in the Pyrenees, where one of the range's highest waterfalls plunges some 275 m down the steep slopes across the lake."
+      },
+      {
+        "title": "Bagnères-de-Luchon spa town",
+        "body": "The section passes through Bagnères-de-Luchon, a historic Pyrenean spa town and the main resupply and rest point before the wild, infrastructure-light stages east into Ariège."
+      },
+      {
+        "title": "Refuge de l'Étang d'Araing under Pic de Crabère",
+        "body": "The section ends at the Refuge de l'Étang d'Araing (1,965 m), sat beside its lake at the foot of Pic de Crabère where the GR10 meets the HRP, staffed with 52 places from June to September."
+      }
+    ],
+    "gr10-couserans": [
+      {
+        "title": "Refuge de l'Étang d'Araing",
+        "body": "This staffed refuge (the Jacques Husson hut, ~1,965 m, 53 places) sits right on its namesake lake beneath the cliffs of the Pic de Crabère, a classic GR10 night-stop at the foot of the climb out of Couserans."
+      },
+      {
+        "title": "Cascade d'Ars above Aulus-les-Bains",
+        "body": "Dropping into Aulus-les-Bains, the trail passes near the Cascade d'Ars, one of the highest waterfalls in the massif at 246 m over three tiers, with the top fall plunging some 110 m in free fall."
+      },
+      {
+        "title": "The Bentaillou mines descent to Eylie",
+        "body": "Below the Étang d'Araing the GR10 drops past the abandoned Bentaillou mine workings before reaching the hamlet of Eylie-d'en-Haut, a stark industrial-heritage interlude in an otherwise wild stretch."
+      }
+    ],
+    "gr10-haute-ariege": [
+      {
+        "title": "Étangs de Bassiès",
+        "body": "The GR10 threads the wild granite cirque of Bassiès, where glacial lakes — the Étang Majeur, Étang Long and Étang d'Escalès — string out over roughly 2.5 km at around 1,600 m before the refuge at 1,650 m."
+      },
+      {
+        "title": "Hot springs at Mérens-les-Vals",
+        "body": "A short 20–30 minute walk up the GR10 from Mérens-les-Vals leads to free, wild sulphurous hot-spring pools of stone basins fed by water at around 37–40°C."
+      },
+      {
+        "title": "Refuge des Bésines & the high border country",
+        "body": "The stage out of Mérens-les-Vals climbs to the FFCAM Refuge des Bésines at 2,104 m, crossing the Porteille des Bésines at 2,333 m on the edge of the Catalan Pyrenees natural park."
+      }
+    ],
+    "gr10-catalan-pyrenees": [
+      {
+        "title": "Pic du Canigou (2,784 m), the Catalans' sacred mountain",
+        "body": "From the Cortalets refuge the GR10 climbs toward Pic du Canigou (2,784 m), the sacred mountain of the Catalans, visible across the whole Roussillon plain and the high point of this entire stretch."
+      },
+      {
+        "title": "Mantet, an isolated village in its own nature reserve",
+        "body": "Reached over the Col du Pal (about 2,294 m), Mantet sits at 1,540 m as one of the most isolated villages in the Pyrénées-Orientales, ringed by the 3,028-hectare Réserve Naturelle de Mantet that covers 94% of the commune."
+      },
+      {
+        "title": "Refuge du Ras de la Carança on the river",
+        "body": "The Refuge du Ras de la Carança stands on the banks of the Carança river at a GR10 crossroads, with 13 dormitory beds, meals and showers during its mid-May to mid-September guarding period, and tent space alongside."
+      },
+      {
+        "title": "The Carança gorge footbridges below the trail",
+        "body": "Below the refuge the Carança river carves the vertiginous Gorges de la Carança, a canyon of rope bridges, suspended walkways, ladders and cliff-cut cornices worth a detour from Thuès-Entre-Valls if you have the time and a head for heights."
+      }
+    ]
+  },
+  "sectionHazards": {
+    "gr10-pays-basque": [
+      {
+        "tone": "warn",
+        "body": "The Basque country is notorious for thick, persistent fog — hikers leaving Kaskoleta have reported visibility down to 20 m — which can make the ridge and pass sections a hard, disorienting navigation slog."
+      },
+      {
+        "tone": "danger",
+        "body": "The Crête d'Iparla above Bidarray runs along vertiginous sandstone cliffs and steep grassy slopes and should only be attempted in dry, clear weather; this stage is so demanding (about 1465 m of ascent) that many walkers skip it by transfer."
+      },
+      {
+        "tone": "warn",
+        "body": "The final approach into the high Iraty/Cize country involves proper mountain days with long, steep ascents and descents, including the rugged Col d'Espalza where a fixed handrail aids a very steep passage that is awkward with a heavy pack or in bad weather."
+      }
+    ],
+    "gr10-haut-bearn": [
+      {
+        "tone": "danger",
+        "body": "The Chemin de la Mâture out of Etsaut is a path cut into a sheer cliff over 200 m above the Gave d'Aspe, narrowing to about 1.8 m in places above the Gorges de l'Enfer — wet rock, a heavy pack, or vertigo make this the most exposed passage of the whole GR10."
+      },
+      {
+        "tone": "warn",
+        "body": "Across the karst plateau of La Pierre Saint-Martin (a mineral world of limestone between roughly 1,500 and 2,100 m), fog can roll in within minutes and there are few landmarks, so carry the IGN map, compass or GPS and don't rely on waymarks alone in poor visibility."
+      }
+    ],
+    "gr10-bigorre": [
+      {
+        "tone": "danger",
+        "body": "The Hourquette d'Ossoue at 2,734 m is the highest pass on the entire GR10 and holds snow late into the season, so early-summer walkers can meet lingering névé on this exposed crossing and should check conditions before committing."
+      },
+      {
+        "tone": "warn",
+        "body": "This Cauterets-Gavarnie corridor is one of the busiest, most iconic stretches of the Pyrenees, so its refuges and gîtes fill early in July and August and should be booked well ahead."
+      }
+    ],
+    "gr10-luchonnais": [
+      {
+        "tone": "danger",
+        "body": "The Fos-to-Araing stage climbs roughly 1,700 m to the Col d'Auéran (2,176 m) with an exposed ridge descent, where one hiker reported visibility dropping sharply at the col — high ground to avoid in storms or low cloud."
+      },
+      {
+        "tone": "warn",
+        "body": "This is a long, demanding stretch with two big days of 1,200 m and 1,700 m of climb and long balcony traverses through wild, infrastructure-light country east of Luchon, so plan resupply and pace carefully."
+      },
+      {
+        "tone": "warn",
+        "body": "Expect to meet patou guardian dogs working flocks on narrow cliff paths near Araing — give the herd a wide, calm berth rather than pushing through."
+      }
+    ],
+    "gr10-couserans": [
+      {
+        "tone": "warn",
+        "body": "After Eylie-d'en-Haut the trail enters a long section with no villages, crossing four successive ridges (Col de l'Arech 1,802 m, Clot du Lac 1,826 m, Col de Laziès 1,845 m, Col d'Auédole 1,727 m), so plan supplies and water for a committing, remote day."
+      },
+      {
+        "tone": "danger",
+        "body": "The high passes around the Pic de Crabère and Col d'Auéran are exposed and snow-prone; the Étang d'Araing approach is strongly advised against in winter due to avalanche paths, and early-season snow can linger on these cols."
+      }
+    ],
+    "gr10-haute-ariege": [
+      {
+        "tone": "danger",
+        "body": "The Rulhe-to-Bésines section is rated highly challenging and for experienced hikers only, crossing exposed cols above 2,300 m where afternoon storms and lingering snow on the porteilles are real risks early and late in the season."
+      },
+      {
+        "tone": "warn",
+        "body": "This is high, remote border country: the Crête des Isards links a succession of climbs and descents over 2,000 m with no villages between refuges, so carry food and plan refuge stops carefully."
+      },
+      {
+        "tone": "success",
+        "body": "Lakes and streams are plentiful through the Bassiès cirque and the high étangs near the Bésines, and the manned refuges (Bassiès, Rulhe, Bésines) are open and staffed through the summer hiking season."
+      }
+    ],
+    "gr10-catalan-pyrenees": [
+      {
+        "tone": "danger",
+        "body": "The summit pitch of Pic du Canigou via the \"cheminée\" chimney is a hands-on scramble that, as of 2023, is no longer waymarked — stay on the GR10 / Tour du Canigou path around the north flank unless you are an experienced scrambler in dry, settled conditions."
+      },
+      {
+        "tone": "danger",
+        "body": "This is high, exposed terrain — the Col du Pal sits near 2,294 m and Canigou tops 2,784 m — so afternoon thunderstorms and lingering snow on the high cols are real risks; the reliable walking window here is roughly July to October."
+      }
+    ]
   }
 }

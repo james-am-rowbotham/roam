@@ -13,6 +13,10 @@ export interface TrailContent {
   objectiveGuide?: GuideTopic[];
   /** Extra blocks appended to a stage body (Overview prose, what-you-see) by stage id. */
   stageBlocks?: Record<string, ContentBlock[]>;
+  /** Standout highlights per section id — become Highlight entities + section.highlightIds. */
+  sectionHighlights?: Record<string, { title: string; body: string }[]>;
+  /** Condition/caution callouts per section id — become a hazards block on the section. */
+  sectionHazards?: Record<string, { tone: string; body: string }[]>;
   /** Editorial images (§21.4) by media id (e.g. `media/hero/<scope>`). */
   media?: Record<string, MediaAsset>;
   /** Provenance for the whole pass (sources, model, generated-at) — kept for the trust

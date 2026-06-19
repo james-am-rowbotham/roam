@@ -9,6 +9,7 @@ import type {
   Country,
   Grade,
   GuideTopic,
+  Highlight,
   Location,
   MediaAsset,
   Objective,
@@ -17,6 +18,7 @@ import type {
   Section,
   SeedInput,
   Stage,
+  StatusTone,
   TrailPack,
 } from '@roam/content';
 import { trailStageStats } from '@roam/content';
@@ -71,6 +73,8 @@ export interface BuiltTrail {
   regions: Region[];
   locations: Location[];
   media: MediaAsset[];
+  /** Highlight entities generated from the content (referenced by section.highlightIds). */
+  highlights: Highlight[];
 }
 
 /** Map a trail's config + knowledge (+ optional AI-draft content) to a validated-shape
@@ -143,6 +147,7 @@ export function buildTrailPack(
     };
   });
 
+  const highlights: Highlight[] = [];
   const sections: Section[] = k.regions.map((r) => {
     const sectionId = `${config.id}-${r.id}`;
     const own = k.stages.filter((s) => s.regionId === r.id);
@@ -161,6 +166,50 @@ export function buildTrailPack(
           (a.type === 'refuge' || a.type === 'hut') && a.chainageM >= startM && a.chainageM <= endM,
       )
       .map((a) => ({ locationId: a.id, note: accomNote(a) }));
+
+    // Highlights → Highlight entities + section.highlightIds; hazards → a cautions topic.
+    const hlEntities: Highlight[] = (content.sectionHighlights?.[sectionId] ?? []).map((h, i) => ({
+      id: `${sectionId}-hl-${i}`,
+      title: h.title,
+      body: h.body,
+    }));
+    highlights.push(...hlEntities);
+    const hazards = content.sectionHazards?.[sectionId] ?? [];
+    const baseGuide = content.sectionGuide?.[sectionId] ?? [];
+    const cautions: GuideTopic[] = hazards.length
+      ? [
+          {
+            key: 'cautions',
+            facet: 'overview',
+            heading: 'Conditions & cautions',
+            blocks: [
+              {
+                kind: 'hazards',
+                callouts: hazards.map((z) => ({ tone: z.tone as StatusTone, body: z.body })),
+              },
+            ],
+          },
+        ]
+      : [];
+    // Section region map — a simplified slice of the route line (§7).
+    const geom = k.sectionGeojson[r.id];
+    const mapBlocks: ContentBlock[] = geom
+      ? [
+          {
+            kind: 'map',
+            geojson: {
+              type: 'FeatureCollection',
+              features: [{ type: 'Feature', geometry: geom, properties: {} }],
+            } as GeoJSON.FeatureCollection,
+            styleId: 'outdoor',
+            markers: [],
+          },
+        ]
+      : [];
+    const mapTopic: GuideTopic[] = mapBlocks.length
+      ? [{ key: 'map', facet: 'overview', blocks: mapBlocks }]
+      : [];
+    const guide = [...mapTopic, ...baseGuide, ...cautions];
     return {
       id: sectionId,
       objectiveId: config.id,
@@ -174,10 +223,10 @@ export function buildTrailPack(
         { key: 'stages', value: own.length ? `${lo}–${hi}` : '—', label: 'Stages' },
         { key: 'distance', value: km(distM), unit: 'km', label: 'Distance' },
       ],
-      guide: content.sectionGuide?.[sectionId],
+      guide: guide.length ? guide : undefined,
       resupply,
       refuges,
-      highlightIds: [],
+      highlightIds: hlEntities.map((h) => h.id),
       stageIds: own.map((s) => `${config.id}-s${s.number}`),
     };
   });
@@ -294,6 +343,7 @@ export function buildTrailPack(
     regions,
     locations,
     media: Object.values(content.media ?? {}),
+    highlights,
   };
 }
 
@@ -308,10 +358,12 @@ export function assembleSeed(
   const regions = new Map<string, Region>();
   const locations = new Map<string, Location>();
   const media = new Map<string, MediaAsset>();
+  const highlights = new Map<string, Highlight>();
   for (const b of built) {
     for (const r of b.regions) regions.set(r.id, r);
     for (const l of b.locations) locations.set(l.id, l);
     for (const m of b.media) media.set(m.id, m);
+    for (const h of b.highlights) highlights.set(h.id, h);
   }
   return {
     continents,
@@ -320,7 +372,7 @@ export function assembleSeed(
     regions: [...regions.values()],
     locations: [...locations.values()],
     pois: [],
-    highlights: [],
+    highlights: [...highlights.values()],
     media: [...media.values()],
     trails: built.map((b) => b.pack),
     peaks: [],
