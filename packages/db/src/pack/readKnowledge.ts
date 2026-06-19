@@ -54,6 +54,25 @@ interface PointRow {
   lat: number;
   lng: number;
 }
+interface WaterRow {
+  id: number;
+  name: string | null;
+  chainage_m: number;
+  seasonal: boolean;
+  lat: number;
+  lng: number;
+}
+interface AccommRow {
+  id: number;
+  name: string;
+  type: string;
+  chainage_m: number;
+  seasonal: boolean;
+  capacity: number | null;
+  booking_url: string | null;
+  lat: number;
+  lng: number;
+}
 
 export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge> {
   const url = process.env.DATABASE_URL;
@@ -127,6 +146,36 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       orderIndex: r.order_index,
     }));
 
+    // Linearly-referenced POIs (§7) — water + accommodation, by chainage along the route.
+    const waterRows = await c<WaterRow[]>`
+      SELECT id, name, chainage_m, seasonal, ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM water_sources WHERE route_id = ${route.id} ORDER BY chainage_m`;
+    const accommRows = await c<AccommRow[]>`
+      SELECT id, name, type, chainage_m, seasonal, capacity, booking_url,
+             ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM accommodations WHERE route_id = ${route.id} ORDER BY chainage_m`;
+
+    const water = waterRows.map((w) => ({
+      id: `${config.id}-water-${w.id}`,
+      name: w.name ?? 'Water source',
+      type: 'water',
+      chainageM: Number(w.chainage_m),
+      lat: Number(w.lat),
+      lng: Number(w.lng),
+      seasonal: w.seasonal,
+    }));
+    const accommodation = accommRows.map((a) => ({
+      id: `${config.id}-accom-${a.id}`,
+      name: a.name,
+      type: a.type,
+      chainageM: Number(a.chainage_m),
+      lat: Number(a.lat),
+      lng: Number(a.lng),
+      seasonal: a.seasonal,
+      capacity: a.capacity,
+      bookingUrl: a.booking_url,
+    }));
+
     return {
       routeName: route.name,
       lengthM,
@@ -134,6 +183,8 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       regions,
       stages,
       locations,
+      water,
+      accommodation,
     };
   } finally {
     await c.end();

@@ -22,7 +22,17 @@ import type {
 import { trailStageStats } from '@roam/content';
 import type { PackConfig } from './config';
 import { EMPTY_CONTENT, type TrailContent } from './content';
-import type { TrailKnowledge } from './knowledge';
+import type { KnowledgePOI, TrailKnowledge } from './knowledge';
+
+// Accommodation detail line — "Refuge · 96 beds · seasonal".
+const accomNote = (a: KnowledgePOI): string =>
+  [
+    a.type.charAt(0).toUpperCase() + a.type.slice(1),
+    a.capacity ? `${a.capacity} beds` : null,
+    a.seasonal ? 'seasonal' : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
 
 const km = (m: number) => Math.round((m / 1000) * 10) / 10;
 
@@ -85,6 +95,28 @@ export function buildTrailPack(
     const distanceKm = km(s.endChainageM - s.startChainageM);
     const grade = gradeForStage(distanceKm, s.ascentM);
     const elev = elevationBlock(k.elevationProfile, s.startChainageM, s.endChainageM);
+    // Project the linearly-referenced POIs (§7) onto this stage's chainage span.
+    const inStage = (m: number) => m >= s.startChainageM && m <= s.endChainageM;
+    const stageWater = k.water.filter((w) => inStage(w.chainageM));
+    const stageAccom = k.accommodation.filter((a) => inStage(a.chainageM));
+    const waterBlock: ContentBlock | null = stageWater.length
+      ? {
+          kind: 'water',
+          header: 'Water',
+          stops: stageWater.map((w) => ({
+            locationId: w.id,
+            distanceKm: km(w.chainageM - s.startChainageM),
+            note: w.seasonal ? 'seasonal' : undefined,
+          })),
+        }
+      : null;
+    const accomBlock: ContentBlock | null = stageAccom.length
+      ? {
+          kind: 'accommodation',
+          header: 'Accommodation',
+          places: stageAccom.map((a) => ({ locationId: a.id, note: accomNote(a) })),
+        }
+      : null;
     return {
       id: stageId,
       sectionId: `${config.id}-${s.regionId}`,
@@ -100,8 +132,13 @@ export function buildTrailPack(
         hours: estimateHours(distanceKm, s.ascentM),
         grade,
       }),
-      // §12.4 order: the Overview narrative leads, the elevation profile follows.
-      blocks: [...(content.stageBlocks?.[stageId] ?? []), ...(elev ? [elev] : [])],
+      // §12.4 order: Overview narrative → elevation → water → accommodation.
+      blocks: [
+        ...(content.stageBlocks?.[stageId] ?? []),
+        ...(elev ? [elev] : []),
+        ...(waterBlock ? [waterBlock] : []),
+        ...(accomBlock ? [accomBlock] : []),
+      ],
       highlightIds: [],
     };
   });
@@ -226,13 +263,19 @@ export function buildTrailPack(
     sectionIds: sections.map((s) => s.id),
   };
 
-  const locations: Location[] = k.locations.map((l) => ({
+  const toLocation = (l: { id: string; name: string; type: string; lat: number; lng: number }) => ({
     id: l.id,
     slug: l.id,
     name: l.name,
     type: l.type,
     coords: { lat: l.lat, lng: l.lng },
-  }));
+  });
+  // Boundary locations + the POIs the stage blocks reference (importer validates the ids).
+  const locations: Location[] = [
+    ...k.locations.map(toLocation),
+    ...k.water.map(toLocation),
+    ...k.accommodation.map(toLocation),
+  ];
 
   return {
     pack: { objective, sections, stages },

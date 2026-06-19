@@ -33,6 +33,19 @@ export interface KnowledgeLocation {
   lng: number;
 }
 
+/** A linearly-referenced POI (§7) — water source or accommodation, positioned by chainage. */
+export interface KnowledgePOI {
+  id: string;
+  name: string;
+  type: string; // 'water' | refuge|hut|campsite|hotel|hostel
+  chainageM: number;
+  lat: number;
+  lng: number;
+  seasonal?: boolean;
+  capacity?: number | null;
+  bookingUrl?: string | null;
+}
+
 export interface TrailKnowledge {
   routeName: string;
   lengthM: number;
@@ -41,4 +54,7 @@ export interface TrailKnowledge {
   regions: KnowledgeRegion[];
   stages: KnowledgeStage[];
   locations: KnowledgeLocation[];
+  /** Linearly-referenced POIs (§7), positioned by chainage; projected onto stages. */
+  water: KnowledgePOI[];
+  accommodation: KnowledgePOI[];
 }

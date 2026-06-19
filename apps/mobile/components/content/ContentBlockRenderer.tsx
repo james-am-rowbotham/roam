@@ -97,6 +97,7 @@ function WaterBlock({
 }) {
   return (
     <View style={styles.block}>
+      {block.header ? <Text style={styles.heading}>{block.header}</Text> : null}
       {block.stops.map((stop, i) => (
         <View key={`${stop.locationId}-${i}`} style={styles.timelineRow}>
           <View style={styles.timelineDot} />
@@ -120,6 +121,7 @@ function AccommodationBlock({
 }) {
   return (
     <View style={styles.block}>
+      {block.header ? <Text style={styles.heading}>{block.header}</Text> : null}
       {block.places.map((p, i) => (
         <View key={`${p.locationId}-${i}`} style={styles.listRow}>
           <Text style={styles.listTitle}>

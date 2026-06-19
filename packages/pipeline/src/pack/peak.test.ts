@@ -92,6 +92,8 @@ const trailKnowledge: TrailKnowledge = {
     { id: 't-a', name: 'A', type: 'town', lat: 42, lng: 0 },
     { id: 't-b', name: 'B', type: 'town', lat: 42, lng: 0.1 },
   ],
+  water: [],
+  accommodation: [],
 };
 
 describe('peak engine (buildPeakPack)', () => {

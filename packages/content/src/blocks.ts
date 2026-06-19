@@ -29,8 +29,12 @@ export type ContentBlock =
       /** single = a stage/route (silhouette) · multiDay = a section/whole trail (columns). */
       variant?: 'single' | 'multiDay';
     }
-  | { kind: 'water'; stops: { locationId: string; distanceKm: number; note?: string }[] }
-  | { kind: 'accommodation'; places: import('./types').PlaceRef[] }
+  | {
+      kind: 'water';
+      header?: string;
+      stops: { locationId: string; distanceKm: number; note?: string }[];
+    }
+  | { kind: 'accommodation'; header?: string; places: import('./types').PlaceRef[] }
   | { kind: 'navigation'; body: string; marking?: string }
   | { kind: 'hazards'; callouts: { tone: StatusTone; body: string }[] }
   | { kind: 'gallery'; mediaIds: string[] }

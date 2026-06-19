@@ -70,6 +70,8 @@ const knowledge: TrailKnowledge = {
     { id: 'c', name: 'C', type: 'refuge', lat: 42.7, lng: 0.5 },
     { id: 'd', name: 'D', type: 'town', lat: 42.5, lng: 1 },
   ],
+  water: [],
+  accommodation: [],
 };
 
 describe('pack builder (multi-trail engine)', () => {

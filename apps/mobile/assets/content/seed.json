@@ -622,6 +622,1306 @@
       }
     },
     {
+      "id": "gr11-water-399",
+      "slug": "gr11-water-399",
+      "name": "Puntaleko Iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.36286,
+        "lng": -1.7858011
+      }
+    },
+    {
+      "id": "gr11-water-434",
+      "slug": "gr11-water-434",
+      "name": "Amuteko iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.3526779,
+        "lng": -1.8026735
+      }
+    },
+    {
+      "id": "gr11-water-461",
+      "slug": "gr11-water-461",
+      "name": "Water in farm yard",
+      "type": "water",
+      "coords": {
+        "lat": 43.272258,
+        "lng": -1.7401849
+      }
+    },
+    {
+      "id": "gr11-water-386",
+      "slug": "gr11-water-386",
+      "name": "Usoen iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.2545009,
+        "lng": -1.6027912
+      }
+    },
+    {
+      "id": "gr11-water-353",
+      "slug": "gr11-water-353",
+      "name": "Maistruzarraren iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.1846087,
+        "lng": -1.5374926
+      }
+    },
+    {
+      "id": "gr11-water-354",
+      "slug": "gr11-water-354",
+      "name": "Trampa",
+      "type": "water",
+      "coords": {
+        "lat": 43.101351,
+        "lng": -1.4961354
+      }
+    },
+    {
+      "id": "gr11-water-401",
+      "slug": "gr11-water-401",
+      "name": "Arga ibaiaren iturburua",
+      "type": "water",
+      "coords": {
+        "lat": 43.0340134,
+        "lng": -1.4760757
+      }
+    },
+    {
+      "id": "gr11-water-389",
+      "slug": "gr11-water-389",
+      "name": "Fuente Xubri",
+      "type": "water",
+      "coords": {
+        "lat": 42.9264767,
+        "lng": -1.0829105
+      }
+    },
+    {
+      "id": "gr11-water-462",
+      "slug": "gr11-water-462",
+      "name": "Water fountain",
+      "type": "water",
+      "coords": {
+        "lat": 42.9045049,
+        "lng": -1.0903274
+      }
+    },
+    {
+      "id": "gr11-water-410",
+      "slug": "gr11-water-410",
+      "name": "Fuente de San Pedro",
+      "type": "water",
+      "coords": {
+        "lat": 42.85982,
+        "lng": -0.9277566
+      }
+    },
+    {
+      "id": "gr11-water-393",
+      "slug": "gr11-water-393",
+      "name": "Hostal Lola",
+      "type": "water",
+      "coords": {
+        "lat": 42.8614554,
+        "lng": -0.9221515
+      }
+    },
+    {
+      "id": "gr11-water-452",
+      "slug": "gr11-water-452",
+      "name": "Fuente fria",
+      "type": "water",
+      "coords": {
+        "lat": 42.8617063,
+        "lng": -0.7997569
+      }
+    },
+    {
+      "id": "gr11-water-357",
+      "slug": "gr11-water-357",
+      "name": "Fuente de lo Fau",
+      "type": "water",
+      "coords": {
+        "lat": 42.8474885,
+        "lng": -0.6682754
+      }
+    },
+    {
+      "id": "gr11-water-380",
+      "slug": "gr11-water-380",
+      "name": "La Frontaza",
+      "type": "water",
+      "coords": {
+        "lat": 42.8094496,
+        "lng": -0.6184644
+      }
+    },
+    {
+      "id": "gr11-water-355",
+      "slug": "gr11-water-355",
+      "name": "La Fuenfria",
+      "type": "water",
+      "coords": {
+        "lat": 42.7706876,
+        "lng": -0.635567
+      }
+    },
+    {
+      "id": "gr11-water-446",
+      "slug": "gr11-water-446",
+      "name": "Fuente Usla",
+      "type": "water",
+      "coords": {
+        "lat": 42.7886192,
+        "lng": -0.5307849
+      }
+    },
+    {
+      "id": "gr11-water-394",
+      "slug": "gr11-water-394",
+      "name": "Fuente Usla",
+      "type": "water",
+      "coords": {
+        "lat": 42.7885638,
+        "lng": -0.5307049
+      }
+    },
+    {
+      "id": "gr11-water-356",
+      "slug": "gr11-water-356",
+      "name": "Fuente Icona 1980",
+      "type": "water",
+      "coords": {
+        "lat": 42.7734611,
+        "lng": -0.5067763
+      }
+    },
+    {
+      "id": "gr11-water-428",
+      "slug": "gr11-water-428",
+      "name": "Fuente del Cerezo",
+      "type": "water",
+      "coords": {
+        "lat": 42.7818904,
+        "lng": -0.5011711
+      }
+    },
+    {
+      "id": "gr11-water-404",
+      "slug": "gr11-water-404",
+      "name": "Fuente de Culibillas",
+      "type": "water",
+      "coords": {
+        "lat": 42.7799904,
+        "lng": -0.4028011
+      }
+    },
+    {
+      "id": "gr11-water-352",
+      "slug": "gr11-water-352",
+      "name": "Fuente Espadilla",
+      "type": "water",
+      "coords": {
+        "lat": 42.7728528,
+        "lng": -0.3329974
+      }
+    },
+    {
+      "id": "gr11-water-406",
+      "slug": "gr11-water-406",
+      "name": "Fuente de Respomuso",
+      "type": "water",
+      "coords": {
+        "lat": 42.8169748,
+        "lng": -0.287901
+      }
+    },
+    {
+      "id": "gr11-water-358",
+      "slug": "gr11-water-358",
+      "name": "Fuente de la Femalla",
+      "type": "water",
+      "coords": {
+        "lat": 42.7008873,
+        "lng": -0.1202606
+      }
+    },
+    {
+      "id": "gr11-water-445",
+      "slug": "gr11-water-445",
+      "name": "Fuente de la Salud",
+      "type": "water",
+      "coords": {
+        "lat": 42.6938474,
+        "lng": -0.1051291
+      }
+    },
+    {
+      "id": "gr11-water-466",
+      "slug": "gr11-water-466",
+      "name": "Fuente",
+      "type": "water",
+      "coords": {
+        "lat": 42.6599148,
+        "lng": -0.107762
+      }
+    },
+    {
+      "id": "gr11-water-426",
+      "slug": "gr11-water-426",
+      "name": "Fuente de los Zapos",
+      "type": "water",
+      "coords": {
+        "lat": 42.655348,
+        "lng": -0.0750543
+      }
+    },
+    {
+      "id": "gr11-water-425",
+      "slug": "gr11-water-425",
+      "name": "fuente Roja",
+      "type": "water",
+      "coords": {
+        "lat": 42.6496558,
+        "lng": -0.0468528
+      }
+    },
+    {
+      "id": "gr11-water-444",
+      "slug": "gr11-water-444",
+      "name": "Fuente Fria o del Abé",
+      "type": "water",
+      "coords": {
+        "lat": 42.632231,
+        "lng": -0.0080498
+      }
+    },
+    {
+      "id": "gr11-water-424",
+      "slug": "gr11-water-424",
+      "name": "Fuen Mochera",
+      "type": "water",
+      "coords": {
+        "lat": 42.6440807,
+        "lng": 0.0039845
+      }
+    },
+    {
+      "id": "gr11-water-390",
+      "slug": "gr11-water-390",
+      "name": "Fuen Blanca",
+      "type": "water",
+      "coords": {
+        "lat": 42.6474066,
+        "lng": 0.0598169
+      }
+    },
+    {
+      "id": "gr11-water-430",
+      "slug": "gr11-water-430",
+      "name": "Fuente de Petramula",
+      "type": "water",
+      "coords": {
+        "lat": 42.6841575,
+        "lng": 0.133146
+      }
+    },
+    {
+      "id": "gr11-water-464",
+      "slug": "gr11-water-464",
+      "name": "Bain des fées",
+      "type": "water",
+      "coords": {
+        "lat": 42.6750534,
+        "lng": 0.2462965
+      }
+    },
+    {
+      "id": "gr11-water-431",
+      "slug": "gr11-water-431",
+      "name": "Fuen de la Sargueta",
+      "type": "water",
+      "coords": {
+        "lat": 42.6500309,
+        "lng": 0.3527972
+      }
+    },
+    {
+      "id": "gr11-water-420",
+      "slug": "gr11-water-420",
+      "name": "Fuente de la Mora",
+      "type": "water",
+      "coords": {
+        "lat": 42.6562244,
+        "lng": 0.3662873
+      }
+    },
+    {
+      "id": "gr11-water-419",
+      "slug": "gr11-water-419",
+      "name": "Fuente de los Chelfos",
+      "type": "water",
+      "coords": {
+        "lat": 42.6593059,
+        "lng": 0.3665337
+      }
+    },
+    {
+      "id": "gr11-water-418",
+      "slug": "gr11-water-418",
+      "name": "Fuente Rafel",
+      "type": "water",
+      "coords": {
+        "lat": 42.6608646,
+        "lng": 0.3777241
+      }
+    },
+    {
+      "id": "gr11-water-421",
+      "slug": "gr11-water-421",
+      "name": "Fuente Chansón",
+      "type": "water",
+      "coords": {
+        "lat": 42.6613013,
+        "lng": 0.3852769
+      }
+    },
+    {
+      "id": "gr11-water-417",
+      "slug": "gr11-water-417",
+      "name": "Fuente de Posets",
+      "type": "water",
+      "coords": {
+        "lat": 42.6736029,
+        "lng": 0.4762274
+      }
+    },
+    {
+      "id": "gr11-water-415",
+      "slug": "gr11-water-415",
+      "name": "Fuente de Cantal",
+      "type": "water",
+      "coords": {
+        "lat": 42.6750403,
+        "lng": 0.4896997
+      }
+    },
+    {
+      "id": "gr11-water-416",
+      "slug": "gr11-water-416",
+      "name": "Fuente del Tormo",
+      "type": "water",
+      "coords": {
+        "lat": 42.6670984,
+        "lng": 0.5142765
+      }
+    },
+    {
+      "id": "gr11-water-375",
+      "slug": "gr11-water-375",
+      "name": "Fuente de Coronas",
+      "type": "water",
+      "coords": {
+        "lat": 42.6497952,
+        "lng": 0.5292739
+      }
+    },
+    {
+      "id": "gr11-water-422",
+      "slug": "gr11-water-422",
+      "name": "Fuente de la Pubiya",
+      "type": "water",
+      "coords": {
+        "lat": 42.6424332,
+        "lng": 0.5630598
+      }
+    },
+    {
+      "id": "gr11-water-405",
+      "slug": "gr11-water-405",
+      "name": "Fuente de la Esmoladera",
+      "type": "water",
+      "coords": {
+        "lat": 42.6192157,
+        "lng": 0.5998703
+      }
+    },
+    {
+      "id": "gr11-water-436",
+      "slug": "gr11-water-436",
+      "name": "Font",
+      "type": "water",
+      "coords": {
+        "lat": 42.6316899,
+        "lng": 0.9208682
+      }
+    },
+    {
+      "id": "gr11-water-374",
+      "slug": "gr11-water-374",
+      "name": "Font de les Marmotes",
+      "type": "water",
+      "coords": {
+        "lat": 42.5947924,
+        "lng": 0.9829292
+      }
+    },
+    {
+      "id": "gr11-water-359",
+      "slug": "gr11-water-359",
+      "name": "Font de Sant Maurici",
+      "type": "water",
+      "coords": {
+        "lat": 42.5820851,
+        "lng": 1.0097261
+      }
+    },
+    {
+      "id": "gr11-water-384",
+      "slug": "gr11-water-384",
+      "name": "Font de l'Ermita",
+      "type": "water",
+      "coords": {
+        "lat": 42.5814867,
+        "lng": 1.0143654
+      }
+    },
+    {
+      "id": "gr11-water-360",
+      "slug": "gr11-water-360",
+      "name": "Font Borda de Palau",
+      "type": "water",
+      "coords": {
+        "lat": 42.5948219,
+        "lng": 1.2040423
+      }
+    },
+    {
+      "id": "gr11-water-403",
+      "slug": "gr11-water-403",
+      "name": "font",
+      "type": "water",
+      "coords": {
+        "lat": 42.5875402,
+        "lng": 1.2102054
+      }
+    },
+    {
+      "id": "gr11-water-451",
+      "slug": "gr11-water-451",
+      "name": "Font Lleret",
+      "type": "water",
+      "coords": {
+        "lat": 42.6198605,
+        "lng": 1.2360036
+      }
+    },
+    {
+      "id": "gr11-water-450",
+      "slug": "gr11-water-450",
+      "name": "Font",
+      "type": "water",
+      "coords": {
+        "lat": 42.6378601,
+        "lng": 1.2490887
+      }
+    },
+    {
+      "id": "gr11-water-449",
+      "slug": "gr11-water-449",
+      "name": "Font de Llacs de Cardós",
+      "type": "water",
+      "coords": {
+        "lat": 42.6436222,
+        "lng": 1.2567892
+      }
+    },
+    {
+      "id": "gr11-water-432",
+      "slug": "gr11-water-432",
+      "name": "La Font Verda",
+      "type": "water",
+      "coords": {
+        "lat": 42.6478103,
+        "lng": 1.2631031
+      }
+    },
+    {
+      "id": "gr11-water-448",
+      "slug": "gr11-water-448",
+      "name": "Font 1980",
+      "type": "water",
+      "coords": {
+        "lat": 42.6139397,
+        "lng": 1.2715051
+      }
+    },
+    {
+      "id": "gr11-water-361",
+      "slug": "gr11-water-361",
+      "name": "Font del Gavatxó",
+      "type": "water",
+      "coords": {
+        "lat": 42.619259,
+        "lng": 1.3346085
+      }
+    },
+    {
+      "id": "gr11-water-465",
+      "slug": "gr11-water-465",
+      "name": "Font del Ferro",
+      "type": "water",
+      "coords": {
+        "lat": 42.6255106,
+        "lng": 1.3798247
+      }
+    },
+    {
+      "id": "gr11-water-435",
+      "slug": "gr11-water-435",
+      "name": "Font de Mossèn Batlle",
+      "type": "water",
+      "coords": {
+        "lat": 42.6190289,
+        "lng": 1.3883485
+      }
+    },
+    {
+      "id": "gr11-water-395",
+      "slug": "gr11-water-395",
+      "name": "Font de la Coruvilla",
+      "type": "water",
+      "coords": {
+        "lat": 42.5868725,
+        "lng": 1.4676508
+      }
+    },
+    {
+      "id": "gr11-water-407",
+      "slug": "gr11-water-407",
+      "name": "Font del Moixó",
+      "type": "water",
+      "coords": {
+        "lat": 42.5832216,
+        "lng": 1.472262
+      }
+    },
+    {
+      "id": "gr11-water-408",
+      "slug": "gr11-water-408",
+      "name": "Font del riu pollos",
+      "type": "water",
+      "coords": {
+        "lat": 42.5801075,
+        "lng": 1.4760177
+      }
+    },
+    {
+      "id": "gr11-water-398",
+      "slug": "gr11-water-398",
+      "name": "Font d'Arinsal",
+      "type": "water",
+      "coords": {
+        "lat": 42.5731615,
+        "lng": 1.4837432
+      }
+    },
+    {
+      "id": "gr11-water-362",
+      "slug": "gr11-water-362",
+      "name": "Font de la Navina",
+      "type": "water",
+      "coords": {
+        "lat": 42.5557786,
+        "lng": 1.5623002
+      }
+    },
+    {
+      "id": "gr11-water-447",
+      "slug": "gr11-water-447",
+      "name": "Font",
+      "type": "water",
+      "coords": {
+        "lat": 42.5354993,
+        "lng": 1.5818351
+      }
+    },
+    {
+      "id": "gr11-water-382",
+      "slug": "gr11-water-382",
+      "name": "Font de les Ordigues",
+      "type": "water",
+      "coords": {
+        "lat": 42.5157266,
+        "lng": 1.5703738
+      }
+    },
+    {
+      "id": "gr11-water-381",
+      "slug": "gr11-water-381",
+      "name": "Font de l'Ase",
+      "type": "water",
+      "coords": {
+        "lat": 42.4577655,
+        "lng": 1.8439439
+      }
+    },
+    {
+      "id": "gr11-water-433",
+      "slug": "gr11-water-433",
+      "name": "Font de la Canal",
+      "type": "water",
+      "coords": {
+        "lat": 42.4502934,
+        "lng": 1.8777294
+      }
+    },
+    {
+      "id": "gr11-water-363",
+      "slug": "gr11-water-363",
+      "name": "Font de la Plaça",
+      "type": "water",
+      "coords": {
+        "lat": 42.4485825,
+        "lng": 1.8794056
+      }
+    },
+    {
+      "id": "gr11-water-414",
+      "slug": "gr11-water-414",
+      "name": "888",
+      "type": "water",
+      "coords": {
+        "lat": 42.4444782,
+        "lng": 1.9022699
+      }
+    },
+    {
+      "id": "gr11-water-468",
+      "slug": "gr11-water-468",
+      "name": "Font de Cal Tià",
+      "type": "water",
+      "coords": {
+        "lat": 42.3186317,
+        "lng": 2.1042492
+      }
+    },
+    {
+      "id": "gr11-water-364",
+      "slug": "gr11-water-364",
+      "name": "Barraques",
+      "type": "water",
+      "coords": {
+        "lat": 42.3370359,
+        "lng": 2.111836
+      }
+    },
+    {
+      "id": "gr11-water-453",
+      "slug": "gr11-water-453",
+      "name": "Font Margarita",
+      "type": "water",
+      "coords": {
+        "lat": 42.3470891,
+        "lng": 2.1165677
+      }
+    },
+    {
+      "id": "gr11-water-409",
+      "slug": "gr11-water-409",
+      "name": "Font de l'Home Mort",
+      "type": "water",
+      "coords": {
+        "lat": 42.3557205,
+        "lng": 2.1169442
+      }
+    },
+    {
+      "id": "gr11-water-365",
+      "slug": "gr11-water-365",
+      "name": "Font dels Plaus",
+      "type": "water",
+      "coords": {
+        "lat": 42.3459214,
+        "lng": 2.139757
+      }
+    },
+    {
+      "id": "gr11-water-423",
+      "slug": "gr11-water-423",
+      "name": "Font del Coronel",
+      "type": "water",
+      "coords": {
+        "lat": 42.3486389,
+        "lng": 2.1490932
+      }
+    },
+    {
+      "id": "gr11-water-402",
+      "slug": "gr11-water-402",
+      "name": "Font del Coronel",
+      "type": "water",
+      "coords": {
+        "lat": 42.3466007,
+        "lng": 2.1494136
+      }
+    },
+    {
+      "id": "gr11-water-442",
+      "slug": "gr11-water-442",
+      "name": "Font Plaça de l'Església",
+      "type": "water",
+      "coords": {
+        "lat": 42.3484364,
+        "lng": 2.1614929
+      }
+    },
+    {
+      "id": "gr11-water-400",
+      "slug": "gr11-water-400",
+      "name": "Font del Raig",
+      "type": "water",
+      "coords": {
+        "lat": 42.3499292,
+        "lng": 2.1630583
+      }
+    },
+    {
+      "id": "gr11-water-366",
+      "slug": "gr11-water-366",
+      "name": "Font de la Ruïra",
+      "type": "water",
+      "coords": {
+        "lat": 42.3576571,
+        "lng": 2.1640441
+      }
+    },
+    {
+      "id": "gr11-water-458",
+      "slug": "gr11-water-458",
+      "name": "Font de l'Oratori",
+      "type": "water",
+      "coords": {
+        "lat": 42.364174,
+        "lng": 2.1673784
+      }
+    },
+    {
+      "id": "gr11-water-387",
+      "slug": "gr11-water-387",
+      "name": "Font Dr. Bassols",
+      "type": "water",
+      "coords": {
+        "lat": 42.3953893,
+        "lng": 2.152337
+      }
+    },
+    {
+      "id": "gr11-water-392",
+      "slug": "gr11-water-392",
+      "name": "Font del doctor Tarrés",
+      "type": "water",
+      "coords": {
+        "lat": 42.3960073,
+        "lng": 2.1522345
+      }
+    },
+    {
+      "id": "gr11-water-438",
+      "slug": "gr11-water-438",
+      "name": "Font de l'esquirol",
+      "type": "water",
+      "coords": {
+        "lat": 42.3961521,
+        "lng": 2.1547861
+      }
+    },
+    {
+      "id": "gr11-water-376",
+      "slug": "gr11-water-376",
+      "name": "Fonts del Freser",
+      "type": "water",
+      "coords": {
+        "lat": 42.4200542,
+        "lng": 2.2249834
+      }
+    },
+    {
+      "id": "gr11-water-441",
+      "slug": "gr11-water-441",
+      "name": "Refugi d'Ulldeter aigua potable",
+      "type": "water",
+      "coords": {
+        "lat": 42.4196895,
+        "lng": 2.2576172
+      }
+    },
+    {
+      "id": "gr11-water-457",
+      "slug": "gr11-water-457",
+      "name": "Font del Saüc",
+      "type": "water",
+      "coords": {
+        "lat": 42.4135513,
+        "lng": 2.275647
+      }
+    },
+    {
+      "id": "gr11-water-459",
+      "slug": "gr11-water-459",
+      "name": "Font del Viver de la Plana",
+      "type": "water",
+      "coords": {
+        "lat": 42.3945204,
+        "lng": 2.2896203
+      }
+    },
+    {
+      "id": "gr11-water-467",
+      "slug": "gr11-water-467",
+      "name": "Font d'en Pere Cabrer",
+      "type": "water",
+      "coords": {
+        "lat": 42.3937853,
+        "lng": 2.2924383
+      }
+    },
+    {
+      "id": "gr11-water-440",
+      "slug": "gr11-water-440",
+      "name": "Font",
+      "type": "water",
+      "coords": {
+        "lat": 42.3747055,
+        "lng": 2.3008804
+      }
+    },
+    {
+      "id": "gr11-water-439",
+      "slug": "gr11-water-439",
+      "name": "Font de la Plaça Major",
+      "type": "water",
+      "coords": {
+        "lat": 42.375328,
+        "lng": 2.3011871
+      }
+    },
+    {
+      "id": "gr11-water-383",
+      "slug": "gr11-water-383",
+      "name": "Font del Vivé",
+      "type": "water",
+      "coords": {
+        "lat": 42.372889,
+        "lng": 2.2994679
+      }
+    },
+    {
+      "id": "gr11-water-460",
+      "slug": "gr11-water-460",
+      "name": "Font Del Boixat",
+      "type": "water",
+      "coords": {
+        "lat": 42.3764367,
+        "lng": 2.3050566
+      }
+    },
+    {
+      "id": "gr11-water-385",
+      "slug": "gr11-water-385",
+      "name": "Font Vella",
+      "type": "water",
+      "coords": {
+        "lat": 42.3490275,
+        "lng": 2.4029733
+      }
+    },
+    {
+      "id": "gr11-water-367",
+      "slug": "gr11-water-367",
+      "name": "Font de Sant Aniol",
+      "type": "water",
+      "coords": {
+        "lat": 42.3169056,
+        "lng": 2.5872311
+      }
+    },
+    {
+      "id": "gr11-water-429",
+      "slug": "gr11-water-429",
+      "name": "Font de Can Sala",
+      "type": "water",
+      "coords": {
+        "lat": 42.3104768,
+        "lng": 2.6423391
+      }
+    },
+    {
+      "id": "gr11-water-443",
+      "slug": "gr11-water-443",
+      "name": "Font de can Nou",
+      "type": "water",
+      "coords": {
+        "lat": 42.310791,
+        "lng": 2.6540469
+      }
+    },
+    {
+      "id": "gr11-water-391",
+      "slug": "gr11-water-391",
+      "name": "La Font Fresca",
+      "type": "water",
+      "coords": {
+        "lat": 42.3075329,
+        "lng": 2.7010857
+      }
+    },
+    {
+      "id": "gr11-water-454",
+      "slug": "gr11-water-454",
+      "name": "Sulfur Spring",
+      "type": "water",
+      "coords": {
+        "lat": 42.3072128,
+        "lng": 2.7060473
+      }
+    },
+    {
+      "id": "gr11-water-437",
+      "slug": "gr11-water-437",
+      "name": "Font",
+      "type": "water",
+      "coords": {
+        "lat": 42.3055007,
+        "lng": 2.7200842
+      }
+    },
+    {
+      "id": "gr11-water-369",
+      "slug": "gr11-water-369",
+      "name": "Font L'Olla",
+      "type": "water",
+      "coords": {
+        "lat": 42.3042852,
+        "lng": 2.7197
+      }
+    },
+    {
+      "id": "gr11-water-379",
+      "slug": "gr11-water-379",
+      "name": "Font Rimalo",
+      "type": "water",
+      "coords": {
+        "lat": 42.3517168,
+        "lng": 2.7391443
+      }
+    },
+    {
+      "id": "gr11-water-368",
+      "slug": "gr11-water-368",
+      "name": "Font del Carme",
+      "type": "water",
+      "coords": {
+        "lat": 42.3920806,
+        "lng": 2.7644587
+      }
+    },
+    {
+      "id": "gr11-water-412",
+      "slug": "gr11-water-412",
+      "name": "La Font del bruc",
+      "type": "water",
+      "coords": {
+        "lat": 42.3898551,
+        "lng": 2.7777308
+      }
+    },
+    {
+      "id": "gr11-water-370",
+      "slug": "gr11-water-370",
+      "name": "Font de Sant Silvestre",
+      "type": "water",
+      "coords": {
+        "lat": 42.4022632,
+        "lng": 2.7970271
+      }
+    },
+    {
+      "id": "gr11-water-413",
+      "slug": "gr11-water-413",
+      "name": "Font de l'amor",
+      "type": "water",
+      "coords": {
+        "lat": 42.4038462,
+        "lng": 2.8007355
+      }
+    },
+    {
+      "id": "gr11-water-455",
+      "slug": "gr11-water-455",
+      "name": "Font de L'Ou",
+      "type": "water",
+      "coords": {
+        "lat": 42.4188602,
+        "lng": 2.874185
+      }
+    },
+    {
+      "id": "gr11-water-378",
+      "slug": "gr11-water-378",
+      "name": "Font del Ferret",
+      "type": "water",
+      "coords": {
+        "lat": 42.4409727,
+        "lng": 2.9263458
+      }
+    },
+    {
+      "id": "gr11-water-397",
+      "slug": "gr11-water-397",
+      "name": "Font Rovellada II",
+      "type": "water",
+      "coords": {
+        "lat": 42.4481144,
+        "lng": 2.9414001
+      }
+    },
+    {
+      "id": "gr11-water-396",
+      "slug": "gr11-water-396",
+      "name": "Font Rovellada",
+      "type": "water",
+      "coords": {
+        "lat": 42.4536694,
+        "lng": 2.9391849
+      }
+    },
+    {
+      "id": "gr11-water-377",
+      "slug": "gr11-water-377",
+      "name": "Font de la Verna",
+      "type": "water",
+      "coords": {
+        "lat": 42.4237771,
+        "lng": 2.9852121
+      }
+    },
+    {
+      "id": "gr11-water-371",
+      "slug": "gr11-water-371",
+      "name": "Font de Cadecas",
+      "type": "water",
+      "coords": {
+        "lat": 42.4094906,
+        "lng": 3.0068654
+      }
+    },
+    {
+      "id": "gr11-water-372",
+      "slug": "gr11-water-372",
+      "name": "Font del Monestir Sant Quirze de Colera",
+      "type": "water",
+      "coords": {
+        "lat": 42.4158552,
+        "lng": 3.0607748
+      }
+    },
+    {
+      "id": "gr11-water-388",
+      "slug": "gr11-water-388",
+      "name": "Font de l'Ou",
+      "type": "water",
+      "coords": {
+        "lat": 42.375493,
+        "lng": 3.0662398
+      }
+    },
+    {
+      "id": "gr11-water-411",
+      "slug": "gr11-water-411",
+      "name": "Font del Suro",
+      "type": "water",
+      "coords": {
+        "lat": 42.3778035,
+        "lng": 3.0696161
+      }
+    },
+    {
+      "id": "gr11-water-373",
+      "slug": "gr11-water-373",
+      "name": "Font del Xai",
+      "type": "water",
+      "coords": {
+        "lat": 42.3684337,
+        "lng": 3.0962641
+      }
+    },
+    {
+      "id": "gr11-water-463",
+      "slug": "gr11-water-463",
+      "name": "Font dels monjos",
+      "type": "water",
+      "coords": {
+        "lat": 42.3235302,
+        "lng": 3.1656905
+      }
+    },
+    {
+      "id": "gr11-water-427",
+      "slug": "gr11-water-427",
+      "name": "Font Mollor",
+      "type": "water",
+      "coords": {
+        "lat": 42.323151,
+        "lng": 3.1857522
+      }
+    },
+    {
+      "id": "gr11-water-456",
+      "slug": "gr11-water-456",
+      "name": "Font de la Pitja",
+      "type": "water",
+      "coords": {
+        "lat": 42.324162,
+        "lng": 3.1868651
+      }
+    },
+    {
+      "id": "gr11-accom-51",
+      "slug": "gr11-accom-51",
+      "name": "bivouac area",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8295456,
+        "lng": -0.3218742
+      }
+    },
+    {
+      "id": "gr11-accom-52",
+      "slug": "gr11-accom-52",
+      "name": "bivouac area",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.82994,
+        "lng": -0.3198676
+      }
+    },
+    {
+      "id": "gr11-accom-53",
+      "slug": "gr11-accom-53",
+      "name": "bivouac areas",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8377428,
+        "lng": -0.3149001
+      }
+    },
+    {
+      "id": "gr11-accom-43",
+      "slug": "gr11-accom-43",
+      "name": "Cabaña de Cerbillonar",
+      "type": "hut",
+      "coords": {
+        "lat": 42.748606,
+        "lng": -0.1526307
+      }
+    },
+    {
+      "id": "gr11-accom-49",
+      "slug": "gr11-accom-49",
+      "name": "Campamento de Virgen Blanca",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.6598651,
+        "lng": 0.3676049
+      }
+    },
+    {
+      "id": "gr11-accom-42",
+      "slug": "gr11-accom-42",
+      "name": "Area de acampada la Senarta",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.6417156,
+        "lng": 0.5661937
+      }
+    },
+    {
+      "id": "gr11-accom-46",
+      "slug": "gr11-accom-46",
+      "name": "Refugi del Pla de la Font",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.5975622,
+        "lng": 1.0727342
+      }
+    },
+    {
+      "id": "gr11-accom-48",
+      "slug": "gr11-accom-48",
+      "name": "Refugi d'Estaon",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.5880155,
+        "lng": 1.2104805
+      }
+    },
+    {
+      "id": "gr11-accom-47",
+      "slug": "gr11-accom-47",
+      "name": "Camping Borda D'Ansalonga",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.565011,
+        "lng": 1.5253413
+      }
+    },
+    {
+      "id": "gr11-accom-50",
+      "slug": "gr11-accom-50",
+      "name": "Les planes de Sornas",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.5704509,
+        "lng": 1.5282556
+      }
+    },
+    {
+      "id": "gr11-accom-44",
+      "slug": "gr11-accom-44",
+      "name": "Refugi forestal de les Cases",
+      "type": "hut",
+      "coords": {
+        "lat": 42.4702091,
+        "lng": 1.8430529
+      }
+    },
+    {
+      "id": "gr11-accom-45",
+      "slug": "gr11-accom-45",
+      "name": "Refugi del Forn de Calç",
+      "type": "hut",
+      "coords": {
+        "lat": 42.4497688,
+        "lng": 2.9471546
+      }
+    },
+    {
+      "id": "gr11-accom-54",
+      "slug": "gr11-accom-54",
+      "name": "Bivouac possible",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4687396,
+        "lng": 2.9689093
+      }
+    },
+    {
       "id": "gr10-loc-0",
       "slug": "gr10-loc-0",
       "name": "Hendaye-Plage",
@@ -1179,6 +2479,1746 @@
       "coords": {
         "lat": 42.4820188,
         "lng": 3.1291223
+      }
+    },
+    {
+      "id": "gr10-water-514",
+      "slug": "gr10-water-514",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 43.3069851,
+        "lng": -1.5948022
+      }
+    },
+    {
+      "id": "gr10-water-515",
+      "slug": "gr10-water-515",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 43.3102938,
+        "lng": -1.5915127
+      }
+    },
+    {
+      "id": "gr10-water-485",
+      "slug": "gr10-water-485",
+      "name": "Arantzeko Iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.3043533,
+        "lng": -1.4835359
+      }
+    },
+    {
+      "id": "gr10-water-516",
+      "slug": "gr10-water-516",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 43.3095276,
+        "lng": -1.4744116
+      }
+    },
+    {
+      "id": "gr10-water-513",
+      "slug": "gr10-water-513",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 43.3083505,
+        "lng": -1.4717386
+      }
+    },
+    {
+      "id": "gr10-water-495",
+      "slug": "gr10-water-495",
+      "name": "Arrietako surtsa",
+      "type": "water",
+      "coords": {
+        "lat": 43.2085032,
+        "lng": -1.3868294
+      }
+    },
+    {
+      "id": "gr10-water-487",
+      "slug": "gr10-water-487",
+      "name": "Irubeko Ithurria",
+      "type": "water",
+      "coords": {
+        "lat": 43.1863341,
+        "lng": -1.3515876
+      }
+    },
+    {
+      "id": "gr10-water-526",
+      "slug": "gr10-water-526",
+      "name": "A.C.C.A. de Baigorri",
+      "type": "water",
+      "coords": {
+        "lat": 43.1638061,
+        "lng": -1.3366544
+      }
+    },
+    {
+      "id": "gr10-water-482",
+      "slug": "gr10-water-482",
+      "name": "Urdantzeko Ithurria",
+      "type": "water",
+      "coords": {
+        "lat": 43.1317596,
+        "lng": -1.3227085
+      }
+    },
+    {
+      "id": "gr10-water-483",
+      "slug": "gr10-water-483",
+      "name": "Ruisseau de l'Abreuvoir",
+      "type": "water",
+      "coords": {
+        "lat": 43.1411885,
+        "lng": -1.3007926
+      }
+    },
+    {
+      "id": "gr10-water-484",
+      "slug": "gr10-water-484",
+      "name": "Abreuvoir",
+      "type": "water",
+      "coords": {
+        "lat": 43.1413537,
+        "lng": -1.291825
+      }
+    },
+    {
+      "id": "gr10-water-486",
+      "slug": "gr10-water-486",
+      "name": "Iturburua",
+      "type": "water",
+      "coords": {
+        "lat": 43.1005087,
+        "lng": -1.1717047
+      }
+    },
+    {
+      "id": "gr10-water-564",
+      "slug": "gr10-water-564",
+      "name": "Iturranburuko borda robinet eau potable.",
+      "type": "water",
+      "coords": {
+        "lat": 43.0782634,
+        "lng": -1.1559007
+      }
+    },
+    {
+      "id": "gr10-water-565",
+      "slug": "gr10-water-565",
+      "name": "Robinet derrière maison",
+      "type": "water",
+      "coords": {
+        "lat": 43.0558386,
+        "lng": -1.1359672
+      }
+    },
+    {
+      "id": "gr10-water-527",
+      "slug": "gr10-water-527",
+      "name": "Robinet",
+      "type": "water",
+      "coords": {
+        "lat": 43.0535097,
+        "lng": -1.1251593
+      }
+    },
+    {
+      "id": "gr10-water-561",
+      "slug": "gr10-water-561",
+      "name": "Robinet, eau de source",
+      "type": "water",
+      "coords": {
+        "lat": 43.052892,
+        "lng": -1.1249015
+      }
+    },
+    {
+      "id": "gr10-water-494",
+      "slug": "gr10-water-494",
+      "name": "Fontaine Puchulusaro / Puxulusaroko iturria",
+      "type": "water",
+      "coords": {
+        "lat": 43.0459791,
+        "lng": -1.1079013
+      }
+    },
+    {
+      "id": "gr10-water-488",
+      "slug": "gr10-water-488",
+      "name": "Okhabeko Ithurria",
+      "type": "water",
+      "coords": {
+        "lat": 43.0400541,
+        "lng": -1.1127752
+      }
+    },
+    {
+      "id": "gr10-water-554",
+      "slug": "gr10-water-554",
+      "name": "eau potable,robinet sois l'abreuvoir",
+      "type": "water",
+      "coords": {
+        "lat": 43.0450222,
+        "lng": -0.9696657
+      }
+    },
+    {
+      "id": "gr10-water-512",
+      "slug": "gr10-water-512",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.9758749,
+        "lng": -0.8716828
+      }
+    },
+    {
+      "id": "gr10-water-509",
+      "slug": "gr10-water-509",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.9979847,
+        "lng": -0.8492655
+      }
+    },
+    {
+      "id": "gr10-water-479",
+      "slug": "gr10-water-479",
+      "name": "Source Harrigorenia",
+      "type": "water",
+      "coords": {
+        "lat": 42.9893658,
+        "lng": -0.7957297
+      }
+    },
+    {
+      "id": "gr10-water-478",
+      "slug": "gr10-water-478",
+      "name": "Fontaine d'Escuret de Bas",
+      "type": "water",
+      "coords": {
+        "lat": 42.9852938,
+        "lng": -0.7833918
+      }
+    },
+    {
+      "id": "gr10-water-477",
+      "slug": "gr10-water-477",
+      "name": "Abreuvoir d'Escuret de Haut",
+      "type": "water",
+      "coords": {
+        "lat": 42.9806514,
+        "lng": -0.7852776
+      }
+    },
+    {
+      "id": "gr10-water-480",
+      "slug": "gr10-water-480",
+      "name": "Abreuvoir de Féas",
+      "type": "water",
+      "coords": {
+        "lat": 42.9802332,
+        "lng": -0.780384
+      }
+    },
+    {
+      "id": "gr10-water-473",
+      "slug": "gr10-water-473",
+      "name": "Abreuvoir du Coup",
+      "type": "water",
+      "coords": {
+        "lat": 42.9778946,
+        "lng": -0.7823621
+      }
+    },
+    {
+      "id": "gr10-water-481",
+      "slug": "gr10-water-481",
+      "name": "Abreuvoir du Col de Lèche",
+      "type": "water",
+      "coords": {
+        "lat": 42.969725,
+        "lng": -0.7750798
+      }
+    },
+    {
+      "id": "gr10-water-475",
+      "slug": "gr10-water-475",
+      "name": "Source Temporaire",
+      "type": "water",
+      "coords": {
+        "lat": 42.975954,
+        "lng": -0.7508151
+      }
+    },
+    {
+      "id": "gr10-water-503",
+      "slug": "gr10-water-503",
+      "name": "Fontaine de Camplong",
+      "type": "water",
+      "coords": {
+        "lat": 42.9751568,
+        "lng": -0.7106754
+      }
+    },
+    {
+      "id": "gr10-water-550",
+      "slug": "gr10-water-550",
+      "name": "Source d'Ardinet",
+      "type": "water",
+      "coords": {
+        "lat": 42.9595499,
+        "lng": -0.6949878
+      }
+    },
+    {
+      "id": "gr10-water-549",
+      "slug": "gr10-water-549",
+      "name": "Source d'Ardinet",
+      "type": "water",
+      "coords": {
+        "lat": 42.9595374,
+        "lng": -0.694947
+      }
+    },
+    {
+      "id": "gr10-water-506",
+      "slug": "gr10-water-506",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.9420558,
+        "lng": -0.656894
+      }
+    },
+    {
+      "id": "gr10-water-522",
+      "slug": "gr10-water-522",
+      "name": "Fontaine",
+      "type": "water",
+      "coords": {
+        "lat": 42.9341143,
+        "lng": -0.6349705
+      }
+    },
+    {
+      "id": "gr10-water-510",
+      "slug": "gr10-water-510",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.9341199,
+        "lng": -0.6349742
+      }
+    },
+    {
+      "id": "gr10-water-476",
+      "slug": "gr10-water-476",
+      "name": "Fontaine Intermittente",
+      "type": "water",
+      "coords": {
+        "lat": 42.9112692,
+        "lng": -0.6100919
+      }
+    },
+    {
+      "id": "gr10-water-557",
+      "slug": "gr10-water-557",
+      "name": "Fontaine",
+      "type": "water",
+      "coords": {
+        "lat": 42.9072541,
+        "lng": -0.5721188
+      }
+    },
+    {
+      "id": "gr10-water-508",
+      "slug": "gr10-water-508",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.9107998,
+        "lng": -0.5702198
+      }
+    },
+    {
+      "id": "gr10-water-502",
+      "slug": "gr10-water-502",
+      "name": "Fontaine d'Arras",
+      "type": "water",
+      "coords": {
+        "lat": 42.8912334,
+        "lng": -0.5476226
+      }
+    },
+    {
+      "id": "gr10-water-472",
+      "slug": "gr10-water-472",
+      "name": "Fontaine de Passette",
+      "type": "water",
+      "coords": {
+        "lat": 42.8910002,
+        "lng": -0.5397057
+      }
+    },
+    {
+      "id": "gr10-water-507",
+      "slug": "gr10-water-507",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.8919634,
+        "lng": -0.5257538
+      }
+    },
+    {
+      "id": "gr10-water-546",
+      "slug": "gr10-water-546",
+      "name": "Hounrède",
+      "type": "water",
+      "coords": {
+        "lat": 42.8583424,
+        "lng": -0.4545451
+      }
+    },
+    {
+      "id": "gr10-water-535",
+      "slug": "gr10-water-535",
+      "name": "Thermes de Cauterets",
+      "type": "water",
+      "coords": {
+        "lat": 42.8884239,
+        "lng": -0.1124213
+      }
+    },
+    {
+      "id": "gr10-water-534",
+      "slug": "gr10-water-534",
+      "name": "Thermes de Pauze, panorama du village",
+      "type": "water",
+      "coords": {
+        "lat": 42.8877981,
+        "lng": -0.1106547
+      }
+    },
+    {
+      "id": "gr10-water-552",
+      "slug": "gr10-water-552",
+      "name": "Point d'eau",
+      "type": "water",
+      "coords": {
+        "lat": 42.8732384,
+        "lng": 0.0058714
+      }
+    },
+    {
+      "id": "gr10-water-553",
+      "slug": "gr10-water-553",
+      "name": "Point d'eau",
+      "type": "water",
+      "coords": {
+        "lat": 42.8743433,
+        "lng": 0.0065092
+      }
+    },
+    {
+      "id": "gr10-water-520",
+      "slug": "gr10-water-520",
+      "name": "Source du lac de Coueyla-Gran",
+      "type": "water",
+      "coords": {
+        "lat": 42.8746892,
+        "lng": 0.153176
+      }
+    },
+    {
+      "id": "gr10-water-492",
+      "slug": "gr10-water-492",
+      "name": "Fontaine de l'Ermite",
+      "type": "water",
+      "coords": {
+        "lat": 42.8322888,
+        "lng": 0.1734518
+      }
+    },
+    {
+      "id": "gr10-water-504",
+      "slug": "gr10-water-504",
+      "name": "Hount du Cap D'Estoudou",
+      "type": "water",
+      "coords": {
+        "lat": 42.8273977,
+        "lng": 0.1816544
+      }
+    },
+    {
+      "id": "gr10-water-560",
+      "slug": "gr10-water-560",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.8367853,
+        "lng": 0.3108596
+      }
+    },
+    {
+      "id": "gr10-water-538",
+      "slug": "gr10-water-538",
+      "name": "Drinking water fountain",
+      "type": "water",
+      "coords": {
+        "lat": 42.8297005,
+        "lng": 0.3269159
+      }
+    },
+    {
+      "id": "gr10-water-548",
+      "slug": "gr10-water-548",
+      "name": "Fontaine",
+      "type": "water",
+      "coords": {
+        "lat": 42.815586,
+        "lng": 0.3459745
+      }
+    },
+    {
+      "id": "gr10-water-566",
+      "slug": "gr10-water-566",
+      "name": "Source de la \"palo det mailh\"",
+      "type": "water",
+      "coords": {
+        "lat": 42.7883405,
+        "lng": 0.5877163
+      }
+    },
+    {
+      "id": "gr10-water-529",
+      "slug": "gr10-water-529",
+      "name": "Fontaine de Saunères",
+      "type": "water",
+      "coords": {
+        "lat": 42.825762,
+        "lng": 0.6376429
+      }
+    },
+    {
+      "id": "gr10-water-556",
+      "slug": "gr10-water-556",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.8632339,
+        "lng": 0.8102218
+      }
+    },
+    {
+      "id": "gr10-water-530",
+      "slug": "gr10-water-530",
+      "name": "Fontaine des Bésurdes",
+      "type": "water",
+      "coords": {
+        "lat": 42.8585371,
+        "lng": 0.8308102
+      }
+    },
+    {
+      "id": "gr10-water-523",
+      "slug": "gr10-water-523",
+      "name": "Fontaine d'Aouen",
+      "type": "water",
+      "coords": {
+        "lat": 42.8309156,
+        "lng": 1.0556965
+      }
+    },
+    {
+      "id": "gr10-water-524",
+      "slug": "gr10-water-524",
+      "name": "Fontaine de la Tauère",
+      "type": "water",
+      "coords": {
+        "lat": 42.8364542,
+        "lng": 1.0525725
+      }
+    },
+    {
+      "id": "gr10-water-533",
+      "slug": "gr10-water-533",
+      "name": "Source d'Estours",
+      "type": "water",
+      "coords": {
+        "lat": 42.8302578,
+        "lng": 1.1641109
+      }
+    },
+    {
+      "id": "gr10-water-547",
+      "slug": "gr10-water-547",
+      "name": "Source Cabane d'Arreau",
+      "type": "water",
+      "coords": {
+        "lat": 42.7808857,
+        "lng": 1.1322758
+      }
+    },
+    {
+      "id": "gr10-water-511",
+      "slug": "gr10-water-511",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.7957846,
+        "lng": 1.228479
+      }
+    },
+    {
+      "id": "gr10-water-528",
+      "slug": "gr10-water-528",
+      "name": "Fontaine",
+      "type": "water",
+      "coords": {
+        "lat": 42.8032896,
+        "lng": 1.2593251
+      }
+    },
+    {
+      "id": "gr10-water-555",
+      "slug": "gr10-water-555",
+      "name": "Fontaine de Saboyé",
+      "type": "water",
+      "coords": {
+        "lat": 42.7925473,
+        "lng": 1.2698681
+      }
+    },
+    {
+      "id": "gr10-water-537",
+      "slug": "gr10-water-537",
+      "name": "source potable",
+      "type": "water",
+      "coords": {
+        "lat": 42.7585342,
+        "lng": 1.3305938
+      }
+    },
+    {
+      "id": "gr10-water-539",
+      "slug": "gr10-water-539",
+      "name": "Fontaine de Crabé",
+      "type": "water",
+      "coords": {
+        "lat": 42.7671071,
+        "lng": 1.3322617
+      }
+    },
+    {
+      "id": "gr10-water-540",
+      "slug": "gr10-water-540",
+      "name": "Fontaine de Carboue",
+      "type": "water",
+      "coords": {
+        "lat": 42.785308,
+        "lng": 1.3430478
+      }
+    },
+    {
+      "id": "gr10-water-563",
+      "slug": "gr10-water-563",
+      "name": "Font Vieille",
+      "type": "water",
+      "coords": {
+        "lat": 42.767059,
+        "lng": 1.5750113
+      }
+    },
+    {
+      "id": "gr10-water-562",
+      "slug": "gr10-water-562",
+      "name": "Font des Turs",
+      "type": "water",
+      "coords": {
+        "lat": 42.7625184,
+        "lng": 1.5837245
+      }
+    },
+    {
+      "id": "gr10-water-551",
+      "slug": "gr10-water-551",
+      "name": "Source d'eau",
+      "type": "water",
+      "coords": {
+        "lat": 42.6348439,
+        "lng": 1.7265845
+      }
+    },
+    {
+      "id": "gr10-water-501",
+      "slug": "gr10-water-501",
+      "name": "Source sulfureuse",
+      "type": "water",
+      "coords": {
+        "lat": 42.649087,
+        "lng": 1.8520891
+      }
+    },
+    {
+      "id": "gr10-water-489",
+      "slug": "gr10-water-489",
+      "name": "Source Ferrugineuse",
+      "type": "water",
+      "coords": {
+        "lat": 42.5021736,
+        "lng": 2.1247498
+      }
+    },
+    {
+      "id": "gr10-water-491",
+      "slug": "gr10-water-491",
+      "name": "Refuge de l'Orri",
+      "type": "water",
+      "coords": {
+        "lat": 42.4605697,
+        "lng": 2.175724
+      }
+    },
+    {
+      "id": "gr10-water-469",
+      "slug": "gr10-water-469",
+      "name": "Fontaine du Coll Mitja",
+      "type": "water",
+      "coords": {
+        "lat": 42.4753802,
+        "lng": 2.2030305
+      }
+    },
+    {
+      "id": "gr10-water-490",
+      "slug": "gr10-water-490",
+      "name": "fount de la perdiu",
+      "type": "water",
+      "coords": {
+        "lat": 42.4721798,
+        "lng": 2.2078348
+      }
+    },
+    {
+      "id": "gr10-water-474",
+      "slug": "gr10-water-474",
+      "name": "Font Freda",
+      "type": "water",
+      "coords": {
+        "lat": 42.5085487,
+        "lng": 2.3910133
+      }
+    },
+    {
+      "id": "gr10-water-536",
+      "slug": "gr10-water-536",
+      "name": "Font d'en Martí",
+      "type": "water",
+      "coords": {
+        "lat": 42.4994202,
+        "lng": 2.4336522
+      }
+    },
+    {
+      "id": "gr10-water-531",
+      "slug": "gr10-water-531",
+      "name": "Fontaine de Bonne-Aigues",
+      "type": "water",
+      "coords": {
+        "lat": 42.5368648,
+        "lng": 2.4332236
+      }
+    },
+    {
+      "id": "gr10-water-525",
+      "slug": "gr10-water-525",
+      "name": "Font de la Perdiu",
+      "type": "water",
+      "coords": {
+        "lat": 42.5337108,
+        "lng": 2.4543207
+      }
+    },
+    {
+      "id": "gr10-water-496",
+      "slug": "gr10-water-496",
+      "name": "Pinatell",
+      "type": "water",
+      "coords": {
+        "lat": 42.5188974,
+        "lng": 2.5092099
+      }
+    },
+    {
+      "id": "gr10-water-541",
+      "slug": "gr10-water-541",
+      "name": "Font de l’Avet",
+      "type": "water",
+      "coords": {
+        "lat": 42.4226541,
+        "lng": 2.711955
+      }
+    },
+    {
+      "id": "gr10-water-558",
+      "slug": "gr10-water-558",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.435551,
+        "lng": 2.8059593
+      }
+    },
+    {
+      "id": "gr10-water-500",
+      "slug": "gr10-water-500",
+      "name": "Fontaine des Miquelets",
+      "type": "water",
+      "coords": {
+        "lat": 42.4582818,
+        "lng": 2.8492854
+      }
+    },
+    {
+      "id": "gr10-water-497",
+      "slug": "gr10-water-497",
+      "name": "Source de Panissars",
+      "type": "water",
+      "coords": {
+        "lat": 42.4560308,
+        "lng": 2.8537616
+      }
+    },
+    {
+      "id": "gr10-water-499",
+      "slug": "gr10-water-499",
+      "name": "Fontaine du Colomer",
+      "type": "water",
+      "coords": {
+        "lat": 42.459194,
+        "lng": 2.8557184
+      }
+    },
+    {
+      "id": "gr10-water-498",
+      "slug": "gr10-water-498",
+      "name": "Fontaine de Pedres Blanques",
+      "type": "water",
+      "coords": {
+        "lat": 42.460221,
+        "lng": 2.8558691
+      }
+    },
+    {
+      "id": "gr10-water-559",
+      "slug": "gr10-water-559",
+      "name": "Source",
+      "type": "water",
+      "coords": {
+        "lat": 42.4796856,
+        "lng": 2.9230285
+      }
+    },
+    {
+      "id": "gr10-water-518",
+      "slug": "gr10-water-518",
+      "name": "Reina de les Fonts",
+      "type": "water",
+      "coords": {
+        "lat": 42.4797213,
+        "lng": 2.9245882
+      }
+    },
+    {
+      "id": "gr10-water-519",
+      "slug": "gr10-water-519",
+      "name": "Font del Pou",
+      "type": "water",
+      "coords": {
+        "lat": 42.4821425,
+        "lng": 2.9379201
+      }
+    },
+    {
+      "id": "gr10-water-521",
+      "slug": "gr10-water-521",
+      "name": "Font d'en Ricard",
+      "type": "water",
+      "coords": {
+        "lat": 42.475984,
+        "lng": 2.9412672
+      }
+    },
+    {
+      "id": "gr10-water-517",
+      "slug": "gr10-water-517",
+      "name": "Font del Puig Neulós",
+      "type": "water",
+      "coords": {
+        "lat": 42.4845557,
+        "lng": 2.9458755
+      }
+    },
+    {
+      "id": "gr10-water-532",
+      "slug": "gr10-water-532",
+      "name": "Source de Tagnarede",
+      "type": "water",
+      "coords": {
+        "lat": 42.4785131,
+        "lng": 2.9517352
+      }
+    },
+    {
+      "id": "gr10-water-542",
+      "slug": "gr10-water-542",
+      "name": "Font de l’Orri",
+      "type": "water",
+      "coords": {
+        "lat": 42.4687581,
+        "lng": 2.9684824
+      }
+    },
+    {
+      "id": "gr10-water-545",
+      "slug": "gr10-water-545",
+      "name": "Nou Fonts",
+      "type": "water",
+      "coords": {
+        "lat": 42.4762492,
+        "lng": 3.004149
+      }
+    },
+    {
+      "id": "gr10-water-470",
+      "slug": "gr10-water-470",
+      "name": "Font de la Massane",
+      "type": "water",
+      "coords": {
+        "lat": 42.4705409,
+        "lng": 3.0069588
+      }
+    },
+    {
+      "id": "gr10-water-471",
+      "slug": "gr10-water-471",
+      "name": "Font de la Fajousette",
+      "type": "water",
+      "coords": {
+        "lat": 42.4738041,
+        "lng": 3.0198769
+      }
+    },
+    {
+      "id": "gr10-water-505",
+      "slug": "gr10-water-505",
+      "name": "Source François Grand",
+      "type": "water",
+      "coords": {
+        "lat": 42.4748972,
+        "lng": 3.0432239
+      }
+    },
+    {
+      "id": "gr10-water-544",
+      "slug": "gr10-water-544",
+      "name": "Font d’en Vergès",
+      "type": "water",
+      "coords": {
+        "lat": 42.4771185,
+        "lng": 3.0499394
+      }
+    },
+    {
+      "id": "gr10-water-493",
+      "slug": "gr10-water-493",
+      "name": "Source des Chasseurs",
+      "type": "water",
+      "coords": {
+        "lat": 42.4839604,
+        "lng": 3.0883696
+      }
+    },
+    {
+      "id": "gr10-water-543",
+      "slug": "gr10-water-543",
+      "name": "Font Sant Andreu",
+      "type": "water",
+      "coords": {
+        "lat": 42.4820845,
+        "lng": 3.0934562
+      }
+    },
+    {
+      "id": "gr10-accom-61",
+      "slug": "gr10-accom-61",
+      "name": "Orio",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.3655466,
+        "lng": -1.7509961
+      }
+    },
+    {
+      "id": "gr10-accom-79",
+      "slug": "gr10-accom-79",
+      "name": "Terrain de camping",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.3560095,
+        "lng": -1.7465443
+      }
+    },
+    {
+      "id": "gr10-accom-119",
+      "slug": "gr10-accom-119",
+      "name": "Les insolites de Biriatou",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.3460605,
+        "lng": -1.7433929
+      }
+    },
+    {
+      "id": "gr10-accom-86",
+      "slug": "gr10-accom-86",
+      "name": "Camping Tellechea",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.2961208,
+        "lng": -1.5661311
+      }
+    },
+    {
+      "id": "gr10-accom-116",
+      "slug": "gr10-accom-116",
+      "name": "Bivouac à la ferme",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.3089682,
+        "lng": -1.5003385
+      }
+    },
+    {
+      "id": "gr10-accom-117",
+      "slug": "gr10-accom-117",
+      "name": "Bivouac aménagé",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.0403917,
+        "lng": -1.0741016
+      }
+    },
+    {
+      "id": "gr10-accom-98",
+      "slug": "gr10-accom-98",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.0429268,
+        "lng": -1.0728036
+      }
+    },
+    {
+      "id": "gr10-accom-78",
+      "slug": "gr10-accom-78",
+      "name": "Camping d'Iraty",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.0368449,
+        "lng": -1.0493759
+      }
+    },
+    {
+      "id": "gr10-accom-77",
+      "slug": "gr10-accom-77",
+      "name": "Ixtila",
+      "type": "campsite",
+      "coords": {
+        "lat": 43.017234,
+        "lng": -0.9519514
+      }
+    },
+    {
+      "id": "gr10-accom-97",
+      "slug": "gr10-accom-97",
+      "name": "Cabane Cayolar d’Anhaou",
+      "type": "hut",
+      "coords": {
+        "lat": 42.975585,
+        "lng": -0.8704099
+      }
+    },
+    {
+      "id": "gr10-accom-62",
+      "slug": "gr10-accom-62",
+      "name": "Elichalt",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.9958209,
+        "lng": -0.8099712
+      }
+    },
+    {
+      "id": "gr10-accom-89",
+      "slug": "gr10-accom-89",
+      "name": "Refuge de l'Abérouat",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.9502946,
+        "lng": -0.6660394
+      }
+    },
+    {
+      "id": "gr10-accom-60",
+      "slug": "gr10-accom-60",
+      "name": "Gîte d'Etape de Lhers",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.9105258,
+        "lng": -0.6190864
+      }
+    },
+    {
+      "id": "gr10-accom-118",
+      "slug": "gr10-accom-118",
+      "name": "Bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8467413,
+        "lng": -0.4880963
+      }
+    },
+    {
+      "id": "gr10-accom-120",
+      "slug": "gr10-accom-120",
+      "name": "Bivouac de Dious Artigues",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8678727,
+        "lng": -0.4497613
+      }
+    },
+    {
+      "id": "gr10-accom-88",
+      "slug": "gr10-accom-88",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8622075,
+        "lng": -0.1762476
+      }
+    },
+    {
+      "id": "gr10-accom-85",
+      "slug": "gr10-accom-85",
+      "name": "Le Cluquet",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8957485,
+        "lng": -0.1095436
+      }
+    },
+    {
+      "id": "gr10-accom-59",
+      "slug": "gr10-accom-59",
+      "name": "Chalet du Clot",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8519137,
+        "lng": -0.1472555
+      }
+    },
+    {
+      "id": "gr10-accom-101",
+      "slug": "gr10-accom-101",
+      "name": "Aire de bivouac du Chalet du Clot",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8523971,
+        "lng": -0.1464712
+      }
+    },
+    {
+      "id": "gr10-accom-127",
+      "slug": "gr10-accom-127",
+      "name": "Aire de bivouac du lac de Gaube",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8281172,
+        "lng": -0.1402235
+      }
+    },
+    {
+      "id": "gr10-accom-93",
+      "slug": "gr10-accom-93",
+      "name": "Aire de bivouac du Refuge des Oulettes de Gaube",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7913874,
+        "lng": -0.1435733
+      }
+    },
+    {
+      "id": "gr10-accom-94",
+      "slug": "gr10-accom-94",
+      "name": "Aire de bivouac du Refuge de Bayssellance",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7793561,
+        "lng": -0.1236418
+      }
+    },
+    {
+      "id": "gr10-accom-100",
+      "slug": "gr10-accom-100",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7572269,
+        "lng": -0.0938143
+      }
+    },
+    {
+      "id": "gr10-accom-92",
+      "slug": "gr10-accom-92",
+      "name": "Ferme des cascades",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8805385,
+        "lng": -0.025399
+      }
+    },
+    {
+      "id": "gr10-accom-122",
+      "slug": "gr10-accom-122",
+      "name": "Cabane de l'Ayré",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8861856,
+        "lng": 0.0701782
+      }
+    },
+    {
+      "id": "gr10-accom-76",
+      "slug": "gr10-accom-76",
+      "name": "Cabane dets Coubous",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8772192,
+        "lng": 0.1126951
+      }
+    },
+    {
+      "id": "gr10-accom-55",
+      "slug": "gr10-accom-55",
+      "name": "Zone de Bivouac d'Aubert",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8388545,
+        "lng": 0.1436533
+      }
+    },
+    {
+      "id": "gr10-accom-95",
+      "slug": "gr10-accom-95",
+      "name": "Abri hivernal du lac d'Aubert",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8400909,
+        "lng": 0.1433956
+      }
+    },
+    {
+      "id": "gr10-accom-75",
+      "slug": "gr10-accom-75",
+      "name": "Chalet - Hôtel Orédon",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8262549,
+        "lng": 0.1691922
+      }
+    },
+    {
+      "id": "gr10-accom-80",
+      "slug": "gr10-accom-80",
+      "name": "Zone de Bivouac du Lac d'Orédon",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8275798,
+        "lng": 0.1689595
+      }
+    },
+    {
+      "id": "gr10-accom-73",
+      "slug": "gr10-accom-73",
+      "name": "Cabane d'Artigusse",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8196267,
+        "lng": 0.1895414
+      }
+    },
+    {
+      "id": "gr10-accom-81",
+      "slug": "gr10-accom-81",
+      "name": "Aire de bivouac de la Lude",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.8388486,
+        "lng": 0.1989112
+      }
+    },
+    {
+      "id": "gr10-accom-74",
+      "slug": "gr10-accom-74",
+      "name": "Cabane du Bastan",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8413304,
+        "lng": 0.2051162
+      }
+    },
+    {
+      "id": "gr10-accom-90",
+      "slug": "gr10-accom-90",
+      "name": "Bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7410892,
+        "lng": 0.4544261
+      }
+    },
+    {
+      "id": "gr10-accom-103",
+      "slug": "gr10-accom-103",
+      "name": "Aire de bivouac du Refuge du Lac d'Oô",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7446139,
+        "lng": 0.4905017
+      }
+    },
+    {
+      "id": "gr10-accom-87",
+      "slug": "gr10-accom-87",
+      "name": "Gîte d'étape GR10",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8322952,
+        "lng": 0.6192588
+      }
+    },
+    {
+      "id": "gr10-accom-69",
+      "slug": "gr10-accom-69",
+      "name": "Cabane Courraus",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8654077,
+        "lng": 0.682142
+      }
+    },
+    {
+      "id": "gr10-accom-71",
+      "slug": "gr10-accom-71",
+      "name": "Cabane Artigue",
+      "type": "hut",
+      "coords": {
+        "lat": 42.862901,
+        "lng": 0.6923424
+      }
+    },
+    {
+      "id": "gr10-accom-82",
+      "slug": "gr10-accom-82",
+      "name": "Camp de l'Ours",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.863843,
+        "lng": 0.8087772
+      }
+    },
+    {
+      "id": "gr10-accom-102",
+      "slug": "gr10-accom-102",
+      "name": "Cabane de Aoueran",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8394357,
+        "lng": 0.827363
+      }
+    },
+    {
+      "id": "gr10-accom-70",
+      "slug": "gr10-accom-70",
+      "name": "Cabane de l'Arech",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8268246,
+        "lng": 0.9684645
+      }
+    },
+    {
+      "id": "gr10-accom-68",
+      "slug": "gr10-accom-68",
+      "name": "Cabane des Espugues",
+      "type": "hut",
+      "coords": {
+        "lat": 42.8206557,
+        "lng": 1.0755985
+      }
+    },
+    {
+      "id": "gr10-accom-56",
+      "slug": "gr10-accom-56",
+      "name": "Gite d'Aunac",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.8511821,
+        "lng": 1.1744483
+      }
+    },
+    {
+      "id": "gr10-accom-84",
+      "slug": "gr10-accom-84",
+      "name": "Les Bouriès",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.7883395,
+        "lng": 1.1763022
+      }
+    },
+    {
+      "id": "gr10-accom-91",
+      "slug": "gr10-accom-91",
+      "name": "Cabane de Guzettou",
+      "type": "hut",
+      "coords": {
+        "lat": 42.7645938,
+        "lng": 1.3427296
+      }
+    },
+    {
+      "id": "gr10-accom-96",
+      "slug": "gr10-accom-96",
+      "name": "Gîte d'étape Le Presbytère",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.7913638,
+        "lng": 1.3388555
+      }
+    },
+    {
+      "id": "gr10-accom-67",
+      "slug": "gr10-accom-67",
+      "name": "Abri forestier de Nagot",
+      "type": "hut",
+      "coords": {
+        "lat": 42.7620642,
+        "lng": 1.5126596
+      }
+    },
+    {
+      "id": "gr10-accom-104",
+      "slug": "gr10-accom-104",
+      "name": "Cabane du Besset",
+      "type": "hut",
+      "coords": {
+        "lat": 42.7560327,
+        "lng": 1.6292904
+      }
+    },
+    {
+      "id": "gr10-accom-64",
+      "slug": "gr10-accom-64",
+      "name": "Cabane des Ludines",
+      "type": "hut",
+      "coords": {
+        "lat": 42.7032582,
+        "lng": 1.6327407
+      }
+    },
+    {
+      "id": "gr10-accom-65",
+      "slug": "gr10-accom-65",
+      "name": "Cabane de Boutas",
+      "type": "hut",
+      "coords": {
+        "lat": 42.6993002,
+        "lng": 1.7406633
+      }
+    },
+    {
+      "id": "gr10-accom-109",
+      "slug": "gr10-accom-109",
+      "name": "Bivouac possible",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5971934,
+        "lng": 1.9196978
+      }
+    },
+    {
+      "id": "gr10-accom-115",
+      "slug": "gr10-accom-115",
+      "name": "Étang Long",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5523379,
+        "lng": 2.0147676
+      }
+    },
+    {
+      "id": "gr10-accom-130",
+      "slug": "gr10-accom-130",
+      "name": "Refuge de la Calme nord",
+      "type": "hut",
+      "coords": {
+        "lat": 42.5406789,
+        "lng": 2.0041895
+      }
+    },
+    {
+      "id": "gr10-accom-110",
+      "slug": "gr10-accom-110",
+      "name": "Bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5453372,
+        "lng": 2.0170641
+      }
+    },
+    {
+      "id": "gr10-accom-114",
+      "slug": "gr10-accom-114",
+      "name": "Étang Noir",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5489329,
+        "lng": 2.0187477
+      }
+    },
+    {
+      "id": "gr10-accom-123",
+      "slug": "gr10-accom-123",
+      "name": "Étang Noir",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5467948,
+        "lng": 2.0203136
+      }
+    },
+    {
+      "id": "gr10-accom-63",
+      "slug": "gr10-accom-63",
+      "name": "Camping Le Petit Canada",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5193209,
+        "lng": 2.0961105
+      }
+    },
+    {
+      "id": "gr10-accom-58",
+      "slug": "gr10-accom-58",
+      "name": "Cabane de l'Orry",
+      "type": "hut",
+      "coords": {
+        "lat": 42.4606413,
+        "lng": 2.1756704
+      }
+    },
+    {
+      "id": "gr10-accom-121",
+      "slug": "gr10-accom-121",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4650443,
+        "lng": 2.2259147
+      }
+    },
+    {
+      "id": "gr10-accom-108",
+      "slug": "gr10-accom-108",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.463567,
+        "lng": 2.2228809
+      }
+    },
+    {
+      "id": "gr10-accom-106",
+      "slug": "gr10-accom-106",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4954539,
+        "lng": 2.3521901
+      }
+    },
+    {
+      "id": "gr10-accom-113",
+      "slug": "gr10-accom-113",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5339483,
+        "lng": 2.4643772
+      }
+    },
+    {
+      "id": "gr10-accom-57",
+      "slug": "gr10-accom-57",
+      "name": "Refuge forestier de la Mouline",
+      "type": "hut",
+      "coords": {
+        "lat": 42.550613,
+        "lng": 2.4902026
+      }
+    },
+    {
+      "id": "gr10-accom-112",
+      "slug": "gr10-accom-112",
+      "name": "Bivouac possible",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5179488,
+        "lng": 2.5260185
+      }
+    },
+    {
+      "id": "gr10-accom-105",
+      "slug": "gr10-accom-105",
+      "name": "Aire de bivouac du Refuge de Batère",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.5013251,
+        "lng": 2.5459903
+      }
+    },
+    {
+      "id": "gr10-accom-129",
+      "slug": "gr10-accom-129",
+      "name": "Bivouac possible",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4895337,
+        "lng": 2.5770923
+      }
+    },
+    {
+      "id": "gr10-accom-66",
+      "slug": "gr10-accom-66",
+      "name": "Refuge des Vigourats",
+      "type": "hut",
+      "coords": {
+        "lat": 42.4893724,
+        "lng": 2.5770786
+      }
+    },
+    {
+      "id": "gr10-accom-83",
+      "slug": "gr10-accom-83",
+      "name": "La Solane",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.421108,
+        "lng": 2.6656464
+      }
+    },
+    {
+      "id": "gr10-accom-111",
+      "slug": "gr10-accom-111",
+      "name": "Camping de la Fargassa",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4357201,
+        "lng": 2.6729822
+      }
+    },
+    {
+      "id": "gr10-accom-72",
+      "slug": "gr10-accom-72",
+      "name": "Refugi de les Salines",
+      "type": "hut",
+      "coords": {
+        "lat": 42.4209233,
+        "lng": 2.7488846
+      }
+    },
+    {
+      "id": "gr10-accom-107",
+      "slug": "gr10-accom-107",
+      "name": "Aire de bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4262678,
+        "lng": 2.7862829
+      }
+    },
+    {
+      "id": "gr10-accom-99",
+      "slug": "gr10-accom-99",
+      "name": "Chez Paco",
+      "type": "refuge",
+      "coords": {
+        "lat": 42.4651279,
+        "lng": 2.864103
+      }
+    },
+    {
+      "id": "gr10-accom-124",
+      "slug": "gr10-accom-124",
+      "name": "Bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4590812,
+        "lng": 2.8705259
+      }
+    },
+    {
+      "id": "gr10-accom-128",
+      "slug": "gr10-accom-128",
+      "name": "Bivouac possible",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4687396,
+        "lng": 2.9689093
+      }
+    },
+    {
+      "id": "gr10-accom-125",
+      "slug": "gr10-accom-125",
+      "name": "Bivouac",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4777308,
+        "lng": 2.9874493
+      }
+    },
+    {
+      "id": "gr10-accom-126",
+      "slug": "gr10-accom-126",
+      "name": "Campsite",
+      "type": "campsite",
+      "coords": {
+        "lat": 42.4776634,
+        "lng": 2.9875772
       }
     },
     {
@@ -3673,6 +6713,24 @@
                   "elevM": 85
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-399",
+                  "distanceKm": 3.9
+                },
+                {
+                  "locationId": "gr11-water-434",
+                  "distanceKm": 5.5
+                },
+                {
+                  "locationId": "gr11-water-461",
+                  "distanceKm": 24.2
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -3788,6 +6846,20 @@
                   "elevM": 200
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-386",
+                  "distanceKm": 10
+                },
+                {
+                  "locationId": "gr11-water-353",
+                  "distanceKm": 22.9
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -3881,6 +6953,20 @@
                 {
                   "distanceKm": 19.1,
                   "elevM": 1108
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-354",
+                  "distanceKm": 4.4
+                },
+                {
+                  "locationId": "gr11-water-401",
+                  "distanceKm": 15.2
                 }
               ]
             }
@@ -4160,6 +7246,20 @@
                   "elevM": 981
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-389",
+                  "distanceKm": 13.6
+                },
+                {
+                  "locationId": "gr11-water-462",
+                  "distanceKm": 16.3
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -4259,6 +7359,20 @@
                   "elevM": 1012
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-410",
+                  "distanceKm": 16
+                },
+                {
+                  "locationId": "gr11-water-393",
+                  "distanceKm": 16.5
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -4336,6 +7450,16 @@
                 {
                   "distanceKm": 11,
                   "elevM": 1623
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-452",
+                  "distanceKm": 7.5
                 }
               ]
             }
@@ -4429,6 +7553,20 @@
                   "elevM": 1786
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-357",
+                  "distanceKm": 10.1
+                },
+                {
+                  "locationId": "gr11-water-380",
+                  "distanceKm": 16.6
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -4510,6 +7648,16 @@
                 {
                   "distanceKm": 12.4,
                   "elevM": 2092
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-355",
+                  "distanceKm": 8.4
                 }
               ]
             }
@@ -4601,6 +7749,28 @@
                 {
                   "distanceKm": 16.3,
                   "elevM": 1528
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-446",
+                  "distanceKm": 11.9
+                },
+                {
+                  "locationId": "gr11-water-394",
+                  "distanceKm": 11.9
+                },
+                {
+                  "locationId": "gr11-water-356",
+                  "distanceKm": 15
+                },
+                {
+                  "locationId": "gr11-water-428",
+                  "distanceKm": 15.9
                 }
               ]
             }
@@ -4706,6 +7876,20 @@
                   "elevM": 1467
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-404",
+                  "distanceKm": 11.9
+                },
+                {
+                  "locationId": "gr11-water-352",
+                  "distanceKm": 20.2
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -4783,6 +7967,34 @@
                 {
                   "distanceKm": 11.1,
                   "elevM": 2498
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-406",
+                  "distanceKm": 8.7
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-51",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr11-accom-52",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr11-accom-53",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -4967,6 +8179,26 @@
                   "elevM": 1350
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-358",
+                  "distanceKm": 20.7
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-43",
+                  "note": "Hut"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -5070,6 +8302,36 @@
                   "elevM": 1977
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-445",
+                  "distanceKm": 0.8
+                },
+                {
+                  "locationId": "gr11-water-466",
+                  "distanceKm": 6.1
+                },
+                {
+                  "locationId": "gr11-water-426",
+                  "distanceKm": 10.9
+                },
+                {
+                  "locationId": "gr11-water-425",
+                  "distanceKm": 14.1
+                },
+                {
+                  "locationId": "gr11-water-444",
+                  "distanceKm": 19.3
+                },
+                {
+                  "locationId": "gr11-water-424",
+                  "distanceKm": 20.9
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -5151,6 +8413,16 @@
                 {
                   "distanceKm": 12.4,
                   "elevM": 1241
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-390",
+                  "distanceKm": 5.7
                 }
               ]
             }
@@ -5242,6 +8514,16 @@
                 {
                   "distanceKm": 16.7,
                   "elevM": 1302
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-430",
+                  "distanceKm": 8.4
                 }
               ]
             }
@@ -5347,6 +8629,42 @@
                   "elevM": 1738
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-464",
+                  "distanceKm": 5.8
+                },
+                {
+                  "locationId": "gr11-water-431",
+                  "distanceKm": 19.2
+                },
+                {
+                  "locationId": "gr11-water-420",
+                  "distanceKm": 20.5
+                },
+                {
+                  "locationId": "gr11-water-419",
+                  "distanceKm": 20.8
+                },
+                {
+                  "locationId": "gr11-water-418",
+                  "distanceKm": 22.1
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-49",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -5442,6 +8760,32 @@
                   "elevM": 1261
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-421",
+                  "distanceKm": 0.6
+                },
+                {
+                  "locationId": "gr11-water-417",
+                  "distanceKm": 10.6
+                },
+                {
+                  "locationId": "gr11-water-415",
+                  "distanceKm": 11.9
+                },
+                {
+                  "locationId": "gr11-water-416",
+                  "distanceKm": 14.4
+                },
+                {
+                  "locationId": "gr11-water-375",
+                  "distanceKm": 17.1
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -5527,6 +8871,30 @@
                 {
                   "distanceKm": 15,
                   "elevM": 2415
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-422",
+                  "distanceKm": 2.9
+                },
+                {
+                  "locationId": "gr11-water-405",
+                  "distanceKm": 7.8
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-42",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -5837,6 +9205,16 @@
                   "elevM": 2259
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-436",
+                  "distanceKm": 4.2
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -5926,6 +9304,34 @@
                 {
                   "distanceKm": 16.7,
                   "elevM": 1338
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-374",
+                  "distanceKm": 0.4
+                },
+                {
+                  "locationId": "gr11-water-359",
+                  "distanceKm": 3.9
+                },
+                {
+                  "locationId": "gr11-water-384",
+                  "distanceKm": 4.6
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-46",
+                  "note": "Refuge · 23 beds"
                 }
               ]
             }
@@ -6090,6 +9496,34 @@
                   "elevM": 1238
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-360",
+                  "distanceKm": 2.2
+                },
+                {
+                  "locationId": "gr11-water-403",
+                  "distanceKm": 3.6
+                },
+                {
+                  "locationId": "gr11-water-451",
+                  "distanceKm": 11.8
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-48",
+                  "note": "Refuge"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -6171,6 +9605,28 @@
                 {
                   "distanceKm": 13.4,
                   "elevM": 2179
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-450",
+                  "distanceKm": 1.1
+                },
+                {
+                  "locationId": "gr11-water-449",
+                  "distanceKm": 2.1
+                },
+                {
+                  "locationId": "gr11-water-432",
+                  "distanceKm": 2.4
+                },
+                {
+                  "locationId": "gr11-water-448",
+                  "distanceKm": 7.2
                 }
               ]
             }
@@ -6260,6 +9716,24 @@
                   "elevM": 2186
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-361",
+                  "distanceKm": 7.6
+                },
+                {
+                  "locationId": "gr11-water-465",
+                  "distanceKm": 12.1
+                },
+                {
+                  "locationId": "gr11-water-435",
+                  "distanceKm": 13.2
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -6347,6 +9821,28 @@
                   "elevM": 1501
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-395",
+                  "distanceKm": 9.2
+                },
+                {
+                  "locationId": "gr11-water-407",
+                  "distanceKm": 9.7
+                },
+                {
+                  "locationId": "gr11-water-408",
+                  "distanceKm": 10.1
+                },
+                {
+                  "locationId": "gr11-water-398",
+                  "distanceKm": 11.7
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -6432,6 +9928,30 @@
                 {
                   "distanceKm": 15.1,
                   "elevM": 1250
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-362",
+                  "distanceKm": 11.1
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-47",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr11-accom-50",
+                  "note": "Refuge"
                 }
               ]
             }
@@ -6527,6 +10047,20 @@
                 {
                   "distanceKm": 19.6,
                   "elevM": 2087
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-447",
+                  "distanceKm": 1.2
+                },
+                {
+                  "locationId": "gr11-water-382",
+                  "distanceKm": 5.1
                 }
               ]
             }
@@ -6689,6 +10223,38 @@
                 {
                   "distanceKm": 14,
                   "elevM": 1160
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-381",
+                  "distanceKm": 6.2
+                },
+                {
+                  "locationId": "gr11-water-433",
+                  "distanceKm": 9.5
+                },
+                {
+                  "locationId": "gr11-water-363",
+                  "distanceKm": 9.7
+                },
+                {
+                  "locationId": "gr11-water-414",
+                  "distanceKm": 12.3
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-44",
+                  "note": "Hut"
                 }
               ]
             }
@@ -6885,6 +10451,56 @@
                   "elevM": 1969
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-468",
+                  "distanceKm": 0.9
+                },
+                {
+                  "locationId": "gr11-water-364",
+                  "distanceKm": 3.1
+                },
+                {
+                  "locationId": "gr11-water-453",
+                  "distanceKm": 5
+                },
+                {
+                  "locationId": "gr11-water-409",
+                  "distanceKm": 5.8
+                },
+                {
+                  "locationId": "gr11-water-365",
+                  "distanceKm": 8.4
+                },
+                {
+                  "locationId": "gr11-water-423",
+                  "distanceKm": 9.7
+                },
+                {
+                  "locationId": "gr11-water-402",
+                  "distanceKm": 9.8
+                },
+                {
+                  "locationId": "gr11-water-442",
+                  "distanceKm": 11
+                },
+                {
+                  "locationId": "gr11-water-400",
+                  "distanceKm": 11.2
+                },
+                {
+                  "locationId": "gr11-water-366",
+                  "distanceKm": 12.2
+                },
+                {
+                  "locationId": "gr11-water-458",
+                  "distanceKm": 13.3
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -6962,6 +10578,28 @@
                 {
                   "distanceKm": 10.2,
                   "elevM": 2396
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-387",
+                  "distanceKm": 0.4
+                },
+                {
+                  "locationId": "gr11-water-392",
+                  "distanceKm": 0.4
+                },
+                {
+                  "locationId": "gr11-water-438",
+                  "distanceKm": 0.9
+                },
+                {
+                  "locationId": "gr11-water-376",
+                  "distanceKm": 9.9
                 }
               ]
             }
@@ -7063,6 +10701,44 @@
                   "elevM": 1072
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-441",
+                  "distanceKm": 1.3
+                },
+                {
+                  "locationId": "gr11-water-457",
+                  "distanceKm": 3.8
+                },
+                {
+                  "locationId": "gr11-water-459",
+                  "distanceKm": 6.5
+                },
+                {
+                  "locationId": "gr11-water-467",
+                  "distanceKm": 6.7
+                },
+                {
+                  "locationId": "gr11-water-440",
+                  "distanceKm": 8.9
+                },
+                {
+                  "locationId": "gr11-water-439",
+                  "distanceKm": 8.9
+                },
+                {
+                  "locationId": "gr11-water-383",
+                  "distanceKm": 9.1
+                },
+                {
+                  "locationId": "gr11-water-460",
+                  "distanceKm": 9.3
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -7162,6 +10838,16 @@
                   "elevM": 723
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-385",
+                  "distanceKm": 0.8
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -7255,6 +10941,24 @@
                 {
                   "distanceKm": 18.1,
                   "elevM": 366
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-367",
+                  "distanceKm": 4.6
+                },
+                {
+                  "locationId": "gr11-water-429",
+                  "distanceKm": 12.3
+                },
+                {
+                  "locationId": "gr11-water-443",
+                  "distanceKm": 13.5
                 }
               ]
             }
@@ -7368,6 +11072,40 @@
                   "elevM": 503
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-391",
+                  "distanceKm": 2.5
+                },
+                {
+                  "locationId": "gr11-water-454",
+                  "distanceKm": 2.8
+                },
+                {
+                  "locationId": "gr11-water-437",
+                  "distanceKm": 4.2
+                },
+                {
+                  "locationId": "gr11-water-369",
+                  "distanceKm": 4.2
+                },
+                {
+                  "locationId": "gr11-water-379",
+                  "distanceKm": 14.2
+                },
+                {
+                  "locationId": "gr11-water-368",
+                  "distanceKm": 23.1
+                },
+                {
+                  "locationId": "gr11-water-412",
+                  "distanceKm": 25.1
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -7473,6 +11211,24 @@
                 {
                   "distanceKm": 25.5,
                   "elevM": 544
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-370",
+                  "distanceKm": 2.6
+                },
+                {
+                  "locationId": "gr11-water-413",
+                  "distanceKm": 3.1
+                },
+                {
+                  "locationId": "gr11-water-455",
+                  "distanceKm": 18
                 }
               ]
             }
@@ -7594,6 +11350,51 @@
                   "elevM": 206
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-378",
+                  "distanceKm": 0.6
+                },
+                {
+                  "locationId": "gr11-water-397",
+                  "distanceKm": 3
+                },
+                {
+                  "locationId": "gr11-water-396",
+                  "distanceKm": 3.2
+                },
+                {
+                  "locationId": "gr11-water-377",
+                  "distanceKm": 14
+                },
+                {
+                  "locationId": "gr11-water-371",
+                  "distanceKm": 17.6
+                },
+                {
+                  "locationId": "gr11-water-372",
+                  "distanceKm": 26.7,
+                  "note": "seasonal"
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr11-accom-45",
+                  "note": "Hut · 12 beds"
+                },
+                {
+                  "locationId": "gr11-accom-54",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -7687,6 +11488,36 @@
                 {
                   "distanceKm": 20,
                   "elevM": 10
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr11-water-388",
+                  "distanceKm": 0.1
+                },
+                {
+                  "locationId": "gr11-water-411",
+                  "distanceKm": 0.6
+                },
+                {
+                  "locationId": "gr11-water-373",
+                  "distanceKm": 4.4
+                },
+                {
+                  "locationId": "gr11-water-463",
+                  "distanceKm": 16.3
+                },
+                {
+                  "locationId": "gr11-water-427",
+                  "distanceKm": 18.9
+                },
+                {
+                  "locationId": "gr11-water-456",
+                  "distanceKm": 19.1
                 }
               ]
             }
@@ -12212,6 +16043,24 @@
                   "elevM": 222
                 }
               ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-61",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-79",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-119",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -12345,6 +16194,30 @@
                 {
                   "distanceKm": 19.7,
                   "elevM": 64
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-514",
+                  "distanceKm": 8.4
+                },
+                {
+                  "locationId": "gr10-water-515",
+                  "distanceKm": 9
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-86",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -12486,6 +16359,34 @@
                   "elevM": 163
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-485",
+                  "distanceKm": 4.1
+                },
+                {
+                  "locationId": "gr10-water-516",
+                  "distanceKm": 5.7
+                },
+                {
+                  "locationId": "gr10-water-513",
+                  "distanceKm": 6
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-116",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -12611,6 +16512,20 @@
                 {
                   "distanceKm": 17.2,
                   "elevM": 320
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-495",
+                  "distanceKm": 10.6
+                },
+                {
+                  "locationId": "gr10-water-487",
+                  "distanceKm": 17.4
                 }
               ]
             }
@@ -12742,6 +16657,28 @@
                 {
                   "distanceKm": 18.2,
                   "elevM": 207
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-526",
+                  "distanceKm": 4
+                },
+                {
+                  "locationId": "gr10-water-482",
+                  "distanceKm": 8.9
+                },
+                {
+                  "locationId": "gr10-water-483",
+                  "distanceKm": 11.4
+                },
+                {
+                  "locationId": "gr10-water-484",
+                  "distanceKm": 12.3
                 }
               ]
             }
@@ -12998,6 +16935,58 @@
                   "elevM": 1268
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-486",
+                  "distanceKm": 0.1
+                },
+                {
+                  "locationId": "gr10-water-564",
+                  "distanceKm": 2.9
+                },
+                {
+                  "locationId": "gr10-water-565",
+                  "distanceKm": 7.4
+                },
+                {
+                  "locationId": "gr10-water-527",
+                  "distanceKm": 8.4
+                },
+                {
+                  "locationId": "gr10-water-561",
+                  "distanceKm": 8.5
+                },
+                {
+                  "locationId": "gr10-water-494",
+                  "distanceKm": 10.1
+                },
+                {
+                  "locationId": "gr10-water-488",
+                  "distanceKm": 10.6
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-117",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-98",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-78",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13115,6 +17104,26 @@
                 {
                   "distanceKm": 15.8,
                   "elevM": 888
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-554",
+                  "distanceKm": 11.1
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-77",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -13272,6 +17281,30 @@
                   "elevM": 493
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-512",
+                  "distanceKm": 17.1
+                },
+                {
+                  "locationId": "gr10-water-509",
+                  "distanceKm": 23.3
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-97",
+                  "note": "Hut"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13369,6 +17402,42 @@
                 {
                   "distanceKm": 10.4,
                   "elevM": 1674
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-479",
+                  "distanceKm": 4.8
+                },
+                {
+                  "locationId": "gr10-water-478",
+                  "distanceKm": 6.7
+                },
+                {
+                  "locationId": "gr10-water-477",
+                  "distanceKm": 7.9
+                },
+                {
+                  "locationId": "gr10-water-480",
+                  "distanceKm": 8.4
+                },
+                {
+                  "locationId": "gr10-water-473",
+                  "distanceKm": 8.7
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-62",
+                  "note": "Refuge"
                 }
               ]
             }
@@ -13486,6 +17555,32 @@
                   "elevM": 1453
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-481",
+                  "distanceKm": 0.4
+                },
+                {
+                  "locationId": "gr10-water-475",
+                  "distanceKm": 4
+                },
+                {
+                  "locationId": "gr10-water-503",
+                  "distanceKm": 8.6
+                },
+                {
+                  "locationId": "gr10-water-550",
+                  "distanceKm": 12
+                },
+                {
+                  "locationId": "gr10-water-549",
+                  "distanceKm": 12
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13599,6 +17694,42 @@
                 {
                   "distanceKm": 14.5,
                   "elevM": 1436
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-506",
+                  "distanceKm": 2.2
+                },
+                {
+                  "locationId": "gr10-water-522",
+                  "distanceKm": 5
+                },
+                {
+                  "locationId": "gr10-water-510",
+                  "distanceKm": 5
+                },
+                {
+                  "locationId": "gr10-water-476",
+                  "distanceKm": 12.6
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-89",
+                  "note": "Refuge · 27 beds"
+                },
+                {
+                  "locationId": "gr10-accom-60",
+                  "note": "Refuge"
                 }
               ]
             }
@@ -13752,6 +17883,46 @@
                   "elevM": 1408
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-557",
+                  "distanceKm": 4.2
+                },
+                {
+                  "locationId": "gr10-water-508",
+                  "distanceKm": 4.9
+                },
+                {
+                  "locationId": "gr10-water-502",
+                  "distanceKm": 8.8
+                },
+                {
+                  "locationId": "gr10-water-472",
+                  "distanceKm": 9.6
+                },
+                {
+                  "locationId": "gr10-water-507",
+                  "distanceKm": 11.2
+                },
+                {
+                  "locationId": "gr10-water-546",
+                  "distanceKm": 22.5
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-118",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -13893,6 +18064,16 @@
                 {
                   "distanceKm": 21.7,
                   "elevM": 2173
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-120",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -14228,6 +18409,16 @@
                   "elevM": 1004
                 }
               ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-88",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -14337,6 +18528,42 @@
                 {
                   "distanceKm": 13.7,
                   "elevM": 1975
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-535",
+                  "distanceKm": 2.3
+                },
+                {
+                  "locationId": "gr10-water-534",
+                  "distanceKm": 2.9
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-85",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-59",
+                  "note": "Refuge"
+                },
+                {
+                  "locationId": "gr10-accom-101",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-127",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -14476,6 +18703,24 @@
                 {
                   "distanceKm": 20.1,
                   "elevM": 1768
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-93",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-94",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-100",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -14736,6 +18981,34 @@
                   "elevM": 1238
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-552",
+                  "distanceKm": 4.3
+                },
+                {
+                  "locationId": "gr10-water-553",
+                  "distanceKm": 4.3
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-92",
+                  "note": "Refuge"
+                },
+                {
+                  "locationId": "gr10-accom-122",
+                  "note": "Hut"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -14879,6 +19152,58 @@
                   "elevM": 1851
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-520",
+                  "distanceKm": 10.4
+                },
+                {
+                  "locationId": "gr10-water-492",
+                  "distanceKm": 18.1
+                },
+                {
+                  "locationId": "gr10-water-504",
+                  "distanceKm": 19
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-76",
+                  "note": "Hut · 4 beds"
+                },
+                {
+                  "locationId": "gr10-accom-55",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-95",
+                  "note": "Hut · 12 beds"
+                },
+                {
+                  "locationId": "gr10-accom-75",
+                  "note": "Refuge · 80 beds"
+                },
+                {
+                  "locationId": "gr10-accom-80",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-73",
+                  "note": "Hut"
+                },
+                {
+                  "locationId": "gr10-accom-81",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15002,6 +19327,30 @@
                   "elevM": 918
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-560",
+                  "distanceKm": 12.7
+                },
+                {
+                  "locationId": "gr10-water-538",
+                  "distanceKm": 15.5
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-74",
+                  "note": "Hut"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15107,6 +19456,16 @@
                 {
                   "distanceKm": 12,
                   "elevM": 1432
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-548",
+                  "distanceKm": 0.8
                 }
               ]
             }
@@ -15226,6 +19585,20 @@
                 {
                   "distanceKm": 15.4,
                   "elevM": 1997
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-90",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-103",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -15363,6 +19736,16 @@
                   "elevM": 628
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-566",
+                  "distanceKm": 17
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15448,6 +19831,16 @@
                 {
                   "distanceKm": 7.5,
                   "elevM": 1649
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-87",
+                  "note": "Refuge"
                 }
               ]
             }
@@ -15585,6 +19978,30 @@
                   "elevM": 701
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-529",
+                  "distanceKm": 0.9
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-69",
+                  "note": "Hut · 6 beds"
+                },
+                {
+                  "locationId": "gr10-accom-71",
+                  "note": "Hut"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -15710,6 +20127,34 @@
                 {
                   "distanceKm": 17.4,
                   "elevM": 1894
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-556",
+                  "distanceKm": 6.4
+                },
+                {
+                  "locationId": "gr10-water-530",
+                  "distanceKm": 8.8
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-82",
+                  "note": "Campsite · 6 beds"
+                },
+                {
+                  "locationId": "gr10-accom-102",
+                  "note": "Refuge"
                 }
               ]
             }
@@ -15918,6 +20363,16 @@
                   "elevM": 1036
                 }
               ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-70",
+                  "note": "Hut · 4 beds"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16039,6 +20494,30 @@
                 {
                   "distanceKm": 16.6,
                   "elevM": 1306
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-523",
+                  "distanceKm": 4.3
+                },
+                {
+                  "locationId": "gr10-water-524",
+                  "distanceKm": 6.5
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-68",
+                  "note": "Hut · 10 beds"
                 }
               ]
             }
@@ -16172,6 +20651,26 @@
                   "elevM": 853
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-533",
+                  "distanceKm": 16.5
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-56",
+                  "note": "Refuge"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16287,6 +20786,16 @@
                   "elevM": 1105
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-547",
+                  "distanceKm": 12
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16372,6 +20881,16 @@
                 {
                   "distanceKm": 7.2,
                   "elevM": 1557
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-84",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -16521,6 +21040,42 @@
                   "elevM": 1415
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-511",
+                  "distanceKm": 1.6
+                },
+                {
+                  "locationId": "gr10-water-528",
+                  "distanceKm": 6.4
+                },
+                {
+                  "locationId": "gr10-water-555",
+                  "distanceKm": 8
+                },
+                {
+                  "locationId": "gr10-water-537",
+                  "distanceKm": 17
+                },
+                {
+                  "locationId": "gr10-water-539",
+                  "distanceKm": 18.2
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-91",
+                  "note": "Hut · 4 beds"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16614,6 +21169,26 @@
                 {
                   "distanceKm": 9.7,
                   "elevM": 1581
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-540",
+                  "distanceKm": 6.1
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-96",
+                  "note": "Refuge · 20 beds"
                 }
               ]
             }
@@ -16890,6 +21465,16 @@
                   "elevM": 1385
                 }
               ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-67",
+                  "note": "Hut · 2 beds"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -16991,6 +21576,20 @@
                 {
                   "distanceKm": 11.7,
                   "elevM": 1370
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-563",
+                  "distanceKm": 10.1
+                },
+                {
+                  "locationId": "gr10-water-562",
+                  "distanceKm": 11.3
                 }
               ]
             }
@@ -17140,6 +21739,24 @@
                   "elevM": 1974
                 }
               ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-104",
+                  "note": "Hut · 4 beds"
+                },
+                {
+                  "locationId": "gr10-accom-64",
+                  "note": "Hut · 6 beds"
+                },
+                {
+                  "locationId": "gr10-accom-65",
+                  "note": "Hut · 10 beds"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17247,6 +21864,16 @@
                   "elevM": 2246
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-551",
+                  "distanceKm": 6.7
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17350,6 +21977,16 @@
                   "elevM": 1826
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-501",
+                  "distanceKm": 7.5
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17443,6 +22080,16 @@
                 {
                   "distanceKm": 9.5,
                   "elevM": 2265
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-109",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -17562,6 +22209,32 @@
                 {
                   "distanceKm": 15.8,
                   "elevM": 1768
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-115",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-130",
+                  "note": "Hut · 4 beds"
+                },
+                {
+                  "locationId": "gr10-accom-110",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-114",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-123",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -17691,6 +22364,26 @@
                   "elevM": 1846
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-489",
+                  "distanceKm": 11.2
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-63",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -17804,6 +22497,42 @@
                 {
                   "distanceKm": 14.1,
                   "elevM": 2323
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-491",
+                  "distanceKm": 1.1
+                },
+                {
+                  "locationId": "gr10-water-469",
+                  "distanceKm": 5.3
+                },
+                {
+                  "locationId": "gr10-water-490",
+                  "distanceKm": 5.8
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-58",
+                  "note": "Hut · 8 beds"
+                },
+                {
+                  "locationId": "gr10-accom-121",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-108",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -18012,6 +22741,31 @@
                   "elevM": 2050
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-474",
+                  "distanceKm": 6.3
+                },
+                {
+                  "locationId": "gr10-water-536",
+                  "distanceKm": 12.4,
+                  "note": "seasonal"
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-106",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18131,6 +22885,34 @@
                   "elevM": 1767
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-531",
+                  "distanceKm": 7.3
+                },
+                {
+                  "locationId": "gr10-water-525",
+                  "distanceKm": 9.9
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-113",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-57",
+                  "note": "Hut · 4 beds"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18248,6 +23030,38 @@
                 {
                   "distanceKm": 15.4,
                   "elevM": 873
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-496",
+                  "distanceKm": 3.8
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-112",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-105",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-129",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-66",
+                  "note": "Hut · 4 beds"
                 }
               ]
             }
@@ -18379,6 +23193,20 @@
                 {
                   "distanceKm": 18.1,
                   "elevM": 731
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-83",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-111",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -18520,6 +23348,34 @@
                   "elevM": 661
                 }
               ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-541",
+                  "distanceKm": 3.3
+                },
+                {
+                  "locationId": "gr10-water-558",
+                  "distanceKm": 20.4
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-72",
+                  "note": "Hut"
+                },
+                {
+                  "locationId": "gr10-accom-107",
+                  "note": "Campsite"
+                }
+              ]
             }
           ],
           "highlightIds": []
@@ -18657,6 +23513,50 @@
                 {
                   "distanceKm": 20.1,
                   "elevM": 1104
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-500",
+                  "distanceKm": 7
+                },
+                {
+                  "locationId": "gr10-water-497",
+                  "distanceKm": 7.5
+                },
+                {
+                  "locationId": "gr10-water-499",
+                  "distanceKm": 8.4
+                },
+                {
+                  "locationId": "gr10-water-498",
+                  "distanceKm": 8.5
+                },
+                {
+                  "locationId": "gr10-water-559",
+                  "distanceKm": 19
+                },
+                {
+                  "locationId": "gr10-water-518",
+                  "distanceKm": 19.1
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-99",
+                  "note": "Refuge"
+                },
+                {
+                  "locationId": "gr10-accom-124",
+                  "note": "Campsite"
                 }
               ]
             }
@@ -18800,6 +23700,80 @@
                 {
                   "distanceKm": 21.4,
                   "elevM": 10
+                }
+              ]
+            },
+            {
+              "kind": "water",
+              "header": "Water",
+              "stops": [
+                {
+                  "locationId": "gr10-water-519",
+                  "distanceKm": 0.4
+                },
+                {
+                  "locationId": "gr10-water-521",
+                  "distanceKm": 0.5
+                },
+                {
+                  "locationId": "gr10-water-517",
+                  "distanceKm": 1.4
+                },
+                {
+                  "locationId": "gr10-water-532",
+                  "distanceKm": 2.1
+                },
+                {
+                  "locationId": "gr10-water-542",
+                  "distanceKm": 4.1
+                },
+                {
+                  "locationId": "gr10-water-545",
+                  "distanceKm": 8.3
+                },
+                {
+                  "locationId": "gr10-water-470",
+                  "distanceKm": 8.7
+                },
+                {
+                  "locationId": "gr10-water-471",
+                  "distanceKm": 10.4
+                },
+                {
+                  "locationId": "gr10-water-505",
+                  "distanceKm": 12.7,
+                  "note": "seasonal"
+                },
+                {
+                  "locationId": "gr10-water-544",
+                  "distanceKm": 13.5
+                },
+                {
+                  "locationId": "gr10-water-493",
+                  "distanceKm": 17.9
+                },
+                {
+                  "locationId": "gr10-water-543",
+                  "distanceKm": 18.5,
+                  "note": "seasonal"
+                }
+              ]
+            },
+            {
+              "kind": "accommodation",
+              "header": "Accommodation",
+              "places": [
+                {
+                  "locationId": "gr10-accom-128",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-125",
+                  "note": "Campsite"
+                },
+                {
+                  "locationId": "gr10-accom-126",
+                  "note": "Campsite"
                 }
               ]
             }
