@@ -7,8 +7,9 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 import { loadContent, saveContent } from './cache';
+import { deriveSectionSpecs } from './deriveSpecs';
 import { CONTENT_MODEL, generateObjectiveGuide, generateSectionContent } from './generate';
-import { GR11_OBJECTIVE, GR11_SECTIONS } from './specs';
+import { getTrailContent, trailIdFromArgs } from './trails';
 
 const key = process.env.ANTHROPIC_API_KEY;
 if (!key) {
@@ -16,16 +17,19 @@ if (!key) {
   process.exit(1);
 }
 
+const trailId = trailIdFromArgs(process.argv);
 const force = process.argv.includes('--force');
+const trail = getTrailContent(trailId);
+const sections = trail.sections ?? deriveSectionSpecs(trailId);
 const client = new Anthropic({ apiKey: key });
 
-const existing = loadContent('gr11');
+const existing = loadContent(trailId);
 const sectionGuide: NonNullable<typeof existing.sectionGuide> = {
   ...(existing.sectionGuide ?? {}),
 };
 
-console.log(`Content generation (${CONTENT_MODEL})${force ? ' --force' : ''}\n`);
-for (const s of GR11_SECTIONS) {
+console.log(`Content generation — ${trailId} (${CONTENT_MODEL})${force ? ' --force' : ''}\n`);
+for (const s of sections) {
   if (sectionGuide[s.id]?.length && !force) {
     console.log(`  skip  ${s.id} (already generated)`);
     continue;
@@ -46,7 +50,7 @@ let objectiveGuide = existing.objectiveGuide;
 if (!objectiveGuide?.length || force) {
   process.stdout.write('  gen   objective Guide (planning + environment) … ');
   try {
-    const { topics, sources } = await generateObjectiveGuide(client, GR11_OBJECTIVE);
+    const { topics, sources } = await generateObjectiveGuide(client, trail.objective);
     if (topics.length) objectiveGuide = topics;
     console.log(`${topics.length} topics · ${sources} sources`);
   } catch (err) {
@@ -56,10 +60,10 @@ if (!objectiveGuide?.length || force) {
   console.log('  skip  objective Guide (already generated)');
 }
 
-saveContent('gr11', {
+saveContent(trailId, {
   ...existing,
   sectionGuide,
   objectiveGuide,
   provenance: { model: CONTENT_MODEL, generatedAt: new Date().toISOString() },
 });
-console.log('\n✓ wrote packages/db/content/gr11.json');
+console.log(`\n✓ wrote packages/db/content/${trailId}.json`);

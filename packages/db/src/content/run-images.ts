@@ -4,27 +4,18 @@
 // No API key needed — Commons is open. Then run `pack:build` to fold media into the pack.
 
 import { loadContent, saveContent } from './cache';
-import { type ImageQuery, sourceImage } from './images';
+import { sourceImage } from './images';
+import { getTrailContent, trailIdFromArgs } from './trails';
 
-// mediaId scheme matches the pack's heroMediaId (`media/hero/<scope>`).
-const QUERIES: ImageQuery[] = [
-  { mediaId: 'media/hero/gr11', term: 'Pyrenees mountains Spain landscape' },
-  { mediaId: 'media/hero/aneto', term: 'Aneto Pyrenees summit' },
-  { mediaId: 'media/hero/gr11-basque-country-navarre', term: 'Selva de Irati beech forest' },
-  { mediaId: 'media/hero/gr11-aragonese-pyrenees', term: 'Panticosa Tena valley Pyrenees' },
-  { mediaId: 'media/hero/gr11-ordesa-high-country', term: 'Ordesa Monte Perdido valley' },
-  {
-    mediaId: 'media/hero/gr11-andorra-pallars-high-country',
-    term: 'Aiguestortes Sant Maurici lake',
-  },
-  { mediaId: 'media/hero/gr11-eastern-pyrenees', term: 'Cap de Creus cape' },
-];
+// Image search terms come from the trail registry (mediaId matches heroMediaId).
+const trailId = trailIdFromArgs(process.argv);
+const QUERIES = getTrailContent(trailId).images;
 
 const force = process.argv.includes('--force');
-const existing = loadContent('gr11');
+const existing = loadContent(trailId);
 const media: NonNullable<typeof existing.media> = { ...(existing.media ?? {}) };
 
-console.log(`Image sourcing (Wikimedia Commons)${force ? ' --force' : ''}\n`);
+console.log(`Image sourcing — ${trailId} (Wikimedia Commons)${force ? ' --force' : ''}\n`);
 for (const q of QUERIES) {
   if (media[q.mediaId] && !force) {
     console.log(`  skip  ${q.mediaId}`);
@@ -44,5 +35,5 @@ for (const q of QUERIES) {
   }
 }
 
-saveContent('gr11', { ...existing, media });
-console.log(`\n✓ wrote ${Object.keys(media).length} media → packages/db/content/gr11.json`);
+saveContent(trailId, { ...existing, media });
+console.log(`\n✓ wrote ${Object.keys(media).length} media → packages/db/content/${trailId}.json`);
