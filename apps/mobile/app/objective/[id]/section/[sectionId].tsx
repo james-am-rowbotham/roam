@@ -1,4 +1,4 @@
-import type { PlaceRef, Section, Stat } from '@roam/content';
+import type { Section, Stat } from '@roam/content';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
@@ -24,8 +24,7 @@ const stageMeta = (stats: Stat[]) =>
   ]
     .filter(Boolean)
     .join(' · ');
-const placeNames = (refs: PlaceRef[]) =>
-  refs.map((r) => contentStore.locations.get(r.locationId)?.name ?? r.locationId).join(', ');
+const locName = (id: string) => contentStore.locations.get(id)?.name ?? id;
 
 // Section screen (§6.1) — hero + stat pills + in-place Overview | Stages tabs (both
 // share the hero, so this is local tab state, not navigation). Overview follows the
@@ -119,16 +118,36 @@ function Overview({ section }: { section: Section }) {
         </View>
       ))}
 
-      {/* Resupply & refuges digest */}
-      <View style={styles.topic}>
-        <Text style={styles.heading}>Resupply & refuges</Text>
-        {section.resupply.length > 0 && (
-          <Text style={styles.bodyText}>Resupply · {placeNames(section.resupply)}</Text>
-        )}
-        {section.refuges.length > 0 && (
-          <Text style={styles.bodyText}>Refuges · {placeNames(section.refuges)}</Text>
-        )}
-      </View>
+      {/* Resupply & refuges digest (§12.2) — day-end towns, then staffed huts with meta */}
+      {(section.resupply.length > 0 || section.refuges.length > 0) && (
+        <View style={styles.topic}>
+          <Text style={styles.heading}>Resupply & refuges</Text>
+          <Text style={styles.bodyText}>
+            Where to restock and sleep, in order along the section.
+          </Text>
+          {section.resupply.length > 0 && (
+            <View style={styles.digestGroup}>
+              <Text style={styles.digestKicker}>RESUPPLY</Text>
+              {section.resupply.map((p) => (
+                <Text key={p.locationId} style={styles.digestName}>
+                  {locName(p.locationId)}
+                </Text>
+              ))}
+            </View>
+          )}
+          {section.refuges.length > 0 && (
+            <View style={styles.digestGroup}>
+              <Text style={styles.digestKicker}>REFUGES</Text>
+              {section.refuges.map((p) => (
+                <View key={p.locationId} style={styles.digestItem}>
+                  <Text style={styles.digestName}>{locName(p.locationId)}</Text>
+                  {p.note ? <Text style={styles.digestMeta}>{p.note}</Text> : null}
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
 
       {/* Highlights — near the end (§12.2) */}
       {section.highlightIds.length > 0 && (
@@ -186,4 +205,9 @@ const styles = StyleSheet.create({
   topic: { gap: spacing[3] },
   heading: { ...type.sectionHeader, color: colors.text.primary },
   bodyText: { ...type.body, color: colors.text.primary },
+  digestGroup: { gap: spacing[2], paddingTop: spacing[2] },
+  digestKicker: { ...type.label, color: colors.text.secondary, paddingBottom: spacing[1] },
+  digestItem: { gap: 1 },
+  digestName: { ...type.bodyStrong, color: colors.text.primary },
+  digestMeta: { ...type.meta, color: colors.text.secondary },
 });

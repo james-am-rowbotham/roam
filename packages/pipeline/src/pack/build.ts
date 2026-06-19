@@ -149,6 +149,18 @@ export function buildTrailPack(
     const distM = own.reduce((sum, s) => sum + (s.endChainageM - s.startChainageM), 0);
     const lo = Math.min(...own.map((s) => s.number));
     const hi = Math.max(...own.map((s) => s.number));
+    // Resupply & refuges digest: the section's day-end towns, and the staffed huts within
+    // its chainage span (§12.2). Both reference Locations already in the pack.
+    const startM = Math.min(...own.map((s) => s.startChainageM));
+    const endM = Math.max(...own.map((s) => s.endChainageM));
+    const townIds = [...new Set(own.flatMap((s) => [s.fromLocationId, s.toLocationId]))];
+    const resupply = townIds.map((locationId) => ({ locationId }));
+    const refuges = k.accommodation
+      .filter(
+        (a) =>
+          (a.type === 'refuge' || a.type === 'hut') && a.chainageM >= startM && a.chainageM <= endM,
+      )
+      .map((a) => ({ locationId: a.id, note: accomNote(a) }));
     return {
       id: sectionId,
       objectiveId: config.id,
@@ -163,8 +175,8 @@ export function buildTrailPack(
         { key: 'distance', value: km(distM), unit: 'km', label: 'Distance' },
       ],
       guide: content.sectionGuide?.[sectionId],
-      resupply: [],
-      refuges: [],
+      resupply,
+      refuges,
       highlightIds: [],
       stageIds: own.map((s) => `${config.id}-s${s.number}`),
     };

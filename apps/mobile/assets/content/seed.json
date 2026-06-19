@@ -6328,7 +6328,35 @@
               "body": "This is the Atlantic flank of the Pyrenees, closest to the Bay of Biscay, and it is green because it is wet — cloud and rain arrive off the sea more often than further east. Fog is the practical hazard, not heat: several stages warn that mist in the upper pasture zones, between Urkiaga and the Abodi passes, can make orientation hard. The walking season runs roughly March to November, with summer the most settled."
             }
           ],
-          "resupply": [],
+          "resupply": [
+            {
+              "locationId": "gr11-loc-0"
+            },
+            {
+              "locationId": "gr11-loc-1"
+            },
+            {
+              "locationId": "gr11-loc-2"
+            },
+            {
+              "locationId": "gr11-loc-3"
+            },
+            {
+              "locationId": "gr11-loc-4"
+            },
+            {
+              "locationId": "gr11-loc-5"
+            },
+            {
+              "locationId": "gr11-loc-6"
+            },
+            {
+              "locationId": "gr11-loc-7"
+            },
+            {
+              "locationId": "gr11-loc-8"
+            }
+          ],
           "refuges": [],
           "highlightIds": [],
           "stageIds": [
@@ -6392,8 +6420,38 @@
               "body": "Summer days are hot with hard sun, but in July and August thunderstorms build through the afternoon, especially when a southerly wind pushes moist air up from the plains — the standard rule is to be off exposed ridges and high passes before 2 pm. Snow lingers on the highest cols well into summer: Tebarray (2,771 m) can hold it until mid-August, and Brazato into July, both steep enough to want an ice axe when iced. Start early, and treat the high passes as the part of the day that decides the rest."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr11-loc-8"
+            },
+            {
+              "locationId": "gr11-loc-9"
+            },
+            {
+              "locationId": "gr11-loc-10"
+            },
+            {
+              "locationId": "gr11-loc-11"
+            },
+            {
+              "locationId": "gr11-loc-12"
+            },
+            {
+              "locationId": "gr11-loc-13"
+            },
+            {
+              "locationId": "gr11-loc-14"
+            },
+            {
+              "locationId": "gr11-loc-15"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr11-accom-43",
+              "note": "Hut"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr11-s9",
@@ -6449,7 +6507,32 @@
               "body": "In July and August the pattern is reliable enough to plan around: clear mornings, then thunderstorms building in the afternoon when warm, moist air pushes up from the south. The high passes here — Chistau at 2,592m, Vallibierna at 2,710m — are exposed and dangerous in a storm. Start early, aim to be off the cols by midday, and treat dark clouds or thunder as a signal to drop down rather than push on."
             }
           ],
-          "resupply": [],
+          "resupply": [
+            {
+              "locationId": "gr11-loc-15"
+            },
+            {
+              "locationId": "gr11-loc-16"
+            },
+            {
+              "locationId": "gr11-loc-17"
+            },
+            {
+              "locationId": "gr11-loc-18"
+            },
+            {
+              "locationId": "gr11-loc-19"
+            },
+            {
+              "locationId": "gr11-loc-20"
+            },
+            {
+              "locationId": "gr11-loc-21"
+            },
+            {
+              "locationId": "gr11-loc-22"
+            }
+          ],
           "refuges": [],
           "highlightIds": [],
           "stageIds": [
@@ -6506,8 +6589,61 @@
               "body": "This stretch walks best from July to September, when the huts are staffed and the high ports are clear. In early summer snow holds on the highest cols — Port de Ratera (2,534m) and especially Port de Baiau (2,757m), where an ice axe and crampons can be needed and the boulder slope above is loose. Later in the season the lower valleys around Tavascan and the approach to Malniu turn hot and dry, so the risk shifts from snow to heat and water."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr11-loc-22"
+            },
+            {
+              "locationId": "gr11-loc-23"
+            },
+            {
+              "locationId": "gr11-loc-24"
+            },
+            {
+              "locationId": "gr11-loc-25"
+            },
+            {
+              "locationId": "gr11-loc-26"
+            },
+            {
+              "locationId": "gr11-loc-27"
+            },
+            {
+              "locationId": "gr11-loc-28"
+            },
+            {
+              "locationId": "gr11-loc-29"
+            },
+            {
+              "locationId": "gr11-loc-30"
+            },
+            {
+              "locationId": "gr11-loc-31"
+            },
+            {
+              "locationId": "gr11-loc-32"
+            },
+            {
+              "locationId": "gr11-loc-33"
+            },
+            {
+              "locationId": "gr11-loc-34"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr11-accom-46",
+              "note": "Refuge · 23 beds"
+            },
+            {
+              "locationId": "gr11-accom-48",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr11-accom-50",
+              "note": "Refuge"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr11-s23",
@@ -6574,8 +6710,57 @@
               "body": "The legs from Molló east to Cap de Creus can be walked year-round, but the high stages around Núria and Ulldeter hold snow from roughly mid-December into late June, where an ice axe and crampons can be needed on the ridge. Lower down the danger flips from cold to heat and water: stages like Talaixà to Albanyà list heat as the main difficulty. On the coast the tramuntana, a northwest wind that can reach gale force, dominates the final approach."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr11-loc-34"
+            },
+            {
+              "locationId": "gr11-loc-35"
+            },
+            {
+              "locationId": "gr11-loc-36"
+            },
+            {
+              "locationId": "gr11-loc-37"
+            },
+            {
+              "locationId": "gr11-loc-38"
+            },
+            {
+              "locationId": "gr11-loc-39"
+            },
+            {
+              "locationId": "gr11-loc-40"
+            },
+            {
+              "locationId": "gr11-loc-41"
+            },
+            {
+              "locationId": "gr11-loc-42"
+            },
+            {
+              "locationId": "gr11-loc-43"
+            },
+            {
+              "locationId": "gr11-loc-44"
+            },
+            {
+              "locationId": "gr11-loc-45"
+            },
+            {
+              "locationId": "gr11-loc-46"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr11-accom-44",
+              "note": "Hut"
+            },
+            {
+              "locationId": "gr11-accom-45",
+              "note": "Hut · 12 beds"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr11-s35",
@@ -15547,8 +15732,44 @@
               "body": "Ainhoa is a bastide-rue, its whitewashed Labourdin houses lined along one avenue that pilgrims once walked toward Compostela by the Baztan route, and Sare beside it is listed among Les Plus Beaux Villages de France. The section ends — by the usual reckoning — at Saint-Jean-Pied-de-Port, the second busiest start of the Camino Francés, where tens of thousands of pilgrims set out each year beneath the old citadel. Saint-Étienne-de-Baïgorry gives its valley wine its name, and Sainte-Engrâce keeps an eleventh-century Romanesque church at the eastern edge."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-0"
+            },
+            {
+              "locationId": "gr10-loc-1"
+            },
+            {
+              "locationId": "gr10-loc-2"
+            },
+            {
+              "locationId": "gr10-loc-3"
+            },
+            {
+              "locationId": "gr10-loc-4"
+            },
+            {
+              "locationId": "gr10-loc-5"
+            },
+            {
+              "locationId": "gr10-loc-6"
+            },
+            {
+              "locationId": "gr10-loc-7"
+            },
+            {
+              "locationId": "gr10-loc-8"
+            },
+            {
+              "locationId": "gr10-loc-9"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-97",
+              "note": "Hut"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s1",
@@ -15606,8 +15827,43 @@
               "body": "The Atlantic end of the range catches a lot of weather, and the high cols hold snow well into summer — the Hourquette d'Arre is commonly blocked until mid-June, sometimes to the month's end. The limestone plateaux are exposed with little shelter and few reliable streams once you leave the valleys, so the karst sections are best crossed in clear, settled conditions. Check the pass before committing to the Gabas–Gourette day early in the season."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-9"
+            },
+            {
+              "locationId": "gr10-loc-10"
+            },
+            {
+              "locationId": "gr10-loc-11"
+            },
+            {
+              "locationId": "gr10-loc-12"
+            },
+            {
+              "locationId": "gr10-loc-13"
+            },
+            {
+              "locationId": "gr10-loc-14"
+            },
+            {
+              "locationId": "gr10-loc-15"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-62",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr10-accom-89",
+              "note": "Refuge · 27 beds"
+            },
+            {
+              "locationId": "gr10-accom-60",
+              "note": "Refuge"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s10",
@@ -15656,8 +15912,69 @@
               "body": "These are the highest days on the GR10, so the season is short — paths around the Hourquette d'Ossoue and Col de Madamète hold snow into early summer, and Petit Vignemale needs ice axe and crampons before the July melt. Afternoon sun on the long exposed descents is fierce; trip reports stress sun protection and an early start to clear the passes before cloud builds. Phone signal is patchy between refuges, so check the forecast in the valley towns."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-15"
+            },
+            {
+              "locationId": "gr10-loc-16"
+            },
+            {
+              "locationId": "gr10-loc-17"
+            },
+            {
+              "locationId": "gr10-loc-18"
+            },
+            {
+              "locationId": "gr10-loc-19"
+            },
+            {
+              "locationId": "gr10-loc-20"
+            },
+            {
+              "locationId": "gr10-loc-21"
+            },
+            {
+              "locationId": "gr10-loc-22"
+            },
+            {
+              "locationId": "gr10-loc-23"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-59",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr10-accom-92",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr10-accom-122",
+              "note": "Hut"
+            },
+            {
+              "locationId": "gr10-accom-76",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-95",
+              "note": "Hut · 12 beds"
+            },
+            {
+              "locationId": "gr10-accom-75",
+              "note": "Refuge · 80 beds"
+            },
+            {
+              "locationId": "gr10-accom-73",
+              "note": "Hut"
+            },
+            {
+              "locationId": "gr10-accom-74",
+              "note": "Hut"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s16",
@@ -15708,8 +16025,47 @@
               "body": "This is high, exposed terrain — the practical season runs June to October, with snow lingering on the cols into early summer. The border ridge to Pic de Bacanère is open and offers no shelter, so it is the place a passing storm matters most; the Araing approach is an avalanche path and not a winter route. Carry layers for the high cols even on a settled day, when valley warmth gives no sense of conditions 1,000m above."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-23"
+            },
+            {
+              "locationId": "gr10-loc-24"
+            },
+            {
+              "locationId": "gr10-loc-25"
+            },
+            {
+              "locationId": "gr10-loc-26"
+            },
+            {
+              "locationId": "gr10-loc-27"
+            },
+            {
+              "locationId": "gr10-loc-28"
+            },
+            {
+              "locationId": "gr10-loc-29"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-87",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr10-accom-69",
+              "note": "Hut · 6 beds"
+            },
+            {
+              "locationId": "gr10-accom-71",
+              "note": "Hut"
+            },
+            {
+              "locationId": "gr10-accom-102",
+              "note": "Refuge"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s24",
@@ -15764,8 +16120,57 @@
               "body": "The high crossings — port d'Aula, col d'Escots, col de Fitté — are exposed and hold snow late into spring, so the cabane d'Aula stages suit summer and early autumn. Water can be scarce on the long climbs: on the Saint-Lizier-d'Ustou to Aulus day the cirque de Casiérens is noted as the first reliable source since setting out. Aulus-les-Bains itself sits low at about 750 m, a warm valley floor after the tops."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-29"
+            },
+            {
+              "locationId": "gr10-loc-30"
+            },
+            {
+              "locationId": "gr10-loc-31"
+            },
+            {
+              "locationId": "gr10-loc-32"
+            },
+            {
+              "locationId": "gr10-loc-33"
+            },
+            {
+              "locationId": "gr10-loc-34"
+            },
+            {
+              "locationId": "gr10-loc-35"
+            },
+            {
+              "locationId": "gr10-loc-36"
+            },
+            {
+              "locationId": "gr10-loc-37"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-70",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-68",
+              "note": "Hut · 10 beds"
+            },
+            {
+              "locationId": "gr10-accom-56",
+              "note": "Refuge"
+            },
+            {
+              "locationId": "gr10-accom-91",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-96",
+              "note": "Refuge · 20 beds"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s30",
@@ -15828,8 +16233,60 @@
               "body": "The high cols here are exposed and afternoon thunderstorms are common through summer — storms often build around 16:00, when temperature can drop sharply, so start the climbs to the Porteille des Bésines and Col de la Coume d'Aniel early. September brings more stable, quieter days but colder nights and a real chance of fresh snow at altitude. Some passes hold persistent snow that can call for care even into summer."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-37"
+            },
+            {
+              "locationId": "gr10-loc-38"
+            },
+            {
+              "locationId": "gr10-loc-39"
+            },
+            {
+              "locationId": "gr10-loc-40"
+            },
+            {
+              "locationId": "gr10-loc-41"
+            },
+            {
+              "locationId": "gr10-loc-42"
+            },
+            {
+              "locationId": "gr10-loc-43"
+            },
+            {
+              "locationId": "gr10-loc-44"
+            },
+            {
+              "locationId": "gr10-loc-45"
+            },
+            {
+              "locationId": "gr10-loc-46"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-67",
+              "note": "Hut · 2 beds"
+            },
+            {
+              "locationId": "gr10-accom-104",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-64",
+              "note": "Hut · 6 beds"
+            },
+            {
+              "locationId": "gr10-accom-65",
+              "note": "Hut · 10 beds"
+            },
+            {
+              "locationId": "gr10-accom-130",
+              "note": "Hut · 4 beds"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s38",
@@ -15887,8 +16344,60 @@
               "body": "The high opening stages run mostly without shade, so the Carança and Canigou days carry full sun and need an early start. As the trail drops toward the coast the heat builds rather than eases — walkers regularly find the last days near the Mediterranean the hottest of the trek. The shaping force at the eastern end is the tramontane, the dry wind off the land that has bent the Albères vegetation and can hit the final ridge hard."
             }
           ],
-          "resupply": [],
-          "refuges": [],
+          "resupply": [
+            {
+              "locationId": "gr10-loc-46"
+            },
+            {
+              "locationId": "gr10-loc-47"
+            },
+            {
+              "locationId": "gr10-loc-48"
+            },
+            {
+              "locationId": "gr10-loc-49"
+            },
+            {
+              "locationId": "gr10-loc-50"
+            },
+            {
+              "locationId": "gr10-loc-51"
+            },
+            {
+              "locationId": "gr10-loc-52"
+            },
+            {
+              "locationId": "gr10-loc-53"
+            },
+            {
+              "locationId": "gr10-loc-54"
+            },
+            {
+              "locationId": "gr10-loc-55"
+            }
+          ],
+          "refuges": [
+            {
+              "locationId": "gr10-accom-58",
+              "note": "Hut · 8 beds"
+            },
+            {
+              "locationId": "gr10-accom-57",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-66",
+              "note": "Hut · 4 beds"
+            },
+            {
+              "locationId": "gr10-accom-72",
+              "note": "Hut"
+            },
+            {
+              "locationId": "gr10-accom-99",
+              "note": "Refuge"
+            }
+          ],
           "highlightIds": [],
           "stageIds": [
             "gr10-s47",
