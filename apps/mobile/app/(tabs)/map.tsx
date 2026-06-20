@@ -1,5 +1,6 @@
 import { Marker } from '@maplibre/maplibre-react-native';
 import {
+  type Difficulty,
   type FilterDimension,
   type MapEntity,
   type MapFilters,
@@ -27,6 +28,7 @@ import {
 import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
+import { contentStore } from '../../lib/contentRepo';
 import { geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
@@ -74,9 +76,36 @@ type MapTrail = {
   waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
 };
 
-// API trail → the @roam/core MapEntity the filter engine works on (§14). Difficulty/season
-// have no trail data yet, so those filters narrow to nothing until coverage lands.
+// Hiking-band stage grade → the MapEntity difficulty scale (severe = expert).
+const GRADE_TO_DIFFICULTY: Record<string, Difficulty> = {
+  easy: 'easy',
+  moderate: 'moderate',
+  hard: 'hard',
+  severe: 'expert',
+};
+const DIFFICULTY_RANK: Record<Difficulty, number> = { easy: 0, moderate: 1, hard: 2, expert: 3 };
+
+// A trail's difficulty, derived from its content stages' grades: the 75th-percentile grade,
+// so a few hard/severe days set the rating (the trail's challenge) without one severe stage
+// labelling the whole route. GR11 → hard, GR10 → expert. undefined when there are no stages.
+function trailDifficulty(slug: string): Difficulty | undefined {
+  const sectionIds = new Set(
+    [...contentStore.sectionSummaries.values()]
+      .filter((s) => s.objectiveId === slug)
+      .map((s) => s.id),
+  );
+  const ranked = [...contentStore.stageSummaries.values()]
+    .filter((s) => sectionIds.has(s.sectionId))
+    .map((s) => GRADE_TO_DIFFICULTY[s.grade.value])
+    .filter((d): d is Difficulty => !!d)
+    .sort((a, b) => DIFFICULTY_RANK[a] - DIFFICULTY_RANK[b]);
+  return ranked.length ? ranked[Math.floor(ranked.length * 0.75)] : undefined;
+}
+
+// API trail → the @roam/core MapEntity the filter engine works on (§14). Difficulty is
+// derived from the matching content objective's stage grades (the API trail has none).
 function trailToEntity(t: MapTrail): MapEntity {
+  const slug = (t.ref ?? t.name ?? '').toLowerCase().replace(/\s+/g, '');
   return {
     id: String(t.id),
     kind: 'trail',
@@ -85,6 +114,7 @@ function trailToEntity(t: MapTrail): MapEntity {
     country: t.country,
     region: t.region,
     distanceM: t.distanceM,
+    difficulty: trailDifficulty(slug),
   };
 }
 

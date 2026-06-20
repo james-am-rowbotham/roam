@@ -4,7 +4,6 @@ import {
   DURATION_BANDS,
   type FilterDimension,
   type MapFilters,
-  SEASONS,
 } from '@roam/core';
 import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,7 +33,6 @@ const STATIC_GROUPS: { title: string; dim: FilterDimension; options: readonly Op
   { title: 'DIFFICULTY', dim: 'difficulty', options: DIFFICULTIES },
   { title: 'DURATION', dim: 'duration', options: DURATION_BANDS },
   { title: 'DISTANCE', dim: 'distance', options: DISTANCE_BANDS },
-  { title: 'SEASON', dim: 'seasons', options: SEASONS },
 ];
 
 export function FilterSheet({
