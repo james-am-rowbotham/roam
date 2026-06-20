@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
   },
   heroTagline: { ...type.body, color: colors.overlay.onImageMuted },
   statBar: {
+    backgroundColor: colors.bg.surface,
     paddingHorizontal: layout.screenPadding,
     paddingVertical: spacing[4],
     borderBottomWidth: StyleSheet.hairlineWidth,

@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
     color: colors.overlay.onImage,
   },
   statBar: {
+    backgroundColor: colors.bg.surface,
     paddingHorizontal: layout.screenPadding,
     paddingVertical: spacing[4],
     borderBottomWidth: StyleSheet.hairlineWidth,
