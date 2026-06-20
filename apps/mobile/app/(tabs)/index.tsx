@@ -1,8 +1,8 @@
 import type { ObjectiveSummary } from '@roam/content';
-import { type Href, useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DiscoveryCard } from '../../components/browse/DiscoveryCard';
+import { TRAIL_CARD_WIDTH, TrailCard } from '../../components/browse/TrailCard';
 import { JourneyCard } from '../../components/journey';
 import { Button, NavBar, SearchField, SectionHeader } from '../../components/ui';
 import { CURRENT_USER_ID } from '../../config/user';
@@ -18,19 +18,6 @@ const objectiveSubtitle = (o: ObjectiveSummary): string => {
   const value = typeof lead.value === 'number' ? lead.value.toLocaleString('en-US') : lead.value;
   return `${kind} · ${value}${lead.unit ? ` ${lead.unit}` : ''}`;
 };
-
-// Dev-only launchers that have no real Home entry yet (discovery is Phase 7).
-const DEV_LINKS: { label: string; href: Href }[] = [
-  {
-    label: 'Discover — Europe (Continent → … → Stage)',
-    href: { pathname: '/discover/continent/[id]', params: { id: 'europe' } },
-  },
-  {
-    label: 'Pyrenees — explore by range (GR11 + GR10 + Aneto)',
-    href: { pathname: '/discover/range/[id]', params: { id: 'pyrenees' } },
-  },
-  { label: 'ContentBlocks — every kind', href: '/dev/content-blocks' },
-];
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -59,11 +46,18 @@ export default function HomeScreen() {
       <SearchField onPress={() => router.push('/search')} />
 
       <SectionHeader title="Popular trails" />
-      <View style={styles.trailList}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
+        snapToInterval={TRAIL_CARD_WIDTH + spacing[2]}
+        snapToAlignment="start"
+        contentContainerStyle={styles.trailCarousel}
+      >
         {isLoading
           ? (['a', 'b', 'c'] as const).map((k) => <View key={k} style={styles.skeleton} />)
           : (objectives ?? []).map((o) => (
-              <DiscoveryCard
+              <TrailCard
                 key={o.id}
                 title={o.name}
                 subtitle={objectiveSubtitle(o)}
@@ -71,9 +65,9 @@ export default function HomeScreen() {
                 onPress={() => router.push({ pathname: '/objective/[id]', params: { id: o.id } })}
               />
             ))}
-      </View>
+      </ScrollView>
 
-      <SectionHeader title="Active journey" />
+      <SectionHeader title="My journeys" />
       {firstRun ? (
         <View style={styles.welcomeCard}>
           <Text style={styles.welcomeTitle}>Welcome to Roam</Text>
@@ -105,29 +99,14 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg.app },
   content: { paddingBottom: spacing[12] },
-  trailList: { marginHorizontal: spacing[8], gap: spacing[6] },
-  devLinks: {
-    marginHorizontal: spacing[8],
-    backgroundColor: colors.bg.surface,
-    borderRadius: radius.lg,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: colors.border.default,
-    overflow: 'hidden',
+  trailCarousel: {
+    paddingHorizontal: spacing[8],
+    gap: spacing[2],
   },
-  devLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: spacing[5],
-    paddingHorizontal: spacing[6],
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.border.default,
-  },
-  devLinkLabel: { ...type.body, color: colors.text.primary },
-  devLinkChevron: { ...type.bodyLarge, color: colors.text.secondary },
   skeleton: {
-    height: 100,
-    borderRadius: radius.xl,
+    width: TRAIL_CARD_WIDTH,
+    height: 173,
+    borderRadius: radius.sm,
     backgroundColor: colors.bg.subtle,
   },
   emptyJourneys: {
