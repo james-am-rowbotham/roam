@@ -9,6 +9,7 @@ export * from './stats';
 export * from './objective';
 export * from './repo';
 export * from './guide';
+export * from './search';
 export * from './importer';
 export * from './memory';
 export { seed } from './seed';
