@@ -60,6 +60,7 @@ export interface StageSummary {
   name: string;
   fromLocationId: string;
   toLocationId: string;
+  heroMediaId?: string;
   grade: Grade;
   atAGlance: Stat[];
 }

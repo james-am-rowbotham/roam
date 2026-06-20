@@ -22,7 +22,14 @@ export type StatusTone = 'success' | 'warn' | 'danger' | 'info';
 
 export type ContentBlock =
   | { kind: 'prose'; heading?: string; body: string }
-  | { kind: 'map'; geojson: GeoJSON.FeatureCollection; styleId: string; markers: MarkerRef[] }
+  | {
+      kind: 'map';
+      geojson: GeoJSON.FeatureCollection;
+      styleId: string;
+      markers: MarkerRef[];
+      /** Route line colour (the trail's osmc way colour); falls back to map ink. */
+      color?: string;
+    }
   | {
       kind: 'elevation';
       points: { distanceKm: number; elevM: number }[];

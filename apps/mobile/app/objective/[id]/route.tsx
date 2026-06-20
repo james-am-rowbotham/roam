@@ -7,7 +7,12 @@ import { PlaceRow } from '../../../components/browse/PlaceRow';
 import { GradeBadge } from '../../../components/ui/GradeBadge';
 import { IconButton } from '../../../components/ui/IconButton';
 import { Tabs } from '../../../components/ui/Tabs';
-import { useObjective, useObjectiveRoutes, useObjectiveSections } from '../../../lib/contentRepo';
+import {
+  mediaFor,
+  useObjective,
+  useObjectiveRoutes,
+  useObjectiveSections,
+} from '../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../theme';
 
 const stat = (stats: Stat[], key: string) => stats.find((s) => s.key === key)?.value;
@@ -90,6 +95,7 @@ export default function RouteScreen() {
                 title={s.name}
                 // Trail section rows put stages · km · character on one meta line (1020:2394).
                 meta={`${sectionMeta(s.atAGlance)} · ${s.tagline}`}
+                mediaUri={mediaFor(s.heroMediaId)?.uri}
                 onPress={() =>
                   router.push({
                     pathname: '/objective/[id]/section/[sectionId]',

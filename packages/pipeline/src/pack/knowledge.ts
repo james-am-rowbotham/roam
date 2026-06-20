@@ -49,6 +49,8 @@ export interface KnowledgePOI {
 export interface TrailKnowledge {
   routeName: string;
   lengthM: number;
+  /** The route's osmc way colour (hex) — the trail line colour for map previews. */
+  wayColor?: string;
   /** Ordered elevation samples along the route: distance-from-start + elevation, metres. */
   elevationProfile: { d: number; e: number }[];
   regions: KnowledgeRegion[];

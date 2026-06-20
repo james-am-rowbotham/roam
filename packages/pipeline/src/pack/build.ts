@@ -27,7 +27,7 @@ import { EMPTY_CONTENT, type TrailContent } from './content';
 import type { KnowledgePOI, TrailKnowledge } from './knowledge';
 
 // A map ContentBlock wrapping one route-line geometry (§7) — for trail/section/stage previews.
-const mapBlock = (geom: GeoJSON.Geometry): ContentBlock => ({
+const mapBlock = (geom: GeoJSON.Geometry, color?: string): ContentBlock => ({
   kind: 'map',
   geojson: {
     type: 'FeatureCollection',
@@ -35,6 +35,7 @@ const mapBlock = (geom: GeoJSON.Geometry): ContentBlock => ({
   } as GeoJSON.FeatureCollection,
   styleId: 'outdoor',
   markers: [],
+  color,
 });
 
 // Accommodation detail line — "Refuge · 96 beds · seasonal".
@@ -160,7 +161,7 @@ export function buildTrailPack(
       // §12.4 order: Overview → map → elevation → water → accommodation → hazards.
       blocks: [
         ...(content.stageBlocks?.[stageId] ?? []),
-        ...(k.stageGeojson[stageId] ? [mapBlock(k.stageGeojson[stageId])] : []),
+        ...(k.stageGeojson[stageId] ? [mapBlock(k.stageGeojson[stageId], k.wayColor)] : []),
         ...(elev ? [elev] : []),
         ...(waterBlock ? [waterBlock] : []),
         ...(accomBlock ? [accomBlock] : []),
@@ -218,7 +219,7 @@ export function buildTrailPack(
     // Section region map — a simplified slice of the route line (§7).
     const geom = k.sectionGeojson[r.id];
     const mapTopic: GuideTopic[] = geom
-      ? [{ key: 'map', facet: 'overview', blocks: [mapBlock(geom)] }]
+      ? [{ key: 'map', facet: 'overview', blocks: [mapBlock(geom, k.wayColor)] }]
       : [];
     const guide = [...mapTopic, ...baseGuide, ...cautions];
     return {
@@ -258,7 +259,11 @@ export function buildTrailPack(
 
   const guideTopics: GuideTopic[] = [];
   if (k.routeGeojson) {
-    guideTopics.push({ key: 'map', facet: 'overview', blocks: [mapBlock(k.routeGeojson)] });
+    guideTopics.push({
+      key: 'map',
+      facet: 'overview',
+      blocks: [mapBlock(k.routeGeojson, k.wayColor)],
+    });
   }
   if (k.elevationProfile.length >= 2) {
     guideTopics.push({
@@ -327,10 +332,10 @@ export function buildTrailPack(
         label: 'Days',
       },
       {
-        key: 'highPoint',
-        value: Math.round(Math.max(...k.elevationProfile.map((p) => p.e))),
+        key: 'ascent',
+        value: totalAscent.toLocaleString('en-US'),
         unit: 'm',
-        label: 'High point',
+        label: 'Ascent',
       },
     ],
     guide: [...guideTopics, ...(content.objectiveGuide ?? [])],

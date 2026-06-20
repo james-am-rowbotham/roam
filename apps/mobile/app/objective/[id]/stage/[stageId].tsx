@@ -1,7 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ContentBlockRenderer, storeResolve } from '../../../../components/content';
+import { ContentBlockRenderer, useStoreResolve } from '../../../../components/content';
 import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { Button } from '../../../../components/ui/Button';
 import { IconButton } from '../../../../components/ui/IconButton';
@@ -19,6 +19,7 @@ export default function StageScreen() {
   const { stageId } = useLocalSearchParams<{ id: string; stageId: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const resolve = useStoreResolve();
   const { data: stage } = useStage(stageId);
 
   if (!stage) {
@@ -53,7 +54,7 @@ export default function StageScreen() {
         </View>
 
         <View style={styles.blocks}>
-          <ContentBlockRenderer blocks={stage.blocks} resolve={storeResolve} />
+          <ContentBlockRenderer blocks={stage.blocks} resolve={resolve} />
         </View>
       </ScrollView>
 

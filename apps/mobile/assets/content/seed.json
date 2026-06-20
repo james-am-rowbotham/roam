@@ -5697,10 +5697,10 @@
             "label": "Days"
           },
           {
-            "key": "highPoint",
-            "value": 2792,
+            "key": "ascent",
+            "value": "38,193",
             "unit": "m",
-            "label": "High point"
+            "label": "Ascent"
           }
         ],
         "guide": [
@@ -7457,7 +7457,8 @@
                   ]
                 },
                 "styleId": "outdoor",
-                "markers": []
+                "markers": [],
+                "color": "#C74538"
               }
             ]
           },
@@ -9679,7 +9680,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -10057,7 +10059,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -10443,7 +10446,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -10927,7 +10931,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -11660,7 +11665,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -11996,7 +12002,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -12327,7 +12334,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -12578,7 +12586,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -12805,7 +12814,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -13026,7 +13036,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -13247,7 +13258,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -13466,7 +13478,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -13641,7 +13654,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -13816,7 +13830,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -14027,7 +14042,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -14238,7 +14254,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -14513,7 +14530,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -14708,7 +14726,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -14913,7 +14932,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -15102,7 +15122,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -15351,7 +15372,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -15586,7 +15608,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -15801,7 +15824,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -16020,7 +16044,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -16269,7 +16294,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -16492,7 +16518,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -16685,7 +16712,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -16850,7 +16878,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17007,7 +17036,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17168,7 +17198,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17351,7 +17382,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17568,7 +17600,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17773,7 +17806,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -17994,7 +18028,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -18197,7 +18232,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -18396,7 +18432,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -18631,7 +18668,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -18860,7 +18898,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -19055,7 +19094,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -19220,7 +19260,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -19513,7 +19554,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -19738,7 +19780,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -19965,7 +20008,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -20180,7 +20224,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -20475,7 +20520,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -20702,7 +20748,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -21001,7 +21048,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -21316,7 +21364,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -21659,7 +21708,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -21941,7 +21991,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -22164,7 +22215,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -22263,10 +22315,10 @@
             "label": "Days"
           },
           {
-            "key": "highPoint",
-            "value": 2684,
+            "key": "ascent",
+            "value": "55,086",
             "unit": "m",
-            "label": "High point"
+            "label": "Ascent"
           }
         ],
         "guide": [
@@ -24331,7 +24383,8 @@
                   ]
                 },
                 "styleId": "outdoor",
-                "markers": []
+                "markers": [],
+                "color": "#C74538"
               }
             ]
           },
@@ -28635,7 +28688,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -28996,7 +29050,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -29417,7 +29472,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -29792,7 +29848,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -30186,7 +30243,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -30674,7 +30732,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -31200,7 +31259,8 @@
                     ]
                   },
                   "styleId": "outdoor",
-                  "markers": []
+                  "markers": [],
+                  "color": "#C74538"
                 }
               ]
             },
@@ -31498,7 +31558,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -31801,7 +31862,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -32114,7 +32176,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -32403,7 +32466,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -32690,7 +32754,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -32953,7 +33018,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -33178,7 +33244,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -33471,7 +33538,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -33804,7 +33872,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -34089,7 +34158,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -34322,7 +34392,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -34585,7 +34656,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -34870,7 +34942,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -35187,7 +35260,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -35442,7 +35516,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -35659,7 +35734,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -35864,7 +35940,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -36055,7 +36132,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -36336,7 +36414,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -36611,7 +36690,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -36856,7 +36936,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -37101,7 +37182,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -37422,7 +37504,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -37651,7 +37734,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -37862,7 +37946,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -38121,7 +38206,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -38360,7 +38446,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -38599,7 +38686,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -38848,7 +38936,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -39077,7 +39166,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -39282,7 +39372,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -39521,7 +39612,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -39794,7 +39886,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -40031,7 +40124,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -40234,7 +40328,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -40477,7 +40572,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -40750,7 +40846,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -40983,7 +41080,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -41244,7 +41342,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -41519,7 +41618,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -41770,7 +41870,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -42029,7 +42130,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -42216,7 +42318,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -42415,7 +42518,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -42618,7 +42722,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -42877,7 +42982,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -43122,7 +43228,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -43327,7 +43434,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -43540,7 +43648,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -43818,7 +43927,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -44099,7 +44209,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -44344,7 +44455,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -44651,7 +44763,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -44972,7 +45085,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",
@@ -45261,7 +45375,8 @@
                 ]
               },
               "styleId": "outdoor",
-              "markers": []
+              "markers": [],
+              "color": "#C74538"
             },
             {
               "kind": "elevation",

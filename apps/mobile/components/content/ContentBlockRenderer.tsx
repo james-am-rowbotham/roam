@@ -5,7 +5,7 @@ import {
   type Location,
   markingColorToken,
 } from '@roam/content';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { resolveColorToken } from '../../lib/colorToken';
 import { geometryBbox } from '../../lib/geo';
 import { colors, radius, spacing, type } from '../../theme';
@@ -21,6 +21,8 @@ export interface BlockResolve {
   location?: (id: string) => Location | undefined;
   leg?: (id: string) => Leg | undefined;
   mediaUrl?: (id: string) => string | undefined;
+  /** Tap handler for a map preview — opens the full map (later: with a filter). */
+  openMap?: () => void;
 }
 
 const STATUS = {
@@ -310,15 +312,27 @@ function SeasonBlock({ block }: { block: Extract<ContentBlock, { kind: 'season' 
   );
 }
 
-function MapBlock({ block }: { block: Extract<ContentBlock, { kind: 'map' }> }) {
+function MapBlock({
+  block,
+  resolve,
+}: {
+  block: Extract<ContentBlock, { kind: 'map' }>;
+  resolve: BlockResolve;
+}) {
   const bounds = block.geojson.features.length ? geometryBbox(block.geojson as never) : undefined;
-  return (
-    <View style={[styles.block, styles.mapContainer]}>
+  const map = (
+    <View style={[styles.block, styles.mapContainer]} pointerEvents="none">
       <MapView bounds={bounds ?? undefined} interactive={false}>
-        <TrailLayer id="content-map" geojson={block.geojson} color={colors.map.route} />
+        <TrailLayer
+          id="content-map"
+          geojson={block.geojson}
+          color={block.color ?? colors.map.route}
+        />
       </MapView>
     </View>
   );
+  // The preview is non-interactive; tapping it opens the full map (later: with a filter).
+  return resolve.openMap ? <Pressable onPress={resolve.openMap}>{map}</Pressable> : map;
 }
 
 // ── dispatcher ─────────────────────────────────────────────────────────────
@@ -354,7 +368,7 @@ function Block({ block, resolve }: { block: ContentBlock; resolve: BlockResolve 
     case 'statStrip':
       return <StatStripBlock block={block} />;
     case 'map':
-      return <MapBlock block={block} />;
+      return <MapBlock block={block} resolve={resolve} />;
     default: {
       // Exhaustiveness: a new ContentBlock kind is a compile error until handled.
       const _never: never = block;

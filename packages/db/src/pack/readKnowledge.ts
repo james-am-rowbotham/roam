@@ -3,6 +3,7 @@
 // + the etapa boundary coordinates via PostGIS) into the normalized TrailKnowledge that
 // the pure buildTrailPack consumes. Source-specific; everything downstream is pure.
 
+import { parseOsmcSymbol } from '@roam/core';
 import type { PackConfig, TrailKnowledge } from '@roam/pipeline';
 import postgres from 'postgres';
 
@@ -25,6 +26,7 @@ interface RouteRow {
   id: number;
   name: string;
   distance_m: number | null;
+  osmc_symbol: string | null;
   // jsonb — may arrive parsed (array) or as a JSON string depending on the driver.
   elevation_profile: unknown;
 }
@@ -81,7 +83,7 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
 
   try {
     const [route] = await c<RouteRow[]>`
-      SELECT r.id, r.name, r.distance_m, r.elevation_profile
+      SELECT r.id, r.name, r.distance_m, r.osmc_symbol, r.elevation_profile
       FROM routes r JOIN trails t ON t.route_id = r.id
       WHERE t.ref = ${config.source.ref} LIMIT 1`;
     if (!route) throw new Error(`No route for trail ref "${config.source.ref}" — ingest it first`);
@@ -226,9 +228,15 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
     const stageGeojson: Record<string, GeoJSON.Geometry> = {};
     for (const r of stageRows) if (r.gj) stageGeojson[`${config.id}-s${r.num}`] = JSON.parse(r.gj);
 
+    // The route's osmc way colour (§17.8) — the trail line colour for map previews.
+    const wayColor = route.osmc_symbol
+      ? (parseOsmcSymbol(route.osmc_symbol)?.wayColor ?? undefined)
+      : undefined;
+
     return {
       routeName: route.name,
       lengthM,
+      wayColor,
       elevationProfile: asProfile(route.elevation_profile),
       regions,
       stages,

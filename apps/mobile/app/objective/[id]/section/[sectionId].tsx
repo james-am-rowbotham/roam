@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PlaceRow } from '../../../../components/browse/PlaceRow';
-import { ContentBlockRenderer, storeResolve } from '../../../../components/content';
+import { ContentBlockRenderer, useStoreResolve } from '../../../../components/content';
 import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
 import { Tabs } from '../../../../components/ui/Tabs';
-import { contentStore, useSection, useSectionStages } from '../../../../lib/contentRepo';
+import { contentStore, mediaFor, useSection, useSectionStages } from '../../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../../theme';
 
 // Section-overview topic order (§12.2): Terrain → Flora & fauna → Culture → Weather → Cautions.
@@ -79,6 +79,7 @@ export default function SectionScreen() {
               key={s.id}
               title={s.name}
               meta={`Stage ${s.number} · ${stageMeta(s.atAGlance)}`}
+              mediaUri={mediaFor(s.heroMediaId)?.uri ?? mediaFor(section.heroMediaId)?.uri}
               onPress={() =>
                 router.push({
                   pathname: '/objective/[id]/stage/[stageId]',
@@ -94,6 +95,7 @@ export default function SectionScreen() {
 }
 
 function Overview({ section }: { section: Section }) {
+  const resolve = useStoreResolve();
   const all = (section.guide ?? [])
     .slice()
     .sort((a, b) => TOPIC_ORDER.indexOf(a.key) - TOPIC_ORDER.indexOf(b.key));
@@ -106,7 +108,7 @@ function Overview({ section }: { section: Section }) {
 
       {/* region map — the section's route-line slice (§7), or a placeholder if absent */}
       {mapTopic?.blocks ? (
-        <ContentBlockRenderer blocks={mapTopic.blocks} resolve={storeResolve} />
+        <ContentBlockRenderer blocks={mapTopic.blocks} resolve={resolve} />
       ) : (
         <View style={styles.mapPlaceholder}>
           <Text style={styles.placeholderText}>Region map</Text>
@@ -119,7 +121,7 @@ function Overview({ section }: { section: Section }) {
         <View key={t.key} style={styles.topic}>
           {t.heading ? <Text style={styles.heading}>{t.heading}</Text> : null}
           {t.body ? <Text style={styles.bodyText}>{t.body}</Text> : null}
-          {t.blocks ? <ContentBlockRenderer blocks={t.blocks} resolve={storeResolve} /> : null}
+          {t.blocks ? <ContentBlockRenderer blocks={t.blocks} resolve={resolve} /> : null}
         </View>
       ))}
 
@@ -158,7 +160,7 @@ function Overview({ section }: { section: Section }) {
       {section.highlightIds.length > 0 && (
         <ContentBlockRenderer
           blocks={[{ kind: 'highlights', highlightIds: section.highlightIds }]}
-          resolve={storeResolve}
+          resolve={resolve}
         />
       )}
     </View>

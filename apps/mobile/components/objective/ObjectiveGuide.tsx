@@ -11,7 +11,7 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, layout, spacing, type } from '../../theme';
-import { ContentBlockRenderer, storeResolve } from '../content';
+import { ContentBlockRenderer, useStoreResolve } from '../content';
 import { HeroMedia } from '../content/HeroMedia';
 import { IconButton } from '../ui/IconButton';
 import { SegmentedControl } from '../ui/SegmentedControl';
@@ -27,6 +27,7 @@ import { Tabs } from '../ui/Tabs';
 export function ObjectiveGuide({ objective }: { objective: Objective }) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const resolve = useStoreResolve();
   const tabs = objectiveTabs(objective);
   const facets = guideFacets(objective.guide);
   const [facet, setFacet] = useState<GuideFacet>(facets[0] ?? 'overview');
@@ -74,9 +75,7 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
           <View key={topic.key} style={styles.topic}>
             {topic.heading ? <Text style={styles.topicHeading}>{topic.heading}</Text> : null}
             {topic.body ? <Text style={styles.topicBody}>{topic.body}</Text> : null}
-            {topic.blocks ? (
-              <ContentBlockRenderer blocks={topic.blocks} resolve={storeResolve} />
-            ) : null}
+            {topic.blocks ? <ContentBlockRenderer blocks={topic.blocks} resolve={resolve} /> : null}
           </View>
         ))}
       </View>

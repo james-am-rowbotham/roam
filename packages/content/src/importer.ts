@@ -265,6 +265,7 @@ export function importPacks(input: SeedInput): ImportedStore {
       name: s.name,
       fromLocationId: s.fromLocationId,
       toLocationId: s.toLocationId,
+      heroMediaId: s.heroMediaId,
       grade: s.grade,
       atAGlance: s.atAGlance,
     });
