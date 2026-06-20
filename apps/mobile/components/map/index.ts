@@ -1,3 +1,4 @@
+export { FilterSheet } from './FilterSheet';
 export { MapImages } from './MapImages';
 export { MapView } from './MapView';
 export type { MapViewHandle } from './MapView';

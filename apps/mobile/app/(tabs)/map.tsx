@@ -1,10 +1,20 @@
 import { Marker } from '@maplibre/maplibre-react-native';
-import { symbolKey } from '@roam/core';
+import {
+  type FilterDimension,
+  type MapEntity,
+  type MapFilters,
+  activeFilterChips,
+  filterEntities,
+  hasActiveFilters,
+  symbolKey,
+  toggleFilterValue,
+} from '@roam/core';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  FilterSheet,
   MapImages,
   MapView,
   type MapViewHandle,
@@ -61,8 +71,25 @@ type MapTrail = {
   id: number;
   ref?: string | null;
   name?: string | null;
+  country?: string | null;
+  region?: string | null;
+  distanceM?: number | null;
   waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
 };
+
+// API trail → the @roam/core MapEntity the filter engine works on (§14). Difficulty/season
+// have no trail data yet, so those filters narrow to nothing until coverage lands.
+function trailToEntity(t: MapTrail): MapEntity {
+  return {
+    id: String(t.id),
+    kind: 'trail',
+    name: t.name ?? t.ref ?? '',
+    ref: t.ref,
+    country: t.country,
+    region: t.region,
+    distanceM: t.distanceM,
+  };
+}
 
 // The trail name + "847 km · 46 stages" + hero image for the map card, from the matching
 // content objective (the API trail carries no stage count); null when there's no match.
@@ -223,13 +250,27 @@ export default function MapScreen() {
     }
   }, [JSON.stringify(pendingViewport)]);
 
-  // Every trail on the map — each draws its own route line, blaze and POIs (TrailRoute).
-  // All trails show all the time; filters come later.
+  // Every trail on the map — each draws its own route line + blaze (TrailRoute).
   const { data: trailsResponse } = useTrails();
   const trails = (trailsResponse?.data ?? []) as MapTrail[];
   const isSectionActive = !!activeSectionId;
   const focusedObjectiveId = focus?.objectiveId ?? null;
   const focusScoped = !!focus?.scope;
+
+  // Filters narrow which trails render (§14). The chip groups live in the FilterSheet; the
+  // active selection shows as removable chips on the map. Cards hide once any filter is on.
+  const [filters, setFilters] = useState<MapFilters>({});
+  const [filterOpen, setFilterOpen] = useState(false);
+  const entities = useMemo(() => trails.map(trailToEntity), [trails]);
+  const shownIds = useMemo(
+    () => new Set(filterEntities(entities, filters).map((e) => e.id)),
+    [entities, filters],
+  );
+  const shownTrails = trails.filter((t) => shownIds.has(String(t.id)));
+  const filterActive = hasActiveFilters(filters);
+  const activeChips = activeFilterChips(filters);
+  const toggle = (dim: FilterDimension, value: string) =>
+    setFilters((f) => toggleFilterValue(f, dim, value));
 
   return (
     <View style={styles.screen}>
@@ -237,16 +278,16 @@ export default function MapScreen() {
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom} bounds={focusBounds}>
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
-        {/* Every trail's route + blaze, always on (in its osmc way colour). POIs + endpoints
-            only render for the focused trail — the all-trails view stays line-only (§17.5). */}
-        {trails.map((t) => (
+        {/* Each trail's route + blaze, in its osmc way colour. POIs + endpoints only render
+            for the focused trail — the all-trails view stays line-only (§17.5). */}
+        {shownTrails.map((t) => (
           <TrailRoute
             key={t.id}
             trail={t}
             focusedObjectiveId={focusedObjectiveId}
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
-            showCard={!focusedObjectiveId}
+            showCard={!focusedObjectiveId && !filterActive}
           />
         ))}
         {activeSectionGeom && (
@@ -293,12 +334,26 @@ export default function MapScreen() {
       </TouchableOpacity>
 
       {/* Focus chips — remove the scope to widen to the whole trail; remove the trail to clear. */}
-      {focus && (
+      {focus ? (
         <View style={[styles.chips, { top: insets.top + 8 + 44 + spacing[3] }]}>
           <Chip label={focus.trailLabel} suffix="✕" selected onPress={clearFocus} />
           {focus.scope && (
             <Chip label={focus.scope.label} suffix="✕" selected onPress={clearFocusScope} />
           )}
+        </View>
+      ) : (
+        // Filter row — the funnel opens the sheet; active filters show as removable chips.
+        <View style={[styles.chips, { top: insets.top + 8 + 44 + spacing[3] }]}>
+          <IconButton icon="filter" style="surface" size="md" onPress={() => setFilterOpen(true)} />
+          {activeChips.map((chip) => (
+            <Chip
+              key={`${chip.dimension}:${chip.value}`}
+              label={chip.label}
+              suffix="✕"
+              selected
+              onPress={() => toggle(chip.dimension, chip.value)}
+            />
+          ))}
         </View>
       )}
 
@@ -334,6 +389,15 @@ export default function MapScreen() {
           />
         </View>
       )}
+
+      <FilterSheet
+        visible={filterOpen}
+        filters={filters}
+        resultCount={shownIds.size}
+        onToggle={toggle}
+        onReset={() => setFilters({})}
+        onClose={() => setFilterOpen(false)}
+      />
     </View>
   );
 }

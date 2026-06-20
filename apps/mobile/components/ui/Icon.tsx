@@ -11,6 +11,7 @@ import {
   Cloud,
   Combine,
   Compass,
+  Filter,
   Flag,
   Home,
   LocateFixed,
@@ -87,6 +88,7 @@ export type IconName =
   | 'swap'
   | 'check'
   | 'combine'
+  | 'filter'
   | 'search'
   | 'microphone'
   | 'play'
@@ -125,6 +127,7 @@ const icons: Record<IconName, React.ElementType> = {
   swap: ArrowLeftRight,
   check: Check,
   combine: Combine,
+  filter: Filter,
   search: Search,
   microphone: Mic,
   play: Play,
