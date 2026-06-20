@@ -7,7 +7,7 @@ import { PlaceRow } from '../components/browse/PlaceRow';
 import { Chip } from '../components/ui/Chip';
 import { Icon } from '../components/ui/Icon';
 import { IconButton } from '../components/ui/IconButton';
-import { useStartJourneyFromContent } from '../lib/contentJourney';
+import { useFocusOnMap } from '../lib/contentFocus';
 import { contentStore, mediaFor, runSearch } from '../lib/contentRepo';
 import { colors, layout, radius, spacing, type } from '../theme';
 
@@ -54,7 +54,7 @@ function heroUri(doc: SearchDoc): string | undefined {
 export default function SearchScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { start } = useStartJourneyFromContent();
+  const { focusTrail, focusSection, focusStage, focusSegment } = useFocusOnMap();
   const [query, setQuery] = useState('');
   const [duration, setDuration] = useState<DurationDays | null>(null);
   const [types, setTypes] = useState<SearchType[]>([]);
@@ -74,29 +74,25 @@ export default function SearchScreen() {
   }, [query, duration, types]);
 
   const open = (doc: SearchDoc) => {
+    // Trails, sections, stages and segments highlight on the map first (with scope chips +
+    // a Start journey CTA). Peaks open their detail (no trail geometry to frame).
     switch (doc.type) {
-      case 'segment':
-        // A synthesised stage-window → the setup wizard, preselected to that range (§16).
-        start(doc.nav.objectiveId, {
-          fromStageId: doc.nav.fromStageId,
-          toStageId: doc.nav.toStageId,
-        });
-        break;
       case 'trail':
-      case 'peak':
-        router.push({ pathname: '/objective/[id]', params: { id: doc.nav.objectiveId } });
+        focusTrail(doc.nav.objectiveId);
         break;
       case 'section':
-        router.push({
-          pathname: '/objective/[id]/section/[sectionId]',
-          params: { id: doc.nav.objectiveId, sectionId: doc.nav.sectionId ?? '' },
-        });
+        if (doc.nav.sectionId) focusSection(doc.nav.objectiveId, doc.nav.sectionId);
         break;
       case 'stage':
-        router.push({
-          pathname: '/objective/[id]/stage/[stageId]',
-          params: { id: doc.nav.objectiveId, stageId: doc.nav.stageId ?? '' },
-        });
+        if (doc.nav.stageId) focusStage(doc.nav.objectiveId, doc.nav.stageId);
+        break;
+      case 'segment':
+        if (doc.nav.fromStageId && doc.nav.toStageId) {
+          focusSegment(doc.nav.objectiveId, doc.nav.fromStageId, doc.nav.toStageId);
+        }
+        break;
+      case 'peak':
+        router.push({ pathname: '/objective/[id]', params: { id: doc.nav.objectiveId } });
         break;
     }
   };

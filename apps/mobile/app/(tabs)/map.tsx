@@ -1,7 +1,7 @@
 import { Marker } from '@maplibre/maplibre-react-native';
 import { symbolKey } from '@roam/core';
 import { useRouter } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -14,8 +14,10 @@ import {
   TrailLayer,
   UserMarker,
 } from '../../components/map';
-import { Icon, IconButton } from '../../components/ui';
+import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { useStartJourneyFromContent } from '../../lib/contentJourney';
+import { geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
 import { useMapStore } from '../../store/mapStore';
@@ -127,7 +129,21 @@ export default function MapScreen() {
     activeSectionLabel,
     activeSectionGeomCenter,
     activeSectionGeom,
+    focus,
+    clearFocusScope,
+    clearFocus,
   } = useMapStore();
+  const { start, canStart } = useStartJourneyFromContent();
+
+  // The focused geometry (scope slice, else whole route) + the box to frame it.
+  const focusGeom = focus?.scope?.geom ?? focus?.routeGeom ?? null;
+  const focusBounds = useMemo(
+    () =>
+      focusGeom
+        ? (geometryBbox(focusGeom as unknown as Record<string, unknown>) ?? undefined)
+        : undefined,
+    [focusGeom],
+  );
 
   const [viewport, setLocalViewport] = useState({
     center: MAP_DEFAULT_CENTER as [number, number],
@@ -154,16 +170,18 @@ export default function MapScreen() {
   const trails = (trailsResponse?.data ?? []) as MapTrail[];
   const isSectionActive = !!activeSectionId;
 
+  const dimTrails = isSectionActive || !!focus;
+
   return (
     <View style={styles.screen}>
-      {/* Full-screen map */}
-      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
+      {/* Full-screen map. A content focus frames its geometry via `bounds`. */}
+      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom} bounds={focusBounds}>
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
         {/* Every trail's route + blaze + POIs, always on. Routes dim when a section
-            is highlighted over them (navigation focus, §17.5). */}
+            or a content focus is highlighted over them (navigation focus, §17.5). */}
         {trails.map((t) => (
-          <TrailRoute key={t.id} trail={t} dim={isSectionActive} />
+          <TrailRoute key={t.id} trail={t} dim={dimTrails} />
         ))}
         {activeSectionGeom && (
           <TrailLayer
@@ -182,18 +200,47 @@ export default function MapScreen() {
             onPress={() => router.push(`/section/${activeSectionId}`)}
           />
         )}
+        {/* Content focus highlight — the searched/browsed trail, section, stage or segment. */}
+        {focusGeom && (
+          <TrailLayer
+            id="focus-highlight"
+            geojson={{ type: 'Feature', geometry: focusGeom as never, properties: {} }}
+            color={colors.accent}
+            width={4}
+            opacity={1}
+          />
+        )}
         {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
 
-      {/* Search bar */}
-      <TouchableOpacity style={[styles.searchBar, { top: insets.top + 8 }]} activeOpacity={0.85}>
+      {/* Search bar → the search screen */}
+      <TouchableOpacity
+        style={[styles.searchBar, { top: insets.top + 8 }]}
+        activeOpacity={0.85}
+        onPress={() => router.push('/search')}
+      >
         <Icon name="search" size={18} color={colors.text.secondary} />
         <Text style={styles.searchPlaceholder}>Search trails, peaks, refuges…</Text>
         <Icon name="microphone" size={18} color={colors.text.secondary} />
       </TouchableOpacity>
 
-      {/* Center-on-me — always visible; disabled until we have a fix. */}
-      <View style={[styles.locate, { bottom: insets.bottom + spacing[12] }]}>
+      {/* Focus chips — remove the scope to widen to the whole trail; remove the trail to clear. */}
+      {focus && (
+        <View style={[styles.chips, { top: insets.top + 8 + 44 + spacing[3] }]}>
+          <Chip label={focus.trailLabel} suffix="✕" selected onPress={clearFocus} />
+          {focus.scope && (
+            <Chip label={focus.scope.label} suffix="✕" selected onPress={clearFocusScope} />
+          )}
+        </View>
+      )}
+
+      {/* Center-on-me — always visible; lifts above the Start CTA when a focus is shown. */}
+      <View
+        style={[
+          styles.locate,
+          { bottom: insets.bottom + (focus ? spacing[12] + 56 : spacing[12]) },
+        ]}
+      >
         <IconButton
           icon="locate"
           style="surface"
@@ -202,6 +249,23 @@ export default function MapScreen() {
           onPress={() => coords && mapRef.current?.centerOn([coords.lng, coords.lat], 13)}
         />
       </View>
+
+      {/* Start journey from the focused trail/range (online ref-bridge; hidden when unmatched). */}
+      {focus && canStart(focus.objectiveId) && (
+        <View style={[styles.cta, { paddingBottom: insets.bottom + spacing[4] }]}>
+          <Button
+            label="Start journey"
+            size="lg"
+            fullWidth
+            onPress={() =>
+              start(focus.objectiveId, {
+                fromStageId: focus.scope?.fromStageId,
+                toStageId: focus.scope?.toStageId,
+              })
+            }
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -231,6 +295,22 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   searchPlaceholder: { ...type.body, color: colors.text.secondary, flex: 1 },
+
+  chips: {
+    position: 'absolute',
+    left: spacing[8],
+    right: spacing[8],
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[3],
+  },
+
+  cta: {
+    position: 'absolute',
+    left: spacing[8],
+    right: spacing[8],
+    bottom: 0,
+  },
 
   locate: {
     position: 'absolute',
