@@ -302,15 +302,8 @@ export function buildTrailPack(
       facet: 'overview',
       heading: 'Distance, elevation & duration',
       body: `Roughly ${km(k.lengthM)} km with about ${totalAscent.toLocaleString('en-US')} m of cumulative ascent over ${k.stages.length} stages.`,
+      // No stat strip here — the header stat pills (atAGlance) already carry distance/ascent/days.
       blocks: [
-        {
-          kind: 'statStrip',
-          stats: [
-            { value: `${km(k.lengthM)}`, label: 'KM' },
-            { value: totalAscent.toLocaleString('en-US'), label: 'M ASCENT' },
-            { value: `${Math.ceil(k.stages.length * 0.9)}–${k.stages.length}`, label: 'DAYS' },
-          ],
-        },
         {
           kind: 'elevation',
           variant: 'multiDay',
