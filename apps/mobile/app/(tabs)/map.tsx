@@ -242,6 +242,13 @@ export default function MapScreen() {
     }
   }, [JSON.stringify(pendingViewport)]);
 
+  // Frame the focused entity once, when it changes (search/card/preview → here). Clearing
+  // the focus does nothing, so the camera stays put and just renders the trails that return.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: value-based dep on focusBounds is intentional
+  useEffect(() => {
+    if (focusBounds) mapRef.current?.fitBounds(focusBounds);
+  }, [JSON.stringify(focusBounds)]);
+
   // Every trail on the map — each draws its own route line + blaze (TrailRoute).
   const { data: trailsResponse } = useTrails();
   const trails = (trailsResponse?.data ?? []) as MapTrail[];
@@ -274,8 +281,9 @@ export default function MapScreen() {
 
   return (
     <View style={styles.screen}>
-      {/* Full-screen map. A content focus frames its geometry via `bounds`. */}
-      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom} bounds={focusBounds}>
+      {/* Full-screen map. A focus frames its geometry imperatively (below), so clearing the
+          focus leaves the camera where it is instead of snapping back. */}
+      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
         {/* Each trail's route + blaze, in its osmc way colour. POIs + endpoints only render

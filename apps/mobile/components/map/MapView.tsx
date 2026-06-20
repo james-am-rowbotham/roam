@@ -28,10 +28,13 @@ interface Props {
   onZoomChanged?: (zoom: number) => void;
 }
 
-// Imperative handle for one-shot camera moves (e.g. "center on me"), which a
-// declarative center/zoom prop can't do once the prop already equals the target.
+// Imperative handle for one-shot camera moves (e.g. "center on me", "frame this
+// route"), which a declarative center/zoom prop can't do once the prop already
+// equals the target — and, for framing, lets the camera STAY put afterwards
+// instead of reverting when a declarative `bounds` prop is removed.
 export interface MapViewHandle {
   centerOn: (center: [number, number], zoom?: number) => void;
+  fitBounds: (bounds: [number, number, number, number]) => void;
 }
 
 export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
@@ -49,6 +52,12 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
 
   useImperativeHandle(ref, () => ({
     centerOn: (c, z) => cameraRef.current?.easeTo({ center: c, zoom: z ?? zoom }),
+    // bounds = [west, south, east, north] = LngLatBounds. fitBounds zooms to frame exactly
+    // the geometry — so the whole trail fits the screen and a section/stage zooms in. One-shot,
+    // so clearing a focus doesn't snap back. Asymmetric padding clears the top search/chips
+    // and the bottom Start CTA.
+    fitBounds: (bounds) =>
+      cameraRef.current?.fitBounds(bounds, { padding: FIT_PADDING, duration: 500 }),
   }));
 
   // Surface the live zoom as a plain number. onRegionIsChanging fires throughout
@@ -79,8 +88,11 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
   );
 });
 
-// Inset so a route framed by `bounds` doesn't touch the preview edges.
+// Inset so a route framed by the `bounds` prop (preview maps) doesn't touch the edges.
 const BOUNDS_PADDING = { top: 28, right: 28, bottom: 28, left: 28 };
+// Imperative fitBounds on the full map: extra top clears the search bar + filter chips,
+// extra bottom clears the Start journey CTA, so the framed route sits in the open area.
+const FIT_PADDING = { top: 128, right: 44, bottom: 96, left: 44 };
 
 const styles = StyleSheet.create({
   map: { flex: 1 },
