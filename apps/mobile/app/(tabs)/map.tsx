@@ -147,12 +147,13 @@ function TrailRoute({
   // 'GR11' → 'gr11', 'GR 10' → 'gr10' — route the line tap to the new objective Guide.
   const slug = (trail.ref ?? trail.name ?? '').toLowerCase().replace(/\s+/g, '');
 
-  // A focus shows this trail as a single entity. Dim every other trail, and dim this one
-  // too when a scope (stage/section) is focused so the highlighted slice stands out. POIs +
-  // endpoints render only for the focused trail (§17.5) — never in the all-trails view.
+  // A content focus is a single-entity view: show ONLY the focused trail. Hide every other
+  // trail entirely (no stray line or blaze). Dim the focused trail when a scope (stage/
+  // section) is focused so the highlighted slice stands out; its blaze drops with it.
   const isFocused = !!focusedObjectiveId && focusedObjectiveId === slug;
   const focusActive = !!focusedObjectiveId;
-  const dim = legacyDim || (focusActive && (!isFocused || focusScoped));
+  if (focusActive && !isFocused) return null;
+  const dim = legacyDim || (focusActive && focusScoped);
 
   if (!geojson) return null;
 
@@ -170,7 +171,7 @@ function TrailRoute({
             : undefined
         }
       />
-      {blazeImage && (
+      {blazeImage && !dim && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
       )}
       {isFocused && (
