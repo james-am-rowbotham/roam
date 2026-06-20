@@ -27,6 +27,8 @@ export {
   patchJourneysId as updateJourney,
   getGetJourneysQueryKey as journeysQueryKey,
   getGetJourneysIdQueryKey as journeyQueryKey,
+  getTrailsIdSections as fetchTrailSections,
+  getGetTrailsIdSectionsQueryKey as trailSectionsQueryKey,
 } from './generated/api';
 export type { PostJourneysIdProgressBody as ProgressAction } from './generated/api';
 

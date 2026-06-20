@@ -7,6 +7,7 @@ import { PlaceRow } from '../components/browse/PlaceRow';
 import { Chip } from '../components/ui/Chip';
 import { Icon } from '../components/ui/Icon';
 import { IconButton } from '../components/ui/IconButton';
+import { useStartJourneyFromContent } from '../lib/contentJourney';
 import { contentStore, mediaFor, runSearch } from '../lib/contentRepo';
 import { colors, layout, radius, spacing, type } from '../theme';
 
@@ -53,6 +54,7 @@ function heroUri(doc: SearchDoc): string | undefined {
 export default function SearchScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { start } = useStartJourneyFromContent();
   const [query, setQuery] = useState('');
   const [duration, setDuration] = useState<DurationDays | null>(null);
   const [types, setTypes] = useState<SearchType[]>([]);
@@ -73,9 +75,15 @@ export default function SearchScreen() {
 
   const open = (doc: SearchDoc) => {
     switch (doc.type) {
+      case 'segment':
+        // A synthesised stage-window → the setup wizard, preselected to that range (§16).
+        start(doc.nav.objectiveId, {
+          fromStageId: doc.nav.fromStageId,
+          toStageId: doc.nav.toStageId,
+        });
+        break;
       case 'trail':
       case 'peak':
-      case 'segment': // discovery → start planning at the trail (preset picker is a later wire-up)
         router.push({ pathname: '/objective/[id]', params: { id: doc.nav.objectiveId } });
         break;
       case 'section':

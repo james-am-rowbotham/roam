@@ -10,9 +10,11 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useStartJourneyFromContent } from '../../lib/contentJourney';
 import { colors, layout, spacing, type } from '../../theme';
 import { ContentBlockRenderer, useStoreResolve } from '../content';
 import { HeroMedia } from '../content/HeroMedia';
+import { Button } from '../ui/Button';
 import { IconButton } from '../ui/IconButton';
 import { SegmentedControl } from '../ui/SegmentedControl';
 import { StatPills } from '../ui/StatPills';
@@ -28,63 +30,79 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const resolve = useStoreResolve();
+  const { start, canStart } = useStartJourneyFromContent();
   const tabs = objectiveTabs(objective);
   const facets = guideFacets(objective.guide);
   const [facet, setFacet] = useState<GuideFacet>(facets[0] ?? 'overview');
 
+  // A trail can start a journey when its content objective maps to an API trail (by ref).
+  const showStart = objective.type === 'trail' && canStart(objective.id);
+
   return (
-    <ScrollView style={styles.screen} contentContainerStyle={styles.content}>
-      {/* hero — placeholder media (§11), dark plate so overlay text reads. Title +
+    <View style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.content}>
+        {/* hero — placeholder media (§11), dark plate so overlay text reads. Title +
           tagline only; the design carries no TRAIL/PEAK kicker (Figma 1050:2369). */}
-      <View style={styles.hero}>
-        <HeroMedia mediaId={objective.heroMediaId} />
-        <Text style={styles.heroTitle}>{objective.name}</Text>
-        <Text style={styles.heroTagline}>{objective.tagline}</Text>
-      </View>
-      <View style={[styles.back, { top: insets.top + spacing[2] }]}>
-        <IconButton icon="arrow-left" onPress={() => router.back()} />
-      </View>
+        <View style={styles.hero}>
+          <HeroMedia mediaId={objective.heroMediaId} />
+          <Text style={styles.heroTitle}>{objective.name}</Text>
+          <Text style={styles.heroTagline}>{objective.tagline}</Text>
+        </View>
+        <View style={[styles.back, { top: insets.top + spacing[2] }]}>
+          <IconButton icon="arrow-left" onPress={() => router.back()} />
+        </View>
 
-      <View style={styles.statBar}>
-        <StatPills stats={objective.atAGlance} />
-      </View>
+        <View style={styles.statBar}>
+          <StatPills stats={objective.atAGlance} />
+        </View>
 
-      {/* underline tabs NAVIGATE (§6.2): tapping Route(s) goes to the route view. */}
-      <Tabs
-        tabs={tabs}
-        value="guide"
-        onChange={(v) => {
-          if (v === 'route') {
-            router.push({ pathname: '/objective/[id]/route', params: { id: objective.id } });
-          }
-        }}
-      />
+        {/* underline tabs NAVIGATE (§6.2): tapping Route(s) goes to the route view. */}
+        <Tabs
+          tabs={tabs}
+          value="guide"
+          onChange={(v) => {
+            if (v === 'route') {
+              router.push({ pathname: '/objective/[id]/route', params: { id: objective.id } });
+            }
+          }}
+        />
 
-      {/* persistent summary — stays across facets, between the two tab rows */}
-      <Text style={styles.summary}>{objective.summary}</Text>
+        {/* persistent summary — stays across facets, between the two tab rows */}
+        <Text style={styles.summary}>{objective.summary}</Text>
 
-      <View style={styles.guide}>
-        {facets.length > 1 && (
-          <SegmentedControl
-            options={facets.map((f) => ({ value: f, label: facetLabel(f) }))}
-            value={facet}
-            onChange={setFacet}
-          />
-        )}
-        {topicsForFacet(objective.guide, facet).map((topic) => (
-          <View key={topic.key} style={styles.topic}>
-            {topic.heading ? <Text style={styles.topicHeading}>{topic.heading}</Text> : null}
-            {topic.body ? <Text style={styles.topicBody}>{topic.body}</Text> : null}
-            {topic.blocks ? <ContentBlockRenderer blocks={topic.blocks} resolve={resolve} /> : null}
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+        <View style={styles.guide}>
+          {facets.length > 1 && (
+            <SegmentedControl
+              options={facets.map((f) => ({ value: f, label: facetLabel(f) }))}
+              value={facet}
+              onChange={setFacet}
+            />
+          )}
+          {topicsForFacet(objective.guide, facet).map((topic) => (
+            <View key={topic.key} style={styles.topic}>
+              {topic.heading ? <Text style={styles.topicHeading}>{topic.heading}</Text> : null}
+              {topic.body ? <Text style={styles.topicBody}>{topic.body}</Text> : null}
+              {topic.blocks ? (
+                <ContentBlockRenderer blocks={topic.blocks} resolve={resolve} />
+              ) : null}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+
+      {/* Start journey — content browse → the existing (online) setup wizard (§6.2). */}
+      {showStart && (
+        <View style={[styles.ctaWrap, { paddingBottom: insets.bottom + layout.ctaBarPadding }]}>
+          <Button label="Start journey" onPress={() => start(objective.id)} />
+        </View>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg.app },
+  ctaWrap: { padding: layout.ctaBarPadding },
   content: { paddingBottom: layout.contentPaddingBottom },
   back: { position: 'absolute', left: layout.screenPadding, zIndex: 1 },
   hero: {
