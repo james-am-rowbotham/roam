@@ -5,7 +5,6 @@ import {
   type MapFilters,
   activeFilterChips,
   filterEntities,
-  hasActiveFilters,
   symbolKey,
   toggleFilterValue,
 } from '@roam/core';
@@ -22,14 +21,12 @@ import {
   SectionEndpoints,
   TrailBlaze,
   TrailLayer,
-  TrailMapCard,
   UserMarker,
 } from '../../components/map';
 import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
-import { contentStore, mediaFor } from '../../lib/contentRepo';
-import { flattenCoords, geometryBbox } from '../../lib/geo';
+import { geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
 import { useMapStore } from '../../store/mapStore';
@@ -90,39 +87,16 @@ function trailToEntity(t: MapTrail): MapEntity {
   };
 }
 
-// The trail name + "847 km · 46 stages" + hero image for the map card, from the matching
-// content objective (the API trail carries no stage count); null when there's no match.
-function trailCardData(slug: string) {
-  const o = contentStore.objectiveSummaries.get(slug);
-  if (!o) return null;
-  const stat = (k: string) => o.atAGlance.find((s) => s.key === k)?.value;
-  const distance = stat('distance');
-  const stages = stat('stages');
-  const meta = [
-    distance != null ? `${Math.round(Number(distance))} km` : null,
-    stages != null ? `${stages} stages` : null,
-  ]
-    .filter(Boolean)
-    .join(' · ');
-  return { title: o.name, meta, image: mediaFor(o.heroMediaId)?.uri };
-}
-
 function TrailRoute({
   trail,
   focusedObjectiveId,
   focusScoped,
   legacyDim,
-  showCard,
-  index,
-  total,
 }: {
   trail: MapTrail;
   focusedObjectiveId: string | null;
   focusScoped: boolean;
   legacyDim: boolean;
-  showCard: boolean;
-  index: number;
-  total: number;
 }) {
   const router = useRouter();
   const id = String(trail.id);
@@ -151,13 +125,6 @@ function TrailRoute({
 
   if (!geojson) return null;
 
-  // The all-trails view anchors a TrailMapCard along the line (Figma 141:672). Stagger the
-  // anchor by trail index so cards on nearby trails don't overlap (trail 0 at 1/3, 1 at 2/3…).
-  const card = showCard ? trailCardData(slug) : null;
-  const verts = card ? flattenCoords(geojson as unknown as Record<string, unknown>) : [];
-  const anchorAt = Math.floor((verts.length * (index + 1)) / (total + 1));
-  const mid = verts.length ? (verts[Math.min(verts.length - 1, anchorAt)] ?? null) : null;
-
   return (
     <>
       <TrailLayer
@@ -174,18 +141,6 @@ function TrailRoute({
       />
       {blazeImage && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
-      )}
-      {card && mid && (
-        <Marker key={`card-${trail.id}`} id={`card-${trail.id}`} lngLat={mid}>
-          <TrailMapCard
-            title={card.title}
-            meta={card.meta}
-            image={card.image}
-            onPress={() =>
-              slug && router.push({ pathname: '/objective/[id]', params: { id: slug } })
-            }
-          />
-        </Marker>
       )}
       {isFocused && (
         <>
@@ -264,7 +219,7 @@ export default function MapScreen() {
   const focusScoped = !!focus?.scope;
 
   // Filters narrow which trails render (§14). The chip groups live in the FilterSheet; the
-  // active selection shows as removable chips on the map. Cards hide once any filter is on.
+  // active selection shows as removable chips on the map.
   const [filters, setFilters] = useState<MapFilters>({});
   const [filterOpen, setFilterOpen] = useState(false);
   const entities = useMemo(() => trails.map(trailToEntity), [trails]);
@@ -273,7 +228,6 @@ export default function MapScreen() {
     [entities, filters],
   );
   const shownTrails = trails.filter((t) => shownIds.has(String(t.id)));
-  const filterActive = hasActiveFilters(filters);
   const activeChips = activeFilterChips(filters);
   const toggle = (dim: FilterDimension, value: string) =>
     setFilters((f) => toggleFilterValue(f, dim, value));
@@ -286,16 +240,13 @@ export default function MapScreen() {
         <MapImages />
         {/* Each trail's route + blaze, in its osmc way colour. POIs + endpoints only render
             for the focused trail — the all-trails view stays line-only (§17.5). */}
-        {shownTrails.map((t, i) => (
+        {shownTrails.map((t) => (
           <TrailRoute
             key={t.id}
             trail={t}
             focusedObjectiveId={focusedObjectiveId}
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
-            showCard={!focusedObjectiveId && !filterActive}
-            index={i}
-            total={shownTrails.length}
           />
         ))}
         {activeSectionGeom && (
