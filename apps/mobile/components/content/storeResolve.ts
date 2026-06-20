@@ -11,9 +11,10 @@ export const storeResolve: BlockResolve = {
   mediaUrl: (id) => contentStore.media.get(id)?.uri,
 };
 
-// Adds `openMap` (a map preview → the full map tab) to the store resolve. Use on screens
-// that render map blocks; later this carries a filter so the map opens scoped to the trail.
-export function useStoreResolve(): BlockResolve {
+// Adds `openMap` (a map preview → the full map tab) to the store resolve. Screens that know
+// their entity pass an `openMap` that focuses it on the map (trail/section/stage); otherwise
+// the preview just opens the map tab.
+export function useStoreResolve(openMap?: () => void): BlockResolve {
   const router = useRouter();
-  return { ...storeResolve, openMap: () => router.push('/(tabs)/map') };
+  return { ...storeResolve, openMap: openMap ?? (() => router.push('/(tabs)/map')) };
 }

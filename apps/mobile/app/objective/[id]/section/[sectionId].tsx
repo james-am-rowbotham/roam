@@ -9,6 +9,7 @@ import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
 import { Tabs } from '../../../../components/ui/Tabs';
+import { useFocusOnMap } from '../../../../lib/contentFocus';
 import { contentStore, mediaFor, useSection, useSectionStages } from '../../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../../theme';
 
@@ -95,7 +96,9 @@ export default function SectionScreen() {
 }
 
 function Overview({ section }: { section: Section }) {
-  const resolve = useStoreResolve();
+  const { focusSection } = useFocusOnMap();
+  // The region map preview opens the map focused on this section.
+  const resolve = useStoreResolve(() => focusSection(section.objectiveId, section.id));
   const all = (section.guide ?? [])
     .slice()
     .sort((a, b) => TOPIC_ORDER.indexOf(a.key) - TOPIC_ORDER.indexOf(b.key));

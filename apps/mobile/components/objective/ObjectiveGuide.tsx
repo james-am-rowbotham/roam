@@ -10,6 +10,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusOnMap } from '../../lib/contentFocus';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
 import { colors, layout, spacing, type } from '../../theme';
 import { ContentBlockRenderer, useStoreResolve } from '../content';
@@ -29,7 +30,11 @@ import { Tabs } from '../ui/Tabs';
 export function ObjectiveGuide({ objective }: { objective: Objective }) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const resolve = useStoreResolve();
+  const { focusTrail } = useFocusOnMap();
+  // A trail's map preview opens the map focused on the whole trail (only for trails).
+  const resolve = useStoreResolve(
+    objective.type === 'trail' ? () => focusTrail(objective.id) : undefined,
+  );
   const { start, canStart } = useStartJourneyFromContent();
   const tabs = objectiveTabs(objective);
   const facets = guideFacets(objective.guide);

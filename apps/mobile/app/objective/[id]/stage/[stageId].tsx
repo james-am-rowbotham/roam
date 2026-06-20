@@ -6,6 +6,7 @@ import { HeroMedia } from '../../../../components/content/HeroMedia';
 import { Button } from '../../../../components/ui/Button';
 import { IconButton } from '../../../../components/ui/IconButton';
 import { StatPills } from '../../../../components/ui/StatPills';
+import { useFocusOnMap } from '../../../../lib/contentFocus';
 import { contentStore, mediaFor, useStage } from '../../../../lib/contentRepo';
 import { colors, layout, spacing, type } from '../../../../theme';
 
@@ -16,10 +17,12 @@ const HERO_STATS = ['distance', 'ascent', 'time', 'grade'];
 // full ContentBlock[] rendered by the single renderer, then the "Start this stage" CTA.
 // A stage is a thin wrapper over ContentBlockRenderer (§8): content lives in the blocks.
 export default function StageScreen() {
-  const { stageId } = useLocalSearchParams<{ id: string; stageId: string }>();
+  const { id, stageId } = useLocalSearchParams<{ id: string; stageId: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const resolve = useStoreResolve();
+  const { focusStage } = useFocusOnMap();
+  // The stage map preview opens the map focused on this stage.
+  const resolve = useStoreResolve(() => focusStage(id, stageId));
   const { data: stage } = useStage(stageId);
 
   if (!stage) {
