@@ -12,12 +12,15 @@ import {
   SectionEndpoints,
   TrailBlaze,
   TrailLayer,
+  TrailMapCard,
   UserMarker,
 } from '../../components/map';
 import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
+import { useFocusOnMap } from '../../lib/contentFocus';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
-import { geometryBbox } from '../../lib/geo';
+import { contentStore, mediaFor } from '../../lib/contentRepo';
+import { flattenCoords, geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
 import { useMapStore } from '../../store/mapStore';
@@ -61,18 +64,38 @@ type MapTrail = {
   waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
 };
 
+// The trail name + "847 km · 46 stages" + hero image for the map card, from the matching
+// content objective (the API trail carries no stage count); null when there's no match.
+function trailCardData(slug: string) {
+  const o = contentStore.objectiveSummaries.get(slug);
+  if (!o) return null;
+  const stat = (k: string) => o.atAGlance.find((s) => s.key === k)?.value;
+  const distance = stat('distance');
+  const stages = stat('stages');
+  const meta = [
+    distance != null ? `${Math.round(Number(distance))} km` : null,
+    stages != null ? `${stages} stages` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  return { title: o.name, meta, image: mediaFor(o.heroMediaId)?.uri };
+}
+
 function TrailRoute({
   trail,
   focusedObjectiveId,
   focusScoped,
   legacyDim,
+  showCard,
 }: {
   trail: MapTrail;
   focusedObjectiveId: string | null;
   focusScoped: boolean;
   legacyDim: boolean;
+  showCard: boolean;
 }) {
   const router = useRouter();
+  const { focusTrail } = useFocusOnMap();
   const id = String(trail.id);
   const enabled = { query: { enabled: !!trail.id } };
   const { data: trailResponse } = useTrail(id, enabled);
@@ -98,6 +121,12 @@ function TrailRoute({
   const dim = legacyDim || (focusActive && (!isFocused || focusScoped));
 
   if (!geojson) return null;
+
+  // The all-trails view anchors a TrailMapCard at the line's midpoint (Figma 141:672).
+  const card = showCard ? trailCardData(slug) : null;
+  const verts = card ? flattenCoords(geojson as unknown as Record<string, unknown>) : [];
+  const mid = verts.length ? verts[Math.floor(verts.length / 2)] : null;
+
   return (
     <>
       <TrailLayer
@@ -114,6 +143,16 @@ function TrailRoute({
       />
       {blazeImage && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
+      )}
+      {card && mid && (
+        <Marker key={`card-${trail.id}`} id={`card-${trail.id}`} lngLat={mid}>
+          <TrailMapCard
+            title={card.title}
+            meta={card.meta}
+            image={card.image}
+            onPress={() => focusTrail(slug)}
+          />
+        </Marker>
       )}
       {isFocused && (
         <>
@@ -207,6 +246,7 @@ export default function MapScreen() {
             focusedObjectiveId={focusedObjectiveId}
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
+            showCard={!focusedObjectiveId}
           />
         ))}
         {activeSectionGeom && (
