@@ -192,14 +192,18 @@ function HighlightsBlock({
   resolve: BlockResolve;
 }) {
   return (
-    <View style={[styles.block, styles.card]}>
+    <View style={styles.block}>
       <Text style={styles.kicker}>{(block.header ?? 'Highlights').toUpperCase()}</Text>
       {block.highlightIds.map((id) => {
         const h = resolve.highlight?.(id);
+        const uri = h?.mediaId ? resolve.mediaUrl?.(h.mediaId) : undefined;
         return (
-          <View key={id} style={styles.dotRow}>
-            <View style={styles.bullet} />
-            <Text style={styles.body}>{h?.title ?? id}</Text>
+          <View key={id} style={styles.highlightCard}>
+            {uri ? (
+              <Image source={{ uri }} style={styles.highlightImage} resizeMode="cover" />
+            ) : null}
+            <Text style={styles.highlightTitle}>{h?.title ?? id}</Text>
+            {h?.body ? <Text style={styles.highlightBody}>{h.body}</Text> : null}
           </View>
         );
       })}
@@ -420,6 +424,15 @@ const styles = StyleSheet.create({
   calloutText: { ...type.meta },
   dotRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
   bullet: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: colors.accent },
+  highlightCard: { gap: spacing[2], marginTop: spacing[3] },
+  highlightImage: {
+    width: '100%',
+    height: 160,
+    borderRadius: radius.lg,
+    backgroundColor: colors.bg.subtle,
+  },
+  highlightTitle: { ...type.bodyStrong, color: colors.text.primary },
+  highlightBody: { ...type.meta, color: colors.text.secondary },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[4] },
   mapContainer: { height: 200, borderRadius: radius.xl, overflow: 'hidden' },
   statStrip: {

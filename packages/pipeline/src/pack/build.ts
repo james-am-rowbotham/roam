@@ -195,6 +195,7 @@ export function buildTrailPack(
       id: `${sectionId}-hl-${i}`,
       title: h.title,
       body: h.body,
+      mediaId: `media/highlight/${sectionId}-hl-${i}`,
     }));
     highlights.push(...hlEntities);
     const hazards = content.sectionHazards?.[sectionId] ?? [];

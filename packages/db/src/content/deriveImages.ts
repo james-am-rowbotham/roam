@@ -22,7 +22,12 @@ const SEED = join(
 interface Pack {
   trails: { objective: { id: string }; stages: { id: string; toLocationId: string }[] }[];
   locations: { id: string; name: string }[];
+  highlights?: { id: string; title: string }[];
 }
+
+// The leading place name in a highlight title — "Lac de Gaube and the Vignemale" → "Lac de
+// Gaube"; "Pic du Canigou (2,784 m), …" → "Pic du Canigou".
+const coreName = (title: string) => title.split(/,|\(| and | & |—|:|&amp;/)[0]?.trim() ?? title;
 
 // Strip the leading accommodation-type words so "Refuge des Bésines" → "Bésines".
 const place = (name: string) =>
@@ -42,6 +47,18 @@ export function deriveStageImageQueries(trailId: string): ImageQuery[] {
     .map((s) => ({
       mediaId: `media/hero/${s.id}`,
       term: `${place(loc.get(s.toLocationId) ?? '')} Pyrenees`.trim(),
+    }))
+    .filter((q) => q.term.length > 10);
+}
+
+// A highlight is a named place/feature — well-covered on Commons.
+export function deriveHighlightImageQueries(trailId: string): ImageQuery[] {
+  const pack = JSON.parse(readFileSync(SEED, 'utf8')) as Pack;
+  return (pack.highlights ?? [])
+    .filter((h) => h.id.startsWith(`${trailId}-`))
+    .map((h) => ({
+      mediaId: `media/highlight/${h.id}`,
+      term: `${coreName(h.title)} Pyrenees`.trim(),
     }))
     .filter((q) => q.term.length > 10);
 }

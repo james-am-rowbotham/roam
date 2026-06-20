@@ -847,6 +847,66 @@
       "author": "Teresa Grau Ros from Barcelona",
       "attribution": "Teresa Grau Ros from Barcelona · CC BY-SA 2.0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Parc_Natural_de_Cap_de_Creus_P4140039_-_Flickr_-_tgrauros.jpg"
+    },
+    "media/highlight/gr11-basque-country-navarre-hl-3": {
+      "id": "media/highlight/gr11-basque-country-navarre-hl-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/MTN25-0091c1-2016-Elizondo.jpg/1920px-MTN25-0091c1-2016-Elizondo.jpg",
+      "width": 1600,
+      "height": 1128,
+      "license": "CC BY 4.0",
+      "author": "Centro Nacional de Información Geográfica",
+      "attribution": "Centro Nacional de Información Geográfica · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:MTN25-0091c1-2016-Elizondo.jpg"
+    },
+    "media/highlight/gr11-aragonese-pyrenees-hl-2": {
+      "id": "media/highlight/gr11-aragonese-pyrenees-hl-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/e/ea/RefugioDeRespomuso20060814.jpg",
+      "width": 1617,
+      "height": 2193,
+      "license": "CC BY-SA 4.0",
+      "author": "Tigerente",
+      "attribution": "Tigerente · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:RefugioDeRespomuso20060814.jpg"
+    },
+    "media/highlight/gr11-ordesa-high-country-hl-0": {
+      "id": "media/highlight/gr11-ordesa-high-country-hl-0",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Pineta_subida_a_collado_de_a%C3%B1isclo_2.jpg/1920px-Pineta_subida_a_collado_de_a%C3%B1isclo_2.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY-SA 4.0",
+      "author": "DaniDi9",
+      "attribution": "DaniDi9 · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pineta_subida_a_collado_de_a%C3%B1isclo_2.jpg"
+    },
+    "media/highlight/gr11-ordesa-high-country-hl-1": {
+      "id": "media/highlight/gr11-ordesa-high-country-hl-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Pyrenees_-_Parque_Nacional_de_Ordesa_y_Monte_Perdido_-_by_the_Refugio_de_Goriz_-_panoramio.jpg/1920px-Pyrenees_-_Parque_Nacional_de_Ordesa_y_Monte_Perdido_-_by_the_Refugio_de_Goriz_-_panoramio.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC BY 3.0",
+      "author": "maczopikczu",
+      "attribution": "maczopikczu · CC BY 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pyrenees_-_Parque_Nacional_de_Ordesa_y_Monte_Perdido_-_by_the_Refugio_de_Goriz_-_panoramio.jpg"
+    },
+    "media/highlight/gr11-andorra-pallars-high-country-hl-0": {
+      "id": "media/highlight/gr11-andorra-pallars-high-country-hl-0",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/CH_Sant_Maurici%2C_Pont_sobre_el_desaig%C3%BCe_a_l%27Escrita.jpg/1920px-CH_Sant_Maurici%2C_Pont_sobre_el_desaig%C3%BCe_a_l%27Escrita.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 4.0",
+      "author": "Contraix",
+      "attribution": "Contraix · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:CH_Sant_Maurici,_Pont_sobre_el_desaig%C3%BCe_a_l%27Escrita.jpg"
+    },
+    "media/highlight/gr11-eastern-pyrenees-hl-0": {
+      "id": "media/highlight/gr11-eastern-pyrenees-hl-0",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/2/21/Mountain_resort_-_Vall_de_N%C3%BAria.jpg",
+      "width": 1654,
+      "height": 1240,
+      "license": "CC BY-SA 3.0",
+      "author": "Till F. Teenck",
+      "attribution": "Till F. Teenck · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mountain_resort_-_Vall_de_N%C3%BAria.jpg"
     }
   },
   "objectiveGuide": [
