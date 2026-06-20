@@ -2,7 +2,10 @@ export type Coords2D = [number, number];
 
 export function flattenCoords(geometry: Record<string, unknown>): Coords2D[] {
   const type = geometry.type as string;
-  // Unwrap a Feature to its geometry.
+  // Unwrap a FeatureCollection / Feature to the underlying geometry/-ies.
+  if (type === 'FeatureCollection' && Array.isArray(geometry.features)) {
+    return (geometry.features as Record<string, unknown>[]).flatMap(flattenCoords);
+  }
   if (type === 'Feature' && geometry.geometry && typeof geometry.geometry === 'object') {
     return flattenCoords(geometry.geometry as Record<string, unknown>);
   }
