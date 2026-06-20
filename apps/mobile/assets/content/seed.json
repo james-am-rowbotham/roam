@@ -9225,6 +9225,41 @@
             ]
           },
           {
+            "key": "markings",
+            "facet": "planning",
+            "heading": "Waymarking",
+            "body": "GR11 is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.",
+            "blocks": [
+              {
+                "kind": "waymark",
+                "osmcSymbol": "red:white:red_lower:11:black",
+                "ref": "GR11"
+              }
+            ]
+          },
+          {
+            "key": "kit",
+            "facet": "planning",
+            "heading": "What to pack",
+            "body": "A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "gear",
+                "items": [
+                  "Waterproof shell",
+                  "Insulating layer",
+                  "Sun hat & SPF",
+                  "Trekking poles",
+                  "Headtorch",
+                  "Water filter",
+                  "Map & compass",
+                  "First-aid & blister kit"
+                ]
+              }
+            ]
+          },
+          {
             "key": "accommodation",
             "facet": "planning",
             "heading": "Where to sleep",
@@ -28155,6 +28190,41 @@
                   7,
                   8,
                   9
+                ]
+              }
+            ]
+          },
+          {
+            "key": "markings",
+            "facet": "planning",
+            "heading": "Waymarking",
+            "body": "GR10 is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.",
+            "blocks": [
+              {
+                "kind": "waymark",
+                "osmcSymbol": "red::white_upper:red_lower:10:",
+                "ref": "GR 10"
+              }
+            ]
+          },
+          {
+            "key": "kit",
+            "facet": "planning",
+            "heading": "What to pack",
+            "body": "A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "gear",
+                "items": [
+                  "Waterproof shell",
+                  "Insulating layer",
+                  "Sun hat & SPF",
+                  "Trekking poles",
+                  "Headtorch",
+                  "Water filter",
+                  "Map & compass",
+                  "First-aid & blister kit"
                 ]
               }
             ]

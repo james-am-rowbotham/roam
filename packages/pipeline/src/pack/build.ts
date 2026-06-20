@@ -50,6 +50,19 @@ const accomNote = (a: KnowledgePOI): string =>
 
 const km = (m: number) => Math.round((m / 1000) * 10) / 10;
 
+// A sensible high-mountain long-trail kit (gear chips, §21.2). A composed default until
+// per-trail kit is curated from terrain/altitude/season.
+const TRAIL_KIT = [
+  'Waterproof shell',
+  'Insulating layer',
+  'Sun hat & SPF',
+  'Trekking poles',
+  'Headtorch',
+  'Water filter',
+  'Map & compass',
+  'First-aid & blister kit',
+];
+
 // Hiking-band grade from relief (no per-etapa grade in OSM) — a Derived first pass a
 // curator can override (§3 grade is open vocab, never an enum).
 function gradeForStage(distanceKm: number, ascentM: number | null): Grade {
@@ -321,6 +334,24 @@ export function buildTrailPack(
       blocks: [{ kind: 'season', best: config.season.best }],
     });
   }
+
+  // Planning: the painted blaze to follow, and a high-mountain kit list as gear chips.
+  if (k.osmcSymbol) {
+    guideTopics.push({
+      key: 'markings',
+      facet: 'planning',
+      heading: 'Waymarking',
+      body: `${config.source.name} is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.`,
+      blocks: [{ kind: 'waymark', osmcSymbol: k.osmcSymbol, ref: config.source.ref }],
+    });
+  }
+  guideTopics.push({
+    key: 'kit',
+    facet: 'planning',
+    heading: 'What to pack',
+    body: 'A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.',
+    blocks: [{ kind: 'chips', group: 'gear', items: TRAIL_KIT }],
+  });
 
   const objective: Objective = {
     id: config.id,

@@ -51,6 +51,8 @@ export interface TrailKnowledge {
   lengthM: number;
   /** The route's osmc way colour (hex) — the trail line colour for map previews. */
   wayColor?: string;
+  /** The raw osmc:symbol tag (§17.8) — parsed + drawn as the trail blaze in the guide. */
+  osmcSymbol?: string;
   /** Ordered elevation samples along the route: distance-from-start + elevation, metres. */
   elevationProfile: { d: number; e: number }[];
   regions: KnowledgeRegion[];

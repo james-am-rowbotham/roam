@@ -237,6 +237,7 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       routeName: route.name,
       lengthM,
       wayColor,
+      osmcSymbol: route.osmc_symbol ?? undefined,
       elevationProfile: asProfile(route.elevation_profile),
       regions,
       stages,

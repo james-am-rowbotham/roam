@@ -43,6 +43,8 @@ export type ContentBlock =
     }
   | { kind: 'accommodation'; header?: string; places: import('./types').PlaceRef[] }
   | { kind: 'navigation'; body: string; marking?: string }
+  // The painted trail blaze — the raw osmc:symbol (§17.8), parsed + drawn by the renderer.
+  | { kind: 'waymark'; osmcSymbol: string; ref?: string }
   | { kind: 'hazards'; header?: string; callouts: { tone: StatusTone; body: string }[] }
   | { kind: 'gallery'; mediaIds: string[] }
   | { kind: 'highlights'; highlightIds: string[]; header?: string }

@@ -5,11 +5,12 @@ import {
   type Location,
   markingColorToken,
 } from '@roam/content';
+import { parseOsmcSymbol } from '@roam/core';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { resolveColorToken } from '../../lib/colorToken';
 import { geometryBbox } from '../../lib/geo';
 import { colors, radius, spacing, type } from '../../theme';
-import { MapView, TrailLayer } from '../map';
+import { MapView, TrailLayer, Waymark } from '../map';
 import { Chip } from '../ui/Chip';
 import { ElevationChart } from './ElevationChart';
 
@@ -150,6 +151,18 @@ function NavigationBlock({ block }: { block: Extract<ContentBlock, { kind: 'navi
         )}
         <Text style={styles.body}>{block.body}</Text>
       </View>
+    </View>
+  );
+}
+
+function WaymarkBlock({ block }: { block: Extract<ContentBlock, { kind: 'waymark' }> }) {
+  // Parse the raw osmc:symbol and draw the painted blaze (§17.8); skip if unparseable.
+  const symbol = parseOsmcSymbol(block.osmcSymbol);
+  if (!symbol) return null;
+  return (
+    <View style={[styles.block, styles.waymarkRow]}>
+      <Waymark symbol={symbol} size={48} />
+      {block.ref ? <Text style={styles.waymarkRef}>{block.ref}</Text> : null}
     </View>
   );
 }
@@ -374,6 +387,8 @@ function Block({ block, resolve }: { block: ContentBlock; resolve: BlockResolve 
       return <AccommodationBlock block={block} resolve={resolve} />;
     case 'navigation':
       return <NavigationBlock block={block} />;
+    case 'waymark':
+      return <WaymarkBlock block={block} />;
     case 'hazards':
       return <HazardsBlock block={block} />;
     case 'gallery':
@@ -457,6 +472,8 @@ const styles = StyleSheet.create({
   listTitle: { ...type.bodyStrong, color: colors.text.primary },
   navRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing[4] },
   markingDot: { width: 12, height: 12, borderRadius: 6, marginTop: 5 },
+  waymarkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
+  waymarkRef: { ...type.bodyStrong, color: colors.text.primary },
   callout: { borderRadius: radius.lg, padding: spacing[6] },
   calloutText: { ...type.meta },
   dotRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
