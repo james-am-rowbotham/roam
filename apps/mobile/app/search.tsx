@@ -28,6 +28,15 @@ const TYPE_LABEL: Record<SearchType, string> = {
   stage: 'Stage',
 };
 
+// Type filter — the four browseable entity kinds (segments are implicit, surfaced by the
+// duration filter). No chip selected → all kinds.
+const TYPES: { label: string; value: SearchType }[] = [
+  { label: 'Trails', value: 'trail' },
+  { label: 'Peaks', value: 'peak' },
+  { label: 'Sections', value: 'section' },
+  { label: 'Stages', value: 'stage' },
+];
+
 // Hero thumbnail for a result — resolved from the summary's heroMediaId (segments have none).
 function heroUri(doc: SearchDoc): string | undefined {
   const id =
@@ -46,13 +55,21 @@ export default function SearchScreen() {
   const insets = useSafeAreaInsets();
   const [query, setQuery] = useState('');
   const [duration, setDuration] = useState<DurationDays | null>(null);
+  const [types, setTypes] = useState<SearchType[]>([]);
+
+  const toggleType = (t: SearchType) =>
+    setTypes((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]));
 
   const results = useMemo(() => {
-    const filters: SearchFilters = duration ? { durationDays: duration } : {};
+    const filters: SearchFilters = {
+      ...(duration ? { durationDays: duration } : {}),
+      ...(types.length ? { types } : {}),
+    };
     // Idle (no query, no filter) → a browse list of trails & peaks, not every stage.
-    if (!query.trim() && !duration) return runSearch('', { types: ['trail', 'peak'] });
+    if (!query.trim() && !duration && !types.length)
+      return runSearch('', { types: ['trail', 'peak'] });
     return runSearch(query, filters);
-  }, [query, duration]);
+  }, [query, duration, types]);
 
   const open = (doc: SearchDoc) => {
     switch (doc.type) {
@@ -115,6 +132,22 @@ export default function SearchScreen() {
         })}
       </ScrollView>
 
+      {/* type filter — multi-select; none selected → all kinds */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chips}
+      >
+        {TYPES.map((t) => (
+          <Chip
+            key={t.value}
+            label={t.label}
+            selected={types.includes(t.value)}
+            onPress={() => toggleType(t.value)}
+          />
+        ))}
+      </ScrollView>
+
       <ScrollView contentContainerStyle={styles.list} keyboardShouldPersistTaps="handled">
         {results.length === 0 ? (
           <Text style={styles.empty}>No matches. Try a different word or duration.</Text>
@@ -155,7 +188,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   input: { flex: 1, ...type.bodyLarge, color: colors.text.primary, padding: 0 },
-  chips: { gap: spacing[3], paddingHorizontal: layout.screenPadding, paddingBottom: spacing[6] },
+  chips: { gap: spacing[3], paddingHorizontal: layout.screenPadding, paddingBottom: spacing[3] },
   list: { paddingHorizontal: layout.screenPadding, paddingBottom: layout.contentPaddingBottom },
   empty: { ...type.body, color: colors.text.secondary, paddingTop: spacing[12] },
 });
