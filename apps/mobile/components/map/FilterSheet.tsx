@@ -14,28 +14,46 @@ import { Chip } from '../ui/Chip';
 
 // Map filter sheet (Figma 03b · 211:745) — the chip groups that filter the trails on the
 // map. Pure presentation over @roam/core's filter dimensions; the screen owns the state.
+type Option = { id: string; label: string };
+
 interface Props {
   visible: boolean;
   filters: MapFilters;
   resultCount: number;
+  /** Geography facets present in the data (country/range) — the chips that actually
+   *  distinguish trails. Empty groups are hidden. */
+  countries: Option[];
+  regions: Option[];
   onToggle: (dim: FilterDimension, value: string) => void;
   onReset: () => void;
   onClose: () => void;
 }
 
-const GROUPS: {
-  title: string;
-  dim: FilterDimension;
-  options: readonly { id: string; label: string }[];
-}[] = [
+// Static dimension buckets (the data-independent ones).
+const STATIC_GROUPS: { title: string; dim: FilterDimension; options: readonly Option[] }[] = [
   { title: 'DIFFICULTY', dim: 'difficulty', options: DIFFICULTIES },
   { title: 'DURATION', dim: 'duration', options: DURATION_BANDS },
   { title: 'DISTANCE', dim: 'distance', options: DISTANCE_BANDS },
   { title: 'SEASON', dim: 'seasons', options: SEASONS },
 ];
 
-export function FilterSheet({ visible, filters, resultCount, onToggle, onReset, onClose }: Props) {
+export function FilterSheet({
+  visible,
+  filters,
+  resultCount,
+  countries,
+  regions,
+  onToggle,
+  onReset,
+  onClose,
+}: Props) {
   const insets = useSafeAreaInsets();
+  // Country / range first (they have real data), then the static buckets. Hide empty groups.
+  const groups = [
+    { title: 'COUNTRY', dim: 'countries' as FilterDimension, options: countries },
+    { title: 'MOUNTAIN RANGE', dim: 'regions' as FilterDimension, options: regions },
+    ...STATIC_GROUPS,
+  ].filter((g) => g.options.length > 0);
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.container}>
@@ -50,7 +68,7 @@ export function FilterSheet({ visible, filters, resultCount, onToggle, onReset, 
           </View>
 
           <ScrollView contentContainerStyle={styles.groups} showsVerticalScrollIndicator={false}>
-            {GROUPS.map((g) => {
+            {groups.map((g) => {
               const selected = (filters[g.dim] as string[] | undefined) ?? [];
               return (
                 <View key={g.dim} style={styles.group}>

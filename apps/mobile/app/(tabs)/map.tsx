@@ -4,6 +4,7 @@ import {
   type MapEntity,
   type MapFilters,
   activeFilterChips,
+  facetOptions,
   filterEntities,
   symbolKey,
   toggleFilterValue,
@@ -228,6 +229,15 @@ export default function MapScreen() {
     [entities, filters],
   );
   const shownTrails = trails.filter((t) => shownIds.has(String(t.id)));
+  // Country/range chips from the data — the facets that actually distinguish trails.
+  const countries = useMemo(
+    () => facetOptions(entities, 'country').map((f) => ({ id: f.value, label: f.label })),
+    [entities],
+  );
+  const regions = useMemo(
+    () => facetOptions(entities, 'region').map((f) => ({ id: f.value, label: f.label })),
+    [entities],
+  );
   const activeChips = activeFilterChips(filters);
   const toggle = (dim: FilterDimension, value: string) =>
     setFilters((f) => toggleFilterValue(f, dim, value));
@@ -353,6 +363,8 @@ export default function MapScreen() {
         visible={filterOpen}
         filters={filters}
         resultCount={shownIds.size}
+        countries={countries}
+        regions={regions}
         onToggle={toggle}
         onReset={() => setFilters({})}
         onClose={() => setFilterOpen(false)}
