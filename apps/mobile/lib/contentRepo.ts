@@ -1,4 +1,14 @@
-import { type SeedInput, createMemoryRepo, importPacks } from '@roam/content';
+import {
+  type SearchDoc,
+  type SearchFilters,
+  type SearchInput,
+  type SeedInput,
+  buildSearchIndex,
+  createMemoryRepo,
+  importPacks,
+  searchIndex,
+  segmentsForDuration,
+} from '@roam/content';
 import { useQuery } from '@tanstack/react-query';
 import seedJson from '../assets/content/seed.json';
 
@@ -11,6 +21,27 @@ export const contentRepo = createMemoryRepo(contentStore);
 
 /** Resolve an editorial image by id (heroMediaId / mediaId) from the bundled pack. */
 export const mediaFor = (id?: string) => (id ? contentStore.media.get(id) : undefined);
+
+// Offline search (§14) — the index is derived once from the loaded store summaries; the
+// query runs purely in @roam/content, so it behaves identically online and offline.
+const searchInput: SearchInput = {
+  objectives: [...contentStore.objectiveSummaries.values()],
+  sections: [...contentStore.sectionSummaries.values()],
+  stages: [...contentStore.stageSummaries.values()],
+  countries: [...contentStore.countries.values()],
+  ranges: [...contentStore.ranges.values()],
+  regions: [...contentStore.regions.values()],
+};
+const searchDocs = buildSearchIndex(searchInput);
+
+/** Run a keyword + facet search. A duration filter folds in synthesised stage-window
+ *  segments (§14) so a hiker can find a 2–3 day chunk that isn't a curated Section. */
+export function runSearch(query: string, filters?: SearchFilters): SearchDoc[] {
+  const docs = filters?.durationDays
+    ? [...searchDocs, ...segmentsForDuration(searchInput, filters.durationDays)]
+    : searchDocs;
+  return searchIndex(docs, { query, filters });
+}
 
 const key = (...parts: string[]) => ['content', ...parts];
 

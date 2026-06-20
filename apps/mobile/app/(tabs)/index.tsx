@@ -56,24 +56,7 @@ export default function HomeScreen() {
       showsVerticalScrollIndicator={false}
     >
       <NavBar />
-      <SearchField />
-
-      {/* TODO(dev): temporary launcher for the new browsing build (Phases 3–4).
-          Remove once Discovery (Phase 7) is the real entry point. */}
-      <SectionHeader title="New build" />
-      <View style={styles.devLinks}>
-        {DEV_LINKS.map((l) => (
-          <TouchableOpacity
-            key={l.label}
-            style={styles.devLink}
-            onPress={() => router.push(l.href)}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.devLinkLabel}>{l.label}</Text>
-            <Text style={styles.devLinkChevron}>›</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <SearchField onPress={() => router.push('/search')} />
 
       <SectionHeader title="Popular trails" />
       <View style={styles.trailList}>
