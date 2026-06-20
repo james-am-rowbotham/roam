@@ -8,14 +8,19 @@ import { contentRepo, contentStore } from './contentRepo';
 // Tapping a trail/section/stage/segment highlights it and zooms in; the map shows
 // removable scope chips (see mapStore ContentFocus).
 
-const mapGeom = (blocks?: ContentBlock[]): GeoJSON.Geometry | null => {
-  const b = blocks?.find((x): x is Extract<ContentBlock, { kind: 'map' }> => x.kind === 'map');
-  return b?.geojson.features[0]?.geometry ?? null;
-};
+const mapBlockOf = (blocks?: ContentBlock[]) =>
+  blocks?.find((x): x is Extract<ContentBlock, { kind: 'map' }> => x.kind === 'map');
 
-async function routeGeomOf(objectiveId: string): Promise<GeoJSON.Geometry | null> {
+const mapGeom = (blocks?: ContentBlock[]): GeoJSON.Geometry | null =>
+  mapBlockOf(blocks)?.geojson.features[0]?.geometry ?? null;
+
+/** The route's line + its osmc way colour (the trail colour for the highlight). */
+async function routeOf(
+  objectiveId: string,
+): Promise<{ geom: GeoJSON.Geometry | null; color?: string }> {
   const o = await contentRepo.getObjective(objectiveId);
-  return mapGeom(o.guide?.find((t) => t.key === 'map')?.blocks);
+  const block = mapBlockOf(o.guide?.find((t) => t.key === 'map')?.blocks);
+  return { geom: block?.geojson.features[0]?.geometry ?? null, color: block?.color };
 }
 async function sectionGeomOf(sectionId: string): Promise<GeoJSON.Geometry | null> {
   const s = await contentRepo.getSection(sectionId);
@@ -55,20 +60,26 @@ export function useFocusOnMap() {
 
   const go = (
     objectiveId: string,
-    routeGeom: GeoJSON.Geometry | null,
+    route: { geom: GeoJSON.Geometry | null; color?: string },
     scope: FocusScope | null,
   ) => {
-    if (!routeGeom) return; // no geometry in the pack → nothing to show
-    setFocus({ objectiveId, trailLabel: trailLabel(objectiveId), routeGeom, scope });
+    if (!route.geom) return; // no geometry in the pack → nothing to show
+    setFocus({
+      objectiveId,
+      trailLabel: trailLabel(objectiveId),
+      routeGeom: route.geom,
+      color: route.color,
+      scope,
+    });
     router.push('/(tabs)/map');
   };
 
   const focusTrail = async (objectiveId: string) => {
-    go(objectiveId, await routeGeomOf(objectiveId), null);
+    go(objectiveId, await routeOf(objectiveId), null);
   };
 
   const focusSection = async (objectiveId: string, sectionId: string) => {
-    const [route, geom] = await Promise.all([routeGeomOf(objectiveId), sectionGeomOf(sectionId)]);
+    const [route, geom] = await Promise.all([routeOf(objectiveId), sectionGeomOf(sectionId)]);
     const stages = objectiveStages(objectiveId).filter((s) => s.sectionId === sectionId);
     const scope: FocusScope | null = geom
       ? {
@@ -84,7 +95,7 @@ export function useFocusOnMap() {
   };
 
   const focusStage = async (objectiveId: string, stageId: string) => {
-    const [route, geom] = await Promise.all([routeGeomOf(objectiveId), stageGeomOf(stageId)]);
+    const [route, geom] = await Promise.all([routeOf(objectiveId), stageGeomOf(stageId)]);
     const num = contentStore.stageSummaries.get(stageId)?.number;
     const scope: FocusScope | null = geom
       ? {
@@ -106,7 +117,7 @@ export function useFocusOnMap() {
       (s) => s.number >= fromNum && s.number <= toNum,
     );
     const [route, ...geoms] = await Promise.all([
-      routeGeomOf(objectiveId),
+      routeOf(objectiveId),
       ...inRange.map((s) => stageGeomOf(s.id)),
     ]);
     const merged = mergeLines(geoms.filter((g): g is GeoJSON.Geometry => !!g));

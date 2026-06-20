@@ -27,6 +27,7 @@ export interface ContentFocus {
   objectiveId: string;
   trailLabel: string; // "GR11"
   routeGeom: GeoJSON.Geometry; // whole-trail line (shown when no scope)
+  color?: string; // the trail's osmc way colour (red for GR11) — the highlight colour
   scope: FocusScope | null;
 }
 

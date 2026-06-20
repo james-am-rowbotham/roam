@@ -61,7 +61,17 @@ type MapTrail = {
   waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
 };
 
-function TrailRoute({ trail, dim }: { trail: MapTrail; dim: boolean }) {
+function TrailRoute({
+  trail,
+  focusedObjectiveId,
+  focusScoped,
+  legacyDim,
+}: {
+  trail: MapTrail;
+  focusedObjectiveId: string | null;
+  focusScoped: boolean;
+  legacyDim: boolean;
+}) {
   const router = useRouter();
   const id = String(trail.id);
   const enabled = { query: { enabled: !!trail.id } };
@@ -79,6 +89,13 @@ function TrailRoute({ trail, dim }: { trail: MapTrail; dim: boolean }) {
   const blazeImage = symbol ? `blaze-${symbolKey(symbol)}` : undefined;
   // 'GR11' → 'gr11', 'GR 10' → 'gr10' — route the line tap to the new objective Guide.
   const slug = (trail.ref ?? trail.name ?? '').toLowerCase().replace(/\s+/g, '');
+
+  // A focus shows this trail as a single entity. Dim every other trail, and dim this one
+  // too when a scope (stage/section) is focused so the highlighted slice stands out. POIs +
+  // endpoints render only for the focused trail (§17.5) — never in the all-trails view.
+  const isFocused = !!focusedObjectiveId && focusedObjectiveId === slug;
+  const focusActive = !!focusedObjectiveId;
+  const dim = legacyDim || (focusActive && (!isFocused || focusScoped));
 
   if (!geojson) return null;
   return (
@@ -98,19 +115,22 @@ function TrailRoute({ trail, dim }: { trail: MapTrail; dim: boolean }) {
       {blazeImage && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
       )}
-      <SectionEndpoints geom={geojson as unknown as Record<string, unknown>} />
-      <NativePOILayer
-        id={`water-${trail.id}`}
-        kind="water"
-        pois={water}
-        onPress={(pid) => router.push(`/poi/water/${pid}`)}
-      />
-      <NativePOILayer
-        id={`accommodations-${trail.id}`}
-        kind="accommodation"
-        pois={accommodations}
-        onPress={(pid) => router.push(`/poi/accommodation/${pid}`)}
-      />
+      {isFocused && (
+        <>
+          <NativePOILayer
+            id={`water-${trail.id}`}
+            kind="water"
+            pois={water}
+            onPress={(pid) => router.push(`/poi/water/${pid}`)}
+          />
+          <NativePOILayer
+            id={`accommodations-${trail.id}`}
+            kind="accommodation"
+            pois={accommodations}
+            onPress={(pid) => router.push(`/poi/accommodation/${pid}`)}
+          />
+        </>
+      )}
     </>
   );
 }
@@ -169,8 +189,8 @@ export default function MapScreen() {
   const { data: trailsResponse } = useTrails();
   const trails = (trailsResponse?.data ?? []) as MapTrail[];
   const isSectionActive = !!activeSectionId;
-
-  const dimTrails = isSectionActive || !!focus;
+  const focusedObjectiveId = focus?.objectiveId ?? null;
+  const focusScoped = !!focus?.scope;
 
   return (
     <View style={styles.screen}>
@@ -178,10 +198,16 @@ export default function MapScreen() {
       <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom} bounds={focusBounds}>
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
-        {/* Every trail's route + blaze + POIs, always on. Routes dim when a section
-            or a content focus is highlighted over them (navigation focus, §17.5). */}
+        {/* Every trail's route + blaze, always on (in its osmc way colour). POIs + endpoints
+            only render for the focused trail — the all-trails view stays line-only (§17.5). */}
         {trails.map((t) => (
-          <TrailRoute key={t.id} trail={t} dim={dimTrails} />
+          <TrailRoute
+            key={t.id}
+            trail={t}
+            focusedObjectiveId={focusedObjectiveId}
+            focusScoped={focusScoped}
+            legacyDim={isSectionActive}
+          />
         ))}
         {activeSectionGeom && (
           <TrailLayer
@@ -200,16 +226,18 @@ export default function MapScreen() {
             onPress={() => router.push(`/section/${activeSectionId}`)}
           />
         )}
-        {/* Content focus highlight — the searched/browsed trail, section, stage or segment. */}
+        {/* Content focus highlight — the searched/browsed trail, section, stage or segment,
+            in the trail's own way colour (red for GR11), with its start/finish endpoints. */}
         {focusGeom && (
           <TrailLayer
             id="focus-highlight"
             geojson={{ type: 'Feature', geometry: focusGeom as never, properties: {} }}
-            color={colors.accent}
+            color={focus?.color ?? colors.map.route}
             width={4}
             opacity={1}
           />
         )}
+        {focusGeom && <SectionEndpoints geom={focusGeom as unknown as Record<string, unknown>} />}
         {coords && <UserMarker coord={[coords.lng, coords.lat]} headingDeg={coords.headingDeg} />}
       </MapView>
 
