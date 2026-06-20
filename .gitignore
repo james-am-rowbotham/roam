@@ -23,8 +23,18 @@ packages/db/data/
 **/build
 **/dist
 
+# Next.js (apps/web) — build output, generated types, static export
+**/.next
+**/.turbo
+**/out
+**/next-env.d.ts
+
+# TypeScript incremental build info
+**/*.tsbuildinfo
+
 # Generated code — run npm run codegen to regenerate
 apps/mobile/lib/generated
+apps/web/lib/generated
 
 # VS Code   
 .vscode

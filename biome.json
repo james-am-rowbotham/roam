@@ -29,11 +29,13 @@
       "**/android",
       "**/dist",
       "**/build",
+      "**/.next",
       "**/.expo",
       "poc-api",
       "poc-mobile",
       "**/data",
       "**/generated",
+      "packages/tokens/tokens.css",
       "apps/mobile/assets/content",
       "packages/db/content",
       "**/content/workflows"

@@ -1,0 +1,33 @@
+{
+  "name": "@roam/web",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "typecheck": "tsc --noEmit",
+    "codegen": "orval --config orval.config.ts",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@roam/core": "workspace:*",
+    "@roam/tokens": "workspace:*",
+    "maplibre-gl": "^5.6.0",
+    "next": "^15.5.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@roam/config": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/geojson": "^7946.0.14",
+    "@types/node": "^22.0.0",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "orval": "^8.16.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "~6.0.3"
+  }
+}

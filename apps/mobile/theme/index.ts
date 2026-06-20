@@ -1,31 +1,14 @@
-// Design tokens — mirrors the Figma variables exactly (Foundations, node 28:2).
-// Import this wherever you need colours, spacing, radius or type styles.
-//
-// The refreshed design system: warm neutrals, single green accent,
-// Bricolage Grotesque (display) / Hanken Grotesk (body, UI) / Geist Mono
-// (numerals, stats, uppercase micro-labels). Spacing, radius and layout are
-// unchanged from the previous design — the refresh deliberately keeps them.
+// Design tokens for the mobile app. Colours, the palette, the radius and
+// spacing scales now come from the shared @roam/tokens package — one source for
+// web + mobile (§16). This file adds the platform-specific pieces RN needs:
+// the loaded font-family names, the type styles that bind them, RN shadow props
+// and layout helpers.
 
+import { colors, palette, radius, spacing } from '@roam/tokens';
 import type { Theme } from './types';
 
-// Primitives. Components never consume these — semantic tokens only.
-export const palette = {
-  stone50: '#FAF7F1',
-  stone0: '#FFFEFB',
-  ink700: '#26231E',
-  ink500: '#6F6A60',
-  white: '#FFFFFF',
-  sand200: '#E8E4D8',
-  sage200: '#D4E6C3',
-  amber100: '#FAEEDA',
-  amber700: '#854F0B',
-  red100: '#FCEBEB',
-  red700: '#A32D2D',
-  green100: '#E2EAE0',
-  green700: '#3D5A3F',
-  blazeRed: '#D63A22',
-  blazeCream: '#FAF4E8',
-} as const;
+// Re-export the shared value tokens so existing `@/theme` imports keep working.
+export { colors, palette, radius, spacing };
 
 export const fonts: Theme['fonts'] = {
   display: 'BricolageGrotesque_600SemiBold',
@@ -36,83 +19,6 @@ export const fonts: Theme['fonts'] = {
   bold: 'HankenGrotesk_700Bold',
   mono: 'GeistMono_400Regular',
   monoMedium: 'GeistMono_500Medium',
-};
-
-// Progress/active UI is green — the blue "info" pair is deleted from the system.
-const progress = { bg: palette.green100, text: palette.green700 };
-
-export const colors: Theme['colors'] = {
-  accent: palette.green700,
-
-  bg: {
-    app: palette.stone50,
-    surface: palette.stone0,
-    // True rgba, not flattened to hex — these composite over photos.
-    subtle: 'rgba(58,47,30,0.04)',
-    input: 'rgba(58,47,30,0.05)',
-  },
-
-  border: {
-    default: 'rgba(58,51,40,0.13)',
-  },
-
-  text: {
-    primary: palette.ink700,
-    secondary: palette.ink500,
-    onAccent: palette.white,
-    tabActive: palette.ink500,
-  },
-
-  // Blaze palette — the canonical FEDME/FFRP waymark colours every trail snaps
-  // into (§16/§17.8). Mirrors TRAIL_PALETTE in packages/core; keep in sync. The
-  // route LINE stays map.route ink — identity lives in the blaze, never the line.
-  trail: {
-    gr: '#C74538', // red — GR / long-distance
-    pr: '#D9B53A', // yellow — PR / day route
-    sl: '#5C8C3D', // green — SL / local
-  },
-
-  // POI marker palette. Markers never follow the accent: peaks render in
-  // text.primary, junction nodes in surface fill + trail.sl ring/number.
-  marker: {
-    water: '#4D7A8C',
-    refuge: '#A0683C',
-    viewpoint: '#58836B',
-    historic: '#7C6E5C',
-    food: '#6B8456',
-  },
-
-  status: {
-    warn: { bg: palette.amber100, text: palette.amber700 },
-    danger: { bg: palette.red100, text: palette.red700 },
-    success: { bg: palette.green100, text: palette.green700 },
-    progress,
-  },
-
-  brand: {
-    blazeRed: palette.blazeRed,
-    blazeCream: palette.blazeCream,
-    // Hairline on the cream bar so it reads on light surfaces.
-    blazeHairline: 'rgba(0,0,0,0.08)',
-  },
-
-  map: {
-    base: palette.sand200,
-    road: palette.white,
-    green: palette.sage200,
-    route: palette.ink700,
-    water: '#AACBD8',
-    contour: '#D8CFBE',
-  },
-
-  // Overlay tokens — used on hero images and frosted-glass elements
-  overlay: {
-    dark: 'rgba(28,24,20,0.35)', // hero image scrim
-    darkStrong: 'rgba(28,24,20,0.45)', // section hero (shorter image, needs more contrast)
-    frosted: 'rgba(255,254,251,0.92)', // back button on hero
-    onImage: '#FFFFFF', // primary text on dark hero
-    onImageMuted: 'rgba(255,255,255,0.85)', // secondary text on hero
-  },
 };
 
 // Digits and ALL-CAPS are instrument readouts (mono); headings are Bricolage;
@@ -148,25 +54,6 @@ export const shadows = {
     shadowRadius: 6,
     elevation: 2,
   },
-} as const;
-
-export const radius = {
-  sm: 6,
-  md: 7,
-  lg: 8,
-  xl: 12,
-  full: 360,
-} as const;
-
-export const spacing = {
-  1: 2,
-  2: 4,
-  3: 6,
-  4: 8,
-  5: 10,
-  6: 12,
-  8: 16,
-  12: 24,
 } as const;
 
 // Semantic spacing — use these for layout decisions, not raw spacing values.

@@ -1,37 +1,11 @@
-// The shape of the design-token theme. Values live in ./index.ts and mirror
-// the Figma variables on the Foundations page (node 28:2).
+// The shape of the design-token theme. Colour values + their types come from the
+// shared @roam/tokens package; the font/type shapes below are mobile-specific.
 
-export interface StatusPair {
-  bg: string;
-  text: string;
-}
+import type { ColorTokens, StatusPair } from '@roam/tokens';
 
-export interface ThemeColors {
-  accent: string;
-  bg: { app: string; surface: string; subtle: string; input: string };
-  border: { default: string };
-  text: { primary: string; secondary: string; onAccent: string; tabActive: string };
-  /** Blaze palette — the three tokens every trail resolves into (§16/§17.8).
-   *  Mirrors TRAIL_PALETTE in packages/core. No blue or purple in the canon. */
-  trail: { gr: string; pr: string; sl: string };
-  marker: { water: string; refuge: string; viewpoint: string; historic: string; food: string };
-  status: {
-    warn: StatusPair;
-    danger: StatusPair;
-    success: StatusPair;
-    /** Progress/active state (replaced the blue "info" pair; resolves to green). */
-    progress: StatusPair;
-  };
-  brand: { blazeRed: string; blazeCream: string; blazeHairline: string };
-  map: { base: string; road: string; green: string; route: string; water: string; contour: string };
-  overlay: {
-    dark: string;
-    darkStrong: string;
-    frosted: string;
-    onImage: string;
-    onImageMuted: string;
-  };
-}
+export type { ColorTokens, StatusPair };
+// Kept as an alias so existing `ThemeColors` imports across the app still work.
+export type ThemeColors = ColorTokens;
 
 export interface ThemeFonts {
   /** Display face for headings (Bricolage). Never below 15px. */

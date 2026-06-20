@@ -50,6 +50,7 @@
         "@op-engineering/op-sqlite": "^16.2.0",
         "@roam/content": "workspace:*",
         "@roam/core": "workspace:*",
+        "@roam/tokens": "workspace:*",
         "@tanstack/react-query": "^5.101.0",
         "expo": "~56.0.8",
         "expo-dev-client": "~56.0.18",
@@ -80,6 +81,7 @@
       "version": "0.0.1",
       "dependencies": {
         "@roam/core": "workspace:*",
+        "@roam/tokens": "workspace:*",
         "maplibre-gl": "^5.6.0",
         "next": "^15.5.0",
         "react": "19.2.3",
@@ -92,6 +94,7 @@
         "@types/node": "^22.0.0",
         "@types/react": "~19.2.2",
         "@types/react-dom": "~19.2.2",
+        "orval": "^8.16.0",
         "tailwindcss": "^4.1.0",
         "typescript": "~6.0.3",
       },
@@ -149,6 +152,15 @@
         "@roam/config": "workspace:*",
         "@types/geojson": "^7946.0.14",
         "bun-types": "^1.3.14",
+        "typescript": "~6.0.3",
+      },
+    },
+    "packages/tokens": {
+      "name": "@roam/tokens",
+      "version": "0.0.1",
+      "devDependencies": {
+        "@roam/config": "workspace:*",
+        "bun-types": "latest",
         "typescript": "~6.0.3",
       },
     },
@@ -871,6 +883,8 @@
     "@roam/mobile": ["@roam/mobile@workspace:apps/mobile"],
 
     "@roam/pipeline": ["@roam/pipeline@workspace:packages/pipeline"],
+
+    "@roam/tokens": ["@roam/tokens@workspace:packages/tokens"],
 
     "@roam/web": ["@roam/web@workspace:apps/web"],
 
