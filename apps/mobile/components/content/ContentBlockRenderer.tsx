@@ -157,11 +157,13 @@ function NavigationBlock({ block }: { block: Extract<ContentBlock, { kind: 'navi
 
 function WaymarkBlock({ block }: { block: Extract<ContentBlock, { kind: 'waymark' }> }) {
   // Parse the raw osmc:symbol and draw the painted blaze (§17.8); skip if unparseable.
-  const symbol = parseOsmcSymbol(block.osmcSymbol);
-  if (!symbol) return null;
+  const parsed = parseOsmcSymbol(block.osmcSymbol);
+  if (!parsed) return null;
+  // The real-world blaze is just the painted bars — drop the route number from this render.
+  const symbol = { ...parsed, text: null, textColor: null };
   return (
     <View style={[styles.block, styles.waymarkRow]}>
-      <Waymark symbol={symbol} size={48} />
+      <Waymark symbol={symbol} size={32} />
       {block.ref ? <Text style={styles.waymarkRef}>{block.ref}</Text> : null}
     </View>
   );

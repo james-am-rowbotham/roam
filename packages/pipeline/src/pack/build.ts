@@ -62,6 +62,18 @@ const TRAIL_KIT = [
   'Map & compass',
   'First-aid & blister kit',
 ];
+const TRAIL_CONDITIONS = [
+  'Afternoon storms',
+  'Snow into early summer',
+  'Exposed high cols',
+  'Long water carries',
+];
+const TRAIL_FOOD = [
+  'Resupply in valley towns',
+  'Refugio half-board',
+  'Carry 2–3 days',
+  'Local cheese & cured meat',
+];
 
 // Hiking-band grade from relief (no per-etapa grade in OSM) — a Derived first pass a
 // curator can override (§3 grade is open vocab, never an enum).
@@ -353,6 +365,36 @@ export function buildTrailPack(
     blocks: [{ kind: 'chips', group: 'gear', items: TRAIL_KIT }],
   });
 
+  // Enrich the AI-drafted Planning/Environment prose with a Derived visual block per topic:
+  // POI fact strips (refuges/water counts) and conditions/food chips — composed from the pack.
+  const enrichAiTopic = (t: GuideTopic): GuideTopic => {
+    const extra: ContentBlock[] = [];
+    if (t.key === 'accommodation') {
+      const refuges = k.accommodation.filter((a) => a.type === 'refuge' || a.type === 'hut').length;
+      extra.push({
+        kind: 'statStrip',
+        stats: [
+          { value: `${k.accommodation.length}`, label: 'STAYS' },
+          { value: `${refuges}`, label: 'REFUGES' },
+        ],
+      });
+    } else if (t.key === 'water') {
+      const reliable = k.water.filter((w) => !w.seasonal).length;
+      extra.push({
+        kind: 'statStrip',
+        stats: [
+          { value: `${k.water.length}`, label: 'SOURCES' },
+          { value: `${reliable}`, label: 'RELIABLE' },
+        ],
+      });
+    } else if (t.key === 'safety') {
+      extra.push({ kind: 'chips', group: 'conditions', items: TRAIL_CONDITIONS });
+    } else if (t.key === 'food') {
+      extra.push({ kind: 'chips', group: 'food', items: TRAIL_FOOD });
+    }
+    return extra.length ? { ...t, blocks: [...(t.blocks ?? []), ...extra] } : t;
+  };
+
   const objective: Objective = {
     id: config.id,
     slug: config.id,
@@ -378,7 +420,7 @@ export function buildTrailPack(
         label: 'Ascent',
       },
     ],
-    guide: [...guideTopics, ...(content.objectiveGuide ?? [])],
+    guide: [...guideTopics, ...(content.objectiveGuide ?? []).map(enrichAiTopic)],
     highlightIds: [],
     sectionIds: sections.map((s) => s.id),
   };

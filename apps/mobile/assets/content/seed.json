@@ -9263,19 +9263,61 @@
             "key": "accommodation",
             "facet": "planning",
             "heading": "Where to sleep",
-            "body": "The trail averages roughly one refugio a day. Staffed huts are the backbone — dormitory beds, a hot meal, a packed lunch, blankets & local information; reckon on around €26 for the bed, €22 for dinner and €11 for breakfast, and bring a sleeping-bag liner since bags aren't supplied. In valleys you'll also find albergues, pensions, hostals & casas rurales, and unstaffed free huts cover the more isolated stretches. Book ahead from mid-July to late August when refuges fill fast; solo walkers can often find a space without it. Wild camping is illegal, but bivouacking — a small tent pitched at dusk and struck at dawn, away from habitation — is tolerated, usually above 1,800–2,100 m; note that camping is banned in Aigüestortes and is restricted in Ordesa to the area by the Góriz refuge."
+            "body": "The trail averages roughly one refugio a day. Staffed huts are the backbone — dormitory beds, a hot meal, a packed lunch, blankets & local information; reckon on around €26 for the bed, €22 for dinner and €11 for breakfast, and bring a sleeping-bag liner since bags aren't supplied. In valleys you'll also find albergues, pensions, hostals & casas rurales, and unstaffed free huts cover the more isolated stretches. Book ahead from mid-July to late August when refuges fill fast; solo walkers can often find a space without it. Wild camping is illegal, but bivouacking — a small tent pitched at dusk and struck at dawn, away from habitation — is tolerated, usually above 1,800–2,100 m; note that camping is banned in Aigüestortes and is restricted in Ordesa to the area by the Góriz refuge.",
+            "blocks": [
+              {
+                "kind": "statStrip",
+                "stats": [
+                  {
+                    "value": "13",
+                    "label": "STAYS"
+                  },
+                  {
+                    "value": "6",
+                    "label": "REFUGES"
+                  }
+                ]
+              }
+            ]
           },
           {
             "key": "water",
             "facet": "planning",
             "heading": "Water on the trail",
-            "body": "Water is dependable across most of the GR11 — village fountains, taps near refuges & mountain springs let you refill often, and unstaffed huts usually have drinking water. The exception is the far eastern end in Catalonia, approaching the Mediterranean, where sources thin out and temperatures can top 30°C; carry extra through there. Treat what you collect: much of the easily reached water sits below grazing land and free-range cattle, so a filter or other treatment is strongly advised. Two to three litres of capacity suits most stages, with more on the dry Catalan stretches."
+            "body": "Water is dependable across most of the GR11 — village fountains, taps near refuges & mountain springs let you refill often, and unstaffed huts usually have drinking water. The exception is the far eastern end in Catalonia, approaching the Mediterranean, where sources thin out and temperatures can top 30°C; carry extra through there. Treat what you collect: much of the easily reached water sits below grazing land and free-range cattle, so a filter or other treatment is strongly advised. Two to three litres of capacity suits most stages, with more on the dry Catalan stretches.",
+            "blocks": [
+              {
+                "kind": "statStrip",
+                "stats": [
+                  {
+                    "value": "117",
+                    "label": "SOURCES"
+                  },
+                  {
+                    "value": "116",
+                    "label": "RELIABLE"
+                  }
+                ]
+              }
+            ]
           },
           {
             "key": "safety",
             "facet": "planning",
             "heading": "Staying safe",
-            "body": "The main risk is afternoon weather: storms build over the high country in summer, often in the evening and night, so cross exposed passes early and be down before they hit. The GR11 climbs many passes with scree, boulderfields & easy scrambling — about as hard as an inexperienced walker would want under a heavy pack — and snow can linger on passes above 2,500 m into early summer, hiding markers and demanding an ice axe and crampons. Fog can drop visibility to a few metres even on a marked route. The emergency number Spain-wide is 112, reaching mountain rescue, but reception is patchy in remote valleys, so leave your route and expected arrival with someone, and use the staffed refuges as shelter and a source of current conditions."
+            "body": "The main risk is afternoon weather: storms build over the high country in summer, often in the evening and night, so cross exposed passes early and be down before they hit. The GR11 climbs many passes with scree, boulderfields & easy scrambling — about as hard as an inexperienced walker would want under a heavy pack — and snow can linger on passes above 2,500 m into early summer, hiding markers and demanding an ice axe and crampons. Fog can drop visibility to a few metres even on a marked route. The emergency number Spain-wide is 112, reaching mountain rescue, but reception is patchy in remote valleys, so leave your route and expected arrival with someone, and use the staffed refuges as shelter and a source of current conditions.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "conditions",
+                "items": [
+                  "Afternoon storms",
+                  "Snow into early summer",
+                  "Exposed high cols",
+                  "Long water carries"
+                ]
+              }
+            ]
           },
           {
             "key": "flora",
@@ -9287,7 +9329,19 @@
             "key": "food",
             "facet": "environment",
             "heading": "Eat the valley you're in",
-            "body": "Mountain food on the GR11 is shepherd's food, and it changes region by region. In the Basque Country and Navarre look for sheep's-milk cheeses — Idiazabal, and the Navarrese curados — and river trout (trucha) off the menu in valley villages. In Aragon, migas reward the hungry: stale bread crumbled and fried with garlic, chorizo, and bacon, sometimes with grapes — a meal built for a working day in the hills. Refuge dinners are usually a fixed three-course menú; stock up on cheese and cured meat in the larger valley towns like Jaca, since long stretches between resupply are normal."
+            "body": "Mountain food on the GR11 is shepherd's food, and it changes region by region. In the Basque Country and Navarre look for sheep's-milk cheeses — Idiazabal, and the Navarrese curados — and river trout (trucha) off the menu in valley villages. In Aragon, migas reward the hungry: stale bread crumbled and fried with garlic, chorizo, and bacon, sometimes with grapes — a meal built for a working day in the hills. Refuge dinners are usually a fixed three-course menú; stock up on cheese and cured meat in the larger valley towns like Jaca, since long stretches between resupply are normal.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "food",
+                "items": [
+                  "Resupply in valley towns",
+                  "Refugio half-board",
+                  "Carry 2–3 days",
+                  "Local cheese & cured meat"
+                ]
+              }
+            ]
           },
           {
             "key": "weather",
@@ -28245,19 +28299,61 @@
             "key": "accommodation",
             "facet": "planning",
             "heading": "Where to sleep",
-            "body": "The backbone of the GR10 is the gîte d'étape — a French walkers' hostel with dormitory beds, an evening meal & breakfast, and usually a packed lunch on request. Staffed mountain refuges fill the higher, remoter stretches on similar half-board terms (budget roughly 50-80 € a night), and the frequent village stages add hotels, pensions & chambres d'hôtes for a real bed. The infrastructure is dense enough to walk the whole route without a tent. Book ahead in July and August, and carry cash, as cards aren't always accepted at the mountain huts."
+            "body": "The backbone of the GR10 is the gîte d'étape — a French walkers' hostel with dormitory beds, an evening meal & breakfast, and usually a packed lunch on request. Staffed mountain refuges fill the higher, remoter stretches on similar half-board terms (budget roughly 50-80 € a night), and the frequent village stages add hotels, pensions & chambres d'hôtes for a real bed. The infrastructure is dense enough to walk the whole route without a tent. Book ahead in July and August, and carry cash, as cards aren't always accepted at the mountain huts.",
+            "blocks": [
+              {
+                "kind": "statStrip",
+                "stats": [
+                  {
+                    "value": "76",
+                    "label": "STAYS"
+                  },
+                  {
+                    "value": "31",
+                    "label": "REFUGES"
+                  }
+                ]
+              }
+            ]
           },
           {
             "key": "water",
             "facet": "planning",
             "heading": "Filling up",
-            "body": "Water is one of the GR10's real advantages over the drier Spanish GR11: the wet, green French flank carries springs, streams & fountains for much of its length, and the route keeps dropping into valleys past villages where you can refill. Streams are generally bridged or easily forded in summer. The carries that matter are the long climbs to the high passes, where you leave the last water at the valley floor and don't meet more until the descent — fill to three litres before those. Treat water taken from streams below pastures, where grazing stock is upstream."
+            "body": "Water is one of the GR10's real advantages over the drier Spanish GR11: the wet, green French flank carries springs, streams & fountains for much of its length, and the route keeps dropping into valleys past villages where you can refill. Streams are generally bridged or easily forded in summer. The carries that matter are the long climbs to the high passes, where you leave the last water at the valley floor and don't meet more until the descent — fill to three litres before those. Treat water taken from streams below pastures, where grazing stock is upstream.",
+            "blocks": [
+              {
+                "kind": "statStrip",
+                "stats": [
+                  {
+                    "value": "98",
+                    "label": "SOURCES"
+                  },
+                  {
+                    "value": "95",
+                    "label": "RELIABLE"
+                  }
+                ]
+              }
+            ]
           },
           {
             "key": "safety",
             "facet": "planning",
             "heading": "Staying safe",
-            "body": "The real hazard on the GR10 is rarely the terrain — it's a careless slip on an easy but exposed path, which is why two poles are strongly advised. Pyrenean weather turns fast: clear mornings build into afternoon thunderstorms, so cross the high passes early, ideally before 2 pm. The walking season runs mid-June to late September, when the snow has cleared the passes and the refuges are open; outside that window you need winter experience. In an emergency dial 112 for the PGHM mountain rescue, give your position, and remember that coverage is patchy above the valleys — staffed refuges are your reliable point of contact and shelter."
+            "body": "The real hazard on the GR10 is rarely the terrain — it's a careless slip on an easy but exposed path, which is why two poles are strongly advised. Pyrenean weather turns fast: clear mornings build into afternoon thunderstorms, so cross the high passes early, ideally before 2 pm. The walking season runs mid-June to late September, when the snow has cleared the passes and the refuges are open; outside that window you need winter experience. In an emergency dial 112 for the PGHM mountain rescue, give your position, and remember that coverage is patchy above the valleys — staffed refuges are your reliable point of contact and shelter.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "conditions",
+                "items": [
+                  "Afternoon storms",
+                  "Snow into early summer",
+                  "Exposed high cols",
+                  "Long water carries"
+                ]
+              }
+            ]
           },
           {
             "key": "flora",
@@ -28275,7 +28371,19 @@
             "key": "food",
             "facet": "environment",
             "heading": "Eat the valley you're in",
-            "body": "Because the GR10 strings together so many village stops, you eat regionally rather than from a stove. In the Basque and Béarn west, that means garbure — the thick cabbage, bean and ham-hock soup of the Pyrenean farmhouse — piperade (peppers, tomato, egg), poulet basquaise and axoa seasoned with Espelette pepper, and ttoro, a Basque fish stew nearer the coast. The mountain cheese to look for is Ossau-Iraty, a pressed ewe's-milk cheese named for the Ossau valley and the Iraty forest, PDO since 1996. For the trail or a café stop, gâteau basque is the standard: a dense pastry cake filled with either black-cherry jam or almond cream. Half-board (demi-pension) at a gîte d'étape is usually the easiest way to eat a regional dinner after a long stage."
+            "body": "Because the GR10 strings together so many village stops, you eat regionally rather than from a stove. In the Basque and Béarn west, that means garbure — the thick cabbage, bean and ham-hock soup of the Pyrenean farmhouse — piperade (peppers, tomato, egg), poulet basquaise and axoa seasoned with Espelette pepper, and ttoro, a Basque fish stew nearer the coast. The mountain cheese to look for is Ossau-Iraty, a pressed ewe's-milk cheese named for the Ossau valley and the Iraty forest, PDO since 1996. For the trail or a café stop, gâteau basque is the standard: a dense pastry cake filled with either black-cherry jam or almond cream. Half-board (demi-pension) at a gîte d'étape is usually the easiest way to eat a regional dinner after a long stage.",
+            "blocks": [
+              {
+                "kind": "chips",
+                "group": "food",
+                "items": [
+                  "Resupply in valley towns",
+                  "Refugio half-board",
+                  "Carry 2–3 days",
+                  "Local cheese & cured meat"
+                ]
+              }
+            ]
           },
           {
             "key": "history",

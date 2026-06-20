@@ -56,7 +56,7 @@ export type ContentBlock =
       source?: string;
       mediaId?: string;
     }
-  | { kind: 'chips'; group: 'gear' | 'conditions'; items: string[] }
+  | { kind: 'chips'; group: 'gear' | 'conditions' | 'food'; items: string[] }
   | { kind: 'itinerary'; legIds: string[] }
   // A difficulty gauge — `level` of `total` segments filled (Figma 1053:2441).
   | { kind: 'difficulty'; label: string; level: number; total: number; note?: string }
