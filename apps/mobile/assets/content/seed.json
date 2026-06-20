@@ -9197,6 +9197,7 @@
             "key": "difficulty",
             "facet": "overview",
             "heading": "Difficulty",
+            "body": "16 of 46 stages rank hard or severe, with single climbs of up to 1,580 m. Most days are moderate going — GR11 rewards steady fitness and early starts more than technical skill.",
             "blocks": [
               {
                 "kind": "difficulty",
@@ -9211,6 +9212,7 @@
             "key": "season",
             "facet": "overview",
             "heading": "Best season",
+            "body": "Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer.",
             "blocks": [
               {
                 "kind": "season",
@@ -9218,8 +9220,7 @@
                   7,
                   8,
                   9
-                ],
-                "note": "Mid-June to mid-September; July and August are the most reliable. The high cols hold snow into early summer."
+                ]
               }
             ]
           },
@@ -28131,6 +28132,7 @@
             "key": "difficulty",
             "facet": "overview",
             "heading": "Difficulty",
+            "body": "28 of 55 stages rank hard or severe, with single climbs of up to 2,400 m. Most days are moderate going — GR10 rewards steady fitness and early starts more than technical skill.",
             "blocks": [
               {
                 "kind": "difficulty",
@@ -28145,6 +28147,7 @@
             "key": "season",
             "facet": "overview",
             "heading": "Best season",
+            "body": "June to September; lower and wetter than the Spanish side, with reliable village stages. Snow lingers on the high cols into early summer.",
             "blocks": [
               {
                 "kind": "season",
@@ -28152,8 +28155,7 @@
                   7,
                   8,
                   9
-                ],
-                "note": "June to September; lower and wetter than the Spanish side, with reliable village stages. Snow lingers on the high cols into early summer."
+                ]
               }
             ]
           },

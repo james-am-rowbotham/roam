@@ -256,6 +256,12 @@ export function buildTrailPack(
   const hi = Math.ceil(avgGrade);
   const difficultyLabel =
     lo === hi ? cap(BANDS[lo] ?? '') : `${cap(BANDS[lo] ?? '')}–${cap(BANDS[hi] ?? '')}`;
+  // Grade mix → the accompanying difficulty sentence.
+  const gradeCounts = [0, 0, 0, 0];
+  for (const i of gradeIdx) gradeCounts[i] = (gradeCounts[i] ?? 0) + 1;
+  const modalGrade = BANDS[gradeCounts.indexOf(Math.max(...gradeCounts))] ?? 'moderate';
+  const hardPlus = gradeIdx.filter((i) => i >= 2).length;
+  const difficultyBody = `${hardPlus} of ${stages.length} stages rank hard or severe, with single climbs of up to ${maxAscent.toLocaleString('en-US')} m. Most days are ${modalGrade} going — ${config.source.name} rewards steady fitness and early starts more than technical skill.`;
 
   const guideTopics: GuideTopic[] = [];
   if (k.routeGeojson) {
@@ -293,6 +299,7 @@ export function buildTrailPack(
       key: 'difficulty',
       facet: 'overview',
       heading: 'Difficulty',
+      body: difficultyBody,
       blocks: [
         {
           kind: 'difficulty',
@@ -309,7 +316,9 @@ export function buildTrailPack(
       key: 'season',
       facet: 'overview',
       heading: 'Best season',
-      blocks: [{ kind: 'season', best: config.season.best, note: config.season.note }],
+      // The window note reads as the topic's accompanying text; the strip shows the months.
+      body: config.season.note,
+      blocks: [{ kind: 'season', best: config.season.best }],
     });
   }
 

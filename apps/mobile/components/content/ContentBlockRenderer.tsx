@@ -259,6 +259,16 @@ function StatStripBlock({ block }: { block: Extract<ContentBlock, { kind: 'statS
   );
 }
 
+// Difficulty meter — segments escalate green → amber → red so the bar reads severity,
+// not just a count. Scale labels sit under it with the trail's level emphasised.
+const DIFF_COLORS = [
+  colors.status.success.text,
+  colors.accent,
+  colors.status.warn.text,
+  colors.status.danger.text,
+];
+const DIFF_SCALE = ['Easy', 'Moderate', 'Hard', 'Severe'];
+
 function DifficultyBlock({ block }: { block: Extract<ContentBlock, { kind: 'difficulty' }> }) {
   return (
     <View style={styles.block}>
@@ -267,8 +277,21 @@ function DifficultyBlock({ block }: { block: Extract<ContentBlock, { kind: 'diff
           <View
             // biome-ignore lint/suspicious/noArrayIndexKey: fixed positional segments
             key={`seg-${i}`}
-            style={[styles.diffSeg, i < block.level && styles.diffSegOn]}
+            style={[
+              styles.diffSeg,
+              i < block.level && { backgroundColor: DIFF_COLORS[i] ?? colors.accent },
+            ]}
           />
+        ))}
+      </View>
+      <View style={styles.diffScale}>
+        {DIFF_SCALE.slice(0, block.total).map((label, i) => (
+          <Text
+            key={label}
+            style={[styles.diffScaleLabel, i === block.level - 1 && styles.diffScaleActive]}
+          >
+            {label}
+          </Text>
         ))}
       </View>
       <View style={styles.diffLabels}>
@@ -462,8 +485,15 @@ const styles = StyleSheet.create({
   statLabel: { ...type.label, color: colors.text.secondary },
   diffBar: { flexDirection: 'row', gap: spacing[3], height: 8 },
   diffSeg: { flex: 1, borderRadius: 360, backgroundColor: colors.bg.subtle },
-  diffSegOn: { backgroundColor: colors.accent },
-  diffLabels: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  diffScale: { flexDirection: 'row', gap: spacing[3], paddingTop: spacing[2] },
+  diffScaleLabel: { ...type.label, flex: 1, textAlign: 'center', color: colors.text.secondary },
+  diffScaleActive: { color: colors.text.primary },
+  diffLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: spacing[2],
+  },
   seasonRow: { flexDirection: 'row', gap: spacing[2] },
   monthPill: {
     flex: 1,
