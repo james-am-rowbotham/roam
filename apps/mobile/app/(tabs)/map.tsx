@@ -27,7 +27,6 @@ import {
 } from '../../components/map';
 import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
-import { useFocusOnMap } from '../../lib/contentFocus';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
 import { contentStore, mediaFor } from '../../lib/contentRepo';
 import { flattenCoords, geometryBbox } from '../../lib/geo';
@@ -114,15 +113,18 @@ function TrailRoute({
   focusScoped,
   legacyDim,
   showCard,
+  index,
+  total,
 }: {
   trail: MapTrail;
   focusedObjectiveId: string | null;
   focusScoped: boolean;
   legacyDim: boolean;
   showCard: boolean;
+  index: number;
+  total: number;
 }) {
   const router = useRouter();
-  const { focusTrail } = useFocusOnMap();
   const id = String(trail.id);
   const enabled = { query: { enabled: !!trail.id } };
   const { data: trailResponse } = useTrail(id, enabled);
@@ -149,10 +151,12 @@ function TrailRoute({
 
   if (!geojson) return null;
 
-  // The all-trails view anchors a TrailMapCard at the line's midpoint (Figma 141:672).
+  // The all-trails view anchors a TrailMapCard along the line (Figma 141:672). Stagger the
+  // anchor by trail index so cards on nearby trails don't overlap (trail 0 at 1/3, 1 at 2/3…).
   const card = showCard ? trailCardData(slug) : null;
   const verts = card ? flattenCoords(geojson as unknown as Record<string, unknown>) : [];
-  const mid = verts.length ? verts[Math.floor(verts.length / 2)] : null;
+  const anchorAt = Math.floor((verts.length * (index + 1)) / (total + 1));
+  const mid = verts.length ? (verts[Math.min(verts.length - 1, anchorAt)] ?? null) : null;
 
   return (
     <>
@@ -177,7 +181,9 @@ function TrailRoute({
             title={card.title}
             meta={card.meta}
             image={card.image}
-            onPress={() => focusTrail(slug)}
+            onPress={() =>
+              slug && router.push({ pathname: '/objective/[id]', params: { id: slug } })
+            }
           />
         </Marker>
       )}
@@ -280,7 +286,7 @@ export default function MapScreen() {
         <MapImages />
         {/* Each trail's route + blaze, in its osmc way colour. POIs + endpoints only render
             for the focused trail — the all-trails view stays line-only (§17.5). */}
-        {shownTrails.map((t) => (
+        {shownTrails.map((t, i) => (
           <TrailRoute
             key={t.id}
             trail={t}
@@ -288,6 +294,8 @@ export default function MapScreen() {
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
             showCard={!focusedObjectiveId && !filterActive}
+            index={i}
+            total={shownTrails.length}
           />
         ))}
         {activeSectionGeom && (
