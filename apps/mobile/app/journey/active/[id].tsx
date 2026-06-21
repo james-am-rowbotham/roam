@@ -34,7 +34,7 @@ import {
   useTrailWater,
   useTrails,
 } from '../../../lib/hooks';
-import { sectionsForDay } from '../../../lib/sections';
+import { journeySectionSpan, sectionsForDay } from '../../../lib/sections';
 import { useJourneyProgress } from '../../../lib/useJourneyProgress';
 import { useUserLocation } from '../../../lib/useUserLocation';
 import { colors, fonts, layout, radius, spacing, type } from '../../../theme';
@@ -141,7 +141,8 @@ export default function ActiveJourneyScreen() {
   const accomm = allAccomm.filter((p) => p.chainageM >= lo && p.chainageM <= hi);
 
   // The day's route as a place chain (e.g. Espinal → Burguete).
-  const sectionRanges = Array.isArray(sectionsResponse?.data) ? sectionsResponse.data : [];
+  const allSections = Array.isArray(sectionsResponse?.data) ? sectionsResponse.data : [];
+  const sectionRanges = journeySectionSpan(allSections, journey.stages);
   const daySections = sectionsForDay(
     sectionRanges,
     currentStage.startChainageM,

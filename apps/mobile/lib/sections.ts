@@ -9,6 +9,27 @@ interface ChainRange {
   endChainageM: number;
 }
 
+// The trail sections (etapas) a journey actually covers — those whose midpoint falls inside
+// the journey's chainage span (the min→max chainage of its planned stages). A section-scoped
+// journey's stages only cover that section, so the itinerary + tracker list the stages you
+// chose, not the whole trail. A whole-trail journey spans everything → all sections.
+export function journeySectionSpan<T extends ChainRange>(
+  sections: T[],
+  journeyStages: ChainRange[],
+): T[] {
+  if (journeyStages.length === 0) return sections;
+  let lo = Number.POSITIVE_INFINITY;
+  let hi = Number.NEGATIVE_INFINITY;
+  for (const s of journeyStages) {
+    lo = Math.min(lo, s.startChainageM, s.endChainageM);
+    hi = Math.max(hi, s.startChainageM, s.endChainageM);
+  }
+  return sections.filter((sec) => {
+    const mid = (sec.startChainageM + sec.endChainageM) / 2;
+    return mid >= lo && mid <= hi;
+  });
+}
+
 export function sectionsForDay<T extends ChainRange>(
   sections: T[],
   start: number,

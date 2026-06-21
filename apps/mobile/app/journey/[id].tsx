@@ -29,6 +29,7 @@ import {
   useTrails,
 } from '../../lib/hooks';
 import { buildItineraryDays } from '../../lib/itineraryDays';
+import { journeySectionSpan } from '../../lib/sections';
 import { useJourneyProgress } from '../../lib/useJourneyProgress';
 import { type GuidePreset, PACE_TARGET_M, type Pace } from '../../store/journeySetupStore';
 import { useMapStore } from '../../store/mapStore';
@@ -164,7 +165,10 @@ export default function JourneyDetailScreen() {
   // Pace: optimistic draft → persisted journey.pace → the baseline implied by the plan.
   const pace = paceDraft ?? journey.pace ?? baselinePace;
   const paceTargetM = PACE_TARGET_M[pace];
-  const itinerary = buildItineraryDays(sectionRanges, {
+  // Only the etapas this journey covers — a section-scoped journey's planned stages span just
+  // that section, so the itinerary lists its stages, not the whole trail.
+  const journeySections = journeySectionSpan(sectionRanges, stages);
+  const itinerary = buildItineraryDays(journeySections, {
     reverse,
     doneDistanceM,
     paceTargetM,
