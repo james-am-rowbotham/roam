@@ -9208,23 +9208,10 @@
             ]
           },
           {
-            "key": "markings",
-            "facet": "planning",
-            "heading": "Waymarking",
-            "body": "GR11 is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.",
-            "blocks": [
-              {
-                "kind": "waymark",
-                "osmcSymbol": "red:white:red_lower:11:black",
-                "ref": "GR11"
-              }
-            ]
-          },
-          {
             "key": "kit",
             "facet": "planning",
-            "heading": "What to pack",
-            "body": "A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.",
+            "heading": "Kit",
+            "body": "Three-season hiking kit: a 30–40 L pack, sturdy boots, warm layers for cold mornings and storms, and a light shelter or refuge sheet. Poles and microspikes help on early-season snow; carry 2–3 L of water capacity for the dry stages.",
             "blocks": [
               {
                 "kind": "chips",
@@ -9243,21 +9230,51 @@
             ]
           },
           {
+            "key": "navigation",
+            "facet": "planning",
+            "heading": "Navigation",
+            "body": "Red-and-white GR marks are frequent but fade on high ground, so carry offline maps and a GPX track — cloud and snow can hide the blazes on the cols. GR11 also shares paths with local PR and SL trails, so watch the colours.",
+            "blocks": [
+              {
+                "kind": "navigation",
+                "body": "",
+                "markings": [
+                  {
+                    "key": "gr",
+                    "label": "GR — red & white (the GR11 itself)"
+                  },
+                  {
+                    "key": "pr",
+                    "label": "PR — yellow & white (local paths)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "key": "accommodation",
             "facet": "planning",
-            "heading": "Where to sleep",
+            "heading": "Accommodation",
             "body": "The trail averages roughly one refugio a day. Staffed huts are the backbone — dormitory beds, a hot meal, a packed lunch, blankets & local information; reckon on around €26 for the bed, €22 for dinner and €11 for breakfast, and bring a sleeping-bag liner since bags aren't supplied. In valleys you'll also find albergues, pensions, hostals & casas rurales, and unstaffed free huts cover the more isolated stretches. Book ahead from mid-July to late August when refuges fill fast; solo walkers can often find a space without it. Wild camping is illegal, but bivouacking — a small tent pitched at dusk and struck at dawn, away from habitation — is tolerated, usually above 1,800–2,100 m; note that camping is banned in Aigüestortes and is restricted in Ordesa to the area by the Góriz refuge.",
             "blocks": [
               {
-                "kind": "statStrip",
-                "stats": [
+                "kind": "detailList",
+                "items": [
                   {
-                    "value": "13",
-                    "label": "STAYS"
+                    "label": "Refuges",
+                    "body": "Staffed mountain huts with set dinners — book ahead in August."
                   },
                   {
-                    "value": "6",
-                    "label": "REFUGES"
+                    "label": "Albergues",
+                    "body": "Simple hostels in the valley villages."
+                  },
+                  {
+                    "label": "Hotels & pensions",
+                    "body": "In the larger valley towns."
+                  },
+                  {
+                    "label": "Camping",
+                    "body": "Tolerated above the treeline if discreet; not in the Ordesa or Aigüestortes national parks."
                   }
                 ]
               }
@@ -9266,28 +9283,20 @@
           {
             "key": "water",
             "facet": "planning",
-            "heading": "Water on the trail",
+            "heading": "Water",
             "body": "Water is dependable across most of the GR11 — village fountains, taps near refuges & mountain springs let you refill often, and unstaffed huts usually have drinking water. The exception is the far eastern end in Catalonia, approaching the Mediterranean, where sources thin out and temperatures can top 30°C; carry extra through there. Treat what you collect: much of the easily reached water sits below grazing land and free-range cattle, so a filter or other treatment is strongly advised. Two to three litres of capacity suits most stages, with more on the dry Catalan stretches.",
             "blocks": [
               {
-                "kind": "statStrip",
-                "stats": [
-                  {
-                    "value": "117",
-                    "label": "SOURCES"
-                  },
-                  {
-                    "value": "116",
-                    "label": "RELIABLE"
-                  }
-                ]
+                "kind": "reliability",
+                "startLabel": "West · reliable",
+                "endLabel": "Central & east · sparse"
               }
             ]
           },
           {
             "key": "safety",
             "facet": "planning",
-            "heading": "Staying safe",
+            "heading": "Safety",
             "body": "The main risk is afternoon weather: storms build over the high country in summer, often in the evening and night, so cross exposed passes early and be down before they hit. The GR11 climbs many passes with scree, boulderfields & easy scrambling — about as hard as an inexperienced walker would want under a heavy pack — and snow can linger on passes above 2,500 m into early summer, hiding markers and demanding an ice axe and crampons. Fog can drop visibility to a few metres even on a marked route. The emergency number Spain-wide is 112, reaching mountain rescue, but reception is patchy in remote valleys, so leave your route and expected arrival with someone, and use the staffed refuges as shelter and a source of current conditions.",
             "blocks": [
               {
@@ -9350,6 +9359,31 @@
             "facet": "environment",
             "heading": "Weather",
             "body": "Wetter and milder in the Atlantic west; hot and dry through the central and eastern summers. Mornings are usually clear, with cloud and thunderstorms building from early afternoon — cloud can fall on the high tops in any weather."
+          },
+          {
+            "key": "transport",
+            "facet": "planning",
+            "heading": "Transport",
+            "body": "Irun and neighbouring Hendaye sit on the French and Spanish rail networks; at the far end, Cap de Creus connects through Figueres to the Barcelona line. Most section start and end points have bus links, but some are sparse — check timetables first.",
+            "blocks": [
+              {
+                "kind": "detailList",
+                "items": [
+                  {
+                    "label": "Start · Irun / Hendaye",
+                    "body": "On the French and Spanish rail networks."
+                  },
+                  {
+                    "label": "End · Cap de Creus",
+                    "body": "Bus to Figueres, then the Barcelona line."
+                  },
+                  {
+                    "label": "Between sections",
+                    "body": "Local buses, often infrequent — check first."
+                  }
+                ]
+              }
+            ]
           }
         ],
         "highlightIds": [],
@@ -28234,23 +28268,10 @@
             ]
           },
           {
-            "key": "markings",
-            "facet": "planning",
-            "heading": "Waymarking",
-            "body": "GR10 is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.",
-            "blocks": [
-              {
-                "kind": "waymark",
-                "osmcSymbol": "red::white_upper:red_lower:10:",
-                "ref": "GR 10"
-              }
-            ]
-          },
-          {
             "key": "kit",
             "facet": "planning",
-            "heading": "What to pack",
-            "body": "A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.",
+            "heading": "Kit",
+            "body": "Three-season hiking kit: a 30–40 L pack, sturdy boots, warm layers for cold mornings and storms, and a light shelter or refuge sheet. Poles and microspikes help on early-season snow; carry 2–3 L of water capacity for the dry stages.",
             "blocks": [
               {
                 "kind": "chips",
@@ -28264,6 +28285,28 @@
                   "Water filter",
                   "Map & compass",
                   "First-aid & blister kit"
+                ]
+              }
+            ]
+          },
+          {
+            "key": "navigation",
+            "facet": "planning",
+            "heading": "Navigation",
+            "body": "Red-and-white GR marks are frequent but fade on high ground, so carry offline maps and a GPX track — cloud and snow can hide the blazes on the cols. GR 10 also shares paths with local PR and SL trails, so watch the colours.",
+            "blocks": [
+              {
+                "kind": "navigation",
+                "body": "",
+                "markings": [
+                  {
+                    "key": "gr",
+                    "label": "GR — red & white (the GR 10 itself)"
+                  },
+                  {
+                    "key": "pr",
+                    "label": "PR — yellow & white (local paths)"
+                  }
                 ]
               }
             ]
@@ -28283,19 +28326,27 @@
           {
             "key": "accommodation",
             "facet": "planning",
-            "heading": "Where to sleep",
+            "heading": "Accommodation",
             "body": "The backbone of the GR10 is the gîte d'étape — a French walkers' hostel with dormitory beds, an evening meal & breakfast, and usually a packed lunch on request. Staffed mountain refuges fill the higher, remoter stretches on similar half-board terms (budget roughly 50-80 € a night), and the frequent village stages add hotels, pensions & chambres d'hôtes for a real bed. The infrastructure is dense enough to walk the whole route without a tent. Book ahead in July and August, and carry cash, as cards aren't always accepted at the mountain huts.",
             "blocks": [
               {
-                "kind": "statStrip",
-                "stats": [
+                "kind": "detailList",
+                "items": [
                   {
-                    "value": "76",
-                    "label": "STAYS"
+                    "label": "Refuges",
+                    "body": "Staffed mountain huts with set dinners — book ahead in summer."
                   },
                   {
-                    "value": "31",
-                    "label": "REFUGES"
+                    "label": "Gîtes d'étape",
+                    "body": "Simple walkers' hostels in the valleys."
+                  },
+                  {
+                    "label": "Hotels & pensions",
+                    "body": "In the spa towns and larger valleys."
+                  },
+                  {
+                    "label": "Camping",
+                    "body": "Tolerated above the treeline if discreet; not in the national parks."
                   }
                 ]
               }
@@ -28304,28 +28355,20 @@
           {
             "key": "water",
             "facet": "planning",
-            "heading": "Filling up",
+            "heading": "Water",
             "body": "Water is one of the GR10's real advantages over the drier Spanish GR11: the wet, green French flank carries springs, streams & fountains for much of its length, and the route keeps dropping into valleys past villages where you can refill. Streams are generally bridged or easily forded in summer. The carries that matter are the long climbs to the high passes, where you leave the last water at the valley floor and don't meet more until the descent — fill to three litres before those. Treat water taken from streams below pastures, where grazing stock is upstream.",
             "blocks": [
               {
-                "kind": "statStrip",
-                "stats": [
-                  {
-                    "value": "98",
-                    "label": "SOURCES"
-                  },
-                  {
-                    "value": "95",
-                    "label": "RELIABLE"
-                  }
-                ]
+                "kind": "reliability",
+                "startLabel": "West · reliable",
+                "endLabel": "East · drier"
               }
             ]
           },
           {
             "key": "safety",
             "facet": "planning",
-            "heading": "Staying safe",
+            "heading": "Safety",
             "body": "The real hazard on the GR10 is rarely the terrain — it's a careless slip on an easy but exposed path, which is why two poles are strongly advised. Pyrenean weather turns fast: clear mornings build into afternoon thunderstorms, so cross the high passes early, ideally before 2 pm. The walking season runs mid-June to late September, when the snow has cleared the passes and the refuges are open; outside that window you need winter experience. In an emergency dial 112 for the PGHM mountain rescue, give your position, and remember that coverage is patchy above the valleys — staffed refuges are your reliable point of contact and shelter.",
             "blocks": [
               {
@@ -28388,6 +28431,31 @@
             "facet": "environment",
             "heading": "Weather",
             "body": "Wetter and milder in the Atlantic west; warmer and drier toward the Mediterranean. Mornings are usually clear, with cloud and thunderstorms building from early afternoon — cloud can fall on the high tops in any weather."
+          },
+          {
+            "key": "transport",
+            "facet": "planning",
+            "heading": "Transport",
+            "body": "Hendaye sits on the Atlantic rail line; Banyuls-sur-Mer, at the Mediterranean end, is on the line to Perpignan. Many valley towns have bus links, but mountain sections can be sparse — check timetables first.",
+            "blocks": [
+              {
+                "kind": "detailList",
+                "items": [
+                  {
+                    "label": "Start · Hendaye",
+                    "body": "On the Atlantic (Paris–Irun) rail line."
+                  },
+                  {
+                    "label": "End · Banyuls-sur-Mer",
+                    "body": "On the coastal line to Perpignan."
+                  },
+                  {
+                    "label": "Between sections",
+                    "body": "Valley buses, often infrequent — check first."
+                  }
+                ]
+              }
+            ]
           }
         ],
         "highlightIds": [],

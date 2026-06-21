@@ -42,7 +42,17 @@ export type ContentBlock =
       stops: { locationId: string; distanceKm: number; note?: string }[];
     }
   | { kind: 'accommodation'; header?: string; places: import('./types').PlaceRef[] }
-  | { kind: 'navigation'; body: string; marking?: string }
+  | {
+      kind: 'navigation';
+      body: string;
+      marking?: string;
+      /** Painted marking legend (Figma 04b) — each a registry key (gr/pr/sl) + label. */
+      markings?: { key: string; label: string }[];
+    }
+  // A labelled sub-row list — Accommodation types, Transport links (Figma 04b).
+  | { kind: 'detailList'; header?: string; items: { label: string; body: string }[] }
+  // A west→east reliability bar (green → amber) with end labels (Figma 04b Water).
+  | { kind: 'reliability'; startLabel: string; endLabel: string }
   // The painted trail blaze — the raw osmc:symbol (§17.8), parsed + drawn by the renderer.
   | { kind: 'waymark'; osmcSymbol: string; ref?: string }
   | { kind: 'hazards'; header?: string; callouts: { tone: StatusTone; body: string }[] }

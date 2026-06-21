@@ -75,6 +75,57 @@ const TRAIL_FOOD = [
   'Local cheese & cured meat',
 ];
 
+// Per-trail Planning structured data (Figma 04b): accommodation sub-types, water reliability
+// end labels, and transport links. Authored per trail (start/end towns differ).
+const PLANNING_DATA: Record<
+  string,
+  {
+    accommodation: { label: string; body: string }[];
+    water: { startLabel: string; endLabel: string };
+    transportBody: string;
+    transport: { label: string; body: string }[];
+  }
+> = {
+  gr11: {
+    accommodation: [
+      { label: 'Refuges', body: 'Staffed mountain huts with set dinners — book ahead in August.' },
+      { label: 'Albergues', body: 'Simple hostels in the valley villages.' },
+      { label: 'Hotels & pensions', body: 'In the larger valley towns.' },
+      {
+        label: 'Camping',
+        body: 'Tolerated above the treeline if discreet; not in the Ordesa or Aigüestortes national parks.',
+      },
+    ],
+    water: { startLabel: 'West · reliable', endLabel: 'Central & east · sparse' },
+    transportBody:
+      'Irun and neighbouring Hendaye sit on the French and Spanish rail networks; at the far end, Cap de Creus connects through Figueres to the Barcelona line. Most section start and end points have bus links, but some are sparse — check timetables first.',
+    transport: [
+      { label: 'Start · Irun / Hendaye', body: 'On the French and Spanish rail networks.' },
+      { label: 'End · Cap de Creus', body: 'Bus to Figueres, then the Barcelona line.' },
+      { label: 'Between sections', body: 'Local buses, often infrequent — check first.' },
+    ],
+  },
+  gr10: {
+    accommodation: [
+      { label: 'Refuges', body: 'Staffed mountain huts with set dinners — book ahead in summer.' },
+      { label: "Gîtes d'étape", body: "Simple walkers' hostels in the valleys." },
+      { label: 'Hotels & pensions', body: 'In the spa towns and larger valleys.' },
+      {
+        label: 'Camping',
+        body: 'Tolerated above the treeline if discreet; not in the national parks.',
+      },
+    ],
+    water: { startLabel: 'West · reliable', endLabel: 'East · drier' },
+    transportBody:
+      'Hendaye sits on the Atlantic rail line; Banyuls-sur-Mer, at the Mediterranean end, is on the line to Perpignan. Many valley towns have bus links, but mountain sections can be sparse — check timetables first.',
+    transport: [
+      { label: 'Start · Hendaye', body: 'On the Atlantic (Paris–Irun) rail line.' },
+      { label: 'End · Banyuls-sur-Mer', body: 'On the coastal line to Perpignan.' },
+      { label: 'Between sections', body: 'Valley buses, often infrequent — check first.' },
+    ],
+  },
+};
+
 // Hiking-band grade from relief (no per-etapa grade in OSM) — a Derived first pass a
 // curator can override (§3 grade is open vocab, never an enum).
 function gradeForStage(distanceKm: number, ascentM: number | null): Grade {
@@ -340,53 +391,69 @@ export function buildTrailPack(
     });
   }
 
-  // Planning: the painted blaze to follow, and a high-mountain kit list as gear chips.
-  if (k.osmcSymbol) {
-    guideTopics.push({
-      key: 'markings',
-      facet: 'planning',
-      heading: 'Waymarking',
-      body: `${config.source.name} is blazed the whole way — follow the painted marks at junctions and you'll rarely need the map for routefinding, only for planning the days.`,
-      blocks: [{ kind: 'waymark', osmcSymbol: k.osmcSymbol, ref: config.source.ref }],
-    });
-  }
+  // Planning (Figma 04b): Kit chips, then Navigation with the GR/PR marking legend.
   guideTopics.push({
     key: 'kit',
     facet: 'planning',
-    heading: 'What to pack',
-    body: 'A high-mountain kit list: layers for cols that stay cold, sun cover for exposed days, and the means to filter and carry water on the dry stretches.',
+    heading: 'Kit',
+    body: 'Three-season hiking kit: a 30–40 L pack, sturdy boots, warm layers for cold mornings and storms, and a light shelter or refuge sheet. Poles and microspikes help on early-season snow; carry 2–3 L of water capacity for the dry stages.',
     blocks: [{ kind: 'chips', group: 'gear', items: TRAIL_KIT }],
+  });
+  guideTopics.push({
+    key: 'navigation',
+    facet: 'planning',
+    heading: 'Navigation',
+    body: `Red-and-white GR marks are frequent but fade on high ground, so carry offline maps and a GPX track — cloud and snow can hide the blazes on the cols. ${config.source.ref} also shares paths with local PR and SL trails, so watch the colours.`,
+    blocks: [
+      {
+        kind: 'navigation',
+        body: '',
+        markings: [
+          { key: 'gr', label: `GR — red & white (the ${config.source.ref} itself)` },
+          { key: 'pr', label: 'PR — yellow & white (local paths)' },
+        ],
+      },
+    ],
   });
 
   // Enrich the AI-drafted Planning/Environment prose with a Derived visual block per topic:
   // POI fact strips (refuges/water counts) and conditions/food chips — composed from the pack.
+  const pd = PLANNING_DATA[config.id];
+  // Plain lens headings for the AI planning topics (Figma 04b/04c).
+  const PLAIN_HEADING: Record<string, string> = {
+    accommodation: 'Accommodation',
+    water: 'Water',
+    safety: 'Safety',
+  };
   const enrichAiTopic = (t: GuideTopic): GuideTopic => {
     const extra: ContentBlock[] = [];
-    if (t.key === 'accommodation') {
-      const refuges = k.accommodation.filter((a) => a.type === 'refuge' || a.type === 'hut').length;
+    if (t.key === 'accommodation' && pd) {
+      extra.push({ kind: 'detailList', items: pd.accommodation });
+    } else if (t.key === 'water' && pd) {
       extra.push({
-        kind: 'statStrip',
-        stats: [
-          { value: `${k.accommodation.length}`, label: 'STAYS' },
-          { value: `${refuges}`, label: 'REFUGES' },
-        ],
-      });
-    } else if (t.key === 'water') {
-      const reliable = k.water.filter((w) => !w.seasonal).length;
-      extra.push({
-        kind: 'statStrip',
-        stats: [
-          { value: `${k.water.length}`, label: 'SOURCES' },
-          { value: `${reliable}`, label: 'RELIABLE' },
-        ],
+        kind: 'reliability',
+        startLabel: pd.water.startLabel,
+        endLabel: pd.water.endLabel,
       });
     } else if (t.key === 'safety') {
       extra.push({ kind: 'hazards', callouts: TRAIL_CONDITIONS });
     } else if (t.key === 'food') {
       extra.push({ kind: 'chips', group: 'food', items: TRAIL_FOOD });
     }
-    return extra.length ? { ...t, blocks: [...(t.blocks ?? []), ...extra] } : t;
+    const heading = PLAIN_HEADING[t.key] ?? t.heading;
+    return { ...t, heading, blocks: extra.length ? [...(t.blocks ?? []), ...extra] : t.blocks };
   };
+
+  // Transport closes the Planning tab (Figma 04b) — after the AI topics, so it sorts last.
+  const transportTopic: GuideTopic | null = pd
+    ? {
+        key: 'transport',
+        facet: 'planning',
+        heading: 'Transport',
+        body: pd.transportBody,
+        blocks: [{ kind: 'detailList', items: pd.transport }],
+      }
+    : null;
 
   const objective: Objective = {
     id: config.id,
@@ -413,7 +480,11 @@ export function buildTrailPack(
         label: 'Ascent',
       },
     ],
-    guide: [...guideTopics, ...(content.objectiveGuide ?? []).map(enrichAiTopic)],
+    guide: [
+      ...guideTopics,
+      ...(content.objectiveGuide ?? []).map(enrichAiTopic),
+      ...(transportTopic ? [transportTopic] : []),
+    ],
     highlightIds: [],
     sectionIds: sections.map((s) => s.id),
   };

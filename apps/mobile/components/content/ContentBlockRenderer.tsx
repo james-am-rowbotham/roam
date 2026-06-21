@@ -140,16 +140,64 @@ function AccommodationBlock({
 function NavigationBlock({ block }: { block: Extract<ContentBlock, { kind: 'navigation' }> }) {
   return (
     <View style={styles.block}>
-      <View style={styles.navRow}>
-        {block.marking && (
+      {block.marking && (
+        <View style={styles.navRow}>
           <View
             style={[
               styles.markingDot,
               { backgroundColor: resolveColorToken(markingColorToken(block.marking)) },
             ]}
           />
-        )}
-        <Text style={styles.body}>{block.body}</Text>
+          <Text style={styles.body}>{block.body}</Text>
+        </View>
+      )}
+      {!block.marking && block.body ? <Text style={styles.body}>{block.body}</Text> : null}
+      {/* Painted marking legend — a two-tone blaze swatch + label per route family. */}
+      {block.markings?.map((m) => (
+        <View key={m.key} style={styles.markingRow}>
+          <View style={styles.markingSwatch}>
+            <View
+              style={[
+                styles.markingSwatchTop,
+                { backgroundColor: resolveColorToken(markingColorToken(m.key)) },
+              ]}
+            />
+            <View style={styles.markingSwatchBottom} />
+          </View>
+          <Text style={styles.markingLabel}>{m.label}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// A labelled sub-row list (Accommodation types, Transport links).
+function DetailListBlock({ block }: { block: Extract<ContentBlock, { kind: 'detailList' }> }) {
+  return (
+    <View style={styles.block}>
+      {block.header ? <Text style={styles.kicker}>{block.header.toUpperCase()}</Text> : null}
+      {block.items.map((it) => (
+        <View key={it.label} style={styles.detailRow}>
+          <Text style={styles.detailLabel}>{it.label}</Text>
+          <Text style={styles.detailBody}>{it.body}</Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// A west→east reliability bar — green (reliable) fading to amber (sparse), end labels below.
+function ReliabilityBlock({ block }: { block: Extract<ContentBlock, { kind: 'reliability' }> }) {
+  return (
+    <View style={styles.block}>
+      <View style={styles.relBar}>
+        <View style={[styles.relSeg, { flex: 1.3, backgroundColor: colors.status.success.text }]} />
+        <View style={[styles.relSeg, { flex: 1, backgroundColor: colors.status.success.bg }]} />
+        <View style={[styles.relSeg, { flex: 1.3, backgroundColor: colors.status.warn.text }]} />
+      </View>
+      <View style={styles.relLabels}>
+        <Text style={styles.relLabel}>{block.startLabel}</Text>
+        <Text style={[styles.relLabel, styles.relLabelEnd]}>{block.endLabel}</Text>
       </View>
     </View>
   );
@@ -401,6 +449,10 @@ function Block({ block, resolve }: { block: ContentBlock; resolve: BlockResolve 
       return <AccommodationBlock block={block} resolve={resolve} />;
     case 'navigation':
       return <NavigationBlock block={block} />;
+    case 'detailList':
+      return <DetailListBlock block={block} />;
+    case 'reliability':
+      return <ReliabilityBlock block={block} />;
     case 'waymark':
       return <WaymarkBlock block={block} />;
     case 'hazards':
@@ -486,6 +538,34 @@ const styles = StyleSheet.create({
   listTitle: { ...type.bodyStrong, color: colors.text.primary },
   navRow: { flexDirection: 'row', alignItems: 'flex-start', gap: spacing[4] },
   markingDot: { width: 12, height: 12, borderRadius: 6, marginTop: 5 },
+  // Marking legend rows — a two-tone blaze swatch (colour over cream) + label.
+  markingRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
+  markingSwatch: {
+    width: 22,
+    height: 15,
+    borderRadius: radius.sm,
+    overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border.default,
+  },
+  markingSwatchTop: { flex: 1.3 },
+  markingSwatchBottom: { flex: 1, backgroundColor: colors.brand.blazeCream },
+  markingLabel: { ...type.meta, color: colors.text.primary },
+  // Detail sub-rows (Accommodation types, Transport links).
+  detailRow: { gap: 1 },
+  detailLabel: { ...type.bodyStrong, color: colors.text.primary },
+  detailBody: { ...type.meta, color: colors.text.secondary },
+  // Reliability bar.
+  relBar: {
+    flexDirection: 'row',
+    height: 8,
+    borderRadius: radius.full,
+    overflow: 'hidden',
+  },
+  relSeg: { height: '100%' },
+  relLabels: { flexDirection: 'row', justifyContent: 'space-between', marginTop: spacing[2] },
+  relLabel: { ...type.label, color: colors.text.secondary },
+  relLabelEnd: { textAlign: 'right' },
   waymarkRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
   waymarkRef: { ...type.bodyStrong, color: colors.text.primary },
   callout: { borderRadius: radius.lg, padding: spacing[6] },
