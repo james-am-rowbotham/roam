@@ -223,6 +223,8 @@ function TrailRoute({
       {blazeImage && treatment === 'full' && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
       )}
+      {/* Highlighting a trail (carousel-selected) shows its start + end points (like web). */}
+      {isSelected && <SectionEndpoints geom={geojson as unknown as Record<string, unknown>} />}
       {isFocused && (
         <>
           <NativePOILayer
@@ -476,6 +478,9 @@ export default function MapScreen() {
             onClose={() => setSelectedTrail(null)}
             onOpen={() =>
               router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
+            }
+            onStart={
+              canStart(selectedItem.objectiveId) ? () => start(selectedItem.objectiveId) : undefined
             }
           />
         </View>

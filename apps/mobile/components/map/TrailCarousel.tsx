@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, radius, spacing, type } from '../../theme';
+import { Button } from '../ui/Button';
 import { Icon } from '../ui/Icon';
 
 export interface CarouselItem {
@@ -11,59 +12,67 @@ export interface CarouselItem {
   statLine: string;
 }
 
-// Card height — drives the recenter button's offset so it sits just above the card.
-export const TRAIL_CARD_HEIGHT = 112;
+// Card height (incl. the Start-journey row) — drives the recenter button's offset.
+export const TRAIL_CARD_HEIGHT = 158;
 
 // A simple trail preview card pinned to the bottom of the map: a cover image with a
-// difficulty badge, the trail name, and a one-line stat summary. Tapping it opens the guide;
-// the ✕ (or tapping the map) dismisses it and unhighlights the trail.
+// difficulty badge, the trail name, a one-line stat summary, and a Start-journey CTA. Tapping
+// the card opens the guide; the ✕ (or tapping the map) dismisses it and unhighlights the trail.
 interface Props {
   item: CarouselItem;
   onClose: () => void;
   onOpen: () => void;
+  /** Present only when the trail can be started (its API counterpart resolves). */
+  onStart?: () => void;
 }
 
-export function TrailCarousel({ item, onClose, onOpen }: Props) {
+export function TrailCarousel({ item, onClose, onOpen, onStart }: Props) {
   return (
     <View style={styles.card}>
-      <TouchableOpacity style={styles.imageWrap} onPress={onOpen} activeOpacity={0.9}>
-        {item.image ? (
-          <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
-        ) : (
-          <View style={[styles.image, styles.imageFallback]} />
-        )}
-        {item.difficulty ? (
-          <View style={styles.diffBadge}>
-            <Text style={styles.diffText}>{item.difficulty}</Text>
-          </View>
-        ) : null}
-      </TouchableOpacity>
+      <View style={styles.row}>
+        <TouchableOpacity style={styles.imageWrap} onPress={onOpen} activeOpacity={0.9}>
+          {item.image ? (
+            <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
+          ) : (
+            <View style={[styles.image, styles.imageFallback]} />
+          )}
+          {item.difficulty ? (
+            <View style={styles.diffBadge}>
+              <Text style={styles.diffText}>{item.difficulty}</Text>
+            </View>
+          ) : null}
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.body} onPress={onOpen} activeOpacity={0.8}>
-        {item.subtitle ? (
-          <Text style={styles.subtitle} numberOfLines={1}>
-            {item.subtitle}
+        <TouchableOpacity style={styles.body} onPress={onOpen} activeOpacity={0.8}>
+          {item.subtitle ? (
+            <Text style={styles.subtitle} numberOfLines={1}>
+              {item.subtitle}
+            </Text>
+          ) : null}
+          <Text style={styles.title} numberOfLines={2}>
+            {item.title}
           </Text>
-        ) : null}
-        <Text style={styles.title} numberOfLines={2}>
-          {item.title}
-        </Text>
-        <Text style={styles.stats} numberOfLines={1}>
-          {item.statLine}
-        </Text>
-      </TouchableOpacity>
+          <Text style={styles.stats} numberOfLines={1}>
+            {item.statLine}
+          </Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.close} onPress={onClose} hitSlop={8}>
-        <Icon name="close" size={18} color={colors.text.secondary} />
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.close} onPress={onClose} hitSlop={8}>
+          <Icon name="close" size={18} color={colors.text.secondary} />
+        </TouchableOpacity>
+      </View>
+
+      {onStart && (
+        <View style={styles.actions}>
+          <Button label="Start journey" size="md" fullWidth onPress={onStart} />
+        </View>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
-    height: TRAIL_CARD_HEIGHT,
     backgroundColor: colors.bg.surface,
     borderRadius: radius.xl,
     borderWidth: StyleSheet.hairlineWidth,
@@ -75,7 +84,8 @@ const styles = StyleSheet.create({
     shadowRadius: 18,
     elevation: 6,
   },
-  imageWrap: { width: 104, height: '100%' },
+  row: { flexDirection: 'row', alignItems: 'stretch' },
+  imageWrap: { width: 104 },
   image: { width: '100%', height: '100%' },
   imageFallback: { backgroundColor: colors.bg.subtle },
   diffBadge: {
@@ -104,5 +114,10 @@ const styles = StyleSheet.create({
     top: spacing[3],
     right: spacing[3],
     padding: spacing[1],
+  },
+  actions: {
+    paddingHorizontal: spacing[6],
+    paddingBottom: spacing[6],
+    paddingTop: spacing[4],
   },
 });
