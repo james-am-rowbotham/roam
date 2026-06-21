@@ -15,7 +15,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  CAROUSEL_PEEK_HEIGHT,
   type CarouselItem,
   FilterSheet,
   MapImages,
@@ -23,6 +22,7 @@ import {
   type MapViewHandle,
   NativePOILayer,
   SectionEndpoints,
+  TRAIL_CARD_HEIGHT,
   TrailBlaze,
   TrailCarousel,
   TrailLayer,
@@ -31,7 +31,7 @@ import {
 import { Button, Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
-import { contentStore } from '../../lib/contentRepo';
+import { contentStore, mediaFor } from '../../lib/contentRepo';
 import { geometryBbox } from '../../lib/geo';
 import { useTrail, useTrailAccommodations, useTrailWater, useTrails } from '../../lib/hooks';
 import { useUserLocation } from '../../lib/useUserLocation';
@@ -89,13 +89,25 @@ function carouselItem(t: MapTrail): CarouselItem | null {
   const slug = trailSlug(t);
   const o = contentStore.objectiveSummaries.get(slug);
   if (!o) return null;
+  const val = (k: string) => o.atAGlance.find((s) => s.key === k)?.value;
+  const d = val('distance');
+  const a = val('ascent');
+  const days = val('days');
+  const statLine = [
+    d != null ? `${d} km` : null,
+    a != null ? `↑ ${a} m` : null,
+    days != null ? `${days} days` : null,
+  ]
+    .filter(Boolean)
+    .join('  ·  ');
+  const diff = trailDifficulty(slug);
   return {
     objectiveId: slug,
     title: o.name,
     subtitle: [t.country, t.region].filter(Boolean).join(' · '),
-    stats: o.atAGlance.filter((s) => ['distance', 'stages', 'days'].includes(s.key)),
-    elevation: t.elevation ?? [],
-    overview: o.summary,
+    image: mediaFor(o.heroMediaId)?.uri,
+    difficulty: diff ? diff.charAt(0).toUpperCase() + diff.slice(1) : undefined,
+    statLine,
   };
 }
 
@@ -176,15 +188,25 @@ function TrailRoute({
   // 'GR11' → 'gr11', 'GR 10' → 'gr10' — route the line tap to the new objective Guide.
   const slug = (trail.ref ?? trail.name ?? '').toLowerCase().replace(/\s+/g, '');
 
-  // A content focus is a single-entity view: show ONLY the focused trail. Hide every other
-  // trail entirely (no stray line or blaze). Dim the focused trail when a scope (stage/
-  // section) is focused so the highlighted slice stands out; its blaze drops with it.
+  // A content focus is a single-entity view: show ONLY the focused trail (hide the rest).
   const isFocused = !!focusedObjectiveId && focusedObjectiveId === slug;
   const focusActive = !!focusedObjectiveId;
   if (focusActive && !isFocused) return null;
-  // Dim when: legacy section active · a scope is focused · the carousel selects another trail.
-  const carouselDim = !focusActive && selectedObjectiveId != null && selectedObjectiveId !== slug;
-  const dim = legacyDim || (focusActive && focusScoped) || carouselDim;
+
+  // Three line treatments: 'full' (selected/focused) = bold + blaze; 'muted' (unselected,
+  // browseable) = thin + faded, no blaze; 'dim' (legacy section / focused-but-scoped slice).
+  const isSelected = !focusActive && selectedObjectiveId === slug;
+  const treatment = legacyDim
+    ? 'dim'
+    : focusActive
+      ? focusScoped
+        ? 'dim'
+        : 'full'
+      : isSelected
+        ? 'full'
+        : 'muted';
+  const lineWidth = treatment === 'full' ? 4 : treatment === 'muted' ? 2.5 : 2;
+  const lineOpacity = treatment === 'full' ? 1 : treatment === 'muted' ? 0.5 : 0.25;
 
   if (!geojson) return null;
 
@@ -194,11 +216,11 @@ function TrailRoute({
         id={`trail-${trail.id}`}
         geojson={geojson as never}
         color={color}
-        width={dim ? 2 : 4}
-        opacity={dim ? 0.25 : 1}
+        width={lineWidth}
+        opacity={lineOpacity}
         onPress={slug ? () => onSelect(slug) : undefined}
       />
-      {blazeImage && !dim && (
+      {blazeImage && treatment === 'full' && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
       )}
       {isFocused && (
@@ -307,25 +329,24 @@ export default function MapScreen() {
   const toggle = (dim: FilterDimension, value: string) =>
     setFilters((f) => toggleFilterValue(f, dim, value));
 
-  // Trail carousel — preview + cycle the filtered trails (mirrors the web TrailCarousel).
-  // The selected trail is highlighted on the map; hidden while a single entity is focused.
-  const carouselItems = shownTrails.map(carouselItem).filter((c): c is CarouselItem => c !== null);
-  // The preview pops up only when a trail is tapped (no default selection).
+  // Tapping a trail pops up a preview card + highlights it; ✕ or a map tap dismisses it.
   const [selectedTrail, setSelectedTrail] = useState<string | null>(null);
-  const selectedItem = carouselItems.find((c) => c.objectiveId === selectedTrail) ?? null;
-  const selectedIndex = selectedItem ? carouselItems.indexOf(selectedItem) : -1;
-  const cycle = (delta: number) => {
-    if (!carouselItems.length || selectedIndex < 0) return;
-    const next = (selectedIndex + delta + carouselItems.length) % carouselItems.length;
-    setSelectedTrail(carouselItems[next]?.objectiveId ?? null);
-  };
+  const selectedTrailData = selectedTrail
+    ? shownTrails.find((t) => trailSlug(t) === selectedTrail)
+    : undefined;
+  const selectedItem = selectedTrailData ? carouselItem(selectedTrailData) : null;
   const showCarousel = !focus && selectedItem !== null;
 
   return (
     <View style={styles.screen}>
       {/* Full-screen map. A focus frames its geometry imperatively (below), so clearing the
           focus leaves the camera where it is instead of snapping back. */}
-      <MapView ref={mapRef} center={viewport.center} zoom={viewport.zoom}>
+      <MapView
+        ref={mapRef}
+        center={viewport.center}
+        zoom={viewport.zoom}
+        onPress={() => setSelectedTrail(null)}
+      >
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
         {/* Each trail's route + blaze, in its osmc way colour. POIs + endpoints only render
@@ -416,7 +437,7 @@ export default function MapScreen() {
             bottom: focus
               ? insets.bottom + spacing[12] + 56
               : showCarousel
-                ? CAROUSEL_PEEK_HEIGHT + spacing[3]
+                ? TRAIL_CARD_HEIGHT + spacing[4] + spacing[3]
                 : insets.bottom + spacing[12],
           },
         ]}
@@ -447,17 +468,13 @@ export default function MapScreen() {
         </View>
       )}
 
-      {/* Trail preview — slides out of the bottom nav; tap a trail to open it (§ carousel). */}
+      {/* Trail preview card — pops up on a trail tap; tap it opens the guide, ✕ dismisses. */}
       {showCarousel && selectedItem && (
         <View style={styles.carousel}>
           <TrailCarousel
             item={selectedItem}
-            index={selectedIndex}
-            total={carouselItems.length}
-            onPrev={() => cycle(-1)}
-            onNext={() => cycle(1)}
-            onDismiss={() => setSelectedTrail(null)}
-            onViewGuide={() =>
+            onClose={() => setSelectedTrail(null)}
+            onOpen={() =>
               router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
             }
           />
@@ -522,9 +539,9 @@ const styles = StyleSheet.create({
 
   carousel: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
+    left: spacing[4],
+    right: spacing[4],
+    bottom: spacing[4],
   },
 
   locate: {

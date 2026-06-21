@@ -6,6 +6,6 @@ export { MARKER_STYLE, type MarkerKind, type MarkerGlyph } from './markerIcons';
 export { NativePOILayer, type NativePOI } from './NativePOILayer';
 export { SectionEndpoints } from './SectionEndpoints';
 export { TrailBlaze, TrailLayer } from './TrailLayer';
-export { CAROUSEL_PEEK_HEIGHT, type CarouselItem, TrailCarousel } from './TrailCarousel';
+export { type CarouselItem, TRAIL_CARD_HEIGHT, TrailCarousel } from './TrailCarousel';
 export { Waymark } from './Waymark';
 export { UserMarker } from './UserMarker';

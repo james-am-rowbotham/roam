@@ -26,6 +26,8 @@ interface Props {
    * directly. Only a plain number crosses this boundary — no MapLibre types.
    */
   onZoomChanged?: (zoom: number) => void;
+  /** Tap on the map background (not a pressable feature) — e.g. to dismiss a selection. */
+  onPress?: () => void;
 }
 
 // Imperative handle for one-shot camera moves (e.g. "center on me", "frame this
@@ -45,6 +47,7 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
     children,
     interactive = true,
     onZoomChanged,
+    onPress,
   },
   ref,
 ) {
@@ -77,6 +80,7 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
       doubleTapZoom={interactive}
       onRegionIsChanging={emitZoom}
       onRegionDidChange={emitZoom}
+      onPress={onPress ? () => onPress() : undefined}
     >
       {bounds ? (
         <Camera ref={cameraRef} bounds={bounds} padding={BOUNDS_PADDING} />

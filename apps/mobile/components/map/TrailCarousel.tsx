@@ -1,167 +1,108 @@
-import type { Stat } from '@roam/content';
-import { useRef, useState } from 'react';
-import { PanResponder, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, radius, spacing, type } from '../../theme';
-import { ElevationProfile } from '../trail/ElevationProfile';
 import { Icon } from '../ui/Icon';
-import { StatPills } from '../ui/StatPills';
 
 export interface CarouselItem {
   objectiveId: string;
   title: string;
   subtitle?: string;
-  stats: Stat[];
-  elevation: number[];
-  overview?: string;
+  image?: string;
+  difficulty?: string;
+  statLine: string;
 }
 
-// The collapsed peek (just the trail name) — also used to offset the recenter button.
-export const CAROUSEL_PEEK_HEIGHT = 56;
+// Card height — drives the recenter button's offset so it sits just above the card.
+export const TRAIL_CARD_HEIGHT = 112;
 
-// Trail preview sheet that slides out of the bottom navigation. Collapsed, it shows just the
-// trail name; swiping up (or tapping) expands it to the stats, elevation profile, a short
-// overview and a View-guide CTA. Prev/next cycle the trails on the map; swiping the peek down
-// dismisses it. Mirrors the web TrailCarousel.
+// A simple trail preview card pinned to the bottom of the map: a cover image with a
+// difficulty badge, the trail name, and a one-line stat summary. Tapping it opens the guide;
+// the ✕ (or tapping the map) dismisses it and unhighlights the trail.
 interface Props {
   item: CarouselItem;
-  index: number;
-  total: number;
-  onPrev: () => void;
-  onNext: () => void;
-  onViewGuide: () => void;
-  onDismiss: () => void;
+  onClose: () => void;
+  onOpen: () => void;
 }
 
-export function TrailCarousel({
-  item,
-  index,
-  total,
-  onPrev,
-  onNext,
-  onViewGuide,
-  onDismiss,
-}: Props) {
-  const [expanded, setExpanded] = useState(false);
-  // Read fresh state/callbacks inside the (stable) pan handler.
-  const live = useRef({ expanded, onDismiss });
-  live.current = { expanded, onDismiss };
-  const pan = useRef(
-    PanResponder.create({
-      // Claim only clear vertical drags, so the inner buttons still get taps.
-      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dy) > 8 && Math.abs(g.dy) > Math.abs(g.dx),
-      onPanResponderRelease: (_, g) => {
-        if (g.dy < -12) setExpanded(true);
-        else if (g.dy > 12) live.current.expanded ? setExpanded(false) : live.current.onDismiss();
-      },
-    }),
-  ).current;
-
+export function TrailCarousel({ item, onClose, onOpen }: Props) {
   return (
-    <View style={styles.sheet} {...pan.panHandlers}>
-      <View style={styles.grip} />
-
-      {expanded ? (
-        <View style={styles.body}>
-          <View style={styles.header}>
-            {total > 1 && (
-              <TouchableOpacity onPress={onPrev} hitSlop={8} style={styles.arrow}>
-                <Icon name="chevron-left" size={22} color={colors.text.primary} />
-              </TouchableOpacity>
-            )}
-            <View style={styles.titleCol}>
-              {item.subtitle ? <Text style={styles.subtitle}>{item.subtitle}</Text> : null}
-              <Text style={styles.title} numberOfLines={1}>
-                {item.title}
-              </Text>
-            </View>
-            {total > 1 && (
-              <>
-                <Text style={styles.count}>{`${index + 1}/${total}`}</Text>
-                <TouchableOpacity onPress={onNext} hitSlop={8} style={styles.arrow}>
-                  <Icon name="chevron-right" size={22} color={colors.text.primary} />
-                </TouchableOpacity>
-              </>
-            )}
+    <View style={styles.card}>
+      <TouchableOpacity style={styles.imageWrap} onPress={onOpen} activeOpacity={0.9}>
+        {item.image ? (
+          <Image source={{ uri: item.image }} style={styles.image} resizeMode="cover" />
+        ) : (
+          <View style={[styles.image, styles.imageFallback]} />
+        )}
+        {item.difficulty ? (
+          <View style={styles.diffBadge}>
+            <Text style={styles.diffText}>{item.difficulty}</Text>
           </View>
+        ) : null}
+      </TouchableOpacity>
 
-          <StatPills stats={item.stats} />
-
-          {item.elevation.length > 1 && (
-            <ElevationProfile data={item.elevation} mode="preview" height={48} />
-          )}
-          {item.overview ? (
-            <Text style={styles.overview} numberOfLines={4}>
-              {item.overview}
-            </Text>
-          ) : null}
-
-          <TouchableOpacity onPress={onViewGuide} hitSlop={6}>
-            <Text style={styles.viewGuide}>View guide →</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <TouchableOpacity onPress={() => setExpanded(true)} activeOpacity={0.7} style={styles.peek}>
-          <Text style={styles.peekTitle} numberOfLines={1}>
-            {item.title}
+      <TouchableOpacity style={styles.body} onPress={onOpen} activeOpacity={0.8}>
+        {item.subtitle ? (
+          <Text style={styles.subtitle} numberOfLines={1}>
+            {item.subtitle}
           </Text>
-          {item.subtitle ? (
-            <Text style={styles.peekSub} numberOfLines={1}>
-              {item.subtitle}
-            </Text>
-          ) : null}
-        </TouchableOpacity>
-      )}
+        ) : null}
+        <Text style={styles.title} numberOfLines={2}>
+          {item.title}
+        </Text>
+        <Text style={styles.stats} numberOfLines={1}>
+          {item.statLine}
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.close} onPress={onClose} hitSlop={8}>
+        <Icon name="close" size={18} color={colors.text.secondary} />
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  sheet: {
-    backgroundColor: colors.bg.surface,
-    borderTopLeftRadius: radius.xl,
-    borderTopRightRadius: radius.xl,
-    paddingHorizontal: spacing[8],
-    paddingTop: spacing[3],
-    paddingBottom: spacing[6],
-    gap: spacing[4],
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border.default,
-    shadowColor: colors.text.primary,
-    shadowOffset: { width: 0, height: -4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  grip: {
-    alignSelf: 'center',
-    width: 40,
-    height: 4,
-    borderRadius: radius.full,
-    backgroundColor: colors.border.default,
-  },
-  peek: {
+  card: {
     flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'center',
-    gap: spacing[3],
-    paddingBottom: spacing[1],
+    height: TRAIL_CARD_HEIGHT,
+    backgroundColor: colors.bg.surface,
+    borderRadius: radius.xl,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.border.default,
+    overflow: 'hidden',
+    shadowColor: colors.text.primary,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.16,
+    shadowRadius: 18,
+    elevation: 6,
   },
-  peekTitle: { ...type.title, fontSize: 17, color: colors.text.primary },
-  peekSub: { ...type.dataMeta, color: colors.text.secondary },
-  body: { gap: spacing[4] },
-  header: { flexDirection: 'row', alignItems: 'center', gap: spacing[3] },
-  arrow: {
-    width: 32,
-    height: 32,
-    borderRadius: radius.full,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.bg.subtle,
+  imageWrap: { width: 104, height: '100%' },
+  image: { width: '100%', height: '100%' },
+  imageFallback: { backgroundColor: colors.bg.subtle },
+  diffBadge: {
+    position: 'absolute',
+    top: spacing[3],
+    left: spacing[3],
+    backgroundColor: colors.bg.surface,
+    borderRadius: radius.sm,
+    paddingHorizontal: spacing[3],
+    paddingVertical: 2,
   },
-  titleCol: { flex: 1, gap: 1 },
+  diffText: { ...type.label, color: colors.text.primary },
+  body: {
+    flex: 1,
+    paddingVertical: spacing[5],
+    paddingHorizontal: spacing[6],
+    paddingRight: spacing[8],
+    justifyContent: 'center',
+    gap: 2,
+  },
   subtitle: { ...type.dataMeta, color: colors.text.secondary },
-  title: { ...type.title, fontSize: 19, color: colors.text.primary },
-  count: { ...type.label, color: colors.text.secondary },
-  overview: { ...type.meta, color: colors.text.secondary, lineHeight: 19 },
-  viewGuide: { ...type.bodyStrong, color: colors.accent },
+  title: { ...type.cardTitle, color: colors.text.primary },
+  stats: { ...type.dataMeta, color: colors.text.secondary },
+  close: {
+    position: 'absolute',
+    top: spacing[3],
+    right: spacing[3],
+    padding: spacing[1],
+  },
 });
