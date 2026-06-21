@@ -6,7 +6,7 @@ import {
   markingColorToken,
 } from '@roam/content';
 import { parseOsmcSymbol } from '@roam/core';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { resolveColorToken } from '../../lib/colorToken';
 import { geometryBbox } from '../../lib/geo';
 import { colors, radius, spacing, type } from '../../theme';
@@ -211,19 +211,29 @@ function HighlightsBlock({
   return (
     <View style={styles.block}>
       <Text style={styles.kicker}>{(block.header ?? 'Highlights').toUpperCase()}</Text>
-      {block.highlightIds.map((id) => {
-        const h = resolve.highlight?.(id);
-        const uri = h?.mediaId ? resolve.mediaUrl?.(h.mediaId) : undefined;
-        return (
-          <View key={id} style={styles.highlightCard}>
-            {uri ? (
-              <Image source={{ uri }} style={styles.highlightImage} resizeMode="cover" />
-            ) : null}
-            <Text style={styles.highlightTitle}>{h?.title ?? id}</Text>
-            {h?.body ? <Text style={styles.highlightBody}>{h.body}</Text> : null}
-          </View>
-        );
-      })}
+      {/* A horizontal image carousel (Figma 04a Highlights) — not a vertical list. */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.highlightRow}
+      >
+        {block.highlightIds.map((id) => {
+          const h = resolve.highlight?.(id);
+          const uri = h?.mediaId ? resolve.mediaUrl?.(h.mediaId) : undefined;
+          return (
+            <View key={id} style={styles.highlightItem}>
+              {uri ? (
+                <Image source={{ uri }} style={styles.highlightImage} resizeMode="cover" />
+              ) : (
+                <View style={[styles.highlightImage, styles.highlightFallback]} />
+              )}
+              <Text style={styles.highlightTitle} numberOfLines={1}>
+                {h?.title ?? id}
+              </Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
@@ -436,7 +446,7 @@ export function ContentBlockRenderer({
 }
 
 const styles = StyleSheet.create({
-  stack: { gap: 24 },
+  stack: { gap: spacing[12] + spacing[2] },
   block: { gap: spacing[5] },
   heading: { ...type.sectionHeader, color: colors.text.primary },
   body: { ...type.body, color: colors.text.primary },
@@ -480,15 +490,16 @@ const styles = StyleSheet.create({
   calloutText: { ...type.meta },
   dotRow: { flexDirection: 'row', alignItems: 'center', gap: spacing[4] },
   bullet: { width: 5, height: 5, borderRadius: 2.5, backgroundColor: colors.accent },
-  highlightCard: { gap: spacing[2], marginTop: spacing[3] },
+  highlightRow: { gap: spacing[4], paddingRight: spacing[4] },
+  highlightItem: { width: 156, gap: spacing[2] },
   highlightImage: {
-    width: '100%',
-    height: 160,
+    width: 156,
+    height: 112,
     borderRadius: radius.lg,
     backgroundColor: colors.bg.subtle,
   },
-  highlightTitle: { ...type.bodyStrong, color: colors.text.primary },
-  highlightBody: { ...type.meta, color: colors.text.secondary },
+  highlightFallback: { backgroundColor: colors.bg.subtle },
+  highlightTitle: { ...type.cardTitle, color: colors.text.primary },
   chipsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing[4] },
   mapContainer: { height: 200, borderRadius: radius.xl, overflow: 'hidden' },
   statStrip: {

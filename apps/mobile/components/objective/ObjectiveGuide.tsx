@@ -83,8 +83,8 @@ export function ObjectiveGuide({ objective }: { objective: Objective }) {
               onChange={setFacet}
             />
           )}
-          {topicsForFacet(objective.guide, facet).map((topic) => (
-            <View key={topic.key} style={styles.topic}>
+          {topicsForFacet(objective.guide, facet).map((topic, i) => (
+            <View key={topic.key} style={[styles.topic, i > 0 && styles.topicDivided]}>
               {topic.heading ? <Text style={styles.topicHeading}>{topic.heading}</Text> : null}
               {topic.body ? <Text style={styles.topicBody}>{topic.body}</Text> : null}
               {topic.blocks ? (
@@ -140,7 +140,13 @@ const styles = StyleSheet.create({
     paddingBottom: spacing[6],
   },
   guide: { paddingHorizontal: layout.screenPadding, gap: spacing[8] },
-  topic: { gap: spacing[3] },
+  topic: { gap: spacing[4] },
+  // A hairline divider + breathing room above every topic after the first (Figma 04a/b/c).
+  topicDivided: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border.default,
+    paddingTop: spacing[8],
+  },
   topicHeading: { ...type.sectionHeader, color: colors.text.primary },
   topicBody: { ...type.body, color: colors.text.primary },
 });

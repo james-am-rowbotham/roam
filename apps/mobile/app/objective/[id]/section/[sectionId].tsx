@@ -120,8 +120,8 @@ function Overview({ section }: { section: Section }) {
 
       {/* Terrain → Flora & fauna → Culture → Weather → Cautions. Topics may carry blocks
           (callouts, imagery) — render them like the Guide does, not text-only (§12.2). */}
-      {topics.map((t) => (
-        <View key={t.key} style={styles.topic}>
+      {topics.map((t, i) => (
+        <View key={t.key} style={[styles.topic, i > 0 && styles.topicDivided]}>
           {t.heading ? <Text style={styles.heading}>{t.heading}</Text> : null}
           {t.body ? <Text style={styles.bodyText}>{t.body}</Text> : null}
           {t.blocks ? <ContentBlockRenderer blocks={t.blocks} resolve={resolve} /> : null}
@@ -213,7 +213,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   placeholderText: { ...type.meta, color: colors.text.secondary },
-  topic: { gap: spacing[3] },
+  topic: { gap: spacing[4] },
+  topicDivided: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.border.default,
+    paddingTop: spacing[8],
+  },
   heading: { ...type.sectionHeader, color: colors.text.primary },
   bodyText: { ...type.body, color: colors.text.primary },
   digestGroup: { gap: spacing[2], paddingTop: spacing[2] },
