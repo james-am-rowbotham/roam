@@ -907,6 +907,76 @@
       "author": "Till F. Teenck",
       "attribution": "Till F. Teenck · CC BY-SA 3.0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mountain_resort_-_Vall_de_N%C3%BAria.jpg"
+    },
+    "media/env/gr11-flora-1": {
+      "id": "media/env/gr11-flora-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Contesa_beech_forest%2C_Catalan_Pyrenees.jpg/1920px-Contesa_beech_forest%2C_Catalan_Pyrenees.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 4.0",
+      "author": "Contraix",
+      "attribution": "Contraix · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Contesa_beech_forest,_Catalan_Pyrenees.jpg"
+    },
+    "media/env/gr11-flora-2": {
+      "id": "media/env/gr11-flora-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Isard_des_pyrenees_bigorre_2003.jpg",
+      "width": 540,
+      "height": 391,
+      "license": "CC BY-SA 3.0",
+      "author": "Bernard-Boehne",
+      "attribution": "Bernard-Boehne · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Isard_des_pyrenees_bigorre_2003.jpg"
+    },
+    "media/env/gr11-culture-1": {
+      "id": "media/env/gr11-culture-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/9/97/Church_-_Northern_Pyrenees_1.jpg",
+      "width": 1280,
+      "height": 960,
+      "license": "CC BY 2.0",
+      "author": "David Abse from London, UK",
+      "attribution": "David Abse from London, UK · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Church_-_Northern_Pyrenees_1.jpg"
+    },
+    "media/env/gr11-culture-3": {
+      "id": "media/env/gr11-culture-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg/1920px-Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg",
+      "width": 1600,
+      "height": 957,
+      "license": "CC BY 4.0",
+      "author": "Pierre André Leclercq",
+      "attribution": "Pierre André Leclercq · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg"
+    },
+    "media/env/gr11-history-1": {
+      "id": "media/env/gr11-history-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg/330px-2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg",
+      "width": 1600,
+      "height": 2133,
+      "license": "CC BY-SA 4.0",
+      "author": "Cyclingralph",
+      "attribution": "Cyclingralph · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg"
+    },
+    "media/env/gr11-history-2": {
+      "id": "media/env/gr11-history-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu/page1-960px-Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu.jpg",
+      "width": 1600,
+      "height": 2372,
+      "license": "Public domain",
+      "author": "Unknown",
+      "attribution": "Unknown · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Weird_Tales_Volume_24_Issue_5_(1934-11).djvu"
+    },
+    "media/env/gr11-history-3": {
+      "id": "media/env/gr11-history-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Refuge_Noh%C3%A8des-Perdrix.jpg/1920px-Refuge_Noh%C3%A8des-Perdrix.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC0",
+      "author": "Alan Mattingly",
+      "attribution": "Alan Mattingly · CC0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_Noh%C3%A8des-Perdrix.jpg"
     }
   },
   "objectiveGuide": [

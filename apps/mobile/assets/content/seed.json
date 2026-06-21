@@ -5001,6 +5001,76 @@
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mountain_resort_-_Vall_de_N%C3%BAria.jpg"
     },
     {
+      "id": "media/env/gr11-flora-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Contesa_beech_forest%2C_Catalan_Pyrenees.jpg/1920px-Contesa_beech_forest%2C_Catalan_Pyrenees.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 4.0",
+      "author": "Contraix",
+      "attribution": "Contraix · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Contesa_beech_forest,_Catalan_Pyrenees.jpg"
+    },
+    {
+      "id": "media/env/gr11-flora-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Isard_des_pyrenees_bigorre_2003.jpg",
+      "width": 540,
+      "height": 391,
+      "license": "CC BY-SA 3.0",
+      "author": "Bernard-Boehne",
+      "attribution": "Bernard-Boehne · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Isard_des_pyrenees_bigorre_2003.jpg"
+    },
+    {
+      "id": "media/env/gr11-culture-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/9/97/Church_-_Northern_Pyrenees_1.jpg",
+      "width": 1280,
+      "height": 960,
+      "license": "CC BY 2.0",
+      "author": "David Abse from London, UK",
+      "attribution": "David Abse from London, UK · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Church_-_Northern_Pyrenees_1.jpg"
+    },
+    {
+      "id": "media/env/gr11-culture-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg/1920px-Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg",
+      "width": 1600,
+      "height": 957,
+      "license": "CC BY 4.0",
+      "author": "Pierre André Leclercq",
+      "attribution": "Pierre André Leclercq · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg"
+    },
+    {
+      "id": "media/env/gr11-history-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg/330px-2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg",
+      "width": 1600,
+      "height": 2133,
+      "license": "CC BY-SA 4.0",
+      "author": "Cyclingralph",
+      "attribution": "Cyclingralph · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg"
+    },
+    {
+      "id": "media/env/gr11-history-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu/page1-960px-Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu.jpg",
+      "width": 1600,
+      "height": 2372,
+      "license": "Public domain",
+      "author": "Unknown",
+      "attribution": "Unknown · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Weird_Tales_Volume_24_Issue_5_(1934-11).djvu"
+    },
+    {
+      "id": "media/env/gr11-history-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Refuge_Noh%C3%A8des-Perdrix.jpg/1920px-Refuge_Noh%C3%A8des-Perdrix.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC0",
+      "author": "Alan Mattingly",
+      "attribution": "Alan Mattingly · CC0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_Noh%C3%A8des-Perdrix.jpg"
+    },
+    {
       "id": "media/hero/gr10",
       "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg/1920px-2019_-_Parc_national_des_Pyrenees_-_refuge_des_Espuguettes.jpg",
       "width": 1600,
@@ -5659,6 +5729,76 @@
       "author": "ArnoLagrange",
       "attribution": "ArnoLagrange · CC BY-SA 4.0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Mantet.jpg"
+    },
+    {
+      "id": "media/env/gr10-flora-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Contesa_beech_forest%2C_Catalan_Pyrenees.jpg/1920px-Contesa_beech_forest%2C_Catalan_Pyrenees.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY-SA 4.0",
+      "author": "Contraix",
+      "attribution": "Contraix · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Contesa_beech_forest,_Catalan_Pyrenees.jpg"
+    },
+    {
+      "id": "media/env/gr10-flora-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Isard_des_pyrenees_bigorre_2003.jpg",
+      "width": 540,
+      "height": 391,
+      "license": "CC BY-SA 3.0",
+      "author": "Bernard-Boehne",
+      "attribution": "Bernard-Boehne · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Isard_des_pyrenees_bigorre_2003.jpg"
+    },
+    {
+      "id": "media/env/gr10-culture-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/9/97/Church_-_Northern_Pyrenees_1.jpg",
+      "width": 1280,
+      "height": 960,
+      "license": "CC BY 2.0",
+      "author": "David Abse from London, UK",
+      "attribution": "David Abse from London, UK · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Church_-_Northern_Pyrenees_1.jpg"
+    },
+    {
+      "id": "media/env/gr10-culture-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg/1920px-Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg",
+      "width": 1600,
+      "height": 957,
+      "license": "CC BY 4.0",
+      "author": "Pierre André Leclercq",
+      "attribution": "Pierre André Leclercq · CC BY 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Azet_returned_from_the_Pla_d%27Arsou%C3%A9_pastures_in_2013.jpg"
+    },
+    {
+      "id": "media/env/gr10-history-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg/330px-2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg",
+      "width": 1600,
+      "height": 2133,
+      "license": "CC BY-SA 4.0",
+      "author": "Cyclingralph",
+      "attribution": "Cyclingralph · CC BY-SA 4.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:2015_Mountain_pass_cycling_milestone_%E2%80%93_Tourmalet_Luz-Saint-Sauveur.jpg"
+    },
+    {
+      "id": "media/env/gr10-history-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu/page1-960px-Weird_Tales_Volume_24_Issue_5_%281934-11%29.djvu.jpg",
+      "width": 1600,
+      "height": 2372,
+      "license": "Public domain",
+      "author": "Unknown",
+      "attribution": "Unknown · Public domain · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Weird_Tales_Volume_24_Issue_5_(1934-11).djvu"
+    },
+    {
+      "id": "media/env/gr10-history-3",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Refuge_Noh%C3%A8des-Perdrix.jpg/1920px-Refuge_Noh%C3%A8des-Perdrix.jpg",
+      "width": 1600,
+      "height": 1200,
+      "license": "CC0",
+      "author": "Alan Mattingly",
+      "attribution": "Alan Mattingly · CC0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_Noh%C3%A8des-Perdrix.jpg"
     }
   ],
   "trails": [
@@ -9322,13 +9462,31 @@
             "key": "flora",
             "facet": "environment",
             "heading": "Flora & fauna",
-            "body": "Atlantic beech and oak in the west give way to bare granite in the east, climbing through the same vegetation belts on every massif. Watch for izard (the Pyrenean chamois) and marmots above the treeline, griffon and bearded vultures overhead, and — rarely, in the central massifs — the reintroduced brown bear."
+            "body": "Atlantic beech and oak in the west give way to bare granite in the east, climbing through the same vegetation belts on every massif. Watch for izard (the Pyrenean chamois) and marmots above the treeline, griffon and bearded vultures overhead, and — rarely, in the central massifs — the reintroduced brown bear.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr11-flora-1",
+                  "media/env/gr11-flora-2"
+                ]
+              }
+            ]
           },
           {
             "key": "culture",
             "facet": "environment",
             "heading": "Culture",
-            "body": "The trail crosses Basque, Aragonese and Catalan country, each with its own language, food and architecture. Stone villages, Romanesque churches and high summer pastures — still grazed by transhumant flocks — tell a long story of life in the mountains."
+            "body": "The trail crosses Basque, Aragonese and Catalan country, each with its own language, food and architecture. Stone villages, Romanesque churches and high summer pastures — still grazed by transhumant flocks — tell a long story of life in the mountains.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr11-culture-1",
+                  "media/env/gr11-culture-3"
+                ]
+              }
+            ]
           },
           {
             "key": "food",
@@ -9352,7 +9510,17 @@
             "key": "history",
             "facet": "environment",
             "heading": "History",
-            "body": "Old smuggling and pilgrim paths thread the range, which served as both frontier and refuge through the Civil War and the World Wars. The GR11 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes into one west-to-east traverse."
+            "body": "Old smuggling and pilgrim paths thread the range, which served as both frontier and refuge through the Civil War and the World Wars. The GR11 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes into one west-to-east traverse.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr11-history-1",
+                  "media/env/gr11-history-2",
+                  "media/env/gr11-history-3"
+                ]
+              }
+            ]
           },
           {
             "key": "weather",
@@ -28394,13 +28562,31 @@
             "key": "flora",
             "facet": "environment",
             "heading": "Flora & fauna",
-            "body": "Atlantic beech and silver fir in the west give way to mountain pine and open high pasture in the east, stacked in bands you can read by altitude. Watch for izard (the Pyrenean chamois) and marmots above the treeline, and griffon and bearded vultures riding the thermals overhead."
+            "body": "Atlantic beech and silver fir in the west give way to mountain pine and open high pasture in the east, stacked in bands you can read by altitude. Watch for izard (the Pyrenean chamois) and marmots above the treeline, and griffon and bearded vultures riding the thermals overhead.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr10-flora-1",
+                  "media/env/gr10-flora-2"
+                ]
+              }
+            ]
           },
           {
             "key": "culture",
             "facet": "environment",
             "heading": "Culture",
-            "body": "The GR10 runs through Basque, Béarnais, Gascon and Catalan country, each with its own language and table. Fronton pelota courts, nineteenth-century spa towns and high summer pastures — still grazed — tell a long story of mountain life."
+            "body": "The GR10 runs through Basque, Béarnais, Gascon and Catalan country, each with its own language and table. Fronton pelota courts, nineteenth-century spa towns and high summer pastures — still grazed — tell a long story of mountain life.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr10-culture-1",
+                  "media/env/gr10-culture-3"
+                ]
+              }
+            ]
           },
           {
             "key": "food",
@@ -28424,7 +28610,17 @@
             "key": "history",
             "facet": "environment",
             "heading": "History",
-            "body": "Smuggling and pilgrim paths thread the French side of the range, from the pilgrim road to Lourdes to old Cathar refuges, fought over through both World Wars. The GR10 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes."
+            "body": "Smuggling and pilgrim paths thread the French side of the range, from the pilgrim road to Lourdes to old Cathar refuges, fought over through both World Wars. The GR10 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes.",
+            "blocks": [
+              {
+                "kind": "gallery",
+                "mediaIds": [
+                  "media/env/gr10-history-1",
+                  "media/env/gr10-history-2",
+                  "media/env/gr10-history-3"
+                ]
+              }
+            ]
           },
           {
             "key": "weather",

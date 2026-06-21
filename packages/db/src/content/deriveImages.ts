@@ -51,6 +51,37 @@ export function deriveStageImageQueries(trailId: string): ImageQuery[] {
     .filter((q) => q.term.length > 10);
 }
 
+// Picture-reel terms for the Environment tab (Figma 04c) — three images per lens, so each of
+// Flora & fauna / Culture / History gets a horizontal reel. Pyrenees-generic (both trails).
+const ENV_REEL: { topic: string; terms: string[] }[] = [
+  {
+    topic: 'flora',
+    terms: [
+      'Pyrenees beech forest',
+      'Pyrenean chamois izard',
+      'Pyrenees alpine meadow wildflowers',
+    ],
+  },
+  {
+    topic: 'culture',
+    terms: [
+      'Pyrenees Romanesque church',
+      'Pyrenees stone mountain village',
+      'Pyrenees shepherd flock pasture',
+    ],
+  },
+  {
+    topic: 'history',
+    terms: ['Pyrenees mountain pass', 'Pyrenees mule track trail', 'Pyrenees mountain refuge hut'],
+  },
+];
+
+export function deriveEnvImageQueries(trailId: string): ImageQuery[] {
+  return ENV_REEL.flatMap(({ topic, terms }) =>
+    terms.map((term, i) => ({ mediaId: `media/env/${trailId}-${topic}-${i + 1}`, term })),
+  );
+}
+
 // A highlight is a named place/feature — well-covered on Commons.
 export function deriveHighlightImageQueries(trailId: string): ImageQuery[] {
   const pack = JSON.parse(readFileSync(SEED, 'utf8')) as Pack;

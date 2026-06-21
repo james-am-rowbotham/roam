@@ -4,16 +4,21 @@
 // No API key needed — Commons is open. Then run `pack:build` to fold media into the pack.
 
 import { loadContent, saveContent } from './cache';
-import { deriveHighlightImageQueries, deriveStageImageQueries } from './deriveImages';
+import {
+  deriveEnvImageQueries,
+  deriveHighlightImageQueries,
+  deriveStageImageQueries,
+} from './deriveImages';
 import { sourceImage } from './images';
 import { getTrailContent, trailIdFromArgs } from './trails';
 
-// Registry terms (objective + sections) + per-stage + per-highlight terms from the pack.
+// Registry terms (objective + sections) + per-stage + per-highlight + Environment reels.
 const trailId = trailIdFromArgs(process.argv);
 const QUERIES = [
   ...getTrailContent(trailId).images,
   ...deriveStageImageQueries(trailId),
   ...deriveHighlightImageQueries(trailId),
+  ...deriveEnvImageQueries(trailId),
 ];
 
 const force = process.argv.includes('--force');

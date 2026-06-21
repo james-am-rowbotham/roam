@@ -241,10 +241,17 @@ function GalleryBlock({
   resolve: BlockResolve;
 }) {
   return (
-    <View style={[styles.block, styles.galleryRow]}>
-      {block.mediaIds.map((id) => (
-        <MediaBox key={id} uri={resolve.mediaUrl?.(id)} style={styles.galleryThumb} />
-      ))}
+    <View style={styles.block}>
+      {/* A horizontal picture reel (Figma 04c). */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.galleryRow}
+      >
+        {block.mediaIds.map((id) => (
+          <MediaBox key={id} uri={resolve.mediaUrl?.(id)} style={styles.galleryThumb} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
