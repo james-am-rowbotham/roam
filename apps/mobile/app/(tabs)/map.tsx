@@ -94,12 +94,12 @@ function carouselItem(t: MapTrail): CarouselItem | null {
   const a = val('ascent');
   const days = val('days');
   const statLine = [
-    d != null ? `${d} km` : null,
+    d != null ? `${Math.round(Number(d))} km` : null,
     a != null ? `↑ ${a} m` : null,
     days != null ? `${days} days` : null,
   ]
     .filter(Boolean)
-    .join('  ·  ');
+    .join(' · ');
   const diff = trailDifficulty(slug);
   return {
     objectiveId: slug,
@@ -493,9 +493,7 @@ export default function MapScreen() {
             onOpen={() =>
               router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
             }
-            onStart={
-              canStart(selectedItem.objectiveId) ? () => start(selectedItem.objectiveId) : undefined
-            }
+            onStart={() => start(selectedItem.objectiveId)}
           />
         </View>
       )}
