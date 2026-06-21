@@ -28,7 +28,7 @@ import {
   TrailLayer,
   UserMarker,
 } from '../../components/map';
-import { Button, Chip, Icon, IconButton } from '../../components/ui';
+import { Chip, Icon, IconButton } from '../../components/ui';
 import { MAP_DEFAULT_CENTER, MAP_DEFAULT_ZOOM } from '../../config/map';
 import { useStartJourneyFromContent } from '../../lib/contentJourney';
 import { contentStore, mediaFor } from '../../lib/contentRepo';
@@ -263,7 +263,7 @@ export default function MapScreen() {
     clearFocusScope,
     clearFocus,
   } = useMapStore();
-  const { start, canStart } = useStartJourneyFromContent();
+  const { start } = useStartJourneyFromContent();
 
   // The focused geometry (scope slice, else whole route) + the box to frame it.
   const focusGeom = focus?.scope?.geom ?? focus?.routeGeom ?? null;
@@ -347,11 +347,14 @@ export default function MapScreen() {
     if (justSelected.current) return;
     setSelectedTrail(null);
   };
-  const selectedTrailData = selectedTrail
-    ? shownTrails.find((t) => trailSlug(t) === selectedTrail)
+  // One preview card for both entry points: a search/preview focus (focus.objectiveId) and a
+  // direct trail tap (selectedTrail). The card carries Start journey for either.
+  const cardObjectiveId = focus?.objectiveId ?? selectedTrail;
+  const cardTrail = cardObjectiveId
+    ? trails.find((t) => trailSlug(t) === cardObjectiveId)
     : undefined;
-  const selectedItem = selectedTrailData ? carouselItem(selectedTrailData) : null;
-  const showCarousel = !focus && selectedItem !== null;
+  const cardItem = cardTrail ? carouselItem(cardTrail) : null;
+  const showCard = cardItem !== null;
 
   return (
     <View style={styles.screen}>
@@ -374,7 +377,7 @@ export default function MapScreen() {
             focusedObjectiveId={focusedObjectiveId}
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
-            selectedObjectiveId={showCarousel ? (selectedItem?.objectiveId ?? null) : null}
+            selectedObjectiveId={!focus ? selectedTrail : null}
             onSelect={selectTrail}
           />
         ))}
@@ -450,11 +453,9 @@ export default function MapScreen() {
         style={[
           styles.locate,
           {
-            bottom: focus
-              ? insets.bottom + spacing[12] + 56
-              : showCarousel
-                ? TRAIL_CARD_HEIGHT + spacing[4] + spacing[3]
-                : insets.bottom + spacing[12],
+            bottom: showCard
+              ? TRAIL_CARD_HEIGHT + spacing[4] + spacing[3]
+              : insets.bottom + spacing[12],
           },
         ]}
       >
@@ -467,33 +468,25 @@ export default function MapScreen() {
         />
       </View>
 
-      {/* Start journey from the focused trail/range (online ref-bridge; hidden when unmatched). */}
-      {focus && canStart(focus.objectiveId) && (
-        <View style={[styles.cta, { paddingBottom: insets.bottom }]}>
-          <Button
-            label="Start journey"
-            size="lg"
-            fullWidth
-            onPress={() =>
-              start(focus.objectiveId, {
-                fromStageId: focus.scope?.fromStageId,
-                toStageId: focus.scope?.toStageId,
-              })
-            }
-          />
-        </View>
-      )}
-
-      {/* Trail preview card — pops up on a trail tap; tap it opens the guide, ✕ dismisses. */}
-      {showCarousel && selectedItem && (
+      {/* Trail preview card — the one surface for a tap-selected OR search/preview-focused
+          trail. Tap opens the guide; Start journey runs the (scoped) setup; ✕ dismisses. */}
+      {showCard && cardItem && (
         <View style={styles.carousel}>
           <TrailCarousel
-            item={selectedItem}
-            onClose={() => setSelectedTrail(null)}
+            item={cardItem}
+            onClose={() => {
+              clearFocus();
+              setSelectedTrail(null);
+            }}
             onOpen={() =>
-              router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
+              router.push({ pathname: '/objective/[id]', params: { id: cardItem.objectiveId } })
             }
-            onStart={() => start(selectedItem.objectiveId)}
+            onStart={() =>
+              start(cardItem.objectiveId, {
+                fromStageId: focus?.scope?.fromStageId,
+                toStageId: focus?.scope?.toStageId,
+              })
+            }
           />
         </View>
       )}
@@ -545,13 +538,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: spacing[3],
-  },
-
-  cta: {
-    position: 'absolute',
-    left: spacing[8],
-    right: spacing[8],
-    bottom: 0,
   },
 
   carousel: {

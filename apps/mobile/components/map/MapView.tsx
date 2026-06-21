@@ -95,8 +95,8 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
 // Inset so a route framed by the `bounds` prop (preview maps) doesn't touch the edges.
 const BOUNDS_PADDING = { top: 28, right: 28, bottom: 28, left: 28 };
 // Imperative fitBounds on the full map: extra top clears the search bar + filter chips,
-// extra bottom clears the Start journey CTA, so the framed route sits in the open area.
-const FIT_PADDING = { top: 128, right: 44, bottom: 96, left: 44 };
+// extra bottom clears the trail preview card, so the framed route sits in the open area.
+const FIT_PADDING = { top: 128, right: 44, bottom: 190, left: 44 };
 
 const styles = StyleSheet.create({
   map: { flex: 1 },
