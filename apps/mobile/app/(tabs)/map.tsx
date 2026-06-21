@@ -1,4 +1,5 @@
 import { Marker } from '@maplibre/maplibre-react-native';
+import type { Stat } from '@roam/content';
 import {
   type Difficulty,
   type FilterDimension,
@@ -83,34 +84,6 @@ type MapTrail = {
 // The content slug for a trail (its objective id) — "GR11" → "gr11".
 const trailSlug = (t: MapTrail) => (t.ref ?? t.name ?? '').toLowerCase().replace(/\s+/g, '');
 
-// A trail's slide-up carousel preview — content stats/overview/image by slug + the API
-// trail's elevation. Null when there's no content objective to preview.
-function carouselItem(t: MapTrail): CarouselItem | null {
-  const slug = trailSlug(t);
-  const o = contentStore.objectiveSummaries.get(slug);
-  if (!o) return null;
-  const val = (k: string) => o.atAGlance.find((s) => s.key === k)?.value;
-  const d = val('distance');
-  const a = val('ascent');
-  const days = val('days');
-  const statLine = [
-    d != null ? `${Math.round(Number(d))} km` : null,
-    a != null ? `↑ ${a} m` : null,
-    days != null ? `${days} days` : null,
-  ]
-    .filter(Boolean)
-    .join(' · ');
-  const diff = trailDifficulty(slug);
-  return {
-    objectiveId: slug,
-    title: o.name,
-    subtitle: [t.country, t.region].filter(Boolean).join(' · '),
-    image: mediaFor(o.heroMediaId)?.uri,
-    difficulty: diff ? diff.charAt(0).toUpperCase() + diff.slice(1) : undefined,
-    statLine,
-  };
-}
-
 // Hiking-band stage grade → the MapEntity difficulty scale (severe = expert).
 const GRADE_TO_DIFFICULTY: Record<string, Difficulty> = {
   easy: 'easy',
@@ -120,21 +93,93 @@ const GRADE_TO_DIFFICULTY: Record<string, Difficulty> = {
 };
 const DIFFICULTY_RANK: Record<Difficulty, number> = { easy: 0, moderate: 1, hard: 2, expert: 3 };
 
-// A trail's difficulty, derived from its content stages' grades: the 75th-percentile grade,
-// so a few hard/severe days set the rating (the trail's challenge) without one severe stage
-// labelling the whole route. GR11 → hard, GR10 → expert. undefined when there are no stages.
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+// A compact one-line stat summary from a summary's at-a-glance stats (trails carry `days`,
+// sections/stages carry `time`).
+function statLineOf(atAGlance: Stat[]): string {
+  const val = (k: string) => atAGlance.find((s) => s.key === k)?.value;
+  const d = val('distance');
+  const a = val('ascent');
+  const tail = val('days') != null ? `${val('days')} days` : (val('time') ?? null);
+  return [d != null ? `${Math.round(Number(d))} km` : null, a != null ? `↑ ${a} m` : null, tail]
+    .filter(Boolean)
+    .join(' · ');
+}
+
+// The 75th-percentile grade over a set of stages — a few hard days set the rating without one
+// severe stage labelling the whole thing. undefined when there are no graded stages.
+function difficultyFromGrades(grades: (Difficulty | undefined)[]): Difficulty | undefined {
+  const ranked = grades
+    .filter((d): d is Difficulty => !!d)
+    .sort((a, b) => DIFFICULTY_RANK[a] - DIFFICULTY_RANK[b]);
+  return ranked.length ? ranked[Math.floor(ranked.length * 0.75)] : undefined;
+}
+
+// A trail's difficulty from its content stages' grades. GR11 → hard, GR10 → expert.
 function trailDifficulty(slug: string): Difficulty | undefined {
   const sectionIds = new Set(
     [...contentStore.sectionSummaries.values()]
       .filter((s) => s.objectiveId === slug)
       .map((s) => s.id),
   );
-  const ranked = [...contentStore.stageSummaries.values()]
-    .filter((s) => sectionIds.has(s.sectionId))
-    .map((s) => GRADE_TO_DIFFICULTY[s.grade.value])
-    .filter((d): d is Difficulty => !!d)
-    .sort((a, b) => DIFFICULTY_RANK[a] - DIFFICULTY_RANK[b]);
-  return ranked.length ? ranked[Math.floor(ranked.length * 0.75)] : undefined;
+  return difficultyFromGrades(
+    [...contentStore.stageSummaries.values()]
+      .filter((s) => sectionIds.has(s.sectionId))
+      .map((s) => GRADE_TO_DIFFICULTY[s.grade.value]),
+  );
+}
+
+// A trail's preview card — content stats/overview/image by slug.
+function carouselItem(t: MapTrail): CarouselItem | null {
+  const slug = trailSlug(t);
+  const o = contentStore.objectiveSummaries.get(slug);
+  if (!o) return null;
+  const diff = trailDifficulty(slug);
+  return {
+    objectiveId: slug,
+    title: o.name,
+    subtitle: [t.country, t.region].filter(Boolean).join(' · '),
+    image: mediaFor(o.heroMediaId)?.uri,
+    difficulty: diff ? cap(diff) : undefined,
+    statLine: statLineOf(o.atAGlance),
+  };
+}
+
+// A focused stage's card — its own name, stage number, grade and stats.
+function stageCardItem(objectiveId: string, stageId: string): CarouselItem | null {
+  const s = contentStore.stageSummaries.get(stageId);
+  if (!s) return null;
+  const trailName = contentStore.objectiveSummaries.get(objectiveId)?.name ?? objectiveId;
+  const diff = GRADE_TO_DIFFICULTY[s.grade.value];
+  return {
+    objectiveId,
+    title: s.name,
+    subtitle: `${trailName} · Stage ${s.number}`,
+    image: mediaFor(s.heroMediaId)?.uri,
+    difficulty: diff ? cap(diff) : undefined,
+    statLine: statLineOf(s.atAGlance),
+  };
+}
+
+// A focused section's card — its name + the trail, stats and difficulty derived from its stages.
+function sectionCardItem(objectiveId: string, sectionId: string): CarouselItem | null {
+  const s = contentStore.sectionSummaries.get(sectionId);
+  if (!s) return null;
+  const trailName = contentStore.objectiveSummaries.get(objectiveId)?.name ?? objectiveId;
+  const diff = difficultyFromGrades(
+    s.stageIds.map(
+      (id) => GRADE_TO_DIFFICULTY[contentStore.stageSummaries.get(id)?.grade.value ?? ''],
+    ),
+  );
+  return {
+    objectiveId,
+    title: s.name,
+    subtitle: trailName,
+    image: mediaFor(s.heroMediaId)?.uri,
+    difficulty: diff ? cap(diff) : undefined,
+    statLine: statLineOf(s.atAGlance),
+  };
 }
 
 // API trail → the @roam/core MapEntity the filter engine works on (§14). Difficulty is
@@ -348,13 +393,38 @@ export default function MapScreen() {
     setSelectedTrail(null);
   };
   // One preview card for both entry points: a search/preview focus (focus.objectiveId) and a
-  // direct trail tap (selectedTrail). The card carries Start journey for either.
+  // direct trail tap (selectedTrail). The card reflects whatever is highlighted — a focused
+  // stage or section shows ITS name/stats; otherwise the trail — and carries Start journey.
   const cardObjectiveId = focus?.objectiveId ?? selectedTrail;
   const cardTrail = cardObjectiveId
     ? trails.find((t) => trailSlug(t) === cardObjectiveId)
     : undefined;
-  const cardItem = cardTrail ? carouselItem(cardTrail) : null;
+  const cardItem: CarouselItem | null =
+    focus?.scope?.kind === 'stage' && focus.scope.stageId
+      ? stageCardItem(focus.objectiveId, focus.scope.stageId)
+      : focus?.scope?.kind === 'section' && focus.scope.sectionId
+        ? sectionCardItem(focus.objectiveId, focus.scope.sectionId)
+        : cardTrail
+          ? carouselItem(cardTrail)
+          : null;
   const showCard = cardItem !== null;
+
+  // Opening the card lands on the highlighted entity's screen (stage / section / trail guide).
+  const openCard = () => {
+    if (focus?.scope?.kind === 'stage' && focus.scope.stageId) {
+      router.push({
+        pathname: '/objective/[id]/stage/[stageId]',
+        params: { id: focus.objectiveId, stageId: focus.scope.stageId },
+      });
+    } else if (focus?.scope?.kind === 'section' && focus.scope.sectionId) {
+      router.push({
+        pathname: '/objective/[id]/section/[sectionId]',
+        params: { id: focus.objectiveId, sectionId: focus.scope.sectionId },
+      });
+    } else if (cardItem) {
+      router.push({ pathname: '/objective/[id]', params: { id: cardItem.objectiveId } });
+    }
+  };
 
   return (
     <View style={styles.screen}>
@@ -478,9 +548,7 @@ export default function MapScreen() {
               clearFocus();
               setSelectedTrail(null);
             }}
-            onOpen={() =>
-              router.push({ pathname: '/objective/[id]', params: { id: cardItem.objectiveId } })
-            }
+            onOpen={openCard}
             onStart={() =>
               start(cardItem.objectiveId, {
                 fromStageId: focus?.scope?.fromStageId,
