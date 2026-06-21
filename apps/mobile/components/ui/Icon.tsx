@@ -5,6 +5,7 @@ import {
   Calendar,
   Check,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   ChevronUp,
   X as Close,
@@ -81,6 +82,7 @@ export type IconName =
   | 'user'
   | 'arrow-left'
   | 'chevron-right'
+  | 'chevron-left'
   | 'chevron-down'
   | 'chevron-up'
   | 'cloud'
@@ -120,6 +122,7 @@ const icons: Record<IconName, React.ElementType> = {
   user: User,
   'arrow-left': ArrowLeft,
   'chevron-right': ChevronRight,
+  'chevron-left': ChevronLeft,
   'chevron-down': ChevronDown,
   'chevron-up': ChevronUp,
   cloud: Cloud,

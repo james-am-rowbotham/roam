@@ -15,6 +15,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  type CarouselItem,
   FilterSheet,
   MapImages,
   MapView,
@@ -22,6 +23,7 @@ import {
   NativePOILayer,
   SectionEndpoints,
   TrailBlaze,
+  TrailCarousel,
   TrailLayer,
   UserMarker,
 } from '../../components/map';
@@ -73,8 +75,28 @@ type MapTrail = {
   country?: string | null;
   region?: string | null;
   distanceM?: number | null;
+  elevation?: number[];
   waymark?: { symbol?: import('@roam/core').OsmcSymbol | null } | null;
 };
+
+// The content slug for a trail (its objective id) — "GR11" → "gr11".
+const trailSlug = (t: MapTrail) => (t.ref ?? t.name ?? '').toLowerCase().replace(/\s+/g, '');
+
+// A trail's slide-up carousel preview — content stats/overview/image by slug + the API
+// trail's elevation. Null when there's no content objective to preview.
+function carouselItem(t: MapTrail): CarouselItem | null {
+  const slug = trailSlug(t);
+  const o = contentStore.objectiveSummaries.get(slug);
+  if (!o) return null;
+  return {
+    objectiveId: slug,
+    title: o.name,
+    subtitle: [t.country, t.region].filter(Boolean).join(' · '),
+    stats: o.atAGlance.filter((s) => ['distance', 'stages', 'days'].includes(s.key)),
+    elevation: t.elevation ?? [],
+    overview: o.summary,
+  };
+}
 
 // Hiking-band stage grade → the MapEntity difficulty scale (severe = expert).
 const GRADE_TO_DIFFICULTY: Record<string, Difficulty> = {
@@ -123,11 +145,14 @@ function TrailRoute({
   focusedObjectiveId,
   focusScoped,
   legacyDim,
+  selectedObjectiveId,
 }: {
   trail: MapTrail;
   focusedObjectiveId: string | null;
   focusScoped: boolean;
   legacyDim: boolean;
+  /** The carousel-selected trail — emphasised; the others dim (no focus). */
+  selectedObjectiveId: string | null;
 }) {
   const router = useRouter();
   const id = String(trail.id);
@@ -153,7 +178,9 @@ function TrailRoute({
   const isFocused = !!focusedObjectiveId && focusedObjectiveId === slug;
   const focusActive = !!focusedObjectiveId;
   if (focusActive && !isFocused) return null;
-  const dim = legacyDim || (focusActive && focusScoped);
+  // Dim when: legacy section active · a scope is focused · the carousel selects another trail.
+  const carouselDim = !focusActive && selectedObjectiveId != null && selectedObjectiveId !== slug;
+  const dim = legacyDim || (focusActive && focusScoped) || carouselDim;
 
   if (!geojson) return null;
 
@@ -280,6 +307,20 @@ export default function MapScreen() {
   const toggle = (dim: FilterDimension, value: string) =>
     setFilters((f) => toggleFilterValue(f, dim, value));
 
+  // Trail carousel — preview + cycle the filtered trails (mirrors the web TrailCarousel).
+  // The selected trail is highlighted on the map; hidden while a single entity is focused.
+  const carouselItems = shownTrails.map(carouselItem).filter((c): c is CarouselItem => c !== null);
+  const [selectedTrail, setSelectedTrail] = useState<string | null>(null);
+  const selectedItem =
+    carouselItems.find((c) => c.objectiveId === selectedTrail) ?? carouselItems[0] ?? null;
+  const selectedIndex = selectedItem ? carouselItems.indexOf(selectedItem) : -1;
+  const cycle = (delta: number) => {
+    if (!carouselItems.length) return;
+    const next = (selectedIndex + delta + carouselItems.length) % carouselItems.length;
+    setSelectedTrail(carouselItems[next]?.objectiveId ?? null);
+  };
+  const showCarousel = !focus && selectedItem !== null;
+
   return (
     <View style={styles.screen}>
       {/* Full-screen map. A focus frames its geometry imperatively (below), so clearing the
@@ -296,6 +337,7 @@ export default function MapScreen() {
             focusedObjectiveId={focusedObjectiveId}
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
+            selectedObjectiveId={showCarousel ? (selectedItem?.objectiveId ?? null) : null}
           />
         ))}
         {activeSectionGeom && (
@@ -365,11 +407,13 @@ export default function MapScreen() {
         </View>
       )}
 
-      {/* Center-on-me — always visible; lifts above the Start CTA when a focus is shown. */}
+      {/* Center-on-me — always visible; lifts above the Start CTA / trail carousel. */}
       <View
         style={[
           styles.locate,
-          { bottom: insets.bottom + (focus ? spacing[12] + 56 : spacing[12]) },
+          {
+            bottom: insets.bottom + (focus ? spacing[12] + 56 : showCarousel ? 248 : spacing[12]),
+          },
         ]}
       >
         <IconButton
@@ -383,7 +427,7 @@ export default function MapScreen() {
 
       {/* Start journey from the focused trail/range (online ref-bridge; hidden when unmatched). */}
       {focus && canStart(focus.objectiveId) && (
-        <View style={[styles.cta, { paddingBottom: insets.bottom + spacing[4] }]}>
+        <View style={[styles.cta, { paddingBottom: insets.bottom }]}>
           <Button
             label="Start journey"
             size="lg"
@@ -393,6 +437,22 @@ export default function MapScreen() {
                 fromStageId: focus.scope?.fromStageId,
                 toStageId: focus.scope?.toStageId,
               })
+            }
+          />
+        </View>
+      )}
+
+      {/* Trail carousel — preview + cycle the filtered trails; tapping View guide opens it. */}
+      {showCarousel && selectedItem && (
+        <View style={[styles.carousel, { bottom: insets.bottom + spacing[4] }]}>
+          <TrailCarousel
+            item={selectedItem}
+            index={selectedIndex}
+            total={carouselItems.length}
+            onPrev={() => cycle(-1)}
+            onNext={() => cycle(1)}
+            onViewGuide={() =>
+              router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
             }
           />
         </View>
@@ -452,6 +512,12 @@ const styles = StyleSheet.create({
     left: spacing[8],
     right: spacing[8],
     bottom: 0,
+  },
+
+  carousel: {
+    position: 'absolute',
+    left: spacing[6],
+    right: spacing[6],
   },
 
   locate: {
