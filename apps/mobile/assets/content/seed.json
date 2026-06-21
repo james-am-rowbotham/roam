@@ -9291,13 +9291,20 @@
             "body": "The main risk is afternoon weather: storms build over the high country in summer, often in the evening and night, so cross exposed passes early and be down before they hit. The GR11 climbs many passes with scree, boulderfields & easy scrambling — about as hard as an inexperienced walker would want under a heavy pack — and snow can linger on passes above 2,500 m into early summer, hiding markers and demanding an ice axe and crampons. Fog can drop visibility to a few metres even on a marked route. The emergency number Spain-wide is 112, reaching mountain rescue, but reception is patchy in remote valleys, so leave your route and expected arrival with someone, and use the staffed refuges as shelter and a source of current conditions.",
             "blocks": [
               {
-                "kind": "chips",
-                "group": "conditions",
-                "items": [
-                  "Afternoon storms",
-                  "Snow into early summer",
-                  "Exposed high cols",
-                  "Long water carries"
+                "kind": "hazards",
+                "callouts": [
+                  {
+                    "tone": "warn",
+                    "body": "Storms build through the afternoon — be off the high cols by midday."
+                  },
+                  {
+                    "tone": "success",
+                    "body": "Snow lingers on north-facing cols into early summer."
+                  },
+                  {
+                    "tone": "info",
+                    "body": "Long dry stretches — carry 2–3 L of water on the exposed days."
+                  }
                 ]
               }
             ]
@@ -28310,13 +28317,20 @@
             "body": "The real hazard on the GR10 is rarely the terrain — it's a careless slip on an easy but exposed path, which is why two poles are strongly advised. Pyrenean weather turns fast: clear mornings build into afternoon thunderstorms, so cross the high passes early, ideally before 2 pm. The walking season runs mid-June to late September, when the snow has cleared the passes and the refuges are open; outside that window you need winter experience. In an emergency dial 112 for the PGHM mountain rescue, give your position, and remember that coverage is patchy above the valleys — staffed refuges are your reliable point of contact and shelter.",
             "blocks": [
               {
-                "kind": "chips",
-                "group": "conditions",
-                "items": [
-                  "Afternoon storms",
-                  "Snow into early summer",
-                  "Exposed high cols",
-                  "Long water carries"
+                "kind": "hazards",
+                "callouts": [
+                  {
+                    "tone": "warn",
+                    "body": "Storms build through the afternoon — be off the high cols by midday."
+                  },
+                  {
+                    "tone": "success",
+                    "body": "Snow lingers on north-facing cols into early summer."
+                  },
+                  {
+                    "tone": "info",
+                    "body": "Long dry stretches — carry 2–3 L of water on the exposed days."
+                  }
                 ]
               }
             ]

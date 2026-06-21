@@ -62,11 +62,11 @@ const TRAIL_KIT = [
   'Map & compass',
   'First-aid & blister kit',
 ];
-const TRAIL_CONDITIONS = [
-  'Afternoon storms',
-  'Snow into early summer',
-  'Exposed high cols',
-  'Long water carries',
+// Safety reads as status callouts (Figma 04b), not chips — tone-coloured condition cards.
+const TRAIL_CONDITIONS: { tone: StatusTone; body: string }[] = [
+  { tone: 'warn', body: 'Storms build through the afternoon — be off the high cols by midday.' },
+  { tone: 'success', body: 'Snow lingers on north-facing cols into early summer.' },
+  { tone: 'info', body: 'Long dry stretches — carry 2–3 L of water on the exposed days.' },
 ];
 const TRAIL_FOOD = [
   'Resupply in valley towns',
@@ -381,7 +381,7 @@ export function buildTrailPack(
         ],
       });
     } else if (t.key === 'safety') {
-      extra.push({ kind: 'chips', group: 'conditions', items: TRAIL_CONDITIONS });
+      extra.push({ kind: 'hazards', callouts: TRAIL_CONDITIONS });
     } else if (t.key === 'food') {
       extra.push({ kind: 'chips', group: 'food', items: TRAIL_FOOD });
     }
