@@ -102,7 +102,7 @@ ${spec.context ?? ''}
 
 Research the web FIRST (Wikipedia/Wikivoyage, federation guides, national parks, refuge sites, reputable trip reports). SOURCING IS MANDATORY — a confidently-wrong fact is worse than nothing. Never invent a fact or a source.
 
-Write ONE topic for EACH of these keys: ${keys}. Each: a short heading and a 2–4 sentence body in Roam's voice, for a hiker planning/understanding the whole trail.
+Write ONE topic for EACH of these keys: ${keys}. Use the plain topic name as the heading (e.g. "Flora & fauna", "Culture", "Food", "History", "Weather"; "Kit", "Navigation", "Accommodation", "Water", "Safety", "Transport") — not a poetic phrase. Give each a 2–4 sentence body in Roam's voice, for a hiker planning/understanding the whole trail.
 
 Return ONLY a JSON object — no prose before or after:
 {"topics":[{"key":"kit","heading":"...","body":"...","sourceRefs":[{"url":"...","title":"..."}]}]}`;

@@ -931,20 +931,32 @@
     {
       "key": "flora",
       "facet": "environment",
-      "heading": "From beech to bare granite",
-      "body": "The GR11 climbs through the same vegetation belts again and again as it crosses each massif: oak and beech woods low down, the great Irati forest in Navarre, then conifers thinning out around 2,300 m, alpine meadow above that, and exposed rock above roughly 2,500 m. Watch the high ground for izards (the Pyrenean chamois, sarrio in Spanish) on the slopes and marmots whistling from boulder fields — both common above the treeline. Overhead you'll see griffon and Egyptian vultures, golden eagles, and, with luck over Ordesa y Monte Perdido, the bearded vulture or quebrantahuesos — the \"bone-breaker,\" with a near three-metre wingspan, that lives almost entirely on bone and has its European stronghold here."
+      "heading": "Flora & fauna",
+      "body": "Atlantic beech and oak in the west give way to bare granite in the east, climbing through the same vegetation belts on every massif. Watch for izard (the Pyrenean chamois) and marmots above the treeline, griffon and bearded vultures overhead, and — rarely, in the central massifs — the reintroduced brown bear."
+    },
+    {
+      "key": "culture",
+      "facet": "environment",
+      "heading": "Culture",
+      "body": "The trail crosses Basque, Aragonese and Catalan country, each with its own language, food and architecture. Stone villages, Romanesque churches and high summer pastures — still grazed by transhumant flocks — tell a long story of life in the mountains."
     },
     {
       "key": "food",
       "facet": "environment",
-      "heading": "Eat the valley you're in",
-      "body": "Mountain food on the GR11 is shepherd's food, and it changes region by region. In the Basque Country and Navarre look for sheep's-milk cheeses — Idiazabal, and the Navarrese curados — and river trout (trucha) off the menu in valley villages. In Aragon, migas reward the hungry: stale bread crumbled and fried with garlic, chorizo, and bacon, sometimes with grapes — a meal built for a working day in the hills. Refuge dinners are usually a fixed three-course menú; stock up on cheese and cured meat in the larger valley towns like Jaca, since long stretches between resupply are normal."
+      "heading": "Food",
+      "body": "Hearty mountain fare that changes region by region: Basque pintxos and cider in the west, migas and game stew in Aragón, botifarra and rich stews in Catalonia. Refuges serve a set dinner; restock in valley villages every two to four days."
+    },
+    {
+      "key": "history",
+      "facet": "environment",
+      "heading": "History",
+      "body": "Old smuggling and pilgrim paths thread the range, which served as both frontier and refuge through the Civil War and the World Wars. The GR11 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes into one west-to-east traverse."
     },
     {
       "key": "weather",
       "facet": "environment",
-      "heading": "Drier as you go east, storms in the afternoon",
-      "body": "Walk the GR11 west to east and you feel the climate change with you: the Atlantic-facing Basque hills are mist-prone and green, while by the Mediterranean end rain is rare and afternoons can climb past 30°C. July to September is the season — the high passes are usually clear of snow and the days long. The summer pattern to plan around is the thunderstorm: hot, settled mornings that build cloud through the day, with storms most often breaking in the late afternoon, evening, or overnight. Start early, aim to be off the high cols by early afternoon, and treat a clear dawn as the time to make your distance."
+      "heading": "Weather",
+      "body": "Wetter and milder in the Atlantic west; hot and dry through the central and eastern summers. Mornings are usually clear, with cloud and thunderstorms building from early afternoon — cloud can fall on the high tops in any weather."
     }
   ],
   "sectionHighlights": {

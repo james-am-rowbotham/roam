@@ -9312,14 +9312,20 @@
           {
             "key": "flora",
             "facet": "environment",
-            "heading": "From beech to bare granite",
-            "body": "The GR11 climbs through the same vegetation belts again and again as it crosses each massif: oak and beech woods low down, the great Irati forest in Navarre, then conifers thinning out around 2,300 m, alpine meadow above that, and exposed rock above roughly 2,500 m. Watch the high ground for izards (the Pyrenean chamois, sarrio in Spanish) on the slopes and marmots whistling from boulder fields — both common above the treeline. Overhead you'll see griffon and Egyptian vultures, golden eagles, and, with luck over Ordesa y Monte Perdido, the bearded vulture or quebrantahuesos — the \"bone-breaker,\" with a near three-metre wingspan, that lives almost entirely on bone and has its European stronghold here."
+            "heading": "Flora & fauna",
+            "body": "Atlantic beech and oak in the west give way to bare granite in the east, climbing through the same vegetation belts on every massif. Watch for izard (the Pyrenean chamois) and marmots above the treeline, griffon and bearded vultures overhead, and — rarely, in the central massifs — the reintroduced brown bear."
+          },
+          {
+            "key": "culture",
+            "facet": "environment",
+            "heading": "Culture",
+            "body": "The trail crosses Basque, Aragonese and Catalan country, each with its own language, food and architecture. Stone villages, Romanesque churches and high summer pastures — still grazed by transhumant flocks — tell a long story of life in the mountains."
           },
           {
             "key": "food",
             "facet": "environment",
-            "heading": "Eat the valley you're in",
-            "body": "Mountain food on the GR11 is shepherd's food, and it changes region by region. In the Basque Country and Navarre look for sheep's-milk cheeses — Idiazabal, and the Navarrese curados — and river trout (trucha) off the menu in valley villages. In Aragon, migas reward the hungry: stale bread crumbled and fried with garlic, chorizo, and bacon, sometimes with grapes — a meal built for a working day in the hills. Refuge dinners are usually a fixed three-course menú; stock up on cheese and cured meat in the larger valley towns like Jaca, since long stretches between resupply are normal.",
+            "heading": "Food",
+            "body": "Hearty mountain fare that changes region by region: Basque pintxos and cider in the west, migas and game stew in Aragón, botifarra and rich stews in Catalonia. Refuges serve a set dinner; restock in valley villages every two to four days.",
             "blocks": [
               {
                 "kind": "chips",
@@ -9334,10 +9340,16 @@
             ]
           },
           {
+            "key": "history",
+            "facet": "environment",
+            "heading": "History",
+            "body": "Old smuggling and pilgrim paths thread the range, which served as both frontier and refuge through the Civil War and the World Wars. The GR11 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes into one west-to-east traverse."
+          },
+          {
             "key": "weather",
             "facet": "environment",
-            "heading": "Drier as you go east, storms in the afternoon",
-            "body": "Walk the GR11 west to east and you feel the climate change with you: the Atlantic-facing Basque hills are mist-prone and green, while by the Mediterranean end rain is rare and afternoons can climb past 30°C. July to September is the season — the high passes are usually clear of snow and the days long. The summer pattern to plan around is the thunderstorm: hot, settled mornings that build cloud through the day, with storms most often breaking in the late afternoon, evening, or overnight. Start early, aim to be off the high cols by early afternoon, and treat a clear dawn as the time to make your distance."
+            "heading": "Weather",
+            "body": "Wetter and milder in the Atlantic west; hot and dry through the central and eastern summers. Mornings are usually clear, with cloud and thunderstorms building from early afternoon — cloud can fall on the high tops in any weather."
           }
         ],
         "highlightIds": [],
@@ -28338,20 +28350,20 @@
           {
             "key": "flora",
             "facet": "environment",
-            "heading": "Belts of green, and who lives in them",
-            "body": "The GR10 climbs through stacked vegetation bands you can read by altitude: oak and mixed deciduous woodland low down, beech and silver fir through the montane belt, mountain pine (Pinus uncinata) on the damp north-facing slopes of the subalpine zone, then open alpine meadow above the treeline, which sits around 2,200–2,450 m. The flower meadows of Béarn and Bigorre carry asphodel, Pyrenean iris, columbine and wild orchids through early summer. For wildlife, the animal you'll likely see most days is the izard, the Pyrenean chamois, smaller and more agile than its Alpine cousin and grazing up to about 3,000 m; marmots whistle from sub-alpine pastures (reintroduced after dying out here post-glaciation). Overhead, griffon vultures are near-daily company, and you may pick out the 3 m wingspan of the bearded vulture (gypaète) in the central French Pyrenees."
+            "heading": "Flora & fauna",
+            "body": "Atlantic beech and silver fir in the west give way to mountain pine and open high pasture in the east, stacked in bands you can read by altitude. Watch for izard (the Pyrenean chamois) and marmots above the treeline, and griffon and bearded vultures riding the thermals overhead."
           },
           {
             "key": "culture",
             "facet": "environment",
-            "heading": "Four cultures, west to east",
-            "body": "The GR10 reads as a slow handover between mountain peoples: Basque in the Pays Basque, Béarnais and Gascon through Aspe, Ossau and Bigorre, then Catalan as you drop toward Canigou and the sea. Euskara, the Basque language, has no relation to any other tongue in Europe, and you'll meet it on the first days as place names, the pelota fronton in every village square, and red-shuttered whitewashed farmhouses (etxe). The Couserans and Haute-Ariège are the trail at its emptiest — villages far apart, long climbs, fewer people — while the Catalan east mixes French and Spanish (and Catalan) in the same conversation. The cultural shift is as marked as the landscape's, and the GR10's village stages and gîtes d'étape put you inside it rather than camping above it."
+            "heading": "Culture",
+            "body": "The GR10 runs through Basque, Béarnais, Gascon and Catalan country, each with its own language and table. Fronton pelota courts, nineteenth-century spa towns and high summer pastures — still grazed — tell a long story of mountain life."
           },
           {
             "key": "food",
             "facet": "environment",
-            "heading": "Eat the valley you're in",
-            "body": "Because the GR10 strings together so many village stops, you eat regionally rather than from a stove. In the Basque and Béarn west, that means garbure — the thick cabbage, bean and ham-hock soup of the Pyrenean farmhouse — piperade (peppers, tomato, egg), poulet basquaise and axoa seasoned with Espelette pepper, and ttoro, a Basque fish stew nearer the coast. The mountain cheese to look for is Ossau-Iraty, a pressed ewe's-milk cheese named for the Ossau valley and the Iraty forest, PDO since 1996. For the trail or a café stop, gâteau basque is the standard: a dense pastry cake filled with either black-cherry jam or almond cream. Half-board (demi-pension) at a gîte d'étape is usually the easiest way to eat a regional dinner after a long stage.",
+            "heading": "Food",
+            "body": "Hearty mountain fare that shifts as you go: Basque cooking and cider in the west, garbure soup and ewe's-milk Ossau-Iraty through Béarn, then Catalan stews at the Mediterranean end. Refuges serve a set dinner; restock in valley towns every two to four days.",
             "blocks": [
               {
                 "kind": "chips",
@@ -28368,14 +28380,14 @@
           {
             "key": "history",
             "facet": "environment",
-            "heading": "A frontier walked by smugglers & escapers",
-            "body": "This border has always been porous, and the GR10's paths inherit that traffic. Local passeurs — Basque smugglers and mountain guides who knew every stream valley — ran contraband across the watershed for generations, and in WWII the same knowledge moved people. In the Basque west, Andrée de Jongh's Comet Line guided some 300 downed Allied airmen over low crossings near the Bidassoa toward San Sebastián, often by night. Further east in the Ariège, the Chemin de la Liberté out of Saint-Girons climbed high into Catalonia; thousands escaped over the Pyrenees between 1940 and 1944 — refugees, airmen, those fleeing forced labour and persecution — guided by safe-house keepers and couriers, many of whom paid with their lives. You're walking the gentler, waymarked version of routes that were once a matter of survival."
+            "heading": "History",
+            "body": "Smuggling and pilgrim paths thread the French side of the range, from the pilgrim road to Lourdes to old Cathar refuges, fought over through both World Wars. The GR10 was waymarked from the 1970s, stitching together existing mule tracks and shepherds' routes."
           },
           {
             "key": "weather",
             "facet": "environment",
-            "heading": "Wet in the west, dry in the east — & up before noon",
-            "body": "The GR10 walks the Atlantic-to-Mediterranean gradient end to end. The Basque start is one of the wettest corners of France — mist, drizzle and lush green — and the trail dries and brightens steadily as you move east, finishing in the warm, rockier, Mediterranean-influenced Catalan Pyrenees above Banyuls. The season is roughly late June to September, after the high passes shed their snow. The daily rhythm that matters most in July and August is the afternoon storm: hot, slightly unstable days build cloud over the ridges, and clear morning skies can turn to thunder at altitude within an hour. Start early, aim to be over the day's high col by early afternoon, and treat a building anvil cloud as the signal to get down."
+            "heading": "Weather",
+            "body": "Wetter and milder in the Atlantic west; warmer and drier toward the Mediterranean. Mornings are usually clear, with cloud and thunderstorms building from early afternoon — cloud can fall on the high tops in any weather."
           }
         ],
         "highlightIds": [],
