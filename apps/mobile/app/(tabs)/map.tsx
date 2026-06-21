@@ -15,6 +15,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
+  CAROUSEL_PEEK_HEIGHT,
   type CarouselItem,
   FilterSheet,
   MapImages,
@@ -146,6 +147,7 @@ function TrailRoute({
   focusScoped,
   legacyDim,
   selectedObjectiveId,
+  onSelect,
 }: {
   trail: MapTrail;
   focusedObjectiveId: string | null;
@@ -153,6 +155,8 @@ function TrailRoute({
   legacyDim: boolean;
   /** The carousel-selected trail — emphasised; the others dim (no focus). */
   selectedObjectiveId: string | null;
+  /** Tapping the line previews the trail in the carousel (not straight to its guide). */
+  onSelect: (slug: string) => void;
 }) {
   const router = useRouter();
   const id = String(trail.id);
@@ -192,11 +196,7 @@ function TrailRoute({
         color={color}
         width={dim ? 2 : 4}
         opacity={dim ? 0.25 : 1}
-        onPress={
-          slug
-            ? () => router.push({ pathname: '/objective/[id]', params: { id: slug } })
-            : undefined
-        }
+        onPress={slug ? () => onSelect(slug) : undefined}
       />
       {blazeImage && !dim && (
         <TrailBlaze id={`blaze-${trail.id}`} geojson={geojson as never} image={blazeImage} />
@@ -310,12 +310,12 @@ export default function MapScreen() {
   // Trail carousel — preview + cycle the filtered trails (mirrors the web TrailCarousel).
   // The selected trail is highlighted on the map; hidden while a single entity is focused.
   const carouselItems = shownTrails.map(carouselItem).filter((c): c is CarouselItem => c !== null);
+  // The preview pops up only when a trail is tapped (no default selection).
   const [selectedTrail, setSelectedTrail] = useState<string | null>(null);
-  const selectedItem =
-    carouselItems.find((c) => c.objectiveId === selectedTrail) ?? carouselItems[0] ?? null;
+  const selectedItem = carouselItems.find((c) => c.objectiveId === selectedTrail) ?? null;
   const selectedIndex = selectedItem ? carouselItems.indexOf(selectedItem) : -1;
   const cycle = (delta: number) => {
-    if (!carouselItems.length) return;
+    if (!carouselItems.length || selectedIndex < 0) return;
     const next = (selectedIndex + delta + carouselItems.length) % carouselItems.length;
     setSelectedTrail(carouselItems[next]?.objectiveId ?? null);
   };
@@ -338,6 +338,7 @@ export default function MapScreen() {
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
             selectedObjectiveId={showCarousel ? (selectedItem?.objectiveId ?? null) : null}
+            onSelect={setSelectedTrail}
           />
         ))}
         {activeSectionGeom && (
@@ -407,12 +408,16 @@ export default function MapScreen() {
         </View>
       )}
 
-      {/* Center-on-me — always visible; lifts above the Start CTA / trail carousel. */}
+      {/* Center-on-me — bottom-right; sits just above the trail peek / Start CTA. */}
       <View
         style={[
           styles.locate,
           {
-            bottom: insets.bottom + (focus ? spacing[12] + 56 : showCarousel ? 248 : spacing[12]),
+            bottom: focus
+              ? insets.bottom + spacing[12] + 56
+              : showCarousel
+                ? CAROUSEL_PEEK_HEIGHT + spacing[3]
+                : insets.bottom + spacing[12],
           },
         ]}
       >
@@ -442,15 +447,16 @@ export default function MapScreen() {
         </View>
       )}
 
-      {/* Trail carousel — preview + cycle the filtered trails; tapping View guide opens it. */}
+      {/* Trail preview — slides out of the bottom nav; tap a trail to open it (§ carousel). */}
       {showCarousel && selectedItem && (
-        <View style={[styles.carousel, { bottom: insets.bottom + spacing[4] }]}>
+        <View style={styles.carousel}>
           <TrailCarousel
             item={selectedItem}
             index={selectedIndex}
             total={carouselItems.length}
             onPrev={() => cycle(-1)}
             onNext={() => cycle(1)}
+            onDismiss={() => setSelectedTrail(null)}
             onViewGuide={() =>
               router.push({ pathname: '/objective/[id]', params: { id: selectedItem.objectiveId } })
             }
@@ -516,8 +522,9 @@ const styles = StyleSheet.create({
 
   carousel: {
     position: 'absolute',
-    left: spacing[6],
-    right: spacing[6],
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 
   locate: {
