@@ -18,15 +18,29 @@ type LonLat = [number, number];
 
 const intervalArg = process.argv.find((a) => a.startsWith('--interval='))?.split('=')[1];
 const intervalM = intervalArg ? Number(intervalArg) : ELEVATION_INTERVAL_M;
+// Open-Meteo's free tier rate-limits hard, so a run can die partway. --force re-does
+// everything; by default we SKIP routes whose stored profile is already at the target
+// density, so a retry only re-spends budget on the routes that haven't been refreshed.
+const force = process.argv.includes('--force');
 
 const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
 const db = drizzle(client);
 
-const rows = await client<{ id: number; name: string; gj: string }[]>`
-  SELECT id, name, ST_AsGeoJSON(geom) AS gj FROM routes WHERE geom IS NOT NULL ORDER BY id`;
+const rows = await client<{ id: number; name: string; gj: string; lenM: number; pts: number }[]>`
+  SELECT id, name, ST_AsGeoJSON(geom) AS gj,
+         ST_Length(geom::geography) AS "lenM",
+         COALESCE(jsonb_array_length(elevation_profile), 0) AS pts
+  FROM routes WHERE geom IS NOT NULL ORDER BY id`;
 
-console.log(`Refreshing elevation for ${rows.length} route(s) @ ${intervalM} m\n`);
+console.log(
+  `Refreshing elevation for ${rows.length} route(s) @ ${intervalM} m${force ? ' (--force)' : ''}\n`,
+);
 for (const r of rows) {
+  const targetPts = r.lenM / intervalM;
+  if (!force && r.pts >= targetPts * 0.8) {
+    console.log(`  ${r.name} (route ${r.id}): ${r.pts} points already ≥ target — skip`);
+    continue;
+  }
   const geom = JSON.parse(r.gj) as { type: string; coordinates: LonLat[] | LonLat[][] };
   const coords: LonLat[] =
     geom.type === 'LineString'

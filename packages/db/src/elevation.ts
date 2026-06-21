@@ -4,11 +4,12 @@ import type { ElevationPoint } from './schema';
 // looking each point up against a DEM (Open-Meteo, free, no key). Runs at ingest
 // (§7) so the device renders a real profile, never a synthetic one.
 //
-// Sampling interval (§7). 250 m gives smooth per-stage profiles (a 12 km stage → ~48 points
-// instead of ~6 at 2 km, which read as a flat line). Open-Meteo rate-limits bursts, so a whole
-// trail takes a few minutes — acceptable at ingest. SCALING NOTE: past a handful of trails, swap
-// the Open-Meteo fetch for a LOCAL DEM read (ASTER/SRTM) — no per-request rate limit.
-export const ELEVATION_INTERVAL_M = 250;
+// Sampling interval (§7). 500 m gives smooth per-stage profiles (a 12 km stage → ~24 points
+// instead of ~6 at 2 km, which read as a flat line) while staying within Open-Meteo's free
+// caps: at 250 m two Pyrenean trails are ~5.6k coords/run — over the 5,000/hour limit. SCALING
+// NOTE: for finer (≈100–250 m) or many trails, swap the Open-Meteo fetch for a LOCAL DEM read
+// (ASTER/SRTM) — no per-request rate limit.
+export const ELEVATION_INTERVAL_M = 500;
 
 type LonLat = [number, number];
 
@@ -60,24 +61,25 @@ async function fetchBatch(batch: Sample[]): Promise<{ elevation: number[] }> {
   const lat = batch.map((s) => s.coord[1].toFixed(5)).join(',');
   const lng = batch.map((s) => s.coord[0].toFixed(5)).join(',');
   const url = `https://api.open-meteo.com/v1/elevation?latitude=${lat}&longitude=${lng}`;
-  for (let attempt = 0; attempt < 6; attempt++) {
+  for (let attempt = 0; attempt < 8; attempt++) {
     const res = await fetch(url);
     if (res.ok) return (await res.json()) as { elevation: number[] };
     if (res.status !== 429 && res.status < 500)
       throw new Error(`Open-Meteo elevation ${res.status}`);
-    await sleep(6000 * (attempt + 1)); // 6s, 12s, 18s … the free tier limits bursts hard
+    await sleep(15000 * (attempt + 1)); // 15s, 30s, 45s … the free tier limits bursts hard
   }
   throw new Error('Open-Meteo elevation: rate-limited after retries');
 }
 
-// Look the samples up against the Open-Meteo elevation DEM (batched ≤100/request,
-// throttled so we don't trip the rate limit).
+// Look the samples up against the Open-Meteo elevation DEM, batched ≤100/request. Open-Meteo's
+// free tier caps the *coordinate* rate at ~600/min, so 100 coords every 12 s (≈500/min) stays
+// safely under it — slow, but it's a once-at-ingest job.
 async function fetchElevations(samples: Sample[]): Promise<ElevationPoint[]> {
   const profile: ElevationPoint[] = [];
   const BATCH = 100;
   for (let i = 0; i < samples.length; i += BATCH) {
     const batch = samples.slice(i, i + BATCH);
-    if (i > 0) await sleep(8000); // space out requests under the rate limit
+    if (i > 0) await sleep(12000); // ≈500 coords/min — under the 600/min free-tier cap
     const data = await fetchBatch(batch);
     batch.forEach((s, j) =>
       profile.push({ d: Math.round(s.chainageM), e: Math.round(data.elevation[j] ?? 0) }),
