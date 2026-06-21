@@ -977,6 +977,26 @@
       "author": "Alan Mattingly",
       "attribution": "Alan Mattingly · CC0 · Wikimedia Commons",
       "sourceUrl": "https://commons.wikimedia.org/wiki/File:Refuge_Noh%C3%A8des-Perdrix.jpg"
+    },
+    "media/env/gr11-food-1": {
+      "id": "media/env/gr11-food-1",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Pintxos_basques_%288287051912%29.jpg/1920px-Pintxos_basques_%288287051912%29.jpg",
+      "width": 1600,
+      "height": 1067,
+      "license": "CC BY 2.0",
+      "author": "Nicolas Vollmer from Munich [Allemagne]",
+      "attribution": "Nicolas Vollmer from Munich [Allemagne] · CC BY 2.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pintxos_basques_(8287051912).jpg"
+    },
+    "media/env/gr11-food-2": {
+      "id": "media/env/gr11-food-2",
+      "uri": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Bar%C3%A8ges_65_Vers_Gl%C3%A8re_fromages_2012.jpg/1920px-Bar%C3%A8ges_65_Vers_Gl%C3%A8re_fromages_2012.jpg",
+      "width": 1600,
+      "height": 1049,
+      "license": "CC BY-SA 3.0",
+      "author": "JLPC",
+      "attribution": "JLPC · CC BY-SA 3.0 · Wikimedia Commons",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Bar%C3%A8ges_65_Vers_Gl%C3%A8re_fromages_2012.jpg"
     }
   },
   "objectiveGuide": [

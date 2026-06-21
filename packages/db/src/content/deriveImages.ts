@@ -74,6 +74,10 @@ const ENV_REEL: { topic: string; terms: string[] }[] = [
     topic: 'history',
     terms: ['Pyrenees mountain pass', 'Pyrenees mule track trail', 'Pyrenees mountain refuge hut'],
   },
+  {
+    topic: 'food',
+    terms: ['Basque pintxos', 'Pyrenees mountain cheese', 'charcuterie cured meat platter'],
+  },
 ];
 
 export function deriveEnvImageQueries(trailId: string): ImageQuery[] {

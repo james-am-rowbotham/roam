@@ -437,14 +437,19 @@ export function buildTrailPack(
       });
     } else if (t.key === 'safety') {
       extra.push({ kind: 'hazards', callouts: TRAIL_CONDITIONS });
-    } else if (t.key === 'food') {
-      extra.push({ kind: 'chips', group: 'food', items: TRAIL_FOOD });
-    } else if (t.key === 'flora' || t.key === 'culture' || t.key === 'history') {
+    } else if (
+      t.key === 'flora' ||
+      t.key === 'culture' ||
+      t.key === 'history' ||
+      t.key === 'food'
+    ) {
       // Environment picture reel (Figma 04c) — only the env images that actually sourced.
       const mediaIds = [1, 2, 3]
         .map((i) => `media/env/${config.id}-${t.key}-${i}`)
         .filter((id) => content.media?.[id]);
       if (mediaIds.length) extra.push({ kind: 'gallery', mediaIds });
+      // Food keeps its dish chips below the reel.
+      if (t.key === 'food') extra.push({ kind: 'chips', group: 'food', items: TRAIL_FOOD });
     }
     const heading = PLAIN_HEADING[t.key] ?? t.heading;
     return { ...t, heading, blocks: extra.length ? [...(t.blocks ?? []), ...extra] : t.blocks };
