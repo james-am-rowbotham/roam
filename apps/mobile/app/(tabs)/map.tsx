@@ -333,6 +333,20 @@ export default function MapScreen() {
 
   // Tapping a trail pops up a preview card + highlights it; ✕ or a map tap dismisses it.
   const [selectedTrail, setSelectedTrail] = useState<string | null>(null);
+  // A trail-line tap also fires the map's background onPress; this flag swallows that one
+  // press so selecting a trail isn't instantly cleared by the click-away.
+  const justSelected = useRef(false);
+  const selectTrail = (slug: string) => {
+    justSelected.current = true;
+    setSelectedTrail(slug);
+    setTimeout(() => {
+      justSelected.current = false;
+    }, 300);
+  };
+  const dismissOnMapPress = () => {
+    if (justSelected.current) return;
+    setSelectedTrail(null);
+  };
   const selectedTrailData = selectedTrail
     ? shownTrails.find((t) => trailSlug(t) === selectedTrail)
     : undefined;
@@ -347,7 +361,7 @@ export default function MapScreen() {
         ref={mapRef}
         center={viewport.center}
         zoom={viewport.zoom}
-        onPress={() => setSelectedTrail(null)}
+        onPress={dismissOnMapPress}
       >
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
@@ -361,7 +375,7 @@ export default function MapScreen() {
             focusScoped={focusScoped}
             legacyDim={isSectionActive}
             selectedObjectiveId={showCarousel ? (selectedItem?.objectiveId ?? null) : null}
-            onSelect={setSelectedTrail}
+            onSelect={selectTrail}
           />
         ))}
         {activeSectionGeom && (
