@@ -1,15 +1,49 @@
-import type { MapTrailCardProps } from '@/components/MapTrailCard';
 import type { Geometry } from 'geojson';
 
-// One trail drawn on the map: its route geometry, the painted way colour for the
-// line (§17.8), and — for the explore map — a `card` with the trail basics shown
-// as a popup over the line. Omit `card` (e.g. on a trail's own page) to draw just
-// the line.
+// A point of interest along a trail (water, refuge, hazard…) shown on the map
+// when its trail is selected (§17). Linear-referenced in the DB; here we just
+// carry the marker kind + coordinates + name.
+export type PoiKind = 'water' | 'refuge' | 'food' | 'viewpoint' | 'historic' | 'hazard';
+export interface PoiPoint {
+  id: string;
+  kind: PoiKind;
+  name: string;
+  lng: number;
+  lat: number;
+}
+
+// One trail drawn on the map: a stable `id` (so the map can reconcile which
+// routes changed across filters instead of re-drawing everything), its route
+// geometry, the painted way colour for the line (§17.8), and its POIs (shown
+// when the trail is selected). Selection/highlighting is driven by the map's
+// `selectedId` prop.
 export interface MapRoute {
+  id: string;
   geometry: Geometry | null;
   color?: string;
-  card?: MapTrailCardProps;
+  pois?: PoiPoint[];
 }
+
+// Marker palette (§16) — the warm POI colours; markers never use the accent.
+export const POI_COLORS: Record<PoiKind, string> = {
+  water: '#4D7A8C',
+  refuge: '#A0683C',
+  food: '#6B8456',
+  viewpoint: '#58836B',
+  historic: '#7C6E5C',
+  hazard: '#A32D2D',
+};
+
+// Collision priority — water always wins a label fight (§17.3): a missed water
+// source is the only dangerous POI mistake.
+export const POI_SORT: Record<PoiKind, number> = {
+  water: 1,
+  refuge: 2,
+  hazard: 3,
+  food: 4,
+  viewpoint: 5,
+  historic: 6,
+};
 
 // Map config kept out of the components so swapping the base style or tile
 // source is a config change, not a refactor (the §3 "strict MapView wrapper"

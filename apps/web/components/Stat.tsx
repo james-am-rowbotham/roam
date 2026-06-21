@@ -7,14 +7,19 @@ export interface StatItem {
 }
 
 const SIZES = {
-  sm: { value: 'text-[16px]', label: 'text-[9.5px]' },
+  sm: { value: 'text-[13px]', label: 'text-[8.5px]' },
   md: { value: 'text-[30px]', label: 'text-[12px]' },
 } as const;
 
-export function Stat({ value, label, size = 'md' }: StatItem & { size?: keyof typeof SIZES }) {
+export function Stat({
+  value,
+  label,
+  size = 'md',
+  align = 'left',
+}: StatItem & { size?: keyof typeof SIZES; align?: 'left' | 'center' }) {
   const s = SIZES[size];
   return (
-    <div className="flex flex-col gap-1">
+    <div className={`flex flex-col gap-1 ${align === 'center' ? 'items-center text-center' : ''}`}>
       <span className={`font-mono ${s.value} leading-none text-primary`}>{value}</span>
       <span className={`label-mono ${s.label} text-secondary`}>{label}</span>
     </div>

@@ -15,9 +15,10 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main>
+      {/* minus header and footer */}
+      <main className="flex flex-col h-[calc(100vh-80px-80px)]">
         <section className="w-full px-6 py-20 md:px-[120px] h-full">
-          <div className="mx-auto flex max-w-[720px] flex-col gap-5">
+          <div className="mx-auto flex max-w-[720px] flex-col gap-5 h-full">
             <p className="label-mono text-[12px] text-accent">Contact</p>
             <h1 className="font-display text-[44px] font-semibold leading-[1.05] tracking-[-0.5px] text-primary">
               Get in touch

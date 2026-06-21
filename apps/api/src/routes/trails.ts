@@ -6,6 +6,7 @@ import {
   db,
   eq,
   getTableColumns,
+  hazards,
   regions,
   routes,
   sections,
@@ -16,7 +17,9 @@ import {
 import {
   AccommodationSchema,
   ErrorSchema,
+  HazardSchema,
   IdParamSchema,
+  RegionSummarySchema,
   SectionSchema,
   TrailFeatureSchema,
   TrailListItemSchema,
@@ -275,5 +278,95 @@ trailsRouter.openapi(
       .where(eq(accommodations.routeId, trail.routeId))
       .orderBy(asc(accommodations.chainageM));
     return c.json(rows as unknown as z.infer<typeof AccommodationSchema>[], 200);
+  },
+);
+
+// GET /trails/:id/regions — the coarse Region layer (§5) with each region's stage
+// span + distance, for the trail's region list and navigation.
+trailsRouter.openapi(
+  createRoute({
+    method: 'get',
+    path: '/{id}/regions',
+    tags: ['Trails'],
+    summary: 'Get coarse regions for a trail',
+    request: { params: IdParamSchema },
+    responses: {
+      200: {
+        content: { 'application/json': { schema: z.array(RegionSummarySchema) } },
+        description: 'Regions',
+      },
+      404: { content: { 'application/json': { schema: ErrorSchema } }, description: 'Not found' },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid('param');
+    const [trail] = await db
+      .select({ routeId: trails.routeId })
+      .from(trails)
+      .where(eq(trails.id, id));
+    if (!trail) return c.json({ error: 'not found' }, 404);
+
+    const rows = (await db.execute(sql`
+      SELECT reg.id, reg.route_id AS "routeId", reg.name, reg.description, reg.image_url AS "imageUrl",
+             reg.order_index AS "orderIndex", reg.created_at AS "createdAt", reg.updated_at AS "updatedAt",
+             COALESCE(MIN(s.order_index), 0)::int AS "stageStart",
+             COALESCE(MAX(s.order_index), 0)::int AS "stageEnd",
+             COUNT(s.id)::int AS "stageCount",
+             COALESCE(MAX(s.end_chainage_m) - MIN(s.start_chainage_m), 0) AS "distanceM"
+      FROM regions reg
+      LEFT JOIN sections s ON s.region_id = reg.id
+      WHERE reg.route_id = ${trail.routeId}
+      GROUP BY reg.id
+      ORDER BY reg.order_index
+    `)) as unknown as z.infer<typeof RegionSummarySchema>[];
+    return c.json(rows, 200);
+  },
+);
+
+// GET /trails/:id/hazards — hazards along the trail, ordered by chainage (§13).
+trailsRouter.openapi(
+  createRoute({
+    method: 'get',
+    path: '/{id}/hazards',
+    tags: ['Trails'],
+    summary: 'Get hazards for a trail ordered by chainage',
+    request: { params: IdParamSchema },
+    responses: {
+      200: {
+        content: { 'application/json': { schema: z.array(HazardSchema) } },
+        description: 'Hazards',
+      },
+      404: { content: { 'application/json': { schema: ErrorSchema } }, description: 'Not found' },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid('param');
+    const [trail] = await db
+      .select({ routeId: trails.routeId })
+      .from(trails)
+      .where(eq(trails.id, id));
+    if (!trail) return c.json({ error: 'not found' }, 404);
+    const rows = await db
+      .select({
+        id: hazards.id,
+        routeId: hazards.routeId,
+        name: hazards.name,
+        chainageM: hazards.chainageM,
+        type: hazards.type,
+        description: hazards.description,
+        source: hazards.source,
+        confidence: hazards.confidence,
+        lastConfirmedAt: hazards.lastConfirmedAt,
+        reportCount: hazards.reportCount,
+        manualOverride: hazards.manualOverride,
+        createdAt: hazards.createdAt,
+        updatedAt: hazards.updatedAt,
+        lat: sql<number | null>`ST_Y(${hazards.geom})`,
+        lng: sql<number | null>`ST_X(${hazards.geom})`,
+      })
+      .from(hazards)
+      .where(eq(hazards.routeId, trail.routeId))
+      .orderBy(asc(hazards.chainageM));
+    return c.json(rows as unknown as z.infer<typeof HazardSchema>[], 200);
   },
 );

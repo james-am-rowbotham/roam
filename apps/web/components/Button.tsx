@@ -25,14 +25,19 @@ export function Button({
   children,
   variant = 'solid',
   size = 'md',
+  fullWidth = false,
 }: {
   href: string;
   children: React.ReactNode;
   variant?: Variant;
   size?: Size;
+  fullWidth?: boolean;
 }) {
   return (
-    <Link href={href} className={`${base} ${sizes[size]} ${variants[variant]}`}>
+    <Link
+      href={href}
+      className={`${base} ${sizes[size]} ${variants[variant]} ${fullWidth ? 'w-full' : ''}`}
+    >
       {children}
     </Link>
   );

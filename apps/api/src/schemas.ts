@@ -95,6 +95,53 @@ export const RegionSchema = z.object({
   updatedAt: z.string(),
 });
 
+// A curated read-layer content block (§21) — the unit the app + web render.
+export const ContentBlockSchema = z.object({
+  id: z.number(),
+  scopeType: z.enum(['route', 'region', 'stage', 'poi']),
+  scopeId: z.number(),
+  lens: z.string(),
+  blockType: z.enum(['narrative', 'fact', 'callout', 'media', 'what_you_see', 'faq']),
+  title: z.string().nullable(),
+  body: z.string(),
+  orderIndex: z.number(),
+  seasonFrom: z.number().nullable(),
+  seasonTo: z.number().nullable(),
+  source: z.string(),
+  confidence: z.number(),
+});
+
+// A coarse Region (§5) with its stage span + distance, for the trail's region list.
+export const RegionSummarySchema = RegionSchema.extend({
+  stageStart: z.number(),
+  stageEnd: z.number(),
+  stageCount: z.number(),
+  distanceM: z.number(),
+});
+
+// Region detail adds the trail context, a geometry slice + elevation slice for
+// the region's chainage span, and its content blocks.
+export const RegionDetailSchema = RegionSummarySchema.extend({
+  trailId: z.number(),
+  geometry: z.record(z.string(), z.unknown()).nullable(),
+  elevationProfile: z.array(ElevationPointSchema).nullable(),
+  contentBlocks: z.array(ContentBlockSchema),
+});
+
+export const HazardSchema = z.object({
+  id: z.number(),
+  routeId: z.number(),
+  name: z.string().nullable(),
+  chainageM: z.number(),
+  lat: z.number().nullable(),
+  lng: z.number().nullable(),
+  type: z.enum(['snow', 'river', 'exposure', 'rockfall', 'seasonal_closure', 'other']),
+  description: z.string().nullable(),
+  ...TrustSchema.shape,
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
 export const WaterSourceSchema = z.object({
   id: z.number(),
   routeId: z.number(),

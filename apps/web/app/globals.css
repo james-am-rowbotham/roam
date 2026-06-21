@@ -17,6 +17,11 @@
   --spacing-shell: 1200px;
 }
 
+:root {
+  /* Fixed top bar height — the map fills the rest of the viewport below it. */
+  --topbar-h: 72px;
+}
+
 html {
   scroll-behavior: smooth;
 }

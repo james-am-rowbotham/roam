@@ -6,7 +6,7 @@ import { Logo } from './Logo';
 export function Header() {
   return (
     <header className="w-full border-b border-line/60 bg-app/80 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-[22px] md:px-20">
+      <div className="mx-auto flex h-[var(--topbar-h)] max-w-[1440px] items-center justify-between px-6 md:px-20">
         <Link href="/" aria-label="Roam home">
           <Logo />
         </Link>

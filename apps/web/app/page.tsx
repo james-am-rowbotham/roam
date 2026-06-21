@@ -1,84 +1,96 @@
-import { CardSection } from '@/components/CardSection';
-import { CtaBand } from '@/components/CtaBand';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
-import { Hero } from '@/components/Hero';
-import { getTrailFeature, getTrails } from '@/lib/api';
-import { facetCards, trailCards } from '@/lib/browse';
-import { dayRange, km } from '@/lib/format';
-import type { MapRoute } from '@/lib/map';
+import { type ExploreItem, MapExplore } from '@/components/MapExplore';
+import { getAccommodations, getTrailFeature, getTrails, getWater } from '@/lib/api';
+import { dayRange, formatDistance, km, meters } from '@/lib/format';
+import type { PoiPoint } from '@/lib/map';
 import { trailSlug } from '@/lib/slug';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://roamhike.com';
 
 export default async function HomePage() {
-  // Live trail catalogue from the API (falls back to [] → no sections render).
+  // Live trail catalogue + geometry + POIs (water, refuges) from the API.
   const trails = await getTrails();
+  const [features, waters, stays] = await Promise.all([
+    Promise.all(trails.map((t) => getTrailFeature(t.id))),
+    Promise.all(trails.map((t) => getWater(t.id))),
+    Promise.all(trails.map((t) => getAccommodations(t.id))),
+  ]);
 
-  // Trail cards + the country / mountain-range browse sections, all derived from
-  // what's actually onboarded — every card links to a real, populated page.
-  const { cards: popular, symbols } = trailCards(trails);
-  const countryCards = facetCards(trails, 'country');
-  const rangeCards = facetCards(trails, 'region');
-
-  // Every onboarded trail's geometry for the live hero map — each rendered in its
-  // painted way colour with a trail-card popup (null geometry is dropped → map
-  // shows a Pyrenees view).
-  const features = await Promise.all(trails.map((t) => getTrailFeature(t.id)));
-  const mapRoutes: MapRoute[] = trails
-    .map((t, i) => {
-      const hi = t.elevation.length ? Math.max(...t.elevation) : null;
-      return {
+  // Build the explorable items: one entity (for the shared filter engine), its
+  // map route line, its result-grid card, and the stats + elevation shown in the
+  // selected-trail carousel. The map + carousel are driven client-side.
+  const items: ExploreItem[] = trails.map((t, i) => {
+    const hi = t.elevation.length ? Math.max(...t.elevation) : null;
+    const slug = trailSlug(t.ref, t.id);
+    const title = t.ref ?? t.name;
+    const pois: PoiPoint[] = [
+      ...(waters[i] ?? [])
+        .filter((w) => w.lat != null && w.lng != null)
+        .map((w) => ({
+          id: `w${w.id}`,
+          kind: 'water' as const,
+          name: w.name ?? 'Water',
+          lng: w.lng as number,
+          lat: w.lat as number,
+        })),
+      ...(stays[i] ?? [])
+        .filter((a) => a.lat != null && a.lng != null)
+        .map((a) => ({
+          id: `a${a.id}`,
+          kind: 'refuge' as const,
+          name: a.name,
+          lng: a.lng as number,
+          lat: a.lat as number,
+        })),
+    ];
+    return {
+      id: String(t.id),
+      entity: {
+        id: String(t.id),
+        kind: 'trail',
+        name: t.ref ?? t.name,
+        ref: t.ref,
+        country: t.country,
+        region: t.region,
+        distanceM: t.distanceM,
+        keywords: [t.name, t.description].filter((s): s is string => Boolean(s)),
+      },
+      route: {
+        id: String(t.id),
         geometry: features[i]?.geometry ?? null,
         color: t.waymark.symbol?.wayColor ?? undefined,
-        card: {
-          title: t.ref ?? t.name,
-          subtitle: [t.country, t.region].filter(Boolean).join(' · ') || undefined,
-          image: t.imageUrl,
-          href: `/trails/${trailSlug(t.ref, t.id)}`,
-          stats: [
-            { value: km(t.distanceM), label: 'km' },
-            { value: dayRange(t.distanceM), label: 'days' },
-            ...(hi != null
-              ? [{ value: Math.round(hi).toLocaleString('en-US'), label: 'm high' }]
-              : []),
-          ],
-        },
-      };
-    })
-    .filter((r) => r.geometry);
+        pois,
+      },
+      card: {
+        title,
+        subtitle: [formatDistance(t.distanceM), t.country].filter(Boolean).join(' · ') || t.name,
+        image: t.imageUrl ?? undefined,
+        href: `/trails/${slug}`,
+      },
+      symbol: t.waymark.symbol,
+      stats: [
+        { value: km(t.distanceM), label: 'km' },
+        { value: dayRange(t.distanceM), label: 'days' },
+        ...(hi != null ? [{ value: Math.round(hi).toLocaleString('en-US'), label: 'm high' }] : []),
+      ],
+      elevation: t.elevation,
+      description: t.description,
+      facts: [
+        ...(t.country ? [{ label: 'Country', value: t.country }] : []),
+        ...(t.region ? [{ label: 'Range', value: t.region }] : []),
+        ...(t.ascentM != null ? [{ label: 'Ascent', value: meters(t.ascentM) }] : []),
+        ...(t.descentM != null ? [{ label: 'Descent', value: meters(t.descentM) }] : []),
+      ],
+    };
+  });
 
   return (
     <>
-      <JsonLd trails={popular} />
+      <JsonLd trails={items.map((i) => i.card)} />
       <Header />
       <main>
-        <Hero routes={mapRoutes} />
-        <CardSection
-          id="popular-trails"
-          eyebrow="Popular trails"
-          title="Start with a classic"
-          cards={popular}
-          imageHeight={210}
-          symbols={symbols}
-        />
-        {countryCards.length > 0 && (
-          <CardSection
-            id="countries"
-            eyebrow="Browse by country"
-            title="Pick a country"
-            cards={countryCards}
-          />
-        )}
-        {rangeCards.length > 0 && (
-          <CardSection
-            id="ranges"
-            eyebrow="Browse by region"
-            title="Explore by mountain range"
-            cards={rangeCards}
-          />
-        )}
-        <CtaBand />
+        <MapExplore items={items} />
       </main>
       <Footer />
     </>

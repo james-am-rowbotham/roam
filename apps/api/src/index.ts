@@ -2,8 +2,10 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { cors } from 'hono/cors';
 import { logger } from './logger';
 import { requestLogger } from './middleware/logging';
+import { contentRouter } from './routes/content';
 import { journeysRouter } from './routes/journeys';
 import { poisRouter } from './routes/pois';
+import { regionsRouter } from './routes/regions';
 import { sectionsRouter } from './routes/sections';
 import { trailsRouter } from './routes/trails';
 
@@ -17,6 +19,8 @@ app.use('*', cors());
 app.get('/health', (c) => c.json({ status: 'ok' }));
 app.route('/trails', trailsRouter);
 app.route('/sections', sectionsRouter);
+app.route('/regions', regionsRouter);
+app.route('/content', contentRouter);
 app.route('/pois', poisRouter);
 app.route('/journeys', journeysRouter);
 

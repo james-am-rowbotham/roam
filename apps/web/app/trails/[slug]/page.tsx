@@ -1,15 +1,23 @@
 import { CtaBand } from '@/components/CtaBand';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { RoutePreview } from '@/components/RoutePreview';
+import { ContentBlocks } from '@/components/content/ContentBlocks';
 import { AtAGlance } from '@/components/trail/AtAGlance';
 import { RegionList } from '@/components/trail/RegionList';
-import { RouteSection } from '@/components/trail/RouteSection';
 import { TrailHero } from '@/components/trail/TrailHero';
 import { TrailIntro } from '@/components/trail/TrailIntro';
-import { findTrailByRef, getSections, getTrailFeature, getTrails } from '@/lib/api';
+import {
+  findTrailByRef,
+  getContent,
+  getRegions,
+  getSections,
+  getTrailFeature,
+  getTrails,
+} from '@/lib/api';
 import { dayRange, km, meters } from '@/lib/format';
-import { groupSectionsIntoRegions } from '@/lib/regions';
 import { findTrailBySlug, trailSlug } from '@/lib/slug';
+import type { Geometry } from 'geojson';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -53,13 +61,18 @@ export default async function TrailPage({ params }: { params: Promise<{ slug: st
   const trail = findTrailBySlug(trails, slug) ?? findTrailByRef(trails, slug);
   if (!trail) notFound();
 
-  const [route, sections] = await Promise.all([getTrailFeature(trail.id), getSections(trail.id)]);
-  const regions = groupSectionsIntoRegions(sections);
+  const [route, sections, regions, routeContent] = await Promise.all([
+    getTrailFeature(trail.id),
+    getSections(trail.id),
+    getRegions(trail.id),
+    getContent('route', trail.routeId),
+  ]);
   const wayColor = trail.waymark.symbol?.wayColor ?? undefined;
   const hi = trail.elevation.length ? Math.max(...trail.elevation) : null;
 
-  const startLabel = regions[0]?.from ?? 'Start';
-  const endLabel = regions[regions.length - 1]?.to ?? 'Finish';
+  const ordered = [...sections].sort((a, b) => a.orderIndex - b.orderIndex);
+  const startLabel = ordered[0]?.name.split('→')[0]?.trim() ?? 'Start';
+  const endLabel = ordered.at(-1)?.name.split('→').at(-1)?.trim() ?? 'Finish';
   const endpoints = `${startLabel} → ${endLabel}`;
 
   const glanceStats = [
@@ -96,14 +109,25 @@ export default async function TrailPage({ params }: { params: Promise<{ slug: st
         <TrailHero trail={trail} stageCount={sections.length} endpoints={endpoints} />
         <AtAGlance stats={glanceStats} />
         <TrailIntro trail={trail} paragraphs={paragraphs} facts={facts} />
-        <RouteSection
-          route={route}
-          wayColor={wayColor}
+        <RoutePreview
+          title="The route"
+          geometry={(route?.geometry ?? null) as Geometry | null}
+          color={wayColor}
           elevation={trail.elevation}
           startLabel={startLabel}
           endLabel={endLabel}
+          overlay={`${trail.ref ?? trail.name} · ${endpoints}`}
         />
-        {regions.length > 0 && <RegionList regions={regions} trailName={trail.ref ?? trail.name} />}
+        {routeContent.length > 0 && (
+          <section className="w-full px-6 py-4 md:px-20">
+            <div className="mx-auto max-w-[820px]">
+              <ContentBlocks blocks={routeContent} />
+            </div>
+          </section>
+        )}
+        {regions.length > 0 && (
+          <RegionList regions={regions} slug={slug} trailName={trail.ref ?? trail.name} />
+        )}
         <CtaBand />
       </main>
       <Footer />
