@@ -10,7 +10,7 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { resolveColorToken } from '../../lib/colorToken';
 import { geometryBbox } from '../../lib/geo';
 import { colors, radius, spacing, type } from '../../theme';
-import { MapView, TrailLayer, Waymark } from '../map';
+import { MapView, SectionEndpoints, TrailLayer, Waymark } from '../map';
 import { Chip } from '../ui/Chip';
 import { ElevationChart } from './ElevationChart';
 
@@ -376,6 +376,8 @@ function MapBlock({
           geojson={block.geojson}
           color={block.color ?? colors.map.route}
         />
+        {/* Start/finish termini on every preview (trail/section/stage). */}
+        <SectionEndpoints geom={block.geojson as unknown as Record<string, unknown>} />
       </MapView>
     </View>
   );
