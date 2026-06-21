@@ -28,6 +28,8 @@ interface Props {
   onZoomChanged?: (zoom: number) => void;
   /** Tap on the map background (not a pressable feature) — e.g. to dismiss a selection. */
   onPress?: () => void;
+  /** Fires once the native map has loaded — safe point to drive imperative camera moves. */
+  onReady?: () => void;
 }
 
 // Imperative handle for one-shot camera moves (e.g. "center on me", "frame this
@@ -48,6 +50,7 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
     interactive = true,
     onZoomChanged,
     onPress,
+    onReady,
   },
   ref,
 ) {
@@ -81,6 +84,7 @@ export const MapView = forwardRef<MapViewHandle, Props>(function MapView(
       onRegionIsChanging={emitZoom}
       onRegionDidChange={emitZoom}
       onPress={onPress ? () => onPress() : undefined}
+      onDidFinishLoadingMap={onReady}
     >
       {bounds ? (
         <Camera ref={cameraRef} bounds={bounds} padding={BOUNDS_PADDING} />

@@ -327,6 +327,9 @@ export default function MapScreen() {
 
   const { coords } = useUserLocation();
   const mapRef = useRef<MapViewHandle>(null);
+  // Imperative camera moves only land once the native map has loaded; gate framing on this so
+  // arriving with a focus (from a section/stage screen) reliably zooms in instead of no-op'ing.
+  const [mapReady, setMapReady] = useState(false);
 
   // Depend on the serialized viewport so the map re-flies only when the pushed
   // value changes, not on every identity change.
@@ -343,8 +346,8 @@ export default function MapScreen() {
   // the focus does nothing, so the camera stays put and just renders the trails that return.
   // biome-ignore lint/correctness/useExhaustiveDependencies: value-based dep on focusBounds is intentional
   useEffect(() => {
-    if (focusBounds) mapRef.current?.fitBounds(focusBounds);
-  }, [JSON.stringify(focusBounds)]);
+    if (mapReady && focusBounds) mapRef.current?.fitBounds(focusBounds);
+  }, [JSON.stringify(focusBounds), mapReady]);
 
   // Every trail on the map — each draws its own route line + blaze (TrailRoute).
   const { data: trailsResponse } = useTrails();
@@ -435,6 +438,7 @@ export default function MapScreen() {
         center={viewport.center}
         zoom={viewport.zoom}
         onPress={dismissOnMapPress}
+        onReady={() => setMapReady(true)}
       >
         {/* Register all map sprites once for the native SymbolLayers. */}
         <MapImages />
