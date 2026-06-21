@@ -153,7 +153,7 @@ async function seedRoute(): Promise<number> {
   });
 
   try {
-    const profile = await buildElevationProfile(ordered, 1000);
+    const profile = await buildElevationProfile(ordered);
     await db.update(routes).set({ elevationProfile: profile }).where(eq(routes.id, route.id));
     console.log(`  Elevation: ${profile.length} points sampled`);
   } catch (err) {

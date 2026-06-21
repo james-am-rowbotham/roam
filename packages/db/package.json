@@ -11,6 +11,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "bun src/migrate.ts",
     "db:seed": "bun src/seed.ts",
+    "db:elevation": "bun src/refresh-elevation.ts",
     "db:studio": "drizzle-kit studio",
     "pack:build": "bun src/pack/build-packs.ts",
     "pack:content": "bun src/content/run.ts",
