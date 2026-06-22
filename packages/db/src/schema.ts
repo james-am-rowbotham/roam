@@ -174,6 +174,27 @@ export const accommodations = pgTable('accommodations', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
+// Unified POIs (config-driven, §8) — one table for every point type so adding a kind is a
+// POI_KINDS registry variable, never a new table + migration. `category` is TEXT (not an enum)
+// for the same reason; `meta` holds the category-specific fields (capacity, seasonal, type,
+// bookingUrl, …) as open jsonb so a new field needs no migration. Supersedes the typed
+// water_sources/accommodations tables (kept until readKnowledge fully reads pois).
+export const pois = pgTable('pois', {
+  id: serial('id').primaryKey(),
+  routeId: integer('route_id')
+    .notNull()
+    .references(() => routes.id),
+  category: text('category').notNull(),
+  name: text('name'),
+  chainageM: doublePrecision('chainage_m').notNull(),
+  geom: geometry('geom', { type: 'point', srid: 4326 }),
+  meta: jsonb('meta').$type<Record<string, unknown>>().notNull().default({}),
+  imageUrl: text('image_url'),
+  ...trustFields,
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 export const hazards = pgTable('hazards', {
   id: serial('id').primaryKey(),
   routeId: integer('route_id')

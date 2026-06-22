@@ -7,6 +7,7 @@
 export * from './config';
 export * from './trails';
 export * from './overpass';
+export * from './pois';
 export * from './geometry';
 export * from './normalise';
 export * from './etapas';

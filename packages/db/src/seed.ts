@@ -3,6 +3,8 @@ import {
   type LonLat,
   type OverpassNode,
   type OverpassWay,
+  POI_KINDS,
+  STAY_CATEGORIES,
   assignEtapaChainage,
   orderIntoLine,
   overpass,
@@ -13,7 +15,7 @@ import { eq, sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { db } from './connection';
 import { buildElevationProfile } from './elevation';
-import { accommodations, regions, routes, sections, trails, waterSources } from './schema';
+import { pois, regions, routes, sections, trails } from './schema';
 import { type SeedConfig, getSeedConfig } from './seedConfigs';
 
 // Structural ingest (§8) — OSM → Postgres, config-driven by trail. Pick the trail from the
@@ -243,95 +245,52 @@ async function seedSections(routeId: number): Promise<void> {
 }
 
 // ── Step 4: Accommodations from Overpass ────────────────────────────────────
-async function seedAccommodations(routeId: number): Promise<void> {
-  console.log('Fetching accommodations from Overpass…');
-  const data = await overpass(`
-    [out:json][timeout:180][bbox:${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east}];
-    (
-      node["tourism"="alpine_hut"];
-      node["tourism"="wilderness_hut"];
-      node["tourism"="camp_site"]["name"];
-    );
-    out body;
-  `);
-  const nodes = data.elements.filter((e): e is OverpassNode => e.type === 'node' && !!e.tags?.name);
-  console.log(`  Got ${nodes.length} nodes, filtering to corridor…`);
-
+// ── Steps 4–5: POIs from Overpass, config-driven by the registry (§8) ────────
+// One loop over POI_KINDS writes every point type into the unified `pois` table, so adding a
+// POI type is a registry variable — not a new seeder. Supersedes seedAccommodations/Water.
+async function seedPois(routeId: number): Promise<void> {
   const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
-  let inserted = 0;
-  for (const node of nodes) {
-    const [proximity] = await client`
-      SELECT ST_DWithin(
-        ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)::geography, geom::geography, 2000
-      ) AS nearby FROM routes WHERE id = ${routeId}
-    `;
-    if (!proximity?.nearby) continue;
-    const tags = node.tags ?? {};
-    const type =
-      tags.tourism === 'camp_site'
-        ? 'campsite'
-        : tags.tourism === 'wilderness_hut'
-          ? 'hut'
-          : 'refuge';
-    const chainageM = await computeChainage(routeId, node.lon, node.lat);
-    await db.insert(accommodations).values({
-      routeId,
-      name: tags.name ?? 'Unnamed',
-      chainageM,
-      geom: sql`ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)`,
-      type,
-      capacity: tags.capacity ? Number.parseInt(tags.capacity) : null,
-      seasonal: !!(tags.seasonal === 'yes' || tags.opening_hours?.includes('summer')),
-      bookingUrl: tags.website ?? tags['contact:website'] ?? null,
-      imageUrl: pick(REFUGE_IMAGES, inserted),
-      source: 'osm',
-      confidence: 0.7,
-    });
-    inserted++;
+  const imageFor = (category: string, i: number) =>
+    STAY_CATEGORIES.includes(category) ? pick(REFUGE_IMAGES, i) : pick(WATER_IMAGES, i);
+  for (const kind of POI_KINDS) {
+    console.log(`Fetching ${kind.key} from Overpass…`);
+    const selectors = kind.overpass.map((s) => `node[${s}];`).join('\n      ');
+    const data = await overpass(`
+      [out:json][timeout:180][bbox:${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east}];
+      (
+      ${selectors}
+      );
+      out body;
+    `);
+    const nodes = data.elements.filter(
+      (e): e is OverpassNode => e.type === 'node' && (!kind.requireName || !!e.tags?.name),
+    );
+    let inserted = 0;
+    for (const node of nodes) {
+      const [proximity] = await client`
+        SELECT ST_DWithin(
+          ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)::geography,
+          geom::geography, ${kind.proximityM}
+        ) AS nearby FROM routes WHERE id = ${routeId}`;
+      if (!proximity?.nearby) continue;
+      const tags = node.tags ?? {};
+      const chainageM = await computeChainage(routeId, node.lon, node.lat);
+      await db.insert(pois).values({
+        routeId,
+        category: kind.category,
+        name: tags.name ?? null,
+        chainageM,
+        geom: sql`ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)`,
+        meta: kind.meta?.(tags) ?? {},
+        imageUrl: imageFor(kind.category, inserted),
+        source: 'osm',
+        confidence: kind.category === 'water' ? 0.65 : 0.7,
+      });
+      inserted++;
+    }
+    console.log(`  Inserted ${inserted} ${kind.key}`);
   }
   await client.end();
-  console.log(`  Inserted ${inserted} accommodations`);
-}
-
-// ── Step 5: Water sources from Overpass ─────────────────────────────────────
-async function seedWaterSources(routeId: number): Promise<void> {
-  console.log('Fetching water sources from Overpass…');
-  const data = await overpass(`
-    [out:json][timeout:180][bbox:${BBOX.south},${BBOX.west},${BBOX.north},${BBOX.east}];
-    (
-      node["natural"="spring"]["name"];
-      node["amenity"="drinking_water"]["name"];
-    );
-    out body;
-  `);
-  const nodes = data.elements.filter((e): e is OverpassNode => e.type === 'node');
-  console.log(`  Got ${nodes.length} nodes, filtering to corridor…`);
-
-  const client = postgres(process.env.DATABASE_URL ?? '', { max: 1, prepare: false });
-  let inserted = 0;
-  for (const node of nodes) {
-    const [proximity] = await client`
-      SELECT ST_DWithin(
-        ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)::geography, geom::geography, 500
-      ) AS nearby FROM routes WHERE id = ${routeId}
-    `;
-    if (!proximity?.nearby) continue;
-    const tags = node.tags ?? {};
-    const chainageM = await computeChainage(routeId, node.lon, node.lat);
-    await db.insert(waterSources).values({
-      routeId,
-      name: tags.name ?? null,
-      chainageM,
-      geom: sql`ST_GeomFromText(${`POINT(${node.lon} ${node.lat})`}, 4326)`,
-      seasonal: tags.seasonal === 'yes' || tags.intermittent === 'yes',
-      imageUrl: pick(WATER_IMAGES, inserted),
-      source: 'osm',
-      confidence: 0.65,
-    });
-    inserted++;
-  }
-  await client.end();
-  console.log(`  Inserted ${inserted} water sources`);
 }
 
 // ── Main ────────────────────────────────────────────────────────────────────
@@ -362,8 +321,7 @@ if (existingTrail.length > 0) {
 
 const routeId = await seedRoute();
 await seedSections(routeId);
-await seedAccommodations(routeId);
-await seedWaterSources(routeId);
+await seedPois(routeId);
 
 console.log(`\n${trailId} seed complete ✓`);
 process.exit(0);
