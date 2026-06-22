@@ -364,3 +364,31 @@ export const contentMedia = pgTable('content_media', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+// ---------------------------------------------------------------------------
+// Pipeline jobs — the background-runner queue, Postgres-native. A worker
+// claims jobs with FOR UPDATE SKIP LOCKED (no extra extension needed; upgradeable
+// to pgmq later). Each job runs one pipeline stage (enrich/check/images/build…)
+// for one objective; idempotent (§8), so a retried job is safe.
+// ---------------------------------------------------------------------------
+export const pipelineJobs = pgTable('pipeline_jobs', {
+  id: serial('id').primaryKey(),
+  stage: text('stage').notNull(),
+  objectiveId: text('objective_id'),
+  args: jsonb('args').$type<Record<string, unknown>>().notNull().default({}),
+  status: text('status', { enum: ['queued', 'running', 'done', 'failed'] })
+    .notNull()
+    .default('queued'),
+  // Human-readable progress the worker updates as it goes ("12/104 blocks").
+  progress: text('progress'),
+  attempts: integer('attempts').notNull().default(0),
+  maxAttempts: integer('max_attempts').notNull().default(3),
+  error: text('error'),
+  // Visibility timeout: a running job whose lock is older than the timeout is
+  // reclaimable (the worker died). Doubles as the worker heartbeat.
+  lockedAt: timestamp('locked_at'),
+  startedAt: timestamp('started_at'),
+  finishedAt: timestamp('finished_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
