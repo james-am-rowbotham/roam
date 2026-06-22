@@ -21,4 +21,5 @@ export const PLACE_BLURBS: Record<string, string> = {
   France: 'Alps, Pyrenees and the GR network',
 };
 
-export const navLinks = [{ label: 'Trails', href: '/#popular-trails' }];
+type NavLink = { label: string; href: string };
+export const navLinks: NavLink[] = [];

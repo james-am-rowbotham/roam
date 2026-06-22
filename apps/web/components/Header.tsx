@@ -11,18 +11,20 @@ export function Header() {
           <Logo />
         </Link>
         <nav className="flex items-center gap-8">
-          <ul className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className="font-body text-[14px] font-medium text-secondary transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {navLinks && (
+            <ul className="hidden items-center gap-8 md:flex">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="font-body text-[14px] font-medium text-secondary transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
           <Button href="/#cta" variant="solid" size="md">
             Get the app
           </Button>
