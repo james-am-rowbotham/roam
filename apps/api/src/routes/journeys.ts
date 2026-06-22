@@ -1,7 +1,6 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { type ProgressAction, applyProgress, planJourney } from '@roam/core';
+import { type Accommodation, type ProgressAction, applyProgress, planJourney } from '@roam/core';
 import {
-  accommodations,
   and,
   asc,
   db,
@@ -10,8 +9,10 @@ import {
   inArray,
   journeys,
   ne,
+  pois,
   routes,
   sections,
+  sql,
   stages,
 } from '@roam/db';
 import {
@@ -80,10 +81,27 @@ journeysRouter.openapi(
         .from(sections)
         .where(eq(sections.routeId, body.routeId))
         .orderBy(asc(sections.orderIndex));
-      const accommodationRows = await db
-        .select()
-        .from(accommodations)
-        .where(eq(accommodations.routeId, body.routeId));
+      // Overnight stops for the journey plan — accommodation POIs (everything but water).
+      const accommodationRows = (await db
+        .select({
+          id: pois.id,
+          routeId: pois.routeId,
+          name: sql<string>`COALESCE(${pois.name}, 'Unnamed')`,
+          chainageM: pois.chainageM,
+          type: sql<Accommodation['type']>`${pois.category}`,
+          capacity: sql<number | null>`(${pois.meta}->>'capacity')::int`,
+          seasonal: sql<boolean>`COALESCE((${pois.meta}->>'seasonal')::boolean, false)`,
+          bookingUrl: sql<string | null>`${pois.meta}->>'bookingUrl'`,
+          source: pois.source,
+          confidence: pois.confidence,
+          lastConfirmedAt: pois.lastConfirmedAt,
+          reportCount: pois.reportCount,
+          manualOverride: pois.manualOverride,
+        })
+        .from(pois)
+        .where(
+          and(eq(pois.routeId, body.routeId), sql`${pois.category} <> 'water'`),
+        )) as Accommodation[];
 
       const plan = planJourney({
         sections: sectionRows,

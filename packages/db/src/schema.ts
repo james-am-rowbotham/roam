@@ -139,46 +139,11 @@ const trustFields = {
 // geom is kept for map rendering; all proximity queries use chainage_m.
 // ---------------------------------------------------------------------------
 
-export const waterSources = pgTable('water_sources', {
-  id: serial('id').primaryKey(),
-  routeId: integer('route_id')
-    .notNull()
-    .references(() => routes.id),
-  name: text('name'),
-  chainageM: doublePrecision('chainage_m').notNull(),
-  imageUrl: text('image_url'),
-  geom: geometry('geom', { type: 'point', srid: 4326 }),
-  seasonal: boolean('seasonal').notNull().default(false),
-  ...trustFields,
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
-
-export const accommodations = pgTable('accommodations', {
-  id: serial('id').primaryKey(),
-  routeId: integer('route_id')
-    .notNull()
-    .references(() => routes.id),
-  name: text('name').notNull(),
-  chainageM: doublePrecision('chainage_m').notNull(),
-  geom: geometry('geom', { type: 'point', srid: 4326 }),
-  type: text('type', {
-    enum: ['refuge', 'hut', 'campsite', 'hotel', 'hostel'],
-  }).notNull(),
-  imageUrl: text('image_url'),
-  capacity: integer('capacity'),
-  seasonal: boolean('seasonal').notNull().default(false),
-  bookingUrl: text('booking_url'),
-  ...trustFields,
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-});
-
 // Unified POIs (config-driven, §8) — one table for every point type so adding a kind is a
 // POI_KINDS registry variable, never a new table + migration. `category` is TEXT (not an enum)
 // for the same reason; `meta` holds the category-specific fields (capacity, seasonal, type,
-// bookingUrl, …) as open jsonb so a new field needs no migration. Supersedes the typed
-// water_sources/accommodations tables (kept until readKnowledge fully reads pois).
+// bookingUrl, …) as open jsonb so a new field needs no migration. This supersedes the old
+// typed water_sources/accommodations tables (dropped): POIs are read from here everywhere.
 export const pois = pgTable('pois', {
   id: serial('id').primaryKey(),
   routeId: integer('route_id')
@@ -296,9 +261,7 @@ export const stages = pgTable('stages', {
   distanceM: doublePrecision('distance_m'),
   ascentM: doublePrecision('ascent_m'),
   descentM: doublePrecision('descent_m'),
-  overnightAccommodationId: integer('overnight_accommodation_id').references(
-    () => accommodations.id,
-  ),
+  overnightAccommodationId: integer('overnight_accommodation_id').references(() => pois.id),
   status: text('status', { enum: ['planned', 'active', 'completed'] })
     .notNull()
     .default('planned'),

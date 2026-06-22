@@ -1,18 +1,18 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
 import { downsampleElevation, resolveWaymark } from '@roam/core';
 import {
-  accommodations,
+  and,
   asc,
   db,
   eq,
   getTableColumns,
   hazards,
+  pois,
   regions,
   routes,
   sections,
   sql,
   trails,
-  waterSources,
 } from '@roam/db';
 import {
   AccommodationSchema,
@@ -207,25 +207,25 @@ trailsRouter.openapi(
     if (!trail) return c.json({ error: 'not found' }, 404);
     const rows = await db
       .select({
-        id: waterSources.id,
-        routeId: waterSources.routeId,
-        name: waterSources.name,
-        chainageM: waterSources.chainageM,
-        imageUrl: waterSources.imageUrl,
-        seasonal: waterSources.seasonal,
-        source: waterSources.source,
-        confidence: waterSources.confidence,
-        lastConfirmedAt: waterSources.lastConfirmedAt,
-        reportCount: waterSources.reportCount,
-        manualOverride: waterSources.manualOverride,
-        createdAt: waterSources.createdAt,
-        updatedAt: waterSources.updatedAt,
-        lat: sql<number | null>`ST_Y(${waterSources.geom})`,
-        lng: sql<number | null>`ST_X(${waterSources.geom})`,
+        id: pois.id,
+        routeId: pois.routeId,
+        name: pois.name,
+        chainageM: pois.chainageM,
+        imageUrl: pois.imageUrl,
+        seasonal: sql<boolean>`COALESCE((${pois.meta}->>'seasonal')::boolean, false)`,
+        source: pois.source,
+        confidence: pois.confidence,
+        lastConfirmedAt: pois.lastConfirmedAt,
+        reportCount: pois.reportCount,
+        manualOverride: pois.manualOverride,
+        createdAt: pois.createdAt,
+        updatedAt: pois.updatedAt,
+        lat: sql<number | null>`ST_Y(${pois.geom})`,
+        lng: sql<number | null>`ST_X(${pois.geom})`,
       })
-      .from(waterSources)
-      .where(eq(waterSources.routeId, trail.routeId))
-      .orderBy(asc(waterSources.chainageM));
+      .from(pois)
+      .where(and(eq(pois.routeId, trail.routeId), eq(pois.category, 'water')))
+      .orderBy(asc(pois.chainageM));
     return c.json(rows as unknown as z.infer<typeof WaterSourceSchema>[], 200);
   },
 );
@@ -255,28 +255,28 @@ trailsRouter.openapi(
     if (!trail) return c.json({ error: 'not found' }, 404);
     const rows = await db
       .select({
-        id: accommodations.id,
-        routeId: accommodations.routeId,
-        name: accommodations.name,
-        chainageM: accommodations.chainageM,
-        imageUrl: accommodations.imageUrl,
-        type: accommodations.type,
-        capacity: accommodations.capacity,
-        seasonal: accommodations.seasonal,
-        bookingUrl: accommodations.bookingUrl,
-        source: accommodations.source,
-        confidence: accommodations.confidence,
-        lastConfirmedAt: accommodations.lastConfirmedAt,
-        reportCount: accommodations.reportCount,
-        manualOverride: accommodations.manualOverride,
-        createdAt: accommodations.createdAt,
-        updatedAt: accommodations.updatedAt,
-        lat: sql<number | null>`ST_Y(${accommodations.geom})`,
-        lng: sql<number | null>`ST_X(${accommodations.geom})`,
+        id: pois.id,
+        routeId: pois.routeId,
+        name: pois.name,
+        chainageM: pois.chainageM,
+        imageUrl: pois.imageUrl,
+        type: pois.category,
+        capacity: sql<number | null>`(${pois.meta}->>'capacity')::int`,
+        seasonal: sql<boolean>`COALESCE((${pois.meta}->>'seasonal')::boolean, false)`,
+        bookingUrl: sql<string | null>`${pois.meta}->>'bookingUrl'`,
+        source: pois.source,
+        confidence: pois.confidence,
+        lastConfirmedAt: pois.lastConfirmedAt,
+        reportCount: pois.reportCount,
+        manualOverride: pois.manualOverride,
+        createdAt: pois.createdAt,
+        updatedAt: pois.updatedAt,
+        lat: sql<number | null>`ST_Y(${pois.geom})`,
+        lng: sql<number | null>`ST_X(${pois.geom})`,
       })
-      .from(accommodations)
-      .where(eq(accommodations.routeId, trail.routeId))
-      .orderBy(asc(accommodations.chainageM));
+      .from(pois)
+      .where(and(eq(pois.routeId, trail.routeId), sql`${pois.category} <> 'water'`))
+      .orderBy(asc(pois.chainageM));
     return c.json(rows as unknown as z.infer<typeof AccommodationSchema>[], 200);
   },
 );
