@@ -139,28 +139,18 @@ export async function readKnowledge(config: PackConfig): Promise<TrailKnowledge>
       orderIndex: r.order_index,
     }));
 
-    // Linearly-referenced POIs (§7) — water + accommodation, by chainage along the route.
-    // POI_SOURCE=pois reads the unified table (P2); default reads the legacy typed tables.
-    const fromPois = process.env.POI_SOURCE === 'pois';
-    const waterRows = fromPois
-      ? await c<WaterRow[]>`
-          SELECT id, name, chainage_m, (meta->>'seasonal')::boolean AS seasonal,
-                 ST_Y(geom) AS lat, ST_X(geom) AS lng
-          FROM pois WHERE route_id = ${route.id} AND category = 'water' ORDER BY chainage_m`
-      : await c<WaterRow[]>`
-          SELECT id, name, chainage_m, seasonal, ST_Y(geom) AS lat, ST_X(geom) AS lng
-          FROM water_sources WHERE route_id = ${route.id} ORDER BY chainage_m`;
-    const accommRows = fromPois
-      ? await c<AccommRow[]>`
-          SELECT id, name, category AS type, chainage_m, (meta->>'seasonal')::boolean AS seasonal,
-                 (meta->>'capacity')::int AS capacity, meta->>'bookingUrl' AS booking_url,
-                 ST_Y(geom) AS lat, ST_X(geom) AS lng
-          FROM pois WHERE route_id = ${route.id} AND category = ANY(${STAY_CATEGORIES})
-          ORDER BY chainage_m`
-      : await c<AccommRow[]>`
-          SELECT id, name, type, chainage_m, seasonal, capacity, booking_url,
-                 ST_Y(geom) AS lat, ST_X(geom) AS lng
-          FROM accommodations WHERE route_id = ${route.id} ORDER BY chainage_m`;
+    // Linearly-referenced POIs (§7) — water + accommodation, by chainage, from the unified
+    // pois table (the source of truth; P2). Category drives the split.
+    const waterRows = await c<WaterRow[]>`
+      SELECT id, name, chainage_m, (meta->>'seasonal')::boolean AS seasonal,
+             ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM pois WHERE route_id = ${route.id} AND category = 'water' ORDER BY chainage_m`;
+    const accommRows = await c<AccommRow[]>`
+      SELECT id, name, category AS type, chainage_m, (meta->>'seasonal')::boolean AS seasonal,
+             (meta->>'capacity')::int AS capacity, meta->>'bookingUrl' AS booking_url,
+             ST_Y(geom) AS lat, ST_X(geom) AS lng
+      FROM pois WHERE route_id = ${route.id} AND category = ANY(${STAY_CATEGORIES})
+      ORDER BY chainage_m`;
 
     const water = waterRows.map((w) => ({
       id: `${config.id}-water-${w.id}`,

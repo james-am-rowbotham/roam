@@ -1,5 +1,5 @@
 import { OpenAPIHono, createRoute, type z } from '@hono/zod-openapi';
-import { accommodations, db, eq, sql, waterSources } from '@roam/db';
+import { and, db, eq, pois, sql } from '@roam/db';
 import { AccommodationSchema, ErrorSchema, IdParamSchema, WaterSourceSchema } from '../schemas';
 
 export const poisRouter = new OpenAPIHono();
@@ -24,24 +24,24 @@ poisRouter.openapi(
     const { id } = c.req.valid('param');
     const [row] = await db
       .select({
-        id: waterSources.id,
-        routeId: waterSources.routeId,
-        name: waterSources.name,
-        chainageM: waterSources.chainageM,
-        imageUrl: waterSources.imageUrl,
-        seasonal: waterSources.seasonal,
-        source: waterSources.source,
-        confidence: waterSources.confidence,
-        lastConfirmedAt: waterSources.lastConfirmedAt,
-        reportCount: waterSources.reportCount,
-        manualOverride: waterSources.manualOverride,
-        createdAt: waterSources.createdAt,
-        updatedAt: waterSources.updatedAt,
+        id: pois.id,
+        routeId: pois.routeId,
+        name: pois.name,
+        chainageM: pois.chainageM,
+        imageUrl: pois.imageUrl,
+        seasonal: sql<boolean>`COALESCE((meta->>'seasonal')::boolean, false)`,
+        source: pois.source,
+        confidence: pois.confidence,
+        lastConfirmedAt: pois.lastConfirmedAt,
+        reportCount: pois.reportCount,
+        manualOverride: pois.manualOverride,
+        createdAt: pois.createdAt,
+        updatedAt: pois.updatedAt,
         lat: sql<number | null>`ST_Y(geom)`,
         lng: sql<number | null>`ST_X(geom)`,
       })
-      .from(waterSources)
-      .where(eq(waterSources.id, id));
+      .from(pois)
+      .where(and(eq(pois.id, id), eq(pois.category, 'water')));
 
     if (!row) return c.json({ error: 'not found' }, 404);
     return c.json(row as unknown as z.infer<typeof WaterSourceSchema>, 200);
@@ -68,27 +68,27 @@ poisRouter.openapi(
     const { id } = c.req.valid('param');
     const [row] = await db
       .select({
-        id: accommodations.id,
-        routeId: accommodations.routeId,
-        name: accommodations.name,
-        chainageM: accommodations.chainageM,
-        imageUrl: accommodations.imageUrl,
-        type: accommodations.type,
-        capacity: accommodations.capacity,
-        seasonal: accommodations.seasonal,
-        bookingUrl: accommodations.bookingUrl,
-        source: accommodations.source,
-        confidence: accommodations.confidence,
-        lastConfirmedAt: accommodations.lastConfirmedAt,
-        reportCount: accommodations.reportCount,
-        manualOverride: accommodations.manualOverride,
-        createdAt: accommodations.createdAt,
-        updatedAt: accommodations.updatedAt,
+        id: pois.id,
+        routeId: pois.routeId,
+        name: pois.name,
+        chainageM: pois.chainageM,
+        imageUrl: pois.imageUrl,
+        type: pois.category,
+        capacity: sql<number | null>`(meta->>'capacity')::int`,
+        seasonal: sql<boolean>`COALESCE((meta->>'seasonal')::boolean, false)`,
+        bookingUrl: sql<string | null>`meta->>'bookingUrl'`,
+        source: pois.source,
+        confidence: pois.confidence,
+        lastConfirmedAt: pois.lastConfirmedAt,
+        reportCount: pois.reportCount,
+        manualOverride: pois.manualOverride,
+        createdAt: pois.createdAt,
+        updatedAt: pois.updatedAt,
         lat: sql<number | null>`ST_Y(geom)`,
         lng: sql<number | null>`ST_X(geom)`,
       })
-      .from(accommodations)
-      .where(eq(accommodations.id, id));
+      .from(pois)
+      .where(and(eq(pois.id, id), sql`category <> 'water'`));
 
     if (!row) return c.json({ error: 'not found' }, 404);
     return c.json(row as unknown as z.infer<typeof AccommodationSchema>, 200);

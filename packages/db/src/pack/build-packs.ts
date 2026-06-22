@@ -21,23 +21,24 @@ import {
   assembleSeed,
   buildTrailPack,
 } from '@roam/pipeline';
-import { loadContent } from '../content/cache';
 import { readTrailContent } from './content-db';
 import { readKnowledge } from './readKnowledge';
 
-// Editorial content source: `db` reads content_blocks (the target, P1), `file` (default) reads
-// the JSON cache. Both feed the same pure builder, so the pack is identical either way.
-const contentSource = process.env.CONTENT_SOURCE === 'db' ? 'db' : 'file';
-
+// Editorial content is read from content_blocks — the source of truth. The JSON cache is now a
+// generation staging area only (synced into the DB via `content:sync-db`), never read here.
 const built = [];
 for (const config of PACK_CONFIGS.filter((c) => c.type === 'trail')) {
-  console.log(`Reading ${config.id} from Postgres… (content: ${contentSource})`);
+  console.log(`Reading ${config.id} from Postgres…`);
   const knowledge = await readKnowledge(config);
-  const content = contentSource === 'db' ? await readTrailContent(config) : loadContent(config.id);
+  const content = await readTrailContent(config);
   const sections = Object.keys(content.sectionGuide ?? {}).length;
-  const contentNote = sections ? ` · content for ${sections} sections` : '';
+  if (sections === 0) {
+    console.warn(
+      `  ⚠ no DB content for ${config.id} — run content:sync-db (or the pipeline) first`,
+    );
+  }
   console.log(
-    `  ${knowledge.stages.length} etapas · ${knowledge.regions.length} regions · ${Math.round(knowledge.lengthM / 1000)} km${contentNote}`,
+    `  ${knowledge.stages.length} etapas · ${knowledge.regions.length} regions · ${Math.round(knowledge.lengthM / 1000)} km · content for ${sections} sections`,
   );
   built.push(buildTrailPack(config, knowledge, content));
 }
