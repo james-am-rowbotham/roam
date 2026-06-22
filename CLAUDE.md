@@ -1121,11 +1121,19 @@ makes it trustworthy → more hikers. Write once, render twice.
 ### 21.8 Schema additions
 Both tables carry the §9 trust fields and key to the curated chain.
 
-- **`content_blocks`** — `scope_type` (`route|region|stage|poi`) + `scope_id`, `lens`,
-  `block_type` (§21.2), `title?`, `body`, `order_index`, `season_from?`/`season_to?`
-  (null = all-year), `source` (`model|partner`), `confidence`, `review_status`
+- **`content_blocks`** — a **stable trust/curation *envelope* + the renderable block as
+  validated `jsonb`**, NOT typed `block_type`/`body` columns (the structure must not live in
+  the DB schema). *Envelope:* `scope_type` (`route|region|stage|poi`) + `scope_id`, `lens`,
+  `order_index`, `season_from?`/`season_to?` (null = all-year), `source`
+  (`derived|parse|model|partner|authored`), `confidence`, `review_status`
   (`draft|reviewed|published|flagged`), `source_refs jsonb` (`{url,title,retrieved_at}[]`),
-  `manual_override`, `last_reviewed_at?`, `embedding vector?` (§21.6), `version`.
+  `manual_override`, `last_reviewed_at?`, `embedding vector?` (§21.6). *Payload:* **`block
+  jsonb`** — the `ContentBlock` from `packages/content` — plus **`schema_version`**.
+  **Content *structure* is owned by the `ContentBlock` union (one source of truth, shared by
+  writer · DB · reader · pack · app · web · admin), never by DB columns** — so an additive
+  block type/field needs no migration; a breaking change *regenerates* (idempotent pipeline,
+  §8) rather than migrates, with only `manual_override` rows hand-migrated. Full plan:
+  **`docs/content-pipeline.md`**.
 - **`content_media`** — `scope_type`+`scope_id`, `lens?`, `role` (`hero|inline|gallery`),
   `order_index`, `r2_key`, `width`, `height`, `geo?` (chainage/lat-lng if matched),
   `source_site`, `license`, `license_url`, `author`, `attribution_text` (**all `NOT NULL`**),
@@ -1154,6 +1162,16 @@ packs; user-on-demand generation is a later online-only feature. (3) **strict-li
 for v1** — accept thinner coverage, fill gaps later. (4) **web renderer: plan now, surface
 later** — build the model web-ready (cheap now, painful to retrofit); ship the surface after
 the app content works. (5) **companion drafts under review, never auto-publishes.**
+(6) **content shape lives in the `ContentBlock` union, stored as validated `jsonb` +
+`schema_version` (§21.8), not DB columns** — so structure changes are a one-package edit, not a
+migration.
+
+> **Plan of record: `docs/content-pipeline.md`.** The pipeline is config-driven (new POI type =
+> a registry variable → unified `pois` table), runs over **trails + peaks** as objectives,
+> persists content in Postgres (web-queryable) with offline packages compiled from it, and is
+> callable + idempotent + background-capable (Hono/Fly worker + `pipeline_jobs`), with LLM
+> write/check stages and an `apps/admin` review-before-publish gate. Build order there (P1
+> content-into-DB → … → P7 offline) refines the C1–C6 below.
 
 **Build order (content workstream — extends §18 Phase 7, shares pipeline + admin):**
 - **C1** — content schema (`content_blocks` + `content_media` + provenance) + `apps/admin`
