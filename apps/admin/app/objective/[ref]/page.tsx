@@ -89,7 +89,24 @@ function BlockCard({ b, trailRef }: { b: BlockRow; trailRef: string }) {
           {b.source} · {Math.round(b.confidence * 100)}%
         </span>
         {b.manualOverride && <span style={{ ...badge, color: '#854f0b' }}>edited</span>}
+        {b.sourceRefs.length === 0 && (
+          <span style={{ ...badge, color: '#a32d2d' }}>no sources</span>
+        )}
       </div>
+
+      {b.sourceRefs.length > 0 && (
+        <div style={{ fontSize: 11, color: '#6f6a60', marginBottom: 6 }}>
+          Sources:{' '}
+          {b.sourceRefs.map((s, i) => (
+            <span key={s.url}>
+              {i > 0 && ' · '}
+              <a href={s.url} target="_blank" rel="noreferrer">
+                {s.title || new URL(s.url).hostname}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
 
       {text ? (
         <form action={editForm.bind(null, b.id, trailRef)}>

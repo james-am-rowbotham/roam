@@ -89,6 +89,7 @@ export interface BlockRow {
   reviewStatus: 'draft' | 'reviewed' | 'published' | 'flagged';
   manualOverride: boolean;
   orderIndex: number;
+  sourceRefs: { url: string; title: string; retrievedAt?: string }[];
 }
 
 /** One trail's content blocks, ordered by scope then position, for review. */
@@ -115,6 +116,7 @@ export async function getObjectiveContent(
       reviewStatus: contentBlocks.reviewStatus,
       manualOverride: contentBlocks.manualOverride,
       orderIndex: contentBlocks.orderIndex,
+      sourceRefs: contentBlocks.sourceRefs,
     })
     .from(contentBlocks)
     .where(scopeWhere(ids))

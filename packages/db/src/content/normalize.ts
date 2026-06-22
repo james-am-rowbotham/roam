@@ -23,14 +23,17 @@ export interface RawTopic {
   key: string;
   heading: string;
   body: string;
+  sourceRefs?: { url: string; title: string }[];
 }
 
-/** Coerce a raw model topic into an overview GuideTopic (clean text, fixed facet). */
+/** Coerce a raw model topic into an overview GuideTopic (clean text, fixed facet),
+ *  preserving the cited sources (§21.10) so the trust envelope gets them. */
 export function normalizeTopic(t: RawTopic): GuideTopic {
   return {
     key: t.key,
     facet: 'overview',
     heading: unescapeHtml(t.heading),
     body: unescapeHtml(t.body),
+    ...(t.sourceRefs?.length ? { sourceRefs: t.sourceRefs } : {}),
   };
 }

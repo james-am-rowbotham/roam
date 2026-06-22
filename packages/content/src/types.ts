@@ -46,6 +46,13 @@ export type GuideFacet = 'overview' | 'planning' | 'environment' | 'conditions';
  *  vocab per domain — never enforced as an enum. A topic is prose (heading + body)
  *  and/or composed `blocks` — the Guide Overview is a composed page (Figma 1050:2369),
  *  so a topic can carry an elevation chart, highlights, etc. via the one renderer. */
+/** A source citation behind generated content (§21.10 — sourced, not free-floating). */
+export interface SourceRef {
+  url: string;
+  title: string;
+  retrievedAt?: string;
+}
+
 export interface GuideTopic {
   key: string;
   facet: GuideFacet;
@@ -54,6 +61,9 @@ export interface GuideTopic {
   body?: string;
   mediaId?: string;
   blocks?: ContentBlock[];
+  /** Web sources the model cited for this topic — persisted to content_blocks.source_refs
+   *  (the trust envelope), feeding the confidence model + admin review (§6, §21.5). */
+  sourceRefs?: SourceRef[];
 }
 
 // ── Discovery / geography (shared, browseable) ──────────────────────────────

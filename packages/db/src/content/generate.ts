@@ -123,6 +123,7 @@ export async function generateObjectiveGuide(
         facet: f.facet,
         heading: unescapeHtml(t.heading),
         body: unescapeHtml(t.body),
+        ...(t.sourceRefs?.length ? { sourceRefs: t.sourceRefs } : {}),
       });
     }
     sources += raw.reduce((n, t) => n + (t.sourceRefs?.length ?? 0), 0);

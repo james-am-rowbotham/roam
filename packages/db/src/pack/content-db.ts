@@ -78,6 +78,8 @@ export async function writeTrailContent(
         block,
         schemaVersion: CONTENT_SCHEMA_VERSION,
         orderIndex,
+        // Lift a guide topic's cited sources into the trust envelope (§21.10).
+        sourceRefs: block.unit === 'guideTopic' ? (block.topic.sourceRefs ?? []) : [],
       });
 
     (content.objectiveGuide ?? []).forEach((topic, i) =>

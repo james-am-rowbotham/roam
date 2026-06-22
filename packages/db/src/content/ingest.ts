@@ -18,6 +18,7 @@ interface RawGuideTopic {
   facet?: string;
   heading: string;
   body: string;
+  sourceRefs?: { url: string; title: string }[];
 }
 
 interface WorkflowResult {
@@ -35,6 +36,7 @@ const normalizeFaceted = (topics: RawGuideTopic[]): GuideTopic[] =>
     facet: (t.facet ?? 'overview') as GuideTopic['facet'],
     heading: unescapeHtml(t.heading),
     body: unescapeHtml(t.body),
+    ...(t.sourceRefs?.length ? { sourceRefs: t.sourceRefs } : {}),
   }));
 
 function unwrap(parsed: unknown): WorkflowResult {
