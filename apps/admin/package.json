@@ -2,11 +2,28 @@
   "name": "@roam/admin",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
-    "typecheck": "echo 'no admin sources yet (Phase 7)'"
+    "dev": "next dev --port 3002",
+    "build": "next build",
+    "start": "next start --port 3002",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@roam/content": "workspace:*",
+    "@roam/db": "workspace:*",
+    "@roam/tokens": "workspace:*",
+    "next": "^15.5.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@roam/config": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "~19.2.2",
+    "@types/react-dom": "~19.2.2",
+    "tailwindcss": "^4.1.0",
     "typescript": "~6.0.3"
   }
 }

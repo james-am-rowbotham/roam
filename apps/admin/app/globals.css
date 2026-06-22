@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "@roam/tokens/tokens.css";
+
+/* Internal curation tool — plain, dense, legible. Warm-neutral surface (§16 tokens). */
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-bg-app, #faf7f1);
+  color: var(--color-text-primary, #26231e);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
