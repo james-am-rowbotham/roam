@@ -25,6 +25,7 @@ export function StageList({ slug, stages }: { slug: string; stages: TrailSection
               {s.orderIndex}
             </span>
             <span className="flex min-w-0 flex-1 flex-col">
+              <span className="label-mono text-[10px] text-primary">Stage {s.orderIndex}</span>
               <span className="truncate font-body text-[15px] font-semibold text-primary">
                 {s.name}
               </span>

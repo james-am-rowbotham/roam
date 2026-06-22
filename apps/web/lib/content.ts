@@ -9,6 +9,8 @@ export interface ExploreCard {
   href: string;
   /** DB-sourced image URL; a themed placeholder shows when absent. */
   image?: string;
+  /** Small type label shown above the title (e.g. "Trail", "Country"). */
+  eyebrow?: string;
 }
 
 // Curated one-liners for countries and mountain ranges we have copy for. A

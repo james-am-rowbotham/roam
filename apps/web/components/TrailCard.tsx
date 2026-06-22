@@ -29,6 +29,7 @@ export function TrailCard({
           )}
         </div>
         <div className="flex flex-col gap-1.5 px-[18px] pb-[18px] pt-4">
+          {card.eyebrow && <p className="label-mono text-[11px] text-primary">{card.eyebrow}</p>}
           <h3 className="font-body text-[19px] font-semibold text-primary">{card.title}</h3>
           <p className="font-mono text-[12px] tracking-[0.02em] text-secondary">{card.subtitle}</p>
         </div>

@@ -26,6 +26,16 @@ import type { PackConfig } from './config';
 import { EMPTY_CONTENT, type TrailContent } from './content';
 import type { KnowledgePOI, TrailKnowledge } from './knowledge';
 
+// Keep the first topic per key; the render maps topics on key, so duplicates must not survive.
+const dedupeByKey = (topics: GuideTopic[]): GuideTopic[] => {
+  const seen = new Set<string>();
+  return topics.filter((t) => {
+    if (seen.has(t.key)) return false;
+    seen.add(t.key);
+    return true;
+  });
+};
+
 // A map ContentBlock wrapping one route-line geometry (§7) — for trail/section/stage previews.
 const mapBlock = (geom: GeoJSON.Geometry, color?: string): ContentBlock => ({
   kind: 'map',
@@ -491,11 +501,14 @@ export function buildTrailPack(
         label: 'Ascent',
       },
     ],
-    guide: [
+    // Dedupe by topic key: the structured guideTopics own keys like 'kit'/'navigation',
+    // so an AI topic reusing one (e.g. GR10's "What to carry") is dropped to keep keys
+    // unique (the render maps topics on key) and let the structured block win.
+    guide: dedupeByKey([
       ...guideTopics,
       ...(content.objectiveGuide ?? []).map(enrichAiTopic),
       ...(transportTopic ? [transportTopic] : []),
-    ],
+    ]),
     highlightIds: [],
     sectionIds: sections.map((s) => s.id),
   };

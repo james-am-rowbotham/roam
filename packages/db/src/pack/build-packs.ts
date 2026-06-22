@@ -22,13 +22,18 @@ import {
   buildTrailPack,
 } from '@roam/pipeline';
 import { loadContent } from '../content/cache';
+import { readTrailContent } from './content-db';
 import { readKnowledge } from './readKnowledge';
+
+// Editorial content source: `db` reads content_blocks (the target, P1), `file` (default) reads
+// the JSON cache. Both feed the same pure builder, so the pack is identical either way.
+const contentSource = process.env.CONTENT_SOURCE === 'db' ? 'db' : 'file';
 
 const built = [];
 for (const config of PACK_CONFIGS.filter((c) => c.type === 'trail')) {
-  console.log(`Reading ${config.id} from Postgres…`);
+  console.log(`Reading ${config.id} from Postgres… (content: ${contentSource})`);
   const knowledge = await readKnowledge(config);
-  const content = loadContent(config.id);
+  const content = contentSource === 'db' ? await readTrailContent(config) : loadContent(config.id);
   const sections = Object.keys(content.sectionGuide ?? {}).length;
   const contentNote = sections ? ` · content for ${sections} sections` : '';
   console.log(

@@ -116,7 +116,6 @@ export default async function TrailPage({ params }: { params: Promise<{ slug: st
           elevation={trail.elevation}
           startLabel={startLabel}
           endLabel={endLabel}
-          overlay={`${trail.ref ?? trail.name} · ${endpoints}`}
         />
         {routeContent.length > 0 && (
           <section className="w-full px-6 py-4 md:px-20">

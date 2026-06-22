@@ -106,7 +106,6 @@ export default async function RegionPage({
           geometry={(region.geometry ?? null) as Geometry | null}
           color={color}
           elevation={elevation}
-          overlay={`${trail.ref ?? trail.name} · ${region.name}`}
         />
 
         {region.contentBlocks.length > 0 && (

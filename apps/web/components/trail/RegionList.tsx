@@ -56,8 +56,8 @@ function RegionCard({ region, slug }: { region: RegionSummary; slug: string }) {
       <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-shadow hover:shadow-[0_10px_30px_rgba(0,0,0,0.10)]">
         <CardImage src={region.imageUrl} alt={region.name} height={160} />
         <div className="flex flex-col gap-1.5 px-[18px] pb-[18px] pt-4">
-          <p className="label-mono text-[11px] text-accent">
-            {stages} · {km(region.distanceM)} km
+          <p className="label-mono text-[11px] text-primary">
+            Section · {stages} · {km(region.distanceM)} km
           </p>
           <h3 className="font-body text-[18px] font-semibold text-primary">{region.name}</h3>
           {region.description && (

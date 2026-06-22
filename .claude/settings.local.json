@@ -9,7 +9,20 @@
       "mcp__claude_ai_Figma__get_design_context",
       "Bash(curl -sL -o icon-mountain.asset \"https://www.figma.com/api/mcp/asset/49622488-84b8-475f-af94-bfc9ebeff53c\")",
       "Bash(npx tsc *)",
-      "Bash(bun -e ' *)"
-    ]
+      "Bash(bun -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" localhost:3000/health)",
+      "Bash(curl -s localhost:3000/trails)",
+      "Bash(bun add *)",
+      "Bash(curl -s \"localhost:3000/trails/6/sections\")",
+      "Bash(curl -s \"localhost:3000/trails/7\")",
+      "Bash(curl -s \"localhost:3000/trails/7/sections\")",
+      "Bash(grep -ivE \"MODULE_TYPELESS|node:|Reparsing|eliminate|trace-warnings|Checked|biome|^\\\\\\\\$|warning\")",
+      "Bash(curl -s localhost:3000/trails/6/sections)",
+      "Bash(python3 -c ' *)",
+      "Bash(xargs kill -9)",
+      "Bash(cd /Users/james/code/roam/apps/web; bun run start >/tmp/web.log 2>&1)",
+      "Bash(grep -vE \"^\\\\s*$\")"
+    ],
+    "additionalDirectories": ["/private/tmp"]
   }
 }

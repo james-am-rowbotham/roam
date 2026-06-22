@@ -14,6 +14,7 @@
     "db:elevation": "bun src/refresh-elevation.ts",
     "db:studio": "drizzle-kit studio",
     "pack:build": "bun src/pack/build-packs.ts",
+    "content:sync-db": "bun src/content/sync-db.ts",
     "pack:content": "bun src/content/run.ts",
     "pack:content:ingest": "bun src/content/ingest.ts",
     "pack:images": "bun src/content/run-images.ts",

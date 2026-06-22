@@ -15,6 +15,7 @@ export function trailCards(trails: TrailListItem[]): { cards: ExploreCard[]; sym
     const title = t.ref ?? t.name;
     symbols[title] = t.waymark.symbol;
     return {
+      eyebrow: 'Trail',
       title,
       subtitle: [formatDistance(t.distanceM), t.country].filter(Boolean).join(' · ') || t.name,
       image: t.imageUrl ?? undefined,
@@ -43,6 +44,7 @@ export function facetCards(trails: TrailListItem[], facet: Facet): ExploreCard[]
     else groups.set(name, [t]);
   }
   return [...groups.entries()].map(([name, list]) => ({
+    eyebrow: facet === 'country' ? 'Country' : 'Mountain range',
     title: name,
     subtitle: PLACE_BLURBS[name] ?? `${list.length} trail${list.length > 1 ? 's' : ''}`,
     image: list.find((t) => t.imageUrl)?.imageUrl ?? undefined,

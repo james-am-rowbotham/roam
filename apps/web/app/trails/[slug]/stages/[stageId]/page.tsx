@@ -5,7 +5,6 @@ import { Header } from '@/components/Header';
 import { RoutePreview } from '@/components/RoutePreview';
 import { ContentBlocks } from '@/components/content/ContentBlocks';
 import { AtAGlance } from '@/components/trail/AtAGlance';
-import { PoiList } from '@/components/trail/PoiList';
 import {
   getAccommodations,
   getContent,
@@ -16,6 +15,7 @@ import {
   getWater,
 } from '@/lib/api';
 import { km, meters } from '@/lib/format';
+import type { PoiPoint } from '@/lib/map';
 import { trailSlug } from '@/lib/slug';
 import type { Geometry } from 'geojson';
 import type { Metadata } from 'next';
@@ -76,6 +76,40 @@ export default async function StagePage({
     ...(stage.descentM != null ? [{ value: meters(stage.descentM), label: 'm ↓' }] : []),
   ];
 
+  // Water / refuges / hazards on this stage, drawn as icons on the stage map
+  // (§17) instead of as lists. Only those within the stage span, with coords.
+  const hasCoords = (p: { lat: number | null; lng: number | null }) =>
+    p.lat != null && p.lng != null;
+  const pois: PoiPoint[] = [
+    ...water
+      .filter((w) => inSpan(w.chainageM) && hasCoords(w))
+      .map((w) => ({
+        id: `w${w.id}`,
+        kind: 'water' as const,
+        name: w.name ?? 'Water',
+        lng: w.lng as number,
+        lat: w.lat as number,
+      })),
+    ...accommodations
+      .filter((a) => inSpan(a.chainageM) && hasCoords(a))
+      .map((a) => ({
+        id: `a${a.id}`,
+        kind: 'refuge' as const,
+        name: a.name,
+        lng: a.lng as number,
+        lat: a.lat as number,
+      })),
+    ...hazards
+      .filter((h) => inSpan(h.chainageM) && hasCoords(h))
+      .map((h) => ({
+        id: `h${h.id}`,
+        kind: 'hazard' as const,
+        name: h.name ?? h.type,
+        lng: h.lng as number,
+        lat: h.lat as number,
+      })),
+  ];
+
   return (
     <>
       <Header />
@@ -93,49 +127,8 @@ export default async function StagePage({
           geometry={(stage.geometry ?? null) as Geometry | null}
           color={color}
           elevation={elevation}
+          pois={pois}
         />
-
-        {(water.some((w) => inSpan(w.chainageM)) ||
-          accommodations.some((a) => inSpan(a.chainageM)) ||
-          hazards.some((h) => inSpan(h.chainageM))) && (
-          <section className="w-full px-6 py-12 md:px-20">
-            <div className="mx-auto grid max-w-[1440px] gap-8 md:grid-cols-2">
-              <PoiList
-                title="Water on this stage"
-                items={water
-                  .filter((w) => inSpan(w.chainageM))
-                  .map((w) => ({
-                    id: `w${w.id}`,
-                    name: w.name ?? 'Water source',
-                    meta: `${km(w.chainageM - lo)} km in`,
-                    tag: w.seasonal ? 'Seasonal' : undefined,
-                  }))}
-              />
-              <PoiList
-                title="Where to stay"
-                items={accommodations
-                  .filter((a) => inSpan(a.chainageM))
-                  .map((a) => ({
-                    id: `a${a.id}`,
-                    name: a.name,
-                    meta: `${km(a.chainageM - lo)} km in`,
-                    tag: a.type,
-                  }))}
-              />
-              <PoiList
-                title="Hazards"
-                items={hazards
-                  .filter((h) => inSpan(h.chainageM))
-                  .map((h) => ({
-                    id: `h${h.id}`,
-                    name: h.name ?? h.type,
-                    meta: `${km(h.chainageM - lo)} km in`,
-                    tag: h.type,
-                  }))}
-              />
-            </div>
-          </section>
-        )}
 
         {content.length > 0 && (
           <section className="w-full px-6 py-12 md:px-20">

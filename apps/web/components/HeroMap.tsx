@@ -106,16 +106,22 @@ function loadPinImages(map: maplibregl.Map): Promise<void> {
 // The selected trail's POIs as zoom-banded markers (§17): faint tinted dots at
 // the regional band, tinted icon-pins at the tactical band, and names fading in
 // at the detail band (water wins label collisions, §17.3). Added once; the data
-// is swapped on selection.
-function addPoiLayers(map: maplibregl.Map) {
+// is swapped on selection. In `preview` mode (a single static stage/region map)
+// the icon-pins show from any zoom so water/refuges/hazards read as icons by
+// default, not as far-zoom dots.
+function addPoiLayers(map: maplibregl.Map, preview: boolean) {
   if (map.getSource(POI_SOURCE)) return;
+  // Preview maps skip the far-zoom dot band entirely and show icon-pins at any
+  // zoom; the explore map keeps the dot→pin band transition at 11.5.
+  const PIN_MIN = preview ? 0 : 11.5;
+  const DOT_MIN = preview ? 24 : 8;
   map.addSource(POI_SOURCE, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
   // Regional band: small tinted dots, no icon.
   map.addLayer({
     id: 'poi-dots',
     type: 'circle',
     source: POI_SOURCE,
-    minzoom: 8,
+    minzoom: DOT_MIN,
     maxzoom: 11.5,
     paint: {
       'circle-radius': ['interpolate', ['linear'], ['zoom'], 9, 3, 11, 5],
@@ -145,10 +151,10 @@ function addPoiLayers(map: maplibregl.Map) {
     id: 'poi-pins',
     type: 'symbol',
     source: POI_SOURCE,
-    minzoom: 11.5,
+    minzoom: PIN_MIN,
     layout: {
       'icon-image': ['concat', 'poi-', ['get', 'kind']],
-      'icon-size': ['interpolate', ['linear'], ['zoom'], 11.5, 0.6, 14, 0.9, 16, 1],
+      'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 1, 11.5, 1.15, 14, 1.3, 16, 1.45],
       'icon-allow-overlap': true,
       'symbol-sort-key': ['get', 'sort'],
       'text-field': ['get', 'name'],
@@ -162,7 +168,10 @@ function addPoiLayers(map: maplibregl.Map) {
       'text-color': '#26231e',
       'text-halo-color': '#fffefb',
       'text-halo-width': 1.4,
-      'text-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0, 15, 1],
+      // Labels reveal a band earlier on preview maps so a stage's POIs read by name.
+      'text-opacity': preview
+        ? ['interpolate', ['linear'], ['zoom'], 11, 0, 12.5, 1]
+        : ['interpolate', ['linear'], ['zoom'], 13, 0, 15, 1],
     },
   });
 }
@@ -204,12 +213,16 @@ export function HeroMap({
   matchedIds,
   selectedId,
   onSelect,
+  preview = false,
 }: {
   routes: MapRoute[];
   /** Ids passing the current filter/search. Undefined = all match. */
   matchedIds?: string[];
   selectedId?: string | null;
   onSelect?: (id: string) => void;
+  /** Single, static route view (trail/region/stage detail): always shows the
+   *  start/finish termini and frames the line with uniform padding. */
+  preview?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -222,6 +235,8 @@ export function HeroMap({
   matchedRef.current = matchedIds ? new Set(matchedIds) : null;
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
+  const previewRef = useRef(preview);
+  previewRef.current = preview;
 
   const drawn = useRef<Map<string, Drawn>>(new Map());
   const fitKeyRef = useRef('');
@@ -233,7 +248,13 @@ export function HeroMap({
     if (!map || !readyRef.current) return;
     const source = map.getSource(POI_SOURCE) as maplibregl.GeoJSONSource | undefined;
     if (!source) return;
-    const route = sel ? routesRef.current.find((r) => r.id === sel) : undefined;
+    // In preview mode (a single static route) always show that route's termini;
+    // otherwise show the selected route's.
+    const route = sel
+      ? routesRef.current.find((r) => r.id === sel)
+      : previewRef.current
+        ? routesRef.current.find((r) => collectCoords(r.geometry).length > 1)
+        : undefined;
     source.setData(poiCollection(route?.pois ?? []));
     if (map.getLayer('poi-dots')) map.moveLayer('poi-dots');
     if (map.getLayer('poi-pins')) map.moveLayer('poi-pins');
@@ -298,9 +319,13 @@ export function HeroMap({
         // Leave room for the side cards on wide screens (CTA left, carousel right).
         const lg = map.getContainer().clientWidth >= 1024;
         map.fitBounds(target, {
-          padding: lg
-            ? { top: 100, bottom: 150, left: 460, right: 400 }
-            : { top: 80, bottom: 80, left: 40, right: 40 },
+          // Previews frame the line uniformly; the explore map leaves room for
+          // the CTA (left) and carousel (right) side cards on wide screens.
+          padding: previewRef.current
+            ? 36
+            : lg
+              ? { top: 100, bottom: 150, left: 460, right: 400 }
+              : { top: 80, bottom: 80, left: 40, right: 40 },
           maxZoom: 12,
           duration: 600,
         });
@@ -415,7 +440,7 @@ export function HeroMap({
     map.touchZoomRotate.disableRotation();
     map.on('load', () => {
       readyRef.current = true;
-      addPoiLayers(map);
+      addPoiLayers(map, previewRef.current);
       // Pin icons load async (data-URL SVGs); MapLibre repaints when they arrive.
       // Never block the trail lines / dots / start-finish on them.
       void loadPinImages(map);

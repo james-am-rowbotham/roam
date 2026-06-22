@@ -4,6 +4,7 @@ import { ElevationProfile } from './ElevationProfile';
 import { Stat, type StatItem } from './Stat';
 
 export interface CarouselItem {
+  eyebrow?: string;
   title: string;
   subtitle?: string;
   image?: string | null;
@@ -52,11 +53,10 @@ export function TrailCarousel({
 
       <div className="flex flex-col gap-3 overflow-y-auto p-4">
         <div className="flex flex-col gap-0.5">
-          {item.subtitle && (
-            <p className="font-mono text-[11px] tracking-[0.02em] text-secondary">
-              {item.subtitle}
-            </p>
-          )}
+          <p className="label-mono text-[11px] text-primary">
+            {item.eyebrow ?? 'Trail'}
+            {item.subtitle ? ` · ${item.subtitle}` : ''}
+          </p>
           <h3 className="font-display text-[19px] font-semibold leading-tight text-primary">
             {item.title}
           </h3>

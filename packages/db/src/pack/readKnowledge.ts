@@ -6,16 +6,7 @@
 import { parseOsmcSymbol } from '@roam/core';
 import type { PackConfig, TrailKnowledge } from '@roam/pipeline';
 import postgres from 'postgres';
-
-// Stable slug for a coarse region name → the discovery Region id + Section suffix.
-const slugify = (s: string): string => {
-  const ascii = s
-    .toLowerCase()
-    .normalize('NFD')
-    // biome-ignore lint/suspicious/noMisleadingCharacterClass: NFD combining diacritics, stripped on purpose
-    .replace(/[\u0300-\u036f]/g, '');
-  return ascii.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-};
+import { slugify } from './slug';
 
 const fromTo = (name: string): [string, string] => {
   const parts = name.split('→').map((p) => p.trim());
