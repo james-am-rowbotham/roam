@@ -1061,6 +1061,16 @@ provenance-stamped: `narrative` (the voice), `fact` (derived spec strip), `callo
 note/non-operational caution), `media` (image + attribution), `what_you_see` (geology/ecology
 explainer pinned to a POI or chainage point), `faq` (Q&A — doubles as Guide retrieval fuel).
 
+**Map-anchored — where possible, content always links to the map.** Every reference to a place
+or feature resolves to a **scoped, filtered map view**, never just prose: a highlight carries a
+chainage/coordinate and shows as a tappable point on the trail; a water/refuge/POI mention links
+to that entity on the map (§13 entity refs); a stage's "5 refuges" summary opens the **stage's
+map slice with the refuge layer on**. Blocks carry an optional `mapAnchor` (`scope` + optional
+`poiFilter` + `chainageM`) on the `ContentBlock` payload (additive, §21.8), and the renderer
+makes them tappable via the same `focusStage`/`focusSection` + POI-layer infra. Prose and map
+read the **same** linearly-referenced data (§7) and the same look-ahead/POI selector (§17.5) —
+one source of truth, the two never diverge. Pure-narrative blocks with no place stay text.
+
 ### 21.3 Generation pipeline (extends §8 Enrich)
 A sibling of the §8 stages, run during/after **Enrich** for each `(scope, lens)`:
 

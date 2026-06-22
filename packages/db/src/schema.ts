@@ -1,3 +1,4 @@
+import type { StoredContent } from '@roam/content';
 import {
   boolean,
   doublePrecision,
@@ -312,11 +313,12 @@ export const contentBlocks = pgTable('content_blocks', {
   // The reading lens (§21.2): terrain | flora | fauna | culture | customs | kit |
   // season | places. Kept as text so lenses can grow without a migration.
   lens: text('lens').notNull(),
-  blockType: text('block_type', {
-    enum: ['narrative', 'fact', 'callout', 'media', 'what_you_see', 'faq'],
-  }).notNull(),
-  title: text('title'),
-  body: text('body').notNull(),
+  // The renderable content as validated jsonb — a StoredContent unit (§21.8). The
+  // structure is owned by the @roam/content union (one source of truth), NEVER by DB
+  // columns: additive block types need no migration. schemaVersion lets a reader
+  // upgrade/skip stale-shaped rows (CONTENT_SCHEMA_VERSION).
+  block: jsonb('block').$type<StoredContent>().notNull(),
+  schemaVersion: integer('schema_version').notNull().default(1),
   orderIndex: integer('order_index').notNull().default(0),
   // Season axis (§21.2): the block's validity window. Null = all-year. Stored as
   // month-of-year (1–12) so "this stage in June vs September" re-renders the rest.

@@ -32,6 +32,12 @@
    to present a **guide**. Static about the objective now; **dynamic later** (weather, refuge
    booking, adaptive) — kept on the *live* side of the §21.1 boundary, never mixed into the
    editorial store.
+8. **Map-anchored content (where possible, always link to the map).** Every content reference
+   to a place or feature resolves to a **scoped, filtered map view**. A highlight carries a
+   chainage/coordinate and shows as a tappable point on the trail; a water/refuge/POI mention
+   links to that entity on the map (§13 entity refs); a stage's "5 refuges" summary opens the
+   **stage's map slice with the refuge layer on**. Prose and map never diverge — both read the
+   same linearly-referenced data (§7) and the same look-ahead/POI selector (§17.5). See §4.5.
 
 ## 3. Architecture — the stage pipeline
 
@@ -102,6 +108,28 @@ must not break that.
 
 `content_media` keeps its hard license gate (`source_site/license/license_url/author/
 attribution_text` all `NOT NULL`) and a provider-agnostic `storage_key` (R2).
+
+### 4.5 Map anchors (req. 8)
+Content blocks carry an optional **map anchor** so the renderer can make them tappable into a
+focused, filtered map — reusing the infra already built (`focusStage`/`focusSection`,
+`NativePOILayer` filtering, §13 entity links). The anchor is part of the validated `ContentBlock`
+payload (§4.3), so it travels with the content and needs no schema change:
+
+```ts
+// added to the ContentBlock union (additive)
+mapAnchor?: {
+  scope: 'route' | 'section' | 'stage';   // what to frame
+  scopeRef?: string;                       // section/stage id; defaults to the block's scope
+  poiFilter?: string[];                    // POI categories to show (e.g. ['refuge'])
+  chainageM?: number;                      // a single point (highlight photo) on the line
+}
+```
+
+Concretely: **highlights** get a `chainageM` (linearly referenced at ingest, §7) → a tappable
+point; **POI-summary blocks** ("5 refuges") get `{ scope:'stage', poiFilter:['refuge'] }` → open
+the stage slice with that layer on; **water/accommodation mentions** stay §13 entity links.
+Pure-narrative blocks with no place stay text. The map view this opens is the *same* one the
+guide describes — one selector, never two sources of truth.
 
 ### 4.4 The narrow waist
 ```

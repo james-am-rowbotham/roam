@@ -4,6 +4,7 @@
 // build against this one model.
 export * from './types';
 export * from './blocks';
+export * from './stored';
 export * from './registries';
 export * from './stats';
 export * from './objective';
