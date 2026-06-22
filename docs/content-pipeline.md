@@ -152,10 +152,13 @@ structure-agnostic.
 
 ## 10. Background execution (Hono / Fly)
 Each stage is callable as a Hono endpoint (`POST /admin/objectives/:id/pipeline/:stage`). Long
-runs go to a background worker. **Decision (recommended start): a `pipeline_jobs` table + a Fly
-worker polling it**, triggered from admin — simplest viable; upgrade to a real queue later.
-(Open-Meteo elevation pacing, §7, lives here: ~500 coords/min, under the 600/min + 5000/hour
-free caps — a finding already baked into `refresh-elevation`.)
+runs go to a background worker via a **managed queue (DECIDED)**. Primary: **Supabase Queues
+(pgmq)** — Postgres-native, managed, transactional with our own data, no new vendor; admin
+**enqueues** a stage, a Bun worker on Fly **consumes** it. If multi-step LLM orchestration
+(per-step retries, concurrency limits, observability) outgrows a plain queue, graduate to a
+**durable-workflow engine** (Inngest / Trigger.dev) — the worker boundary stays the same.
+Rate-limit pacing lives in the worker (Open-Meteo: ~500 coords/min, under the 600/min +
+5000/hour free caps — already baked into `refresh-elevation`).
 
 ## 11. Changing content structure
 Because shape lives in `@roam/content` (not the schema):
@@ -170,10 +173,12 @@ Because shape lives in `@roam/content` (not the schema):
 - `schema_version` per row lets a reader upgrade/skip stale-shaped blocks instead of crashing,
   and lets migration be lazy.
 
-## 12. Open decisions
-1. **POI storage** — unified `pois` table (recommended) vs typed tables driven by config.
-2. **Background jobs** — `pipeline_jobs` table + Fly worker (recommended) vs a real queue.
-3. **Admin stack** — Next.js + Supabase auth (recommended).
+## 12. Decisions (resolved)
+1. **POI storage → unified `pois` table + registry.** A new POI type is one registry variable;
+   no per-type table or migration.
+2. **Background jobs → a managed queue now.** Supabase Queues (pgmq) + a Bun worker on Fly,
+   enqueued from admin; durable-workflow engine (Inngest/Trigger.dev) if orchestration grows.
+3. **Admin stack → Next.js + Supabase Auth.** Matches `apps/web`, reuses the content renderer.
 
 ## 13. Build order (each shippable)
 - **P1 — Content in the DB (the spine).** Reconcile `content_blocks` to *envelope columns +
@@ -185,7 +190,8 @@ Because shape lives in `@roam/content` (not the schema):
 - **P2 — Config-driven POIs.** POI registry + unified ingest. "Add a variable" becomes true.
 - **P3 — Admin portal.** Read + edit + approve over P1's data (the human gate).
 - **P4 — LLM check stage.** Sourcing/confidence/on-topic gate before review.
-- **P5 — Background runner.** `pipeline_jobs` + Fly worker, triggered from admin.
+- **P5 — Background runner.** Managed queue (Supabase Queues/pgmq) + Bun worker on Fly,
+  enqueued from admin.
 - **P6 — Peaks through the pipeline.** `OBJECTIVE_DEFS`, peak routes normalised + chainaged.
 - **P7 — Offline packages + dynamic layer.** R2 + device SQLite; weather/booking on the live
   side of the §21.1 boundary.

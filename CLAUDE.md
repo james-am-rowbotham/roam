@@ -1167,11 +1167,12 @@ the app content works. (5) **companion drafts under review, never auto-publishes
 migration.
 
 > **Plan of record: `docs/content-pipeline.md`.** The pipeline is config-driven (new POI type =
-> a registry variable → unified `pois` table), runs over **trails + peaks** as objectives,
+> a registry variable → **unified `pois` table**), runs over **trails + peaks** as objectives,
 > persists content in Postgres (web-queryable) with offline packages compiled from it, and is
-> callable + idempotent + background-capable (Hono/Fly worker + `pipeline_jobs`), with LLM
-> write/check stages and an `apps/admin` review-before-publish gate. Build order there (P1
-> content-into-DB → … → P7 offline) refines the C1–C6 below.
+> callable + idempotent + background-capable (Hono + a **managed queue (Supabase Queues/pgmq)**
+> Bun worker on Fly), with LLM write/check stages and a **Next.js + Supabase-auth `apps/admin`**
+> review-before-publish gate. Build order there (P1 content-into-DB → … → P7 offline) refines the
+> C1–C6 below.
 
 **Build order (content workstream — extends §18 Phase 7, shares pipeline + admin):**
 - **C1** — content schema (`content_blocks` + `content_media` + provenance) + `apps/admin`
