@@ -35,14 +35,14 @@ contentRouter.openapi(
         scopeType: contentBlocks.scopeType,
         scopeId: contentBlocks.scopeId,
         lens: contentBlocks.lens,
-        blockType: contentBlocks.blockType,
-        title: contentBlocks.title,
-        body: contentBlocks.body,
+        block: contentBlocks.block,
+        schemaVersion: contentBlocks.schemaVersion,
         orderIndex: contentBlocks.orderIndex,
         seasonFrom: contentBlocks.seasonFrom,
         seasonTo: contentBlocks.seasonTo,
         source: contentBlocks.source,
         confidence: contentBlocks.confidence,
+        reviewStatus: contentBlocks.reviewStatus,
       })
       .from(contentBlocks)
       .where(and(eq(contentBlocks.scopeType, scopeType), eq(contentBlocks.scopeId, scopeId)))

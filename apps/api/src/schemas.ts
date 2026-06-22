@@ -101,14 +101,15 @@ export const ContentBlockSchema = z.object({
   scopeType: z.enum(['route', 'region', 'stage', 'poi']),
   scopeId: z.number(),
   lens: z.string(),
-  blockType: z.enum(['narrative', 'fact', 'callout', 'media', 'what_you_see', 'faq']),
-  title: z.string().nullable(),
-  body: z.string(),
+  // The renderable payload — a StoredContent unit (validated by @roam/content, §21.8).
+  block: z.unknown(),
+  schemaVersion: z.number(),
   orderIndex: z.number(),
   seasonFrom: z.number().nullable(),
   seasonTo: z.number().nullable(),
   source: z.string(),
   confidence: z.number(),
+  reviewStatus: z.enum(['draft', 'reviewed', 'published', 'flagged']),
 });
 
 // A coarse Region (§5) with its stage span + distance, for the trail's region list.

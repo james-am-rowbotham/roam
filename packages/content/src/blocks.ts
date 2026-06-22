@@ -5,6 +5,7 @@
 // `marking`/waymark symbols and marker `placeType`s resolve from the vocab registry
 // (./registries), never a baked enum.
 
+import type { FeatureCollection } from 'geojson';
 import type { Coords } from './types';
 
 /** A point to mark on a `map` block — a reference to a shared Location/POI (by id)
@@ -24,7 +25,7 @@ export type ContentBlock =
   | { kind: 'prose'; heading?: string; body: string }
   | {
       kind: 'map';
-      geojson: GeoJSON.FeatureCollection;
+      geojson: FeatureCollection;
       styleId: string;
       markers: MarkerRef[];
       /** Route line colour (the trail's osmc way colour); falls back to map ink. */
